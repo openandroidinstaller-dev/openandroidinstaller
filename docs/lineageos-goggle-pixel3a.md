@@ -12,3 +12,10 @@ Steps: https://wiki.lineageos.org/devices/sargo/install
     - Go back, and select “Developer options”.
     - Scroll down, and check the “Android debugging” or “USB debugging” entry under “Debugging”.
     - when connected to PC, click "allow debugging" on the phone.
+- need to enable "OEM unlooking" in setting!
+
+
+## How to force restart Pixel 3a
+There is a chance that your Pixel’s screen might freeze and stop responding to any taps or commands. In such cases, you’ll need to force restart your phone.
+- To force reboot, press and hold the power button for 30 seconds or more.
+- Release your hold once the logo lights up the screen.
