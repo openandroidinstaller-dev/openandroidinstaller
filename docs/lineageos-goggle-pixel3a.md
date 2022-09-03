@@ -19,3 +19,10 @@ Steps: https://wiki.lineageos.org/devices/sargo/install
 There is a chance that your Pixel’s screen might freeze and stop responding to any taps or commands. In such cases, you’ll need to force restart your phone.
 - To force reboot, press and hold the power button for 30 seconds or more.
 - Release your hold once the logo lights up the screen.
+
+
+## Vendor image
+- factory reset: https://developers.google.com/android/images
+- run `adb reboot bootloader`
+- then run `sh flash-all.sh`
+- lock the bootloader again by running `adb reboot bootloader` and then `fastboot flashing lock`. Follow the instructions on screen.
