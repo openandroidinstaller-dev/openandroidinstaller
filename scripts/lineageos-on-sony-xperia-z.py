@@ -1,7 +1,7 @@
-"""Script to flash a google pixel 3a.
+"""Script to flash a sony xperia z.
 
 Example usage:
-    poetry run python scripts/lineageos-on-pixel3a.py --recovery images/google-pixel3a/lineage-19.1-20220830-recovery-sargo.img --image images/google-pixel3a/lineage-19.1-20220830-nightly-sargo-signed.zip 
+    poetry run python scripts/lineageos-on-sony-xperia-z.py --recovery images/sony-xperia-z/twrp-3.6.2_9-0-yuga.img --image images/sony-xperia-z/lineage-18.1-20220214-UNOFFICIAL-yuga.zip 
 """
 import click
 from subprocess import call
