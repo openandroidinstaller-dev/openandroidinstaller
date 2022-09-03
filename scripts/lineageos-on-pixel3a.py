@@ -14,10 +14,10 @@ from utils import run_fastboot_command
 @click.option('--image', help='Path to the lineage os image to flash.')
 def install_lineage_os(recovery: str, image: str):
     # Steps 1: Unlock the bootloader
-    #unlock_result = unlocking_bootloader_result = unlock_bootloader()
-    #if not unlock_result:
-    #    click.echo("Unlocking the bootloader failed. Exiting.")
-    #    return False
+    unlock_result = unlocking_bootloader_result = unlock_bootloader()
+    if not unlock_result:
+        click.echo("Unlocking the bootloader failed. Exiting.")
+        return False
 
     # Step 2: Temporarily booting a custom recovery using fastboot
     boot_recovery_result = boot_recovery(recovery)
@@ -33,6 +33,7 @@ def install_lineage_os(recovery: str, image: str):
 
     click.echo(
         "Installing lineageOS was successful! Have fun with your device! :)")
+    return True
 
 
 def install_os(image: str):
