@@ -1,9 +1,9 @@
-"""Script to flash a Samsung Galaxy A3.
+"""Script to flash a Samsung Galaxy A3 (2017).
 
 Following: https://lineageosroms.com/a3xelte/#basic-requirements
 
 Example usage:
-    poetry run python scripts/lineageos-on-galaxy-a3.py --recovery images/samsung-galaxy-a3/twrp-3.6.2_9-0-a3xelte.img --image images/samsung-galaxy-a3/lineage-18.1-20220819-UNOFFICIAL-a7xelte.zip
+    poetry run python scripts/lineageos-on-galaxy-a3.py --recovery images/samsung-galaxy-a3/twrp-3.6.2_9-0-a3y17lte.img --image images/samsung-galaxy-a3/lineage-16.0-20190908-UNOFFICIAL-a3y17lte.zip
 """
 import click
 from time import sleep
@@ -93,7 +93,8 @@ def boot_recovery(recovery: str):
     if call(f'adb reboot download', shell=True) < 0:
         click.echo("*** Booting into download mode failed! ***")
         return False
-    sleep(5)
+    confirmed = click.confirm("Confirm to continue",
+                              default=True, abort=False, prompt_suffix=': ', show_default=True, err=False)
 
     # install TWRP recovery from image
     click.echo("\nFlash custom recovery")
