@@ -1,3 +1,6 @@
+### 04.09.2022
+- heute install script für samsung galaxy a3 bauen :)
+
 ### 03.09.2022
 - heute install script für google pixel 3a bauen
 - installations script für google pixel 3a funktioniert, könnte aber noch weniger manuelle schritte haben.
