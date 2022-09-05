@@ -41,7 +41,7 @@ def install_lineage_os(recovery: str, image: str):
 
 def install_os(image: str):
     """Installing LineageOS from recovery with the image filepath given in image."""
-    # manuall wipeing and stuff
+    # manual wiping and stuff
     click.echo("Now tap 'Wipe'.")
     sleep(2)
     click.echo("Then tap 'Format Data' and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage.")
