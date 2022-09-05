@@ -24,5 +24,5 @@ There is a chance that your Pixel’s screen might freeze and stop responding to
 ## Vendor image
 - factory reset: https://developers.google.com/android/images
 - run `adb reboot bootloader`
-- then run `sh flash-all.sh`
+- then run `sh flash-all.sh` in the unpacked directory.
 - lock the bootloader again by running `adb reboot bootloader` and then `fastboot flashing lock`. Follow the instructions on screen.
