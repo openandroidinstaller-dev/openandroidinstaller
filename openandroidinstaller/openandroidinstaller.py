@@ -2,6 +2,11 @@ import flet
 from flet import AppBar, ElevatedButton, Page, Text, View, Row
 
 
+from subprocess import check_output, STDOUT
+
+
+
+
 def main(page: Page):
     page.title = "OpenAndroidInstaller"
     views = []    
@@ -24,6 +29,11 @@ def main(page: Page):
         page.views.append(views[view_num])
         page.update()
 
+    def check_devices(e):
+        output = check_output(["adb", "shell", "dumpsys", "bluetooth_manager", "|", "grep", "\'name:\'", "|", "cut", "-c9-"], stderr=STDOUT).decode() 
+        page.views[-1].controls.append(Text(f"Detected: {output}"))
+        page.update()
+
     # Generate the Views for the different steps
 
     def get_nav() -> Row:
@@ -38,6 +48,7 @@ def main(page: Page):
             "0",
             [
                 AppBar(title=Text("Welcome to OpenAndroidInstaller!")),
+                ElevatedButton("Check devices", on_click=check_devices),
                 ElevatedButton("Next", on_click=go_next),
             ],
         )
