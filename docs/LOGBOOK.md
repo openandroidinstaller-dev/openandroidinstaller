@@ -1,3 +1,9 @@
+### 06.09.2022
+- Figure out how to package a desktop app with flet and pyinstaller
+- Continue learning flet
+- design the controlflow of the installer app
+
+
 ### 05.09.2022
 - Try to do trwp scripting to wipe the samsung galaxy --> doesnt work so far
 - restore vendor setup for samsung galaxy A3
