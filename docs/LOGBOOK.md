@@ -1,6 +1,8 @@
 ### 05.09.2022
 - Try to do trwp scripting to wipe the samsung galaxy --> doesnt work so far
 - restore vendor setup for samsung galaxy A3
+- start building a simple GUI
+    - learn flet basics
 
 ### 04.09.2022
 - heute install script für samsung galaxy a3 bauen :)
