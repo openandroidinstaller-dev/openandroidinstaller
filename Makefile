@@ -6,4 +6,4 @@ app:
 	poetry run python openandroidinstaller/openandroidinstaller.py
 
 build-app:
-	poetry run pyinstaller openandroidinstaller/openandroidinstaller.py --noconsole --noconfirm --onefile -i=openandroidinstaller/assets/favicon.ico
+	poetry run pyinstaller openandroidinstaller/openandroidinstaller.py --noconsole --noconfirm --onefile --icon "/assets/favicon.ico" --add-data "openandroidinstaller/assets:assets"
