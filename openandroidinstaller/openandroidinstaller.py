@@ -1,16 +1,17 @@
 import flet
-from flet import AppBar, ElevatedButton, Page, Text, View, colors, FloatingActionButton
+from flet import AppBar, ElevatedButton, Page, Text, View, Row
 
 
 def main(page: Page):
     page.title = "OpenAndroidInstaller"
     views = []    
 
+    # Click-event handlers
 
     def go_next(e):
         view_num = int(page.views[-1].route) + 1
-        if view_num > 3:
-            view_num = 3
+        if view_num > 6:
+            view_num = 6
         page.views.clear()
         page.views.append(views[view_num])
         page.update()
@@ -23,6 +24,14 @@ def main(page: Page):
         page.views.append(views[view_num])
         page.update()
 
+    # Generate the Views for the different steps
+
+    def get_nav() -> Row:
+        return Row([
+            ElevatedButton("Back", on_click=go_back),
+            ElevatedButton("Next", on_click=go_next),
+        ])
+
 
     def get_welcome_view(page: Page) -> View:
         return View(
@@ -33,13 +42,14 @@ def main(page: Page):
             ],
         )
 
+
     def get_bootloader_view(page: Page) -> View:
         return View(
             "1",
             [
                 AppBar(title=Text("Unlock bootloder")),
-                ElevatedButton("Next", on_click=go_next),
-                ElevatedButton("Back", on_click=go_back),
+                Text("Turn on developer options and OEM Unlock on your phone."),
+                get_nav(),
             ],
         )
 
@@ -49,8 +59,7 @@ def main(page: Page):
             "2",
             [
                 AppBar(title=Text("Select images.")),
-                ElevatedButton("Next", on_click=go_next),
-                ElevatedButton("Back", on_click=go_back),
+                get_nav(),
             ],
         )
 
@@ -60,20 +69,43 @@ def main(page: Page):
             "3",
             [
                 AppBar(title=Text("Boot recovery")),
-                ElevatedButton("Next", on_click=go_next),
+                get_nav(),
+            ],
+        )
+
+    
+    def get_install_view(page: Page) -> View:
+        return View(
+            "4",
+            [
+                AppBar(title=Text("Install Lineage OS")),
+                get_nav(),
+            ],
+        )
+
+
+    def get_success_view(page: Page) -> View:
+        return View(
+            "5",
+            [
+                AppBar(title=Text("Success!")),
                 ElevatedButton("Back", on_click=go_back),
             ],
         )
+
+    # main part
 
     views = [
         get_welcome_view(page),
         get_bootloader_view(page),
         get_image_select_view(page),
-        get_recovery_view(page)
+        get_recovery_view(page),
+        get_install_view(page),
+        get_success_view(page)
     ]
 
     page.views.append(views[0])
     page.update()
 
 
-flet.app(target=main)
+flet.app(target=main, assets_dir="assets")
