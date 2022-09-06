@@ -5,6 +5,5 @@ install:
 app:
 	poetry run python openandroidinstaller/openandroidinstaller.py
 
-build:
-	poetry run pyinstaller openandroidinstaller/openandroidinstaller.py --noconsole --noconfirm --onefile --icon openandroidinstaller/assets/logo-192x192.png
-
+build-app:
+	poetry run pyinstaller openandroidinstaller/openandroidinstaller.py --noconsole --noconfirm --onefile -i=openandroidinstaller/assets/favicon.ico
