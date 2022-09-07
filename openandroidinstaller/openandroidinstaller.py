@@ -3,8 +3,10 @@ from time import sleep
 import flet
 from flet import (AppBar, ElevatedButton, Page, Text, View, Row, ProgressRing, Column, FilePicker, FilePickerResultEvent, icons)
 from typing import List
-from subprocess import check_output, STDOUT, call
+from subprocess import check_output, STDOUT, call, CalledProcessError
 from functools import partial
+
+from installer_config import InstallerConfig
 
 
 recovery_path = None
@@ -32,27 +34,42 @@ def main(page: Page):
         page.update()
 
     def search_devices(e):
+        config_path = "openandroidinstaller/assets/configs/"
         try:
+            # read device properties
             output = check_output(["adb", "shell", "dumpsys", "bluetooth_manager", "|", "grep", "\'name:\'", "|", "cut", "-c9-"], stderr=STDOUT).decode() 
             page.views[-1].controls.append(Text(f"Detected: {output}"))
+            # load config from file
+            config = InstallerConfig.from_file(config_path + output.strip() + ".yaml")
+            page.views[-1].controls.append(Text(f"Installer configuration found."))
             page.views[-1].controls.append(ElevatedButton("Confirm and continue", on_click=confirm))
-            views.extend([
-                get_new_view(title="Unlock the bootloader", content=[confirm_button("Turn on developer options and OEM Unlock on your phone.")], index=2),
-                get_new_view(title="Boot into recovery", content=[confirm_button("Turn on your device and wait until its fully booted.")], index=3),
-                get_new_view(title="Boot into recovery", content=[call_button("Reboot into bootloader", command="adb reboot download")], index=4),
-                get_new_view(title="Boot into recovery", content=[call_button("Flash custom recovery", command="heimdall flash --no-reboot --RECOVERY recovery")], index=5),
-                get_new_view(title="Boot into recovery", content=[confirm_button("Unplug the USB cable from your device. Manually reboot into recovery. Press the Volume Down + Power buttons for 8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, hold Volume Up + Home + Power.")], index=6),
-                get_new_view(title="Flash LineageOS", content=[confirm_button("Now tap 'Wipe'. Then tap 'Format Data' and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage.")], index=7),
-                get_new_view(title="Flash LineageOS", content=[confirm_button("Return to the previous menu and tap 'Advanced Wipe', then select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'.")], index=8),
-                get_new_view(title="Flash LineageOS", content=[confirm_button("On the device, go back and select “Advanced”, “ADB Sideload”, then swipe to begin sideload. Then confirm here")], index=9),
-                get_new_view(title="Flash LineageOS", content=[call_button("Flash lineageOS image. Don't remove the USB-Cable!", command="adb sideload image")], index=10),
-                get_new_view(title="Boot into recovery", content=[call_button("Reboot into OS", command="adb reboot")], index=11),
-                get_new_view(title="Successfully finished flashing", content=[Text("Have fun with LineageOS!")], index=12),
-            ])
-        except:
+            new_views = views_from_config(config)
+            views.extend(new_views)
+        except CalledProcessError:
             output = "No device detected!"
             page.views[-1].controls.append(Text(f"{output}"))
         page.update()
+
+
+    def views_from_config(config: InstallerConfig) -> List[View]:
+        new_views = []
+        for num_step, step in enumerate(config.steps):
+            if step.type == "confirm_button":
+                new_views.append(
+                    get_new_view(title=step.title, content=[confirm_button(step.content)], index=2+num_step)
+                )
+            elif step.type == "call_button":
+                new_views.append(
+                    get_new_view(title=step.title, content=[call_button(step.content, command=step.command)], index=2+num_step)
+                )
+            elif step.type == "text":
+                new_views.append(
+                    get_new_view(title=step.title, content=[Text(step.content)], index=2+num_step)
+                )
+            else:
+                raise Exception(f"Unknown step type: {step.type}")
+        return new_views
+    
 
     def call_to_phone(e, command: str):
         command = command.replace("recovery", recovery_path)
