@@ -27,4 +27,4 @@ class InstallerConfig():
                 print(exc)
 
         steps = [Step(**raw_step) for raw_step in raw_steps]
-        return cls(raw_steps)
+        return cls(steps)
