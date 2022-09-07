@@ -69,8 +69,7 @@ def install_os(image: str):
     if call(f'adb reboot', shell=True) < 0:
         return False
 
-    click.echo(
-        "Flashing finished. Now press 'back' (arrow) and then 'Reboot system now' to finish the installation.")
+    click.echo("Flashing finished.")
     return True
 
 
