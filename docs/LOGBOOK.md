@@ -1,3 +1,6 @@
+### 07.09.2022
+- try a linear GUI flow
+
 ### 06.09.2022
 - Figure out how to package a desktop app with flet and pyinstaller
 - Continue learning flet
