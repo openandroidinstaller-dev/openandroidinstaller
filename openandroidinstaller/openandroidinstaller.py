@@ -1,3 +1,4 @@
+import chunk
 from time import sleep
 import flet
 from flet import (AppBar, ElevatedButton, Page, Text, View, Row, ProgressRing, Column, FilePicker, FilePickerResultEvent, icons)
@@ -18,8 +19,6 @@ def main(page: Page):
 
     def confirm(e):
         view_num = int(page.views[-1].route) + 1
-        #if view_num > 6:
-        #    view_num = 6
         page.views.clear()
         page.views.append(views[view_num])
         page.update()
@@ -37,6 +36,19 @@ def main(page: Page):
             output = check_output(["adb", "shell", "dumpsys", "bluetooth_manager", "|", "grep", "\'name:\'", "|", "cut", "-c9-"], stderr=STDOUT).decode() 
             page.views[-1].controls.append(Text(f"Detected: {output}"))
             page.views[-1].controls.append(ElevatedButton("Confirm and continue", on_click=confirm))
+            views.extend([
+                get_new_view(title="Unlock the bootloader", content=[confirm_button("Turn on developer options and OEM Unlock on your phone.")], index=2),
+                get_new_view(title="Boot into recovery", content=[confirm_button("Turn on your device and wait until its fully booted.")], index=3),
+                get_new_view(title="Boot into recovery", content=[call_button("Reboot into bootloader", command="adb reboot download")], index=4),
+                get_new_view(title="Boot into recovery", content=[call_button("Flash custom recovery", command="heimdall flash --no-reboot --RECOVERY recovery")], index=5),
+                get_new_view(title="Boot into recovery", content=[confirm_button("Unplug the USB cable from your device. Manually reboot into recovery. Press the Volume Down + Power buttons for 8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, hold Volume Up + Home + Power.")], index=6),
+                get_new_view(title="Flash LineageOS", content=[confirm_button("Now tap 'Wipe'. Then tap 'Format Data' and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage.")], index=7),
+                get_new_view(title="Flash LineageOS", content=[confirm_button("Return to the previous menu and tap 'Advanced Wipe', then select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'.")], index=8),
+                get_new_view(title="Flash LineageOS", content=[confirm_button("On the device, go back and select “Advanced”, “ADB Sideload”, then swipe to begin sideload. Then confirm here")], index=9),
+                get_new_view(title="Flash LineageOS", content=[call_button("Flash lineageOS image. Don't remove the USB-Cable!", command="adb sideload image")], index=10),
+                get_new_view(title="Boot into recovery", content=[call_button("Reboot into OS", command="adb reboot")], index=11),
+                get_new_view(title="Successfully finished flashing", content=[Text("Have fun with LineageOS!")], index=12),
+            ])
         except:
             output = "No device detected!"
             page.views[-1].controls.append(Text(f"{output}"))
@@ -44,7 +56,7 @@ def main(page: Page):
 
     def call_to_phone(e, command: str):
         command = command.replace("recovery", recovery_path)
-        #command = command.replace("image", pick_image_dialog.result.path)
+        command = command.replace("image", image_path)
         page.views[-1].controls.append(ProgressRing())
         page.update()
         res = call(f'{command}', shell=True)
@@ -85,11 +97,15 @@ def main(page: Page):
     # Generate the Views for the different steps
 
     def confirm_button(text: str, confirm_text: str = "Confirm and continue") -> Row:
-        return Row([
-            Text(f"{text}"),
-            ElevatedButton(f"{confirm_text}", on_click=confirm)
-        ])
-
+        words = text.split(" ")
+        chunk_size = 10
+        if len(words) > chunk_size:
+            n_chunks = len(words) // chunk_size
+            text_field = [Text(f"{' '.join(words[i*chunk_size:(i+1)*chunk_size])}") for i in range(n_chunks)]
+            return Column(text_field + [ElevatedButton(f"{confirm_text}", on_click=confirm)])
+        else:
+            text_field = Text(f"{text}")
+            return Row([text_field, ElevatedButton(f"{confirm_text}", on_click=confirm)])
     
     def call_button(text: str, command: str, confirm_text: str = "Confirm and run") -> Row:
         return Row([
@@ -129,11 +145,6 @@ def main(page: Page):
             ]
 
         ), confirm_button("Done?")], index=1),
-        get_new_view(title="Unlock the bootloader", content=[confirm_button("Turn on developer options and OEM Unlock on your phone.")], index=2),
-        get_new_view(title="Boot into recovery", content=[confirm_button("Turn on your device and wait until its fully booted.")], index=3),
-        get_new_view(title="Boot into recovery", content=[call_button("Reboot into bootloader", command="adb reboot download")], index=4),
-        get_new_view(title="Boot into recovery", content=[call_button("Flash custom recovery", command="heimdall flash --no-reboot --RECOVERY recovery")], index=5),
-        get_new_view(title="Continue somehow", content=[confirm_button("Turn on your device and wait until its fully booted.")], index=6),
     ]
 
     page.views.append(views[0])
