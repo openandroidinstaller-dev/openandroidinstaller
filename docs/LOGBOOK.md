@@ -1,5 +1,11 @@
+### 08.09.2022
+- write a basic README
+
+
 ### 07.09.2022
 - try a linear GUI flow
+- enable flashing devices fom config files
+- build the UI based on device config
 
 ### 06.09.2022
 - Figure out how to package a desktop app with flet and pyinstaller
