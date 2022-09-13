@@ -14,7 +14,7 @@ steps:
     command: "adb reboot bootloader"
   - title: "Unlock the bootloader"
     type: confirm_button
-    content: "Follow the instructions on Sony’s official unlocking website to generate an unlock code for your bootloader. https://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/"
+    content: "Follow the instructions on Sonys official unlocking website to generate an unlock code for your bootloader. https://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/"
   - title: "Unlock the bootloader"
     type: call_button_with_input
     content: "Use your code to unlock the bootloader of your device:"

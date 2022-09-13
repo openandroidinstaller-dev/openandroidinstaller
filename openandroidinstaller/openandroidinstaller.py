@@ -29,16 +29,20 @@ from installer_config import InstallerConfig
 
 recovery_path = None
 image_path = None
-inputtext = None
 
 
 def main(page: Page):
     page.title = "OpenAndroidInstaller"
+    page.window_width = 480
+    page.window_height = 640
+    page.window_top = 100
+    page.window_left = 720
     # page.theme_mode = "dark"
     views = []
     pb = ProgressBar(width=400, color="amber", bgcolor="#eeeeee", bar_height=16)
     pb.value = 0
     num_views = None  # this is updated later
+    inputtext = TextField(hint_text="your unlock code", expand=False)  # textfield for the unlock code
 
     # Click-event handlers
 
@@ -118,7 +122,7 @@ def main(page: Page):
                     get_new_view(
                         title=step.title,
                         content=[
-                            TextField(hint_text="your unlock code", expand=False),
+                            inputtext,
                             call_button(step.content, command=step.command),
                         ],
                         index=2 + num_step,
@@ -139,7 +143,7 @@ def main(page: Page):
     def call_to_phone(e, command: str):
         command = command.replace("recovery", recovery_path)
         command = command.replace("image", image_path)
-        command = command.replace("inputtext", inputtext)
+        command = command.replace("inputtext", inputtext.value)
         page.views[-1].controls.append(ProgressRing())
         page.update()
         res = call(f"{command}", shell=True)
