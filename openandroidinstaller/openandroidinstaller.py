@@ -1,7 +1,7 @@
 import chunk
 from time import sleep
 import flet
-from flet import (AppBar, ElevatedButton, Page, Text, View, Row, ProgressRing, Column, FilePicker, FilePickerResultEvent, icons, ProgressBar)
+from flet import (AppBar, ElevatedButton, Page, Text, View, Row, ProgressRing, Column, FilePicker, FilePickerResultEvent, icons, ProgressBar, Banner, colors, TextButton, Icon)
 from typing import List
 from subprocess import check_output, STDOUT, call, CalledProcessError
 from functools import partial
@@ -15,6 +15,7 @@ image_path = None
 
 def main(page: Page):
     page.title = "OpenAndroidInstaller"
+    # page.theme_mode = "dark"
     views = []
     pb = ProgressBar(width=400, color="amber", bgcolor="#eeeeee", bar_height=16)
     pb.value = 0
@@ -31,12 +32,8 @@ def main(page: Page):
         page.views.append(views[view_num])
         page.update()
 
-    def go_back(e):
-        view_num = int(page.views[-1].route) - 1
-        if view_num < 0:
-            view_num = 0
-        page.views.clear()
-        page.views.append(views[view_num])
+    def close_banner(e):
+        page.banner.open = False
         page.update()
 
     def search_devices(e):
@@ -48,7 +45,7 @@ def main(page: Page):
             # load config from file
             config = InstallerConfig.from_file(config_path + output.strip() + ".yaml")
             page.views[-1].controls.append(Text(f"Installer configuration found."))
-            page.views[-1].controls.append(ElevatedButton("Confirm and continue", on_click=confirm))
+            page.views[-1].controls.append(ElevatedButton("Confirm and continue", on_click=confirm, icon=icons.NEXT_PLAN_OUTLINED))
             new_views = views_from_config(config)
             views.extend(new_views)
             global num_views
@@ -119,6 +116,19 @@ def main(page: Page):
     page.overlay.append(pick_image_dialog)
     page.overlay.append(pick_recovery_dialog)
 
+    # warnings banner
+
+    page.banner = Banner(
+        bgcolor=colors.AMBER_100,
+        leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
+        content=Text(
+            "Important: Please read through the instructions at least once before actually following them, so as to avoid any problems due to any missed steps!"
+        ),
+        actions=[
+            TextButton("I understand", on_click=close_banner),
+        ],
+    )
+
     # Generate the Views for the different steps
 
     def confirm_button(text: str, confirm_text: str = "Confirm and continue") -> Row:
@@ -127,10 +137,10 @@ def main(page: Page):
         if len(words) > chunk_size:
             n_chunks = len(words) // chunk_size
             text_field = [Text(f"{' '.join(words[i*chunk_size:(i+1)*chunk_size])}") for i in range(n_chunks)]
-            return Column(text_field + [ElevatedButton(f"{confirm_text}", on_click=confirm)])
+            return Column(text_field + [ElevatedButton(f"{confirm_text}", on_click=confirm, icon=icons.NEXT_PLAN_OUTLINED)])
         else:
             text_field = Text(f"{text}")
-            return Row([text_field, ElevatedButton(f"{confirm_text}", on_click=confirm)])
+            return Row([text_field, ElevatedButton(f"{confirm_text}", on_click=confirm, icon=icons.NEXT_PLAN_OUTLINED)])
     
     def call_button(text: str, command: str, confirm_text: str = "Confirm and run") -> Row:
         return Row([
@@ -139,18 +149,23 @@ def main(page: Page):
         ])
 
     def get_new_view(title: str, index: int, content: List = []) -> View:
+        title_bar = AppBar(leading=Icon(icons.ANDROID_OUTLINED), leading_width=40, center_title=True, elevation=16)
+        if index != 0:
+            title_bar.title = Text(f"Step {index}: {title}")
+        else:
+            title_bar.title = Text(f"{title}")
         return View(
             route=f"{index}",
             controls=[pb] + content,
             padding=50,
-            appbar=AppBar(leading=None, title=Text(f"{title}")),
+            appbar=title_bar,
             floating_action_button=None
         )
 
     # main part
 
     views = [
-        get_new_view(title="Welcome to OpenAndroidInstaller!", content=[ElevatedButton("Search device", on_click=search_devices)], index=0),
+        get_new_view(title="Welcome to OpenAndroidInstaller!", content=[ElevatedButton("Search device", on_click=search_devices, icon=icons.PHONE_ANDROID)], index=0),
         get_new_view(title="Pick image and recovery", content=[Row(
             [
                 ElevatedButton(
@@ -177,6 +192,7 @@ def main(page: Page):
     ]
 
     page.views.append(views[0])
+    page.banner.open = True
     page.update()
 
 
