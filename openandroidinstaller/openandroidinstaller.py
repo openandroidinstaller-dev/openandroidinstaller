@@ -1,7 +1,7 @@
 import chunk
 from time import sleep
 import flet
-from flet import (AppBar, ElevatedButton, Page, Text, View, Row, ProgressRing, Column, FilePicker, FilePickerResultEvent, icons)
+from flet import (AppBar, ElevatedButton, Page, Text, View, Row, ProgressRing, Column, FilePicker, FilePickerResultEvent, icons, ProgressBar)
 from typing import List
 from subprocess import check_output, STDOUT, call, CalledProcessError
 from functools import partial
@@ -16,11 +16,17 @@ image_path = None
 def main(page: Page):
     page.title = "OpenAndroidInstaller"
     views = []
+    pb = ProgressBar(width=400, color="amber", bgcolor="#eeeeee", bar_height=16)
+    pb.value = 0
+    num_views = None # this is updated later
 
     # Click-event handlers
 
     def confirm(e):
         view_num = int(page.views[-1].route) + 1
+        global num_views
+        if num_views:
+            pb.value = view_num / num_views
         page.views.clear()
         page.views.append(views[view_num])
         page.update()
@@ -45,6 +51,8 @@ def main(page: Page):
             page.views[-1].controls.append(ElevatedButton("Confirm and continue", on_click=confirm))
             new_views = views_from_config(config)
             views.extend(new_views)
+            global num_views
+            num_views = len(views)
         except CalledProcessError:
             output = "No device detected!"
             page.views[-1].controls.append(Text(f"{output}"))
@@ -132,7 +140,11 @@ def main(page: Page):
 
     def get_new_view(title: str, index: int, content: List = []) -> View:
         return View(
-            f"{index}", [AppBar(title=Text(f"{title}"))] + content
+            route=f"{index}",
+            controls=[pb] + content,
+            padding=50,
+            appbar=AppBar(leading=None, title=Text(f"{title}")),
+            floating_action_button=None
         )
 
     # main part
