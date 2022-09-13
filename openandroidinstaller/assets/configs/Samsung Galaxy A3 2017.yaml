@@ -29,7 +29,7 @@ steps:
     type: call_button
     content: "Flash lineageOS image. Don't remove the USB-Cable!"
     command: "adb sideload image"
-  - title: "Boot into recovery"
+  - title: "Reboot"
     type: call_button
     content: "Reboot into OS"
     command: "adb reboot"

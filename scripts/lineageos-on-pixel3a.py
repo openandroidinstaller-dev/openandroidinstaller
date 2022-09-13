@@ -10,8 +10,8 @@ from utils import run_fastboot_command
 
 
 @click.command()
-@click.option('--recovery', help='Path to the recovery file to flash. (Can be TWRP)')
-@click.option('--image', help='Path to the lineage os image to flash.')
+@click.option("--recovery", help="Path to the recovery file to flash. (Can be TWRP)")
+@click.option("--image", help="Path to the lineage os image to flash.")
 def install_lineage_os(recovery: str, image: str):
     # Steps 1: Unlock the bootloader
     unlock_result = unlocking_bootloader_result = unlock_bootloader()
@@ -31,8 +31,7 @@ def install_lineage_os(recovery: str, image: str):
         click.echo("Installing LineageOS failed. Exiting.")
         return False
 
-    click.echo(
-        "Installing lineageOS was successful! Have fun with your device! :)")
+    click.echo("Installing lineageOS was successful! Have fun with your device! :)")
     return True
 
 
@@ -44,32 +43,48 @@ def install_os(image: str):
         click.echo("Booting into bootloader failed. Exiting.")
         return False
     # needs screen interaction here
-    confirmed = click.confirm("Select 'Boot into Recovery' on your smartphone screen. Wait until you are in recovery, then confirm",
-                              default=True, abort=False, prompt_suffix=': ', show_default=True, err=False)
+    confirmed = click.confirm(
+        "Select 'Boot into Recovery' on your smartphone screen. Wait until you are in recovery, then confirm",
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
+    )
 
     # automatic factory reset
-    #factory_reset_result = run_fastboot_command(cmd=["erase", "cache"])
-    #click.echo(f"{factory_reset_result}")
-    #factory_reset_result = run_fastboot_command(cmd=["erase", "userdata"])
-    #click.echo(f"{factory_reset_result}")
-    
+    # factory_reset_result = run_fastboot_command(cmd=["erase", "cache"])
+    # click.echo(f"{factory_reset_result}")
+    # factory_reset_result = run_fastboot_command(cmd=["erase", "userdata"])
+    # click.echo(f"{factory_reset_result}")
+
     # manual factory reset
     confirmed = click.confirm(
         "Now tap Factory Reset, then Format data / factory reset and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage, as well as format your cache partition (if you have one). Confirm if you are done",
-        default=True, abort=False, prompt_suffix=': ', show_default=True, err=False
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
     )
 
     # sideload linageos image with adb
     confirmed = click.confirm(
         "On the device, select “Apply Update”, then “Apply from ADB” to begin sideload. Then confirm here",
-        default=True, abort=False, prompt_suffix=': ', show_default=True, err=False
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
     )
     click.echo("\nRunning: adb sideload <image>")
-    if call(f'adb sideload {image}', shell=True) < 0:
+    if call(f"adb sideload {image}", shell=True) < 0:
         click.echo("*** Sideloading image failed! ***")
         return False
-    
-    click.echo("Flashing finished. Now press 'back' (arrow) and then 'Reboot system now' to finish the installation.")
+
+    click.echo(
+        "Flashing finished. Now press 'back' (arrow) and then 'Reboot system now' to finish the installation."
+    )
     return True
 
 
@@ -85,8 +100,14 @@ def boot_recovery(recovery: str):
         click.echo("Unlocking the bootloader failed. Exiting.")
         return False
     # needs screen interaction here
-    confirmed = click.confirm("Select 'Restart bootloader' on your smartphone screen. Then confirm",
-                              default=True, abort=False, prompt_suffix=': ', show_default=True, err=False)
+    confirmed = click.confirm(
+        "Select 'Restart bootloader' on your smartphone screen. Then confirm",
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
+    )
     # list devices
     devices = run_fastboot_command(cmd=["devices"])
     click.echo(f"Found: {devices}")
@@ -99,7 +120,7 @@ def boot_recovery(recovery: str):
 def reboot_device():
     """Reboot the connected device."""
     click.echo("\nRunning: fastboot reboot")
-    if call('fastboot' + ' reboot', shell=True) < 0:
+    if call("fastboot" + " reboot", shell=True) < 0:
         click.echo("*** Reboot command failed! ***")
         return 4
     return 0
@@ -108,7 +129,7 @@ def reboot_device():
 def reboot_device_into_bootloader():
     """Reboot the connected device into fastboot."""
     click.echo("\nRunning: adb reboot bootloader")
-    if call('adb reboot bootloader', shell=True) < 0:
+    if call("adb reboot bootloader", shell=True) < 0:
         click.echo("*** Reboot-bootloader command failed! ***")
         return 4
     return 0
@@ -122,17 +143,28 @@ def unlock_bootloader():
         click.echo("Unlocking the bootloader failed. Exiting.")
         return False
     # needs screen interaction here
-    confirmed = click.confirm("Select 'Restart bootloader' on your smartphone screen. Then confirm",
-                              default=True, abort=False, prompt_suffix=': ', show_default=True, err=False)
+    confirmed = click.confirm(
+        "Select 'Restart bootloader' on your smartphone screen. Then confirm",
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
+    )
     # list devices
     devices = run_fastboot_command(cmd=["devices"])
     click.echo(f"Found: {devices}")
     # actually unlock the bootloader
     unlock_res = run_fastboot_command(cmd=["flashing", "unlock"])
     click.echo(f"{unlock_res}")
-    click.confirm("At this point the device may display on-screen prompts which will require interaction to continue the process of unlocking the bootloader. Please take whatever actions the device asks you to to proceed.",
-                  default=True, abort=False, prompt_suffix=': ', show_default=True, err=False
-                  )
+    click.confirm(
+        "At this point the device may display on-screen prompts which will require interaction to continue the process of unlocking the bootloader. Please take whatever actions the device asks you to to proceed.",
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
+    )
     # reboot device
     reboot_res = reboot_device()
     if reboot_res == 4:
@@ -140,13 +172,18 @@ def unlock_bootloader():
         return False
     click.echo("Bootloader is now unlocked!")
     click.echo(
-        ">>Since the device resets completely, you will need to re-enable USB debugging to continue.")
+        ">>Since the device resets completely, you will need to re-enable USB debugging to continue."
+    )
     confirmed = click.confirm(
         "Confirm to continue",
-        default=True, abort=False, prompt_suffix=': ', show_default=True, err=False
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
     )
     return confirmed
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     install_lineage_os()

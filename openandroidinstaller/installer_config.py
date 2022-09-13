@@ -3,17 +3,15 @@ import yaml
 from typing import List
 
 
-class Step():
-
-    def __init__(self, title: str, type: str, content: str, command: str=None):
+class Step:
+    def __init__(self, title: str, type: str, content: str, command: str = None):
         self.title = title
         self.type = type
         self.content = content
         self.command = command
 
 
-class InstallerConfig():
-    
+class InstallerConfig:
     def __init__(self, steps: List[Step]):
         self.steps = steps
 
