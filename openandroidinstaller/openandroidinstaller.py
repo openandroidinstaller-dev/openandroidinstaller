@@ -2,6 +2,7 @@ import chunk
 from time import sleep
 import flet
 from flet import (
+    Divider,
     AppBar,
     ElevatedButton,
     Page,
@@ -256,6 +257,8 @@ def main(page: Page):
         get_new_view(
             title="Welcome to OpenAndroidInstaller!",
             content=[
+                Text("Before you continue, make sure your devices is on the latest system update."),
+                Divider(),
                 Text("Enable USB debugging on your device by enabling developer options."),
                 Text("To do this, tap seven times on the build number in the System-Menu in Settings."),
                 Text("Then in developer options, toggle OEM unlocking and USB-Debugging."), 
