@@ -1,10 +1,4 @@
 steps:
-  - title: "Enable developer options and OEM unlocking"
-    type: confirm_button
-    content: "Enable USB debugging on your device by enabling developer options. To do this, tap 5 times on the build number in the System-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."
-  - title: "Unlock the bootloader"
-    type: confirm_button
-    content: "Turn on developer options and OEM Unlock on your phone."
   - title: "Unlock the bootloader"
     type: confirm_button
     content: "Turn on your device and wait until its fully booted."
@@ -19,13 +13,15 @@ steps:
     type: call_button
     content: "Unlock the bootloader now:"
     command: "fastboot flashing unlock"
+    allow_skip: True
   - title: "Unlock the bootloader"
     type: confirm_button
     content: "At this point the device may display on-screen prompts which will require interaction to continue the process of unlocking the bootloader. Please take whatever actions the device asks you to to proceed."
   - title: "Unlock the bootloader"
     type: call_button
     content: "Reboot the phone"
-    command: "adb reboot"
+    command: "fastboot reboot"
+    allow_skip: True
   - title: "Unlock the bootloader"
     type: confirm_button
     content: "The bootloader is now unlocked. Since the device resets completely, you will need to re-enable USB debugging to continue."
@@ -39,7 +35,7 @@ steps:
   - title: "Flash custom recovery"
     type: call_button
     content: "Flash custom recovery (temporarily)"
-    command: "fastboot flash boot recovery"
+    command: "fastboot flash boot <recovery>"
   - title: "Flash LineageOS"
     type: call_button
     content: "Boot into recovery"
@@ -56,7 +52,7 @@ steps:
   - title: "Flash LineageOS"
     type: call_button
     content: "Flash lineageOS image. Don't remove the USB-Cable!"
-    command: "adb sideload image"
+    command: "adb sideload <image>"
   - title: "Reboot"
     type: call_button
     content: "Reboot into OS"

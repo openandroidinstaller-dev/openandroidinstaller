@@ -130,9 +130,9 @@ def main(page: Page):
         return new_views
 
     def call_to_phone(e, command: str):
-        command = command.replace("recovery", recovery_path)
-        command = command.replace("image", image_path)
-        command = command.replace("inputtext", inputtext.value)
+        command = command.replace("<recovery>", recovery_path)
+        command = command.replace("<image>", image_path)
+        command = command.replace("<inputtext>", inputtext.value)
         page.views[-1].controls.append(ProgressRing())
         page.update()
         res = call(f"{command}", shell=True)
@@ -256,6 +256,9 @@ def main(page: Page):
         get_new_view(
             title="Welcome to OpenAndroidInstaller!",
             content=[
+                Text("Enable USB debugging on your device by enabling developer options."),
+                Text("To do this, tap 5 times on the build number in the System-Menu in Settings."),
+                Text("Then in developer options, toggle OEM unlocking and USB-Debugging."), 
                 ElevatedButton(
                     "Search device", on_click=search_devices, icon=icons.PHONE_ANDROID
                 )

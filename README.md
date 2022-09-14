@@ -21,6 +21,20 @@
   </p>
 </div>
 
+
+## Warning: Unlocking the bootloader will erase all data on your device!
+This also includes your DRM keys, which are stored in the Trim Area partition (also called TA).
+Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
+If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
+
+## Officially supported devices
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
+Samsung | Galaxy A5 2016 | a5xelte |  | under development
+Google | Pixel 3a | sargo | sargo | tested
+Sony | Xperia Z | yuga | | tested
+
 ## Installation
 
 1. Download the AppImage, .exe or appropriate file for your OS. 
