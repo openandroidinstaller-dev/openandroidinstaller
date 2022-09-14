@@ -39,7 +39,7 @@ def main(page: Page):
     page.window_left = 720
     # page.theme_mode = "dark"
     views = []
-    pb = ProgressBar(width=400, color="amber", bgcolor="#eeeeee", bar_height=16)
+    pb = ProgressBar(width=400, color="#00d886", bgcolor="#eeeeee", bar_height=16)
     pb.value = 0
     num_views = None  # this is updated later
     inputtext = TextField(hint_text="your unlock code", expand=False)  # textfield for the unlock code
@@ -133,7 +133,7 @@ def main(page: Page):
         command = command.replace("<recovery>", recovery_path)
         command = command.replace("<image>", image_path)
         command = command.replace("<inputtext>", inputtext.value)
-        page.views[-1].controls.append(ProgressRing())
+        page.views[-1].controls.append(ProgressRing(color="#00d886"))
         page.update()
         res = call(f"{command}", shell=True)
         if res != 0:
@@ -257,7 +257,7 @@ def main(page: Page):
             title="Welcome to OpenAndroidInstaller!",
             content=[
                 Text("Enable USB debugging on your device by enabling developer options."),
-                Text("To do this, tap 5 times on the build number in the System-Menu in Settings."),
+                Text("To do this, tap seven times on the build number in the System-Menu in Settings."),
                 Text("Then in developer options, toggle OEM unlocking and USB-Debugging."), 
                 ElevatedButton(
                     "Search device", on_click=search_devices, icon=icons.PHONE_ANDROID

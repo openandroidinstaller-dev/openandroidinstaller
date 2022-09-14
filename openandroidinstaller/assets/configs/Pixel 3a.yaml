@@ -39,7 +39,10 @@ steps:
   - title: "Flash LineageOS"
     type: call_button
     content: "Boot into recovery"
-    command: "fastboot reboot"
+    command: "adb reboot bootloader"
+  - title: "Flash LineageOS"
+    type: confirm_button
+    content: "Select 'Restart recovery' on your smartphone screen. Then confirm"
   - title: "Flash LineageOS"
     type: confirm_button
     content: "Now tap 'Wipe'. Then tap 'Format Data' and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage."
