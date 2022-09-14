@@ -100,44 +100,33 @@ def main(page: Page):
 
     def views_from_config(config: InstallerConfig) -> List[View]:
         new_views = []
+        # create a view for every step
         for num_step, step in enumerate(config.steps):
+            step_content = []
+            # basic view depending on step.type
             if step.type == "confirm_button":
-                new_views.append(
-                    get_new_view(
-                        title=step.title,
-                        content=[confirm_button(step.content)],
-                        index=2 + num_step,
-                    )
-                )
+                step_content=[confirm_button(step.content)]
             elif step.type == "call_button":
-                new_views.append(
-                    get_new_view(
-                        title=step.title,
-                        content=[call_button(step.content, command=step.command)],
-                        index=2 + num_step,
-                    )
-                )
+                step_content=[call_button(step.content, command=step.command)]
             elif step.type == "call_button_with_input":
-                new_views.append(
-                    get_new_view(
-                        title=step.title,
-                        content=[
-                            inputtext,
-                            call_button(step.content, command=step.command),
-                        ],
-                        index=2 + num_step,
-                    )
-                )
+                step_content=[inputtext, call_button(step.content, command=step.command)]
             elif step.type == "text":
-                new_views.append(
-                    get_new_view(
-                        title=step.title,
-                        content=[Text(step.content)],
-                        index=2 + num_step,
-                    )
-                )
+                step_content = [Text(step.content)]
             else:
                 raise Exception(f"Unknown step type: {step.type}")
+
+            # if skipping is allowed add a button to the view
+            if step.allow_skip:
+                step_content.append(confirm_button("Already done?", confirm_text="Skip"))
+            
+            # append the new view
+            new_views.append(
+                get_new_view(
+                    title=step.title,
+                    content=step_content,
+                    index=2 + num_step,
+                )
+            )
         return new_views
 
     def call_to_phone(e, command: str):

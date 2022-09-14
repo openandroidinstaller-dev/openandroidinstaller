@@ -19,6 +19,7 @@ steps:
     type: call_button_with_input
     content: "Use your code to unlock the bootloader of your device:"
     command: "fastboot oem unlock inputtext"
+    allow_skip: True
   - title: "Flash temporary recovery"
     type: confirm_button
     content: "Since the device resets completely, you will need to re-enable USB debugging to continue. Connect your device to your PC via USB."
@@ -26,6 +27,7 @@ steps:
     type: call_button
     content: "Reboot into bootloader"
     command: "adb reboot bootloader"
+    allow_skip: True
   - title: "Flash temporary recovery"
     type: call_button
     content: "Flash recovery image"
