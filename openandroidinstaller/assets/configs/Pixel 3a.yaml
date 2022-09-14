@@ -1,0 +1,66 @@
+steps:
+  - title: "Enable developer options and OEM unlocking"
+    type: confirm_button
+    content: "Enable USB debugging on your device by enabling developer options. To do this, tap 5 times on the build number in the System-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."
+  - title: "Unlock the bootloader"
+    type: confirm_button
+    content: "Turn on developer options and OEM Unlock on your phone."
+  - title: "Unlock the bootloader"
+    type: confirm_button
+    content: "Turn on your device and wait until its fully booted."
+  - title: "Unlock the bootloader"
+    type: call_button
+    content: "Reboot into bootloader"
+    command: "adb reboot bootloader"
+  - title: "Unlock the bootloader"
+    type: confirm_button
+    content: "Select 'Restart bootloader' on your smartphone screen. Then confirm"
+  - title: "Unlock the bootloader"
+    type: call_button
+    content: "Unlock the bootloader now:"
+    command: "fastboot flashing unlock"
+  - title: "Unlock the bootloader"
+    type: confirm_button
+    content: "At this point the device may display on-screen prompts which will require interaction to continue the process of unlocking the bootloader. Please take whatever actions the device asks you to to proceed."
+  - title: "Unlock the bootloader"
+    type: call_button
+    content: "Reboot the phone"
+    command: "adb reboot"
+  - title: "Unlock the bootloader"
+    type: confirm_button
+    content: "The bootloader is now unlocked. Since the device resets completely, you will need to re-enable USB debugging to continue."
+  - title: "Flash custom recovery"
+    type: call_button
+    content: "Reboot into bootloader"
+    command: "adb reboot bootloader"
+  - title: "Flash custom recovery"
+    type: confirm_button
+    content: "Select 'Restart bootloader' on your smartphone screen. Then confirm"
+  - title: "Flash custom recovery"
+    type: call_button
+    content: "Flash custom recovery (temporarily)"
+    command: "fastboot flash boot recovery"
+  - title: "Flash LineageOS"
+    type: call_button
+    content: "Boot into recovery"
+    command: "fastboot reboot"
+  - title: "Flash LineageOS"
+    type: confirm_button
+    content: "Now tap 'Wipe'. Then tap 'Format Data' and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage."
+  - title: "Flash LineageOS"
+    type: confirm_button
+    content: "Return to the previous menu and tap 'Advanced Wipe', then select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'."
+  - title: "Flash LineageOS"
+    type: confirm_button
+    content: "On the device, go back and select “Advanced”, “ADB Sideload”, then swipe to begin sideload. Then confirm here"
+  - title: "Flash LineageOS"
+    type: call_button
+    content: "Flash lineageOS image. Don't remove the USB-Cable!"
+    command: "adb sideload image"
+  - title: "Reboot"
+    type: call_button
+    content: "Reboot into OS"
+    command: "adb reboot"
+  - title: "Successfully finished flashing"
+    type: text
+    content: "Have fun with LineageOS!"
