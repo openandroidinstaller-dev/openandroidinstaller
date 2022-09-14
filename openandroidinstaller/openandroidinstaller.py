@@ -43,7 +43,9 @@ def main(page: Page):
     pb = ProgressBar(width=400, color="#00d886", bgcolor="#eeeeee", bar_height=16)
     pb.value = 0
     num_views = None  # this is updated later
-    inputtext = TextField(hint_text="your unlock code", expand=False)  # textfield for the unlock code
+    inputtext = TextField(
+        hint_text="your unlock code", expand=False
+    )  # textfield for the unlock code
 
     # Click-event handlers
 
@@ -106,11 +108,14 @@ def main(page: Page):
             step_content = []
             # basic view depending on step.type
             if step.type == "confirm_button":
-                step_content=[confirm_button(step.content)]
+                step_content = [confirm_button(step.content)]
             elif step.type == "call_button":
-                step_content=[call_button(step.content, command=step.command)]
+                step_content = [call_button(step.content, command=step.command)]
             elif step.type == "call_button_with_input":
-                step_content=[inputtext, call_button(step.content, command=step.command)]
+                step_content = [
+                    inputtext,
+                    call_button(step.content, command=step.command),
+                ]
             elif step.type == "text":
                 step_content = [Text(step.content)]
             else:
@@ -118,8 +123,10 @@ def main(page: Page):
 
             # if skipping is allowed add a button to the view
             if step.allow_skip:
-                step_content.append(confirm_button("Already done?", confirm_text="Skip"))
-            
+                step_content.append(
+                    confirm_button("Already done?", confirm_text="Skip")
+                )
+
             # append the new view
             new_views.append(
                 get_new_view(
@@ -257,14 +264,22 @@ def main(page: Page):
         get_new_view(
             title="Welcome to OpenAndroidInstaller!",
             content=[
-                Text("Before you continue, make sure your devices is on the latest system update."),
+                Text(
+                    "Before you continue, make sure your devices is on the latest system update."
+                ),
                 Divider(),
-                Text("Enable USB debugging on your device by enabling developer options."),
-                Text("To do this, tap seven times on the build number in the System-Menu in Settings."),
-                Text("Then in developer options, toggle OEM unlocking and USB-Debugging."), 
+                Text(
+                    "Enable USB debugging on your device by enabling developer options."
+                ),
+                Text(
+                    "To do this, tap seven times on the build number in the System-Menu in Settings."
+                ),
+                Text(
+                    "Then in developer options, toggle OEM unlocking and USB-Debugging."
+                ),
                 ElevatedButton(
                     "Search device", on_click=search_devices, icon=icons.PHONE_ANDROID
-                )
+                ),
             ],
             index=0,
         ),

@@ -4,7 +4,14 @@ from typing import List
 
 
 class Step:
-    def __init__(self, title: str, type: str, content: str, command: str = None, allow_skip: bool = False):
+    def __init__(
+        self,
+        title: str,
+        type: str,
+        content: str,
+        command: str = None,
+        allow_skip: bool = False,
+    ):
         self.title = title
         self.type = type
         self.content = content
