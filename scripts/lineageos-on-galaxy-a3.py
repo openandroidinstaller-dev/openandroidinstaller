@@ -11,8 +11,8 @@ from subprocess import call
 
 
 @click.command()
-@click.option('--recovery', help='Path to the recovery file to flash. (Can be TWRP)')
-@click.option('--image', help='Path to the lineage os image to flash.')
+@click.option("--recovery", help="Path to the recovery file to flash. (Can be TWRP)")
+@click.option("--image", help="Path to the lineage os image to flash.")
 def install_lineage_os(recovery: str, image: str):
     """Main function to install lineage os."""
     click.echo("Install lineage os on Samsung Galaxy A3.")
@@ -34,8 +34,7 @@ def install_lineage_os(recovery: str, image: str):
         click.echo("Installing LineageOS failed. Exiting.")
         return False
 
-    click.echo(
-        "Installing lineageOS was successful! Have fun with your device! :)")
+    click.echo("Installing lineageOS was successful! Have fun with your device! :)")
     return True
 
 
@@ -44,29 +43,49 @@ def install_os(image: str):
     # manual wiping and stuff
     click.echo("Now tap 'Wipe'.")
     sleep(2)
-    click.echo("Then tap 'Format Data' and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage.")
+    click.echo(
+        "Then tap 'Format Data' and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage."
+    )
     sleep(2)
-    click.echo("Return to the previous menu and tap 'Advanced Wipe', then select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'.")
-    confirmed = click.confirm("Confirm to continue",
-                              default=True, abort=False, prompt_suffix=': ', show_default=True, err=False)
+    click.echo(
+        "Return to the previous menu and tap 'Advanced Wipe', then select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'."
+    )
+    confirmed = click.confirm(
+        "Confirm to continue",
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
+    )
 
     # sideload lineage os image with ADB
     confirmed = click.confirm(
         "On the device, select “Advanced”, “ADB Sideload”, then swipe to begin sideload. Then confirm here",
-        default=True, abort=False, prompt_suffix=': ', show_default=True, err=False
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
     )
     click.echo("\nRunning: adb sideload <image>")
-    if call(f'adb sideload {image}', shell=True) < 0:
+    if call(f"adb sideload {image}", shell=True) < 0:
         click.echo("*** Sideloading image failed! ***")
         return False
-    
+
     # (Optionally): If you want to install any additional add-ons, repeat the sideload steps above for those packages in sequence.
 
-    confirmed = click.confirm("Confirm to continue",
-                              default=True, abort=False, prompt_suffix=': ', show_default=True, err=False)
-    
+    confirmed = click.confirm(
+        "Confirm to continue",
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
+    )
+
     click.echo("\nRebooting")
-    if call(f'adb reboot', shell=True) < 0:
+    if call(f"adb reboot", shell=True) < 0:
         return False
 
     click.echo("Flashing finished.")
@@ -86,14 +105,26 @@ def boot_recovery(recovery: str):
         return False
 
     # reboot into download mode
-    click.confirm("Turn on your device and wait until its fully booted.",
-                  default=True, abort=False, prompt_suffix=': ', show_default=True, err=False)
+    click.confirm(
+        "Turn on your device and wait until its fully booted.",
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
+    )
     click.echo("\nBooting into download mode:")
-    if call(f'adb reboot download', shell=True) < 0:
+    if call(f"adb reboot download", shell=True) < 0:
         click.echo("*** Booting into download mode failed! ***")
         return False
-    confirmed = click.confirm("Confirm to continue",
-                              default=True, abort=False, prompt_suffix=': ', show_default=True, err=False)
+    confirmed = click.confirm(
+        "Confirm to continue",
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
+    )
 
     # install TWRP recovery from image
     click.echo("\nFlash custom recovery")
@@ -101,12 +132,21 @@ def boot_recovery(recovery: str):
         click.echo("*** Flashing custom recovery failed! ***")
         return False
     click.echo(
-        "A blue transfer bar will appear on the device showing the recovery image being flashed.")
+        "A blue transfer bar will appear on the device showing the recovery image being flashed."
+    )
     sleep(5)
     click.echo("Once it's done, unplug the USB cable from your device.")
-    click.echo("Manually reboot into recovery. Press the Volume Down + Power buttons for 8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, hold Volume Up + Home + Power.")
-    confirmed = click.confirm("Confirm to continue",
-                              default=True, abort=False, prompt_suffix=': ', show_default=True, err=False)
+    click.echo(
+        "Manually reboot into recovery. Press the Volume Down + Power buttons for 8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, hold Volume Up + Home + Power."
+    )
+    confirmed = click.confirm(
+        "Confirm to continue",
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
+    )
 
     click.echo("Recovery flashed successfully.")
     return True
@@ -114,10 +154,16 @@ def boot_recovery(recovery: str):
 
 def unlock_bootloader():
     """Function to unlock the bootloader."""
-    confirmed = click.confirm("Turn on developer options and OEM Unlock on your phone.",
-                              default=True, abort=False, prompt_suffix=': ', show_default=True, err=False)
-    #click.echo("Now, turn of your phone. Then press Volume Up and Power key for a couple of seconds. All your data will be deleted!")
-    #click.echo("Release both keys when the SAMSUNG Galaxy A3 Core logo pops up.")
+    confirmed = click.confirm(
+        "Turn on developer options and OEM Unlock on your phone.",
+        default=True,
+        abort=False,
+        prompt_suffix=": ",
+        show_default=True,
+        err=False,
+    )
+    # click.echo("Now, turn of your phone. Then press Volume Up and Power key for a couple of seconds. All your data will be deleted!")
+    # click.echo("Release both keys when the SAMSUNG Galaxy A3 Core logo pops up.")
     # click.confirm("After that choose Reboot to bootloader by using Volume keys to scroll down and the Power button to confirm that. ",
     #              default=True, abort=False, prompt_suffix=': ', show_default=True, err=False)
     return confirmed
@@ -131,5 +177,5 @@ def check_heimdall():
     return 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     install_lineage_os()

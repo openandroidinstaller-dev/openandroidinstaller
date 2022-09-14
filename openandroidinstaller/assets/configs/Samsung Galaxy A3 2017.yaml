@@ -1,7 +1,4 @@
 steps:
-  - title: "Unlock the bootloader"
-    type: confirm_button
-    content: "Turn on developer options and OEM Unlock on your phone."
   - title: "Boot into recovery"
     type: confirm_button
     content: "Turn on your device and wait until its fully booted."
@@ -12,7 +9,7 @@ steps:
   - title: "Boot into recovery"
     type: call_button
     content: "Flash custom recovery"
-    command: "heimdall flash --no-reboot --RECOVERY recovery"
+    command: "heimdall flash --no-reboot --RECOVERY <recovery>"
   - title: "Boot into recovery"
     type: confirm_button
     content: "Unplug the USB cable from your device. Manually reboot into recovery. Press the Volume Down + Power buttons for 8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, hold Volume Up + Home + Power."
@@ -28,8 +25,8 @@ steps:
   - title: "Flash LineageOS"
     type: call_button
     content: "Flash lineageOS image. Don't remove the USB-Cable!"
-    command: "adb sideload image"
-  - title: "Boot into recovery"
+    command: "adb sideload <image>"
+  - title: "Reboot"
     type: call_button
     content: "Reboot into OS"
     command: "adb reboot"
