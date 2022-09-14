@@ -1,6 +1,9 @@
 steps:
   - title: "Unlock the bootloader"
     type: confirm_button
+    content: "Enable USB debugging on your device by enabling developer options. To do this, tap 5 times on the build number in the System-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."
+  - title: "Unlock the bootloader"
+    type: confirm_button
     content: "On the device, dial *#*#7378423#*#* (*#*#SERVICE#*#*) to launch the service menu."
   - title: "Unlock the bootloader"
     type: confirm_button
