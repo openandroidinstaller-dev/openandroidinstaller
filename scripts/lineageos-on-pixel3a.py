@@ -3,9 +3,9 @@
 Example usage:
     poetry run python scripts/lineageos-on-pixel3a.py --recovery images/google-pixel3a/lineage-19.1-20220830-recovery-sargo.img --image images/google-pixel3a/lineage-19.1-20220830-nightly-sargo-signed.zip 
 """
-import click
 from subprocess import call
 
+import click
 from utils import run_fastboot_command
 
 

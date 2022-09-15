@@ -21,7 +21,7 @@ steps:
     content: "Return to the previous menu and tap 'Advanced Wipe', then select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'."
   - title: "Flash LineageOS"
     type: confirm_button
-    content: "On the device, go back and select “Advanced”, “ADB Sideload”, then swipe to begin sideload. Then confirm here"
+    content: "Now connect the phone to the computer again with the USB-cable. On the device, go back and select “Advanced”, “ADB Sideload”, then swipe to begin sideload. Then confirm here"
   - title: "Flash LineageOS"
     type: call_button
     content: "Flash lineageOS image. Don't remove the USB-Cable!"

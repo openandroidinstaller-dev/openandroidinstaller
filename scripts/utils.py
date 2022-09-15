@@ -1,6 +1,6 @@
 """Reusable functions for flashing."""
+from subprocess import STDOUT, check_output
 from typing import List
-from subprocess import check_output, STDOUT
 
 
 def run_fastboot_command(cmd: List[str]) -> str:

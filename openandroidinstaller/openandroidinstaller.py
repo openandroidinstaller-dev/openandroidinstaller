@@ -1,32 +1,34 @@
-import chunk
+from os import path
+from functools import partial
+from subprocess import STDOUT, CalledProcessError, call, check_output
 from time import sleep
+from typing import List
+
 import flet
 from flet import (
-    Divider,
     AppBar,
-    ElevatedButton,
-    Page,
-    Text,
-    View,
-    Row,
-    ProgressRing,
+    Banner,
     Column,
+    Divider,
+    ElevatedButton,
     FilePicker,
     FilePickerResultEvent,
-    icons,
-    ProgressBar,
-    Banner,
-    colors,
-    TextButton,
     Icon,
+    Page,
+    ProgressBar,
+    ProgressRing,
+    Row,
+    Text,
+    TextButton,
     TextField,
+    View,
+    colors,
+    icons,
 )
-from typing import List
-from subprocess import check_output, STDOUT, call, CalledProcessError
-from functools import partial
-
 from installer_config import InstallerConfig
 
+# CONFIG_PATH = "openandroidinstaller/assets/configs/"
+CONFIG_PATH = path.abspath(path.join(path.dirname(__file__), "assets/configs/"))
 
 recovery_path = None
 image_path = None
@@ -53,7 +55,7 @@ def main(page: Page):
         view_num = int(page.views[-1].route) + 1
         global num_views
         if num_views:
-            pb.value = view_num / num_views
+            pb.value = view_num / (num_views - 1)
         page.views.clear()
         page.views.append(views[view_num])
         page.update()
@@ -63,7 +65,6 @@ def main(page: Page):
         page.update()
 
     def search_devices(e):
-        config_path = "openandroidinstaller/assets/configs/"
         try:
             # read device properties
             output = check_output(
@@ -83,7 +84,9 @@ def main(page: Page):
             ).decode()
             page.views[-1].controls.append(Text(f"Detected: {output}"))
             # load config from file
-            config = InstallerConfig.from_file(config_path + output.strip() + ".yaml")
+            config = InstallerConfig.from_file(
+                CONFIG_PATH + "/" + output.strip() + ".yaml"
+            )
             page.views[-1].controls.append(Text(f"Installer configuration found."))
             page.views[-1].controls.append(
                 ElevatedButton(

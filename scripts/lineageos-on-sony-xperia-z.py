@@ -3,9 +3,9 @@
 Example usage:
     poetry run python scripts/lineageos-on-sony-xperia-z.py --recovery images/sony-xperia-z/twrp-3.6.2_9-0-yuga.img --image images/sony-xperia-z/lineage-18.1-20220214-UNOFFICIAL-yuga.zip 
 """
-import click
 from subprocess import call
 
+import click
 from utils import run_fastboot_command
 
 

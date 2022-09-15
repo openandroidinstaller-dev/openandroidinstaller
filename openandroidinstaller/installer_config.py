@@ -1,6 +1,7 @@
 """Class to load config files for the install procedure."""
-import yaml
 from typing import List
+
+import yaml
 
 
 class Step:

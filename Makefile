@@ -7,3 +7,6 @@ app:
 
 build-app:
 	poetry run pyinstaller openandroidinstaller/openandroidinstaller.py --noconsole --noconfirm --onefile --icon "/assets/favicon.ico" --add-data "openandroidinstaller/assets:assets"
+
+clean-build:
+	rm -rf build/ dist/

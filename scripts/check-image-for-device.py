@@ -1,7 +1,7 @@
 """Script to check if a given lineageOS image works for a connected device."""
 from os import device_encoding
+from subprocess import STDOUT, check_output
 from typing import Dict
-from subprocess import check_output, STDOUT
 
 
 def get_device_info() -> Dict[str, str]:

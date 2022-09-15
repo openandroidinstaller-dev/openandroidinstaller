@@ -1,5 +1,5 @@
 """Check if adb works and print the version."""
-from subprocess import check_output, STDOUT
+from subprocess import STDOUT, check_output
 
 
 def check_adb_version():
