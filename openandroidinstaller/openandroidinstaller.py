@@ -27,7 +27,7 @@ from flet import (
 )
 from installer_config import InstallerConfig
 
-# CONFIG_PATH = "openandroidinstaller/assets/configs/"
+
 CONFIG_PATH = path.abspath(path.join(path.dirname(__file__), "assets/configs/"))
 
 recovery_path = None
@@ -40,6 +40,7 @@ def main(page: Page):
     page.window_height = 640
     page.window_top = 100
     page.window_left = 720
+    page.horizontal_alignment = "center"
     # page.theme_mode = "dark"
     views = []
     pb = ProgressBar(width=400, color="#00d886", bgcolor="#eeeeee", bar_height=16)

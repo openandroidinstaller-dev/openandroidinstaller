@@ -1,13 +1,12 @@
 <br />
 <div align="center">
   <h1>OpenAndroidInstaller</h1>
+  <p>Makes installing alternative Android distributions nice and easy.</p>
   <a href="https://github.com/openandroidinstaller-dev/openandroidinstaller">
     <img src="openandroidinstaller/assets/logo-192x192.png" alt="OpenAndroidInstaller" height="80">
   </a>
 
   <p align="center">
-    <br />
-    Makes installing alternative Android distributions nice and easy.
     <br />
     The OpenAndroidInstaller project helps Android users to keep their smartphone's operating system up to date with free software and to continue using the device even though the manufacturer no longer offers updates. With a graphical installation software, users are easily guided through the installation process of free Android operating systems like LineageOS.
     <br />
@@ -21,8 +20,9 @@
   </p>
 </div>
 
+> **Warning**: This application is currently in alpha state, so use at your own risk! I take no responsibility for bricked devices or dead SD cards.
 
-## Warning: Unlocking the bootloader will erase all data on your device!
+> **Note**: Unlocking the bootloader will erase all data on your device!
 This also includes your DRM keys, which are stored in the Trim Area partition (also called TA).
 Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
 If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
@@ -48,7 +48,7 @@ Sony | Xperia Z | yuga | | tested
 
 ## Usage
 
-Download the lineageOS image and the custom recovery image.
+Download the lineageOS image and the custom recovery image. A source for files can be found here: https://lineageosroms.com
 Start the desktop app and follow the instructions.
 
 ## Run OpenAndroidInstaller for development
