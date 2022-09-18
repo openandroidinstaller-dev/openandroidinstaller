@@ -42,9 +42,9 @@ Sony | Xperia Z | yuga | | tested
 3. OPTIONAL: Install `heimdall` for Samsung Devices:
     - download heimdall: https://androidfilehost.com/?w=files&flid=304516
     - install heimdall: 
-        $ unzip /path/to/heimdall_ubuntu.zip -d /tmp
-        $ cp /tmp/bin/heimdall* /usr/bin/
-        $ rm -rf /tmp/bin
+        - `$ unzip /path/to/heimdall_ubuntu.zip -d /tmp`
+        - `$ cp /tmp/bin/heimdall* /usr/bin/`
+        - `$ rm -rf /tmp/bin`
 
 ## Usage
 
