@@ -64,7 +64,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "flet"
-version = "0.1.56"
+version = "0.1.59"
 description = "Flet for Python - easily build interactive multi-platform apps in Python"
 category = "main"
 optional = false

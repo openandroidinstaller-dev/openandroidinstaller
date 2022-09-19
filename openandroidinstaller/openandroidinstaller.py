@@ -1,71 +1,58 @@
-from os import path
 from functools import partial
+from os import path
 from subprocess import STDOUT, CalledProcessError, call, check_output
 from time import sleep
-from typing import List
+from turtle import width
+from typing import Callable, List
 
 import flet
-from flet import (
-    AppBar,
-    Banner,
-    Column,
-    Divider,
-    ElevatedButton,
-    FilePicker,
-    FilePickerResultEvent,
-    Icon,
-    Page,
-    ProgressBar,
-    ProgressRing,
-    Row,
-    Text,
-    TextButton,
-    TextField,
-    View,
-    colors,
-    icons,
-)
-from installer_config import InstallerConfig
-
+from flet import (AppBar, Banner, Column, Container, Divider, ElevatedButton,
+                  FilePicker, FilePickerResultEvent, Icon, Image, Page,
+                  ProgressBar, ProgressRing, Row, Text, TextButton, TextField,
+                  UserControl, View, alignment, colors, icons)
+from installer_config import InstallerConfig, Step
+from widgets import call_button, confirm_button, get_title
 
 CONFIG_PATH = path.abspath(path.join(path.dirname(__file__), "assets/configs/"))
 
-recovery_path = None
-image_path = None
 
+class WelcomeView(UserControl):
+    def __init__(
+        self, on_confirm: Callable, load_config: Callable, progressbar: ProgressBar
+    ):
+        super().__init__()
+        self.on_confirm = on_confirm
+        self.load_config = load_config
+        self.progressbar = progressbar
+        self.view = Column(width=400)
 
-def main(page: Page):
-    page.title = "OpenAndroidInstaller"
-    page.window_width = 480
-    page.window_height = 640
-    page.window_top = 100
-    page.window_left = 720
-    page.horizontal_alignment = "center"
-    # page.theme_mode = "dark"
-    views = []
-    pb = ProgressBar(width=400, color="#00d886", bgcolor="#eeeeee", bar_height=16)
-    pb.value = 0
-    num_views = None  # this is updated later
-    inputtext = TextField(
-        hint_text="your unlock code", expand=False
-    )  # textfield for the unlock code
+    def build(self):
+        self.view.controls.extend(
+            [
+                get_title("Welcome to the OpenAndroidInstaller"),
+                self.progressbar,
+                Text(
+                    "Before you continue, make sure your devices is on the latest system update."
+                ),
+                Divider(),
+                Text(
+                    """Enable USB debugging on your device by enabling developer options. To do this, tap seven times on the build number in the System-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."""
+                ),
+                Row(
+                    [
+                        ElevatedButton(
+                            "Search device",
+                            on_click=self.search_devices,
+                            icon=icons.PHONE_ANDROID,
+                        )
+                    ],
+                    alignment="center",
+                ),
+            ]
+        )
+        return self.view
 
-    # Click-event handlers
-
-    def confirm(e):
-        view_num = int(page.views[-1].route) + 1
-        global num_views
-        if num_views:
-            pb.value = view_num / (num_views - 1)
-        page.views.clear()
-        page.views.append(views[view_num])
-        page.update()
-
-    def close_banner(e):
-        page.banner.open = False
-        page.update()
-
-    def search_devices(e):
+    def search_devices(self, e):
         try:
             # read device properties
             output = check_output(
@@ -83,108 +70,287 @@ def main(page: Page):
                 ],
                 stderr=STDOUT,
             ).decode()
-            page.views[-1].controls.append(Text(f"Detected: {output}"))
+            self.view.controls.append(Text(f"Detected: {output}"))
             # load config from file
-            config = InstallerConfig.from_file(
-                CONFIG_PATH + "/" + output.strip() + ".yaml"
-            )
-            page.views[-1].controls.append(Text(f"Installer configuration found."))
-            page.views[-1].controls.append(
-                ElevatedButton(
-                    "Confirm and continue",
-                    on_click=confirm,
-                    icon=icons.NEXT_PLAN_OUTLINED,
+            path = f"{CONFIG_PATH}/{output.strip()}.yaml"
+            load_config_success = self.load_config(path)
+            if load_config_success:
+                self.view.controls.append(Text(f"Installer configuration found."))
+                self.view.controls.append(
+                    Row(
+                        [
+                            ElevatedButton(
+                                "Confirm and continue",
+                                on_click=self.on_confirm,
+                                icon=icons.NEXT_PLAN_OUTLINED,
+                            )
+                        ],
+                        alignment="center",
+                    )
                 )
-            )
-            new_views = views_from_config(config)
-            views.extend(new_views)
-            global num_views
-            num_views = len(views)
+            else:
+                self.view.controls.append(Text(f"No matching config found."))
+                # show alternative configs here
+                # select a new path and load again
+                pass
         except CalledProcessError:
             output = "No device detected!"
-            page.views[-1].controls.append(Text(f"{output}"))
-        page.update()
+            self.view.controls.append(Text(f"{output}"))
+        self.view.update()
 
-    def views_from_config(config: InstallerConfig) -> List[View]:
-        new_views = []
-        # create a view for every step
-        for num_step, step in enumerate(config.steps):
-            step_content = []
-            # basic view depending on step.type
-            if step.type == "confirm_button":
-                step_content = [confirm_button(step.content)]
-            elif step.type == "call_button":
-                step_content = [call_button(step.content, command=step.command)]
-            elif step.type == "call_button_with_input":
-                step_content = [
-                    inputtext,
-                    call_button(step.content, command=step.command),
-                ]
-            elif step.type == "text":
-                step_content = [Text(step.content)]
-            else:
-                raise Exception(f"Unknown step type: {step.type}")
 
-            # if skipping is allowed add a button to the view
-            if step.allow_skip:
-                step_content.append(
-                    confirm_button("Already done?", confirm_text="Skip")
-                )
+class SelectFilesView(UserControl):
+    def __init__(
+        self,
+        on_confirm: Callable,
+        progressbar: ProgressBar,
+        pick_image_dialog: Callable,
+        pick_recovery_dialog: Callable,
+        selected_image: Text,
+        selected_recovery: Text,
+    ):
+        super().__init__()
+        self.on_confirm = on_confirm
+        self.progressbar = progressbar
+        self.pick_image_dialog = pick_image_dialog
+        self.pick_recovery_dialog = pick_recovery_dialog
+        self.selected_image = selected_image
+        self.selected_recovery = selected_recovery
+        self.view = Column(width=400)
 
-            # append the new view
-            new_views.append(
-                get_new_view(
-                    title=step.title,
-                    content=step_content,
-                    index=2 + num_step,
+    def build(self):
+        self.view.controls.append(self.pick_image_dialog)
+        self.view.controls.append(self.pick_recovery_dialog)
+        self.view.controls.extend(
+            [
+                get_title("Pick image and recovery"),
+                self.progressbar,
+                Row(
+                    [
+                        ElevatedButton(
+                            "Pick image file",
+                            icon=icons.UPLOAD_FILE,
+                            on_click=lambda _: self.pick_image_dialog.pick_files(
+                                allow_multiple=False,
+                                file_type="custom",
+                                allowed_extensions=["zip"],
+                            ),
+                        ),
+                        self.selected_image,
+                    ]
+                ),
+                Row(
+                    [
+                        ElevatedButton(
+                            "Pick recovery file",
+                            icon=icons.UPLOAD_FILE,
+                            on_click=lambda _: self.pick_recovery_dialog.pick_files(
+                                allow_multiple=False,
+                                file_type="custom",
+                                allowed_extensions=["img"],
+                            ),
+                        ),
+                        self.selected_recovery,
+                    ]
+                ),
+                confirm_button("Done?", self.on_confirm),
+            ]
+        )
+        return self.view
+
+
+class MainView(UserControl):
+    def __init__(self):
+        super().__init__()
+        self.config = None
+        # initialize the progress bar indicator
+        self.progress_bar = ProgressBar(
+            width=400, color="#00d886", bgcolor="#eeeeee", bar_height=16
+        )
+        self.progress_bar.value = 0
+        # create the main column
+        self.view = Column()
+        # initialize global stuff
+        # file pickers
+        self.pick_image_dialog = FilePicker(on_result=self.pick_image_result)
+        self.pick_recovery_dialog = FilePicker(on_result=self.pick_recovery_result)
+        self.selected_image = Text()
+        self.selected_recovery = Text()
+
+        # text input
+        self.inputtext = TextField(
+            hint_text="your unlock code", expand=False
+        )  # textfield for the unlock code
+
+        # paths
+        self.image_path = ""
+        self.recovery_path = ""
+
+        # create default starter views
+        welcome = WelcomeView(
+            on_confirm=self.confirm,
+            load_config=self.load_config,
+            progressbar=self.progress_bar,
+        )
+        select_files = SelectFilesView(
+            on_confirm=self.confirm,
+            progressbar=self.progress_bar,
+            pick_image_dialog=self.pick_image_dialog,
+            pick_recovery_dialog=self.pick_recovery_dialog,
+            selected_image=self.selected_image,
+            selected_recovery=self.selected_recovery,
+        )
+        # ordered to allow for pop
+        self.default_views = [select_files, welcome]
+        # keep track of the number of steps
+        self.num_steps = len(self.default_views)
+
+    def build(self):
+        self.view.controls.append(self.default_views.pop())
+        return self.view
+
+    def confirm(self, e):
+        """Confirmation event handler to use in downstream views."""
+        # remove all elements from column view
+        self.view.controls = []
+        # if a config is loaded, display a progress bar
+        if self.config:
+            self.progress_bar.value = (self.num_steps - 1) / (
+                len(self.config.steps) + 2
+            )  # don't show on the first step
+            self.num_steps += 1  # increase the step counter
+        # if there are default views left, display them first
+        if self.default_views:
+            self.view.controls.append(self.default_views.pop())
+        else:
+            self.view.controls.append(
+                StepView(
+                    step=self.config.steps.pop(0),
+                    on_confirm=self.confirm,
+                    progressbar=self.progress_bar,
+                    inputtext=self.inputtext,
+                    image_path=self.image_path,
+                    recovery_path=self.recovery_path,
                 )
             )
-        return new_views
+        self.view.update()
 
-    def call_to_phone(e, command: str):
-        command = command.replace("<recovery>", recovery_path)
-        command = command.replace("<image>", image_path)
-        command = command.replace("<inputtext>", inputtext.value)
-        page.views[-1].controls.append(ProgressRing(color="#00d886"))
-        page.update()
+    def load_config(self, path: str):
+        """Function to load a config file from path."""
+        try:
+            self.config = InstallerConfig.from_file(path)
+            return True
+        except FileNotFoundError:
+            return False
+
+    def pick_image_result(self, e: FilePickerResultEvent):
+        self.selected_image.value = (
+            ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        )
+        self.image_path = e.files[0].path
+        self.selected_image.update()
+
+    def pick_recovery_result(self, e: FilePickerResultEvent):
+        self.selected_recovery.value = (
+            ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        )
+        self.recovery_path = e.files[0].path
+        self.selected_recovery.update()
+
+
+class StepView(UserControl):
+    def __init__(
+        self,
+        step: Step,
+        on_confirm: Callable,
+        progressbar: ProgressBar,
+        inputtext: TextField,
+        image_path: str,
+        recovery_path: str,
+    ):
+        super().__init__()
+        self.step = step
+        self.on_confirm = on_confirm
+        self.progressbar = progressbar
+        self.inputtext = inputtext
+        self.image_path = image_path
+        self.recovery_path = recovery_path
+
+        self.view = Column(width=400)
+
+    def build(self):
+        """Create the content of a view from step."""
+        self.view.controls = [get_title(f"{self.step.title}"), self.progressbar]
+        # basic view depending on step.type
+        if self.step.type == "confirm_button":
+            self.view.controls.append(
+                confirm_button(self.step.content, self.on_confirm)
+            )
+        elif self.step.type == "call_button":
+            self.view.controls.append(
+                call_button(
+                    self.step.content, self.call_to_phone, command=self.step.command
+                )
+            )
+        elif self.step.type == "call_button_with_input":
+            self.view.controls.extend(
+                [
+                    self.inputtext,
+                    call_button(
+                        self.step.content, self.call_to_phone, command=self.step.command
+                    ),
+                ]
+            )
+        elif self.step.type == "text":
+            self.view.controls.append(Text(self.step.content))
+        else:
+            raise Exception(f"Unknown step type: {self.step.type}")
+
+        # if skipping is allowed add a button to the view
+        if self.step.allow_skip:
+            self.view.controls.append(
+                confirm_button("Already done?", self.on_confirm, confirm_text="Skip")
+            )
+        return self.view
+
+    def call_to_phone(self, e, command: str):
+        command = command.replace("<recovery>", self.recovery_path)
+        command = command.replace("<image>", self.image_path)
+        command = command.replace("<inputtext>", self.inputtext.value)
+        self.view.controls.append(
+            Row(
+                [ProgressRing(color="#00d886")],  # , Text("Wait for completion...")],
+                alignment="center",
+            )
+        )
+        self.view.update()
         res = call(f"{command}", shell=True)
         if res != 0:
-            page.views[-1].controls.pop()
-            page.views[-1].controls.append(Text("Command {command} failed!"))
+            self.view.controls.pop()
+            self.view.controls.append(Text("Command {command} failed!"))
         else:
             sleep(5)
-            page.views[-1].controls.pop()
-            page.views[-1].controls.append(
-                ElevatedButton("Confirm and continue", on_click=confirm)
+            self.view.controls.pop()  # pop the progress ring
+            self.view.controls.append(
+                ElevatedButton("Confirm and continue", on_click=self.on_confirm)
             )
+        self.view.update()
+
+
+def main(page: Page):
+    # Configure the application base page
+    page.title = "OpenAndroidInstaller"
+    page.window_width = 480
+    page.window_height = 640
+    page.window_top = 100
+    page.window_left = 720
+    page.scroll = "adaptive"
+    page.horizontal_alignment = "center"
+
+    # display a warnings banner
+    def close_banner(e):
+        page.banner.open = False
         page.update()
-
-    # file picker setup
-
-    def pick_image_result(e: FilePickerResultEvent):
-        selected_image.value = (
-            ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
-        )
-        global image_path
-        image_path = e.files[0].path
-        selected_image.update()
-
-    def pick_recovery_result(e: FilePickerResultEvent):
-        selected_recovery.value = (
-            ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
-        )
-        global recovery_path
-        recovery_path = e.files[0].path
-        selected_recovery.update()
-
-    pick_image_dialog = FilePicker(on_result=pick_image_result)
-    pick_recovery_dialog = FilePicker(on_result=pick_recovery_result)
-    selected_image = Text()
-    selected_recovery = Text()
-    page.overlay.append(pick_image_dialog)
-    page.overlay.append(pick_recovery_dialog)
-
-    # warnings banner
 
     page.banner = Banner(
         bgcolor=colors.AMBER_100,
@@ -196,133 +362,15 @@ def main(page: Page):
             TextButton("I understand", on_click=close_banner),
         ],
     )
-
-    # Generate the Views for the different steps
-
-    def confirm_button(text: str, confirm_text: str = "Confirm and continue") -> Row:
-        words = text.split(" ")
-        chunk_size = 10
-        if len(words) > chunk_size:
-            n_chunks = len(words) // chunk_size
-            text_field = [
-                Text(f"{' '.join(words[i*chunk_size:(i+1)*chunk_size])}")
-                for i in range(n_chunks)
-            ]
-            return Column(
-                text_field
-                + [
-                    ElevatedButton(
-                        f"{confirm_text}",
-                        on_click=confirm,
-                        icon=icons.NEXT_PLAN_OUTLINED,
-                    )
-                ]
-            )
-        else:
-            text_field = Text(f"{text}")
-            return Row(
-                [
-                    text_field,
-                    ElevatedButton(
-                        f"{confirm_text}",
-                        on_click=confirm,
-                        icon=icons.NEXT_PLAN_OUTLINED,
-                    ),
-                ]
-            )
-
-    def call_button(
-        text: str, command: str, confirm_text: str = "Confirm and run"
-    ) -> Row:
-        return Row(
-            [
-                Text(f"{text}"),
-                ElevatedButton(
-                    f"{confirm_text}", on_click=partial(call_to_phone, command=command)
-                ),
-            ]
-        )
-
-    def get_new_view(title: str, index: int, content: List = []) -> View:
-        title_bar = AppBar(
-            leading=Icon(icons.ANDROID_OUTLINED),
-            leading_width=40,
-            center_title=True,
-            elevation=16,
-        )
-        if index != 0:
-            title_bar.title = Text(f"Step {index}: {title}")
-        else:
-            title_bar.title = Text(f"{title}")
-        return View(
-            route=f"{index}",
-            controls=[pb] + content,
-            padding=50,
-            appbar=title_bar,
-            floating_action_button=None,
-        )
-
-    # main part
-
-    views = [
-        get_new_view(
-            title="Welcome to OpenAndroidInstaller!",
-            content=[
-                Text(
-                    "Before you continue, make sure your devices is on the latest system update."
-                ),
-                Divider(),
-                Text(
-                    "Enable USB debugging on your device by enabling developer options."
-                ),
-                Text(
-                    "To do this, tap seven times on the build number in the System-Menu in Settings."
-                ),
-                Text(
-                    "Then in developer options, toggle OEM unlocking and USB-Debugging."
-                ),
-                ElevatedButton(
-                    "Search device", on_click=search_devices, icon=icons.PHONE_ANDROID
-                ),
-            ],
-            index=0,
-        ),
-        get_new_view(
-            title="Pick image and recovery",
-            content=[
-                Row(
-                    [
-                        ElevatedButton(
-                            "Pick image file",
-                            icon=icons.UPLOAD_FILE,
-                            on_click=lambda _: pick_image_dialog.pick_files(
-                                allow_multiple=False
-                            ),
-                        ),
-                        selected_image,
-                    ]
-                ),
-                Row(
-                    [
-                        ElevatedButton(
-                            "Pick recovery file",
-                            icon=icons.UPLOAD_FILE,
-                            on_click=lambda _: pick_recovery_dialog.pick_files(
-                                allow_multiple=False
-                            ),
-                        ),
-                        selected_recovery,
-                    ]
-                ),
-                confirm_button("Done?"),
-            ],
-            index=1,
-        ),
-    ]
-
-    page.views.append(views[0])
     page.banner.open = True
+
     page.update()
+
+    # create application instance
+    app = MainView()
+
+    # add application's root control to the page
+    page.add(app)
 
 
 flet.app(target=main, assets_dir="assets")
