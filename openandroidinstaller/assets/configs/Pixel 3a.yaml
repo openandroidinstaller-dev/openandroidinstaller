@@ -4,11 +4,11 @@ steps:
     content: "Turn on your device and wait until its fully booted."
   - title: "Unlock the bootloader"
     type: call_button
-    content: "Reboot into bootloader"
+    content: "Press 'Confirm' to reboot into the bootloader."
     command: "adb reboot bootloader"
   - title: "Unlock the bootloader"
     type: confirm_button
-    content: "Select 'Restart bootloader' on your smartphone screen. Then confirm"
+    content: "Select 'Restart bootloader' on your smartphone screen by pressing the volume button and the confirm by pushing the power button. Then press 'Confirm' here."
   - title: "Unlock the bootloader"
     type: call_button
     content: "Unlock the bootloader now:"

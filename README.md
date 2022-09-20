@@ -73,6 +73,7 @@ Every step in the config file corresponds to one view in the application. These 
   - `<image>`: The path of the image file.
   - `<recovery>`: The path of the recovery file.
   - `<inputtext>`: Text from the user input from `call_button_with_input` views.
+- `img`: Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 
 After you created a config file, you can open a pull request to make the file available to other users. The file should be named after device name output by `adb shell dumpsys bluetooth_manager | grep 'name:' | cut -c9-` when the devices is connected to the computer. Please also add the device to the supported devices table above.

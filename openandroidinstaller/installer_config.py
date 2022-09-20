@@ -11,12 +11,14 @@ class Step:
         type: str,
         content: str,
         command: str = None,
+        img: str = "placeholder.png",
         allow_skip: bool = False,
     ):
         self.title = title
         self.type = type
         self.content = content
         self.command = command
+        self.img = img
         self.allow_skip = allow_skip
 
 

@@ -14,7 +14,6 @@ def get_title(title: str):
     return Container(
         content=Row(
             [
-                Image(src=image_path, height=40, width=40, border_radius=40),
                 Text(f"{title}", style="titleMedium"),
             ]
         ),
