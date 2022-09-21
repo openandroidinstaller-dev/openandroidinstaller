@@ -1,6 +1,7 @@
 """Main app code for openAndroidInstaller."""
 
 
+from ctypes import alignment
 import webbrowser
 from functools import partial
 from os import path
@@ -13,7 +14,8 @@ import flet
 from flet import (AppBar, Banner, Checkbox, Column, Container, Divider,
                   ElevatedButton, FilePicker, FilePickerResultEvent, Icon,
                   Image, Page, ProgressBar, ProgressRing, Row, Text,
-                  TextButton, TextField, UserControl, VerticalDivider, colors,
+                  TextButton, TextField, UserControl, VerticalDivider, colors, FilledButton,
+                  AlertDialog,
                   icons)
 from installer_config import InstallerConfig, Step
 from widgets import call_button, confirm_button, get_title
@@ -27,7 +29,7 @@ class BaseView(UserControl):
         super().__init__()
         self.right_view = Column(expand=True)
         self.left_view = Column(
-            width=400, controls=[Image(src=IMAGE_PATH + "/" + image)], expand=True
+            width=480, controls=[Image(src=IMAGE_PATH + "/" + image)], expand=True, horizontal_alignment="center",
         )
         # main view row
         self.view = Row(
@@ -37,10 +39,11 @@ class BaseView(UserControl):
 
 
 class WelcomeView(BaseView):
-    def __init__(self, on_confirm: Callable, load_config: Callable):
+    def __init__(self, on_confirm: Callable, load_config: Callable, page: Page):
         super().__init__(image="connect-to-usb.png")
         self.on_confirm = on_confirm
         self.load_config = load_config
+        self.page = page
 
     def build(self):
         self.continue_button = ElevatedButton(
@@ -57,6 +60,15 @@ class WelcomeView(BaseView):
             disabled=True,
             label_position="left",
         )
+        self.dlg_help_developer_options = AlertDialog(
+            modal=True,
+            title=Text("How to enable developer options and OEM unlocking"),
+            content=Text("To do this, tap seven times on the build number in the System-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."),
+            actions=[
+                TextButton("Close", on_click=self.close_developer_options_dlg),
+            ],
+            actions_alignment="end",
+        )
         self.right_view.controls.extend(
             [
                 get_title("Welcome to the OpenAndroidInstaller!"),
@@ -69,8 +81,9 @@ class WelcomeView(BaseView):
                 ),
                 Divider(),
                 Text(
-                    "Enable USB debugging on your device by enabling developer options. To do this, tap seven times on the build number in the System-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."
+                    "Enable USB debugging and OEM unlocking on your device by enabling developer options."
                 ),
+                Row([FilledButton("How do I enable developer mode?", on_click=self.open_developer_options_dlg, expand=True, tooltip="Get help to enable developer options and OEM unlocking.")]),
                 Divider(),
                 Text(
                     "Now connect your device to this computer via USB, then press 'Search device'."
@@ -89,6 +102,7 @@ class WelcomeView(BaseView):
                             on_click=self.search_devices,
                             icon=icons.PHONE_ANDROID,
                             expand=True,
+                            tooltip="Search for a connected device."
                         ),
                         self.continue_button,
                     ],
@@ -97,6 +111,18 @@ class WelcomeView(BaseView):
             ]
         )
         return self.view
+
+    def open_developer_options_dlg(self, e):
+        """Open the dialog for help to developer mode."""
+        self.page.dialog = self.dlg_help_developer_options 
+        self.dlg_help_developer_options.open = True
+        self.page.update()
+
+
+    def close_developer_options_dlg(self, e):
+        """Close the dialog for help to developer mode."""
+        self.dlg_help_developer_options.open = False
+        self.page.update()
 
     def search_devices(self, e):
         try:
@@ -209,14 +235,25 @@ class SelectFilesView(BaseView):
         else:
             self.confirm_button.disabled = True
 
+class SuccessView(BaseView):
+    def __init__(self, page: Page):
+        super().__init__(image="success.png")
+
+    def build(self, ):
+        self.right_view.controls = [
+            get_title("Installation completed successfully!"),
+            Row([ElevatedButton("Finish and close", expand=True, on_click=lambda _: self.page.window_close())])
+        ]
+        return self.view
+
 
 class MainView(UserControl):
-    def __init__(self):
+    def __init__(self, page: Page):
         super().__init__()
         self.config = None
         # initialize the progress bar indicator
         self.progress_bar = ProgressBar(
-            width=400, color="#00d886", bgcolor="#eeeeee", bar_height=16
+            width=480, color="#00d886", bgcolor="#eeeeee", bar_height=16
         )
         self.progress_bar.value = 0
         # create the main columns
@@ -241,6 +278,7 @@ class MainView(UserControl):
         welcome = WelcomeView(
             on_confirm=self.confirm,
             load_config=self.load_config,
+            page=self.page
         )
         select_files = SelectFilesView(
             on_confirm=self.confirm,
@@ -252,6 +290,8 @@ class MainView(UserControl):
         )
         # ordered to allow for pop
         self.default_views = [select_files, welcome]
+        # create the final success view
+        self.final_view = SuccessView(page)
         # keep track of the number of steps
         self.num_steps = len(self.default_views)
 
@@ -272,7 +312,7 @@ class MainView(UserControl):
         # if there are default views left, display them first
         if self.default_views:
             self.view.controls.append(self.default_views.pop())
-        else:
+        elif self.config.steps:
             self.view.controls.append(
                 StepView(
                     step=self.config.steps.pop(0),
@@ -283,6 +323,9 @@ class MainView(UserControl):
                     recovery_path=self.recovery_path,
                 )
             )
+        else:
+            # display the final view
+            self.view.controls.append(self.final_view)
         self.view.update()
 
     def load_config(self, path: str):
@@ -388,8 +431,8 @@ class StepView(BaseView):
 def main(page: Page):
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
-    page.window_width = 960
-    page.window_height = 640
+    page.window_width = 1080
+    page.window_height = 720
     page.window_top = 100
     page.window_left = 720
     page.scroll = "adaptive"
@@ -437,12 +480,13 @@ def main(page: Page):
             TextButton("I understand", on_click=close_banner),
         ],
     )
-    page.banner.open = True
+    # TODO: disable the banner for now
+    #page.banner.open = True
 
     page.update()
 
     # create application instance
-    app = MainView()
+    app = MainView(page)
 
     # add application's root control to the page
     page.add(app)
