@@ -3,8 +3,7 @@ from functools import partial
 from os import path
 from typing import Callable
 
-from flet import (Column, Container, ElevatedButton, Image, Row, Text,
-                  alignment, icons)
+from flet import Column, Container, ElevatedButton, Image, Row, Text, alignment, icons
 
 
 def get_title(title: str):
@@ -32,10 +31,15 @@ def confirm_button(
     return Column(
         [
             Text(f"{text}"),
-            ElevatedButton(
-                f"{confirm_text}",
-                on_click=confirm_func,
-                icon=icons.NEXT_PLAN_OUTLINED,
+            Row(
+                [
+                    ElevatedButton(
+                        f"{confirm_text}",
+                        on_click=confirm_func,
+                        icon=icons.NEXT_PLAN_OUTLINED,
+                        expand=True,
+                    )
+                ]
             ),
         ],
         horizontal_alignment="center",
@@ -48,8 +52,15 @@ def call_button(
     return Column(
         [
             Text(f"{text}"),
-            ElevatedButton(
-                f"{confirm_text}", on_click=partial(call_func, command=command)
+            Row(
+                [
+                    ElevatedButton(
+                        f"{confirm_text}",
+                        on_click=partial(call_func, command=command),
+                        expand=True,
+                        icon=icons.DIRECTIONS_RUN_OUTLINED,
+                    )
+                ]
             ),
         ],
         horizontal_alignment="center",

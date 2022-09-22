@@ -1,24 +1,46 @@
 """Main app code for openAndroidInstaller."""
 
-
 from ctypes import alignment
 import webbrowser
-from functools import partial
 from os import path
 from subprocess import STDOUT, CalledProcessError, call, check_output
 from time import sleep
-from turtle import width
-from typing import Callable, List
+from typing import Callable
 
 import flet
-from flet import (AppBar, Banner, Checkbox, Column, Container, Divider,
-                  ElevatedButton, FilePicker, FilePickerResultEvent, Icon,
-                  Image, Page, ProgressBar, ProgressRing, Row, Text,
-                  TextButton, TextField, UserControl, VerticalDivider, colors, FilledButton,
-                  AlertDialog,
-                  icons)
+from flet import (
+    AppBar,
+    Banner,
+    Checkbox,
+    Column,
+    Container,
+    Divider,
+    ElevatedButton,
+    FilePicker,
+    FilePickerResultEvent,
+    Icon,
+    Image,
+    Page,
+    ProgressBar,
+    ProgressRing,
+    Row,
+    Text,
+    TextButton,
+    TextField,
+    UserControl,
+    VerticalDivider,
+    colors,
+    FilledButton,
+    AlertDialog,
+    icons,
+)
 from installer_config import InstallerConfig, Step
 from widgets import call_button, confirm_button, get_title
+
+# Toggle to True for development purposes
+DEVELOPMENT = False 
+DEVELOPMENT_CONFIG = "Pixel 3a"
+
 
 CONFIG_PATH = path.abspath(path.join(path.dirname(__file__), "assets/configs/"))
 IMAGE_PATH = path.abspath(path.join(path.dirname(__file__), "assets/imgs/"))
@@ -29,7 +51,10 @@ class BaseView(UserControl):
         super().__init__()
         self.right_view = Column(expand=True)
         self.left_view = Column(
-            width=480, controls=[Image(src=IMAGE_PATH + "/" + image)], expand=True, horizontal_alignment="center",
+            width=480,
+            controls=[Image(src=IMAGE_PATH + "/" + image)],
+            expand=True,
+            horizontal_alignment="center",
         )
         # main view row
         self.view = Row(
@@ -63,7 +88,9 @@ class WelcomeView(BaseView):
         self.dlg_help_developer_options = AlertDialog(
             modal=True,
             title=Text("How to enable developer options and OEM unlocking"),
-            content=Text("To do this, tap seven times on the build number in the System-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."),
+            content=Text(
+                "To do this, tap seven times on the build number in the System-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."
+            ),
             actions=[
                 TextButton("Close", on_click=self.close_developer_options_dlg),
             ],
@@ -77,13 +104,22 @@ class WelcomeView(BaseView):
                 ),
                 Divider(),
                 Text(
-                    "Before you continue, make sure your devices is on the latest system update."
+                    "Before you continue, make sure your devices is on the latest system update. Also make sure you have a backup of all your important data on the phone, since this procedure will erase all data from the phone. Note, that vendor specific back-ups might not work on LineageOS!"
                 ),
                 Divider(),
                 Text(
                     "Enable USB debugging and OEM unlocking on your device by enabling developer options."
                 ),
-                Row([FilledButton("How do I enable developer mode?", on_click=self.open_developer_options_dlg, expand=True, tooltip="Get help to enable developer options and OEM unlocking.")]),
+                Row(
+                    [
+                        FilledButton(
+                            "How do I enable developer mode?",
+                            on_click=self.open_developer_options_dlg,
+                            expand=True,
+                            tooltip="Get help to enable developer options and OEM unlocking.",
+                        )
+                    ]
+                ),
                 Divider(),
                 Text(
                     "Now connect your device to this computer via USB, then press 'Search device'."
@@ -102,7 +138,7 @@ class WelcomeView(BaseView):
                             on_click=self.search_devices,
                             icon=icons.PHONE_ANDROID,
                             expand=True,
-                            tooltip="Search for a connected device."
+                            tooltip="Search for a connected device.",
                         ),
                         self.continue_button,
                     ],
@@ -114,10 +150,9 @@ class WelcomeView(BaseView):
 
     def open_developer_options_dlg(self, e):
         """Open the dialog for help to developer mode."""
-        self.page.dialog = self.dlg_help_developer_options 
+        self.page.dialog = self.dlg_help_developer_options
         self.dlg_help_developer_options.open = True
         self.page.update()
-
 
     def close_developer_options_dlg(self, e):
         """Close the dialog for help to developer mode."""
@@ -154,7 +189,16 @@ class WelcomeView(BaseView):
                 # select a new path and load again
                 pass
         except CalledProcessError:
-            self.device_name.value = "No device detected! Connect to USB and try again."
+            if DEVELOPMENT:
+                path = f"{CONFIG_PATH}/{DEVELOPMENT_CONFIG}.yaml"
+                load_config_success = self.load_config(path)
+                if load_config_success:
+                    self.config_found_box.value = True
+                    self.continue_button.disabled = False
+            else:
+                self.device_name.value = (
+                    "No device detected! Connect to USB and try again."
+                )
         self.view.update()
 
 
@@ -235,14 +279,27 @@ class SelectFilesView(BaseView):
         else:
             self.confirm_button.disabled = True
 
-class SuccessView(BaseView):
-    def __init__(self, page: Page):
-        super().__init__(image="success.png")
 
-    def build(self, ):
+class SuccessView(BaseView):
+    def __init__(self, progressbar: ProgressBar):
+        super().__init__(image="success.png")
+        self.progressbar = progressbar
+
+    def build(
+        self,
+    ):
         self.right_view.controls = [
             get_title("Installation completed successfully!"),
-            Row([ElevatedButton("Finish and close", expand=True, on_click=lambda _: self.page.window_close())])
+            self.progressbar,
+            Row(
+                [
+                    ElevatedButton(
+                        "Finish and close",
+                        expand=True,
+                        on_click=lambda _: self.page.window_close(),
+                    )
+                ]
+            ),
         ]
         return self.view
 
@@ -276,9 +333,7 @@ class MainView(UserControl):
 
         # create default starter views
         welcome = WelcomeView(
-            on_confirm=self.confirm,
-            load_config=self.load_config,
-            page=self.page
+            on_confirm=self.confirm, load_config=self.load_config, page=self.page
         )
         select_files = SelectFilesView(
             on_confirm=self.confirm,
@@ -291,9 +346,9 @@ class MainView(UserControl):
         # ordered to allow for pop
         self.default_views = [select_files, welcome]
         # create the final success view
-        self.final_view = SuccessView(page)
+        self.final_view = SuccessView(progressbar=self.progress_bar)
         # keep track of the number of steps
-        self.num_steps = len(self.default_views)
+        self.num_steps = 2
 
     def build(self):
         self.view.controls.append(self.default_views.pop())
@@ -305,9 +360,7 @@ class MainView(UserControl):
         self.view.controls = []
         # if a config is loaded, display a progress bar
         if self.config:
-            self.progress_bar.value = (self.num_steps - 1) / (
-                len(self.config.steps) + 2
-            )  # don't show on the first step
+            self.progress_bar.value = (self.num_steps - 1) / (self.num_total_steps + 2)  # don't show on the first step
             self.num_steps += 1  # increase the step counter
         # if there are default views left, display them first
         if self.default_views:
@@ -332,6 +385,7 @@ class MainView(UserControl):
         """Function to load a config file from path."""
         try:
             self.config = InstallerConfig.from_file(path)
+            self.num_total_steps = len(self.config.steps)
             return True
         except FileNotFoundError:
             return False
@@ -398,7 +452,7 @@ class StepView(BaseView):
             raise Exception(f"Unknown step type: {self.step.type}")
 
         # if skipping is allowed add a button to the view
-        if self.step.allow_skip:
+        if self.step.allow_skip or DEVELOPMENT:
             self.right_view.controls.append(
                 confirm_button("Already done?", self.on_confirm, confirm_text="Skip")
             )
@@ -431,8 +485,8 @@ class StepView(BaseView):
 def main(page: Page):
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
-    page.window_width = 1080
     page.window_height = 720
+    page.window_width = int(1.5 * page.window_height)
     page.window_top = 100
     page.window_left = 720
     page.scroll = "adaptive"
@@ -481,7 +535,7 @@ def main(page: Page):
         ],
     )
     # TODO: disable the banner for now
-    #page.banner.open = True
+    # page.banner.open = True
 
     page.update()
 
