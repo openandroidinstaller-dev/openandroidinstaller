@@ -15,6 +15,7 @@ pyinstaller = "^5.3"
 Pillow = "^9.2.0"
 PyYAML = "^6.0"
 isort = "^5.10.1"
+loguru = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
 

@@ -20,7 +20,7 @@
   </p>
 </div>
 
-> **Warning**: This application is currently in alpha state, so use at your own risk! I take no responsibility for bricked devices or dead SD cards.
+> **Warning**: This application is currently in early alpha state, so use at your own risk! I take no responsibility for bricked devices or dead SD cards.
 
 > **Note**: Unlocking the bootloader will erase all data on your device!
 This also includes your DRM keys, which are stored in the Trim Area partition (also called TA).
@@ -33,9 +33,11 @@ Vendor | Device Name | CodeName | Models | Status
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | a5xelte |  | under development
 Google | Pixel 3a | sargo | sargo | tested
-Sony | Xperia Z | yuga | | tested
+Sony | Xperia Z | yuga | C6603 | tested
+Sony | Xperia Z3 | z3 | | under development
 
 ## Installation
+Currently, only linux is supported. 
 
 1. Download the AppImage, .exe or appropriate file for your OS. 
 2. Install `adb` and `fastboot` by running `sudo apt install android-tools-adb android-tools-fastboot`
@@ -54,8 +56,9 @@ Start the desktop app and follow the instructions.
 ## Run OpenAndroidInstaller for development
 
 1. Clone the main branch of this repository
-2. Run `make poetry` and `make install` to setup poetry and the relevant requirements
-3. Clone this Run `make app` to start the desktop app from the source code.
+2. Follow the steps 2. and 3. from 'Installation' above.
+3. Run `make poetry` and `make install` to setup poetry and the relevant requirements
+4. Run `make app` to start the desktop app from the source.
 
 ## Contribute your own installation configurations
 
@@ -73,6 +76,7 @@ Every step in the config file corresponds to one view in the application. These 
   - `<image>`: The path of the image file.
   - `<recovery>`: The path of the recovery file.
   - `<inputtext>`: Text from the user input from `call_button_with_input` views.
+- `img`: Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 
 After you created a config file, you can open a pull request to make the file available to other users. The file should be named after device name output by `adb shell dumpsys bluetooth_manager | grep 'name:' | cut -c9-` when the devices is connected to the computer. Please also add the device to the supported devices table above.
