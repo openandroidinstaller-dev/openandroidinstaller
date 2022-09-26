@@ -55,7 +55,7 @@ steps:
     content: "On the device, select “Apply Update”, then “Apply from ADB” to begin sideload. Then confirm here."
   - title: "Flash LineageOS"
     type: call_button
-    content: "Now it's time to flash the LineageOS image. Don't remove the USB-Cable and press 'Confirm and run' to start! Confirm after it's done."
+    content: "Now it's time to flash the LineageOS image. Don't remove the USB-Cable and press 'Confirm and run' to start! This might take a while. Confirm after it's done."
     command: "adb sideload <image>"
   - title: "Flash LineageOS"
     type: confirm_button
