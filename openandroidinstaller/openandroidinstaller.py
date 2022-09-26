@@ -14,6 +14,7 @@
 # Author: Tobias Sterbak
 
 import webbrowser
+from loguru import logger
 from os import path
 from subprocess import STDOUT, CalledProcessError, call, check_output
 from time import sleep
@@ -51,7 +52,7 @@ from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
 DEVELOPMENT = False
-DEVELOPMENT_CONFIG = "Pixel 3a"
+DEVELOPMENT_CONFIG = "Xperia Z"  # "Pixel 3a"
 
 
 CONFIG_PATH = path.abspath(path.join(path.dirname(__file__), "assets/configs/"))
@@ -134,7 +135,7 @@ class WelcomeView(BaseView):
                 ),
                 Divider(),
                 Text(
-                    "Now connect your device to this computer via USB, then press 'Search device'."
+                    "Now connect your device to this computer via USB and allow USB debugging in the pop-up on your phone. Then press 'Search device'."
                 ),
                 Divider(),
                 Column(
@@ -483,6 +484,7 @@ class StepView(BaseView):
             )
         )
         self.right_view.update()
+        logger.info(f"Run command: {command}")
         res = call(f"{command}", shell=True)
         if res != 0:
             self.right_view.controls.pop()
