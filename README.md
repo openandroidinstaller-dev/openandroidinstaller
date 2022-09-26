@@ -33,9 +33,11 @@ Vendor | Device Name | CodeName | Models | Status
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | a5xelte |  | under development
 Google | Pixel 3a | sargo | sargo | tested
-Sony | Xperia Z | yuga | | tested
+Sony | Xperia Z | yuga | C6603 | tested
+Sony | Xperia Z3 | z3 | | under development
 
 ## Installation
+Currently, only linux is supported. 
 
 1. Download the AppImage, .exe or appropriate file for your OS. 
 2. Install `adb` and `fastboot` by running `sudo apt install android-tools-adb android-tools-fastboot`
