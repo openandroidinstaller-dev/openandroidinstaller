@@ -1,6 +1,18 @@
-"""Main app code for openAndroidInstaller."""
+"""Main file of the OpenAndroidInstaller."""
 
-from ctypes import alignment
+# This file is part of OpenAndroidInstaller.
+# OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation,
+# either version 3 of the License, or (at your option) any later version.
+
+# OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
+# If not, see <https://www.gnu.org/licenses/>."""
+# Author: Tobias Sterbak
+
 import webbrowser
 from os import path
 from subprocess import STDOUT, CalledProcessError, call, check_output
@@ -38,7 +50,7 @@ from installer_config import InstallerConfig, Step
 from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
-DEVELOPMENT = False 
+DEVELOPMENT = False
 DEVELOPMENT_CONFIG = "Pixel 3a"
 
 
@@ -360,7 +372,9 @@ class MainView(UserControl):
         self.view.controls = []
         # if a config is loaded, display a progress bar
         if self.config:
-            self.progress_bar.value = (self.num_steps - 1) / (self.num_total_steps + 2)  # don't show on the first step
+            self.progress_bar.value = (self.num_steps - 1) / (
+                self.num_total_steps + 2
+            )  # don't show on the first step
             self.num_steps += 1  # increase the step counter
         # if there are default views left, display them first
         if self.default_views:
