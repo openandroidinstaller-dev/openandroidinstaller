@@ -20,7 +20,7 @@
   </p>
 </div>
 
-> **Warning**: This application is currently in alpha state, so use at your own risk! I take no responsibility for bricked devices or dead SD cards.
+> **Warning**: This application is currently in early alpha state, so use at your own risk! I take no responsibility for bricked devices or dead SD cards.
 
 > **Note**: Unlocking the bootloader will erase all data on your device!
 This also includes your DRM keys, which are stored in the Trim Area partition (also called TA).
@@ -54,8 +54,9 @@ Start the desktop app and follow the instructions.
 ## Run OpenAndroidInstaller for development
 
 1. Clone the main branch of this repository
-2. Run `make poetry` and `make install` to setup poetry and the relevant requirements
-3. Clone this Run `make app` to start the desktop app from the source code.
+2. Follow the steps 2. and 3. from 'Installation' above.
+3. Run `make poetry` and `make install` to setup poetry and the relevant requirements
+4. Run `make app` to start the desktop app from the source.
 
 ## Contribute your own installation configurations
 
