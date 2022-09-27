@@ -1,0 +1,66 @@
+metadata:
+  maintainer: Tobias Sterbak (tsterbak)
+  devicename: Pixel 3a
+requirements:
+steps:
+  - title: "Unlock the bootloader"
+    type: confirm_button
+    content: "As a first step, you need to unlock the bootloader. A bootloader is the piece of software, that tells your phone who to start and run an operating system (like Android). Your device should be turned on."
+  - title: "Unlock the bootloader"
+    type: call_button
+    content: "Press 'Confirm and run' to reboot into the bootloader."
+    command: "adb reboot bootloader"
+  - title: "Unlock the bootloader"
+    type: confirm_button
+    content: "Select 'Restart bootloader' on your smartphone screen by pressing the volume button and the confirm by pushing the power button. Then press 'Confirm and continue' here."
+  - title: "Unlock the bootloader"
+    type: call_button
+    content: "In this step you actually unlock the bootloader. Just press 'Confirm and run' here. Once it's done, press continue here."
+    command: "fastboot flashing unlock"
+    allow_skip: True
+  - title: "Unlock the bootloader"
+    type: confirm_button
+    content: "At this point the device may display on-screen prompts which will require interaction to continue the process of unlocking the bootloader. Please take whatever actions the device asks you to to proceed."
+  - title: "Unlock the bootloader"
+    type: call_button
+    content: "To finish the unlocking, the phone needs to reboot. Just press 'Confirm and run' here to reboot. Then continue."
+    command: "fastboot reboot"
+  - title: "Unlock the bootloader"
+    type: confirm_button
+    content: "The bootloader is now unlocked. Since the device resets completely, you will need to re-enable USB debugging to continue."
+  - title: "Flash a custom recovery"
+    type: confirm_button 
+    content: "Now you need to flash a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating, adapting and repairing of the operating system."
+  - title: "Flash a custom recovery"
+    type: call_button
+    content: "Once the device is fully booted, you need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue."
+    command: "adb reboot bootloader"
+  - title: "Flash a custom recovery"
+    type: confirm_button
+    content: "Select 'Restart bootloader' on your smartphone screen. Then confirm to continue."
+  - title: "Flash a custom recovery"
+    type: call_button
+    content: "Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue."
+    command: "fastboot flash boot <recovery>"
+  - title: "Flash LineageOS"
+    type: confirm_button 
+    content: "In this step, you finally flash LineageOS. Confirm to continue."
+  - title: "Flash LineageOS"
+    type: confirm_button
+    content: "Select 'Recovery Mode' on your smartphone screen and press the Start-Button to confirm. Then confirm here."
+  - title: "Flash LineageOS"
+    type: confirm_button
+    content: "Now tap Factory Reset, then Format data / Factory reset on your phone screen and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage, as well as format your cache partition (if you have one)."
+  - title: "Flash LineageOS"
+    type: confirm_button
+    content: "Return to the main menu on the phone."
+  - title: "Flash LineageOS"
+    type: confirm_button
+    content: "On the device, select “Apply Update”, then “Apply from ADB” to begin sideload. Then confirm here."
+  - title: "Flash LineageOS"
+    type: call_button
+    content: "Now it's time to flash the LineageOS image. Don't remove the USB-Cable and press 'Confirm and run' to start! This might take a while. Confirm after it's done."
+    command: "adb sideload <image>"
+  - title: "Flash LineageOS"
+    type: confirm_button
+    content: "Flashing finished. Now press 'back' (arrow) and then 'Reboot system now' on the phone screen to finish the installation."

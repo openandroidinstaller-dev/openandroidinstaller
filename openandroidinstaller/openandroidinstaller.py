@@ -13,12 +13,13 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import sys
 import webbrowser
 from loguru import logger
-from os import path
 from subprocess import STDOUT, CalledProcessError, call, check_output
 from time import sleep
 from typing import Callable
+from pathlib import Path
 
 import flet
 from flet import (
@@ -51,12 +52,16 @@ from installer_config import InstallerConfig, Step
 from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
-DEVELOPMENT = False
-DEVELOPMENT_CONFIG = "Xperia Z"  # "Pixel 3a"
+DEVELOPMENT = False 
+DEVELOPMENT_CONFIG = "a3y17lte"  # "sargo"
 
 
-CONFIG_PATH = path.abspath(path.join(path.dirname(__file__), "assets/configs/"))
-IMAGE_PATH = path.abspath(path.join(path.dirname(__file__), "assets/imgs/"))
+PLATFORM = sys.platform
+logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
+# Define asset paths
+CONFIG_PATH = Path(__file__).parent.joinpath(Path("assets/configs")).resolve()
+IMAGE_PATH = Path(__file__).parent.joinpath(Path("assets/imgs")).resolve()
+BIN_PATH = Path(__file__).parent.joinpath(Path("bin")).resolve()
 
 
 class BaseView(UserControl):
@@ -65,7 +70,7 @@ class BaseView(UserControl):
         self.right_view = Column(expand=True)
         self.left_view = Column(
             width=480,
-            controls=[Image(src=IMAGE_PATH + "/" + image)],
+            controls=[Image(src=IMAGE_PATH.joinpath(Path(image)))],
             expand=True,
             horizontal_alignment="center",
         )
@@ -173,37 +178,58 @@ class WelcomeView(BaseView):
         self.page.update()
 
     def search_devices(self, e):
+        """Search the device when the button is clicked."""
+        logger.info("Search devices...")
         try:
             # read device properties
-            output = check_output(
-                [
-                    "adb",
-                    "shell",
-                    "dumpsys",
-                    "bluetooth_manager",
-                    "|",
-                    "grep",
-                    "'name:'",
-                    "|",
-                    "cut",
-                    "-c9-",
-                ],
-                stderr=STDOUT,
-            ).decode()
+            # TODO: This is not windows ready...
+            if PLATFORM in ("linux", "darwin"):
+                output = check_output(
+                    [
+                        str(BIN_PATH.joinpath(Path("adb"))),
+                        "shell",
+                        "getprop",
+                        "|",
+                        "grep",
+                        "ro.product.device"
+                    ],
+                    stderr=STDOUT,
+                ).decode()
+            elif PLATFORM == "windows":
+                output = check_output(
+                    [
+                        str(BIN_PATH.joinpath(Path("adb"))),
+                        "shell",
+                        "getprop",
+                        "|",
+                        "findstr",
+                        "ro.product.device"
+                    ],
+                    stderr=STDOUT,
+                ).decode()
+            else:
+                raise Exception(f"Unknown platform {PLATFORM}.")
+
+            output = output.split("[")[-1][:-2]
+            logger.info(f"Detected {output}")
+            # write the device code to the text shown in the box
             self.device_name.value = output.strip()
             # load config from file
-            path = f"{CONFIG_PATH}/{output.strip()}.yaml"
+            path = CONFIG_PATH.joinpath(Path(f"{output.strip()}.yaml"))
             load_config_success = self.load_config(path)
+            # display success in the application
             if load_config_success:
                 self.config_found_box.value = True
                 self.continue_button.disabled = False
+                # overwrite the text field with the real name from the config
+                self.device_name.value = f"{load_config_success} (code: {output.strip()})"
             else:
                 # show alternative configs here
                 # select a new path and load again
                 pass
         except CalledProcessError:
             if DEVELOPMENT:
-                path = f"{CONFIG_PATH}/{DEVELOPMENT_CONFIG}.yaml"
+                path = CONFIG_PATH.joinpath(Path(f"{DEVELOPMENT_CONFIG}.yaml"))
                 load_config_success = self.load_config(path)
                 if load_config_success:
                     self.config_found_box.value = True
@@ -401,7 +427,7 @@ class MainView(UserControl):
         try:
             self.config = InstallerConfig.from_file(path)
             self.num_total_steps = len(self.config.steps)
-            return True
+            return self.config.metadata.get("devicename", "No device name in config.")
         except FileNotFoundError:
             return False
 
@@ -474,6 +500,11 @@ class StepView(BaseView):
         return self.view
 
     def call_to_phone(self, e, command: str):
+        # TODO: use proper windows paths
+        command = command.replace("adb", str(BIN_PATH.joinpath(Path("adb"))))
+        command = command.replace("fastboot", str(BIN_PATH.joinpath(Path("fastboot"))))
+        command = command.replace("heimdall", str(BIN_PATH.joinpath(Path("heimdall"))))
+
         command = command.replace("<recovery>", self.recovery_path)
         command = command.replace("<image>", self.image_path)
         command = command.replace("<inputtext>", self.inputtext.value)
@@ -509,9 +540,7 @@ def main(page: Page):
     page.horizontal_alignment = "center"
 
     # header
-    image_path = path.abspath(
-        path.join(path.dirname(__file__), "assets/logo-192x192.png")
-    )
+    image_path = Path(__file__).parent.joinpath(Path("assets/logo-192x192.png"))
     page.appbar = AppBar(
         leading=Image(src=image_path, height=40, width=40, border_radius=40),
         leading_width=56,
