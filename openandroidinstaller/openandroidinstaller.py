@@ -53,7 +53,7 @@ from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
 DEVELOPMENT = False 
-DEVELOPMENT_CONFIG = "Samsung Galaxy A3 2017"  # "Pixel 3a"
+DEVELOPMENT_CONFIG = "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
@@ -178,22 +178,20 @@ class WelcomeView(BaseView):
         self.page.update()
 
     def search_devices(self, e):
+        """Search the device when the button is clicked."""
+        logger.info("Search devices...")
         try:
             # read device properties
             # TODO: This is not windows ready...
-            if PLATFORM in ("linux", "MacOS"):
+            if PLATFORM in ("linux", "darwin"):
                 output = check_output(
                     [
                         str(BIN_PATH.joinpath(Path("adb"))),
                         "shell",
-                        "dumpsys",
-                        "bluetooth_manager",
+                        "getprop",
                         "|",
                         "grep",
-                        "'name:'",
-                        "|",
-                        "cut",
-                        "-c9-",
+                        "ro.product.device"
                     ],
                     stderr=STDOUT,
                 ).decode()
@@ -202,27 +200,29 @@ class WelcomeView(BaseView):
                     [
                         str(BIN_PATH.joinpath(Path("adb"))),
                         "shell",
-                        "dumpsys",
-                        "bluetooth_manager",
+                        "getprop",
                         "|",
                         "findstr",
-                        "'name:'",
-                        "|",
-                        "-split",
-                        "-c9-",
+                        "ro.product.device"
                     ],
                     stderr=STDOUT,
                 ).decode()
             else:
                 raise Exception(f"Unknown platform {PLATFORM}.")
 
+            output = output.split("[")[-1][:-2]
+            logger.info(f"Detected {output}")
+            # write the device code to the text shown in the box
             self.device_name.value = output.strip()
             # load config from file
             path = CONFIG_PATH.joinpath(Path(f"{output.strip()}.yaml"))
             load_config_success = self.load_config(path)
+            # display success in the application
             if load_config_success:
                 self.config_found_box.value = True
                 self.continue_button.disabled = False
+                # overwrite the text field with the real name from the config
+                self.device_name.value = f"{load_config_success} (code: {output.strip()})"
             else:
                 # show alternative configs here
                 # select a new path and load again
@@ -427,7 +427,7 @@ class MainView(UserControl):
         try:
             self.config = InstallerConfig.from_file(path)
             self.num_total_steps = len(self.config.steps)
-            return True
+            return self.config.metadata.get("devicename", "No device name in config.")
         except FileNotFoundError:
             return False
 

@@ -1,5 +1,6 @@
 metadata:
-  - maintainer: Tobias Sterbak (tsterbak)
+  maintainer: Tobias Sterbak (tsterbak)
+  devicename: Samsung Galaxy A3 (2017)
 requirements:
   - heimdall
 steps:

@@ -1,5 +1,6 @@
 metadata:
-  - maintainer: Tobias Sterbak (tsterbak)
+  maintainer: Tobias Sterbak (tsterbak)
+  devicename: Samsung Galaxy A5 (2016)
 requirements:
   - heimdall
 steps:
