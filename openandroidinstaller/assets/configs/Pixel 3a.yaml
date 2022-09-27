@@ -1,3 +1,6 @@
+metadata:
+  - maintainer: Tobias Sterbak (tsterbak)
+requirements:
 steps:
   - title: "Unlock the bootloader"
     type: confirm_button

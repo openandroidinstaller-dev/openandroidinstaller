@@ -51,7 +51,7 @@ from installer_config import InstallerConfig, Step
 from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
-DEVELOPMENT = False
+DEVELOPMENT = False 
 DEVELOPMENT_CONFIG = "Xperia Z"  # "Pixel 3a"
 
 

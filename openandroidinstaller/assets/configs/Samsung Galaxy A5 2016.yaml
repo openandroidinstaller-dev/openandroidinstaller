@@ -1,35 +1,33 @@
+metadata:
+  - maintainer: Tobias Sterbak (tsterbak)
+requirements:
+  - heimdall
 steps:
-  - title: "Boot into recovery"
-    type: confirm_button
-    content: "Turn on your device and wait until its fully booted."
-  - title: "Boot into recovery"
+  - title: "Boot into bootloader"
     type: call_button
-    content: "Reboot into bootloader"
+    content: "As a first step, you need to boot into the bootloader. A bootloader is the piece of software, that tells your phone who to start and run an operating system (like Android). Your device should be turned on. Then press 'Confirm and run' to reboot into the bootloader. Continue once it's done."
     command: "adb reboot download"
-  - title: "Boot into recovery"
+  - title: "Flash custom recovery"
     type: call_button
-    content: "Flash custom recovery"
+    content: "In this step, you need to flash a custom recovery on your device. Press 'Confirm and run' to start the process. Confirm afterwards to continue."
     command: "heimdall flash --no-reboot --RECOVERY <recovery>"
   - title: "Boot into recovery"
     type: confirm_button
-    content: "Unplug the USB cable from your device. Manually reboot into recovery. Press the Volume Down + Power buttons for 8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, hold Volume Up + Home + Power."
+    content: "Unplug the USB cable from your device. Then manually reboot into recovery by pressing the Volume Down + Power buttons for 8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, hold Volume Up + Home + Power."
   - title: "Flash LineageOS"
     type: confirm_button
-    content: "Now tap 'Wipe'. Then tap 'Format Data' and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage."
+    content: "Now tap 'Wipe' on your phone. Then tap 'Format Data' and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage. Confirm to continue once you are done."
   - title: "Flash LineageOS"
     type: confirm_button
-    content: "Return to the previous menu and tap 'Advanced Wipe', then select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'."
+    content: "Return to the previous menu on your phone and tap 'Advanced Wipe', then select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'. Confirm to continue once you are done."
   - title: "Flash LineageOS"
     type: confirm_button
-    content: "Now connect the phone to the computer again with the USB-cable. On the device, go back and select “Advanced”, “ADB Sideload”, then swipe to begin sideload. Then confirm here"
+    content: "Now connect the phone to the computer again with the USB-cable. On the device, go back and select “Advanced”, “ADB Sideload”, then swipe to begin sideload. Then confirm here."
   - title: "Flash LineageOS"
     type: call_button
-    content: "Flash lineageOS image. Don't remove the USB-Cable!"
+    content: "Now it's time to flash the LineageOS image. Don't remove the USB-Cable and press 'Confirm and run' to start! This might take a while. Confirm after it's done."
     command: "adb sideload <image>"
-  - title: "Reboot"
+  - title: "Reboot into LineageOS"
     type: call_button
-    content: "Reboot into OS"
+    content: "As a final step, reboot into LineageOS to finish the installation by pressing the button."
     command: "adb reboot"
-  - title: "Successfully finished flashing"
-    type: text
-    content: "Have fun with LineageOS!"
