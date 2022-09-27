@@ -38,31 +38,28 @@ Sony | Xperia Z3 | z3 | | under development
 Sony | Xperia ZX | kagura | | under development
 Fairphone | Fairphone 2 | FP2 | | under development
 
-## Installation
-Currently, only linux is supported. 
-
-1. Download the AppImage, .exe or appropriate file for your OS. 
-2. Install `adb` and `fastboot` by running `sudo apt install android-tools-adb android-tools-fastboot`
-3. OPTIONAL: Install `heimdall` for Samsung Devices:
-    - download heimdall: https://androidfilehost.com/?w=files&flid=304516
-    - install heimdall: 
-        - `$ unzip /path/to/heimdall_ubuntu.zip -d /tmp`
-        - `$ cp /tmp/bin/heimdall* /usr/bin/`
-        - `$ rm -rf /tmp/bin`
 
 ## Usage
 
-Download the lineageOS image and the custom recovery image. A source for files can be found here: https://lineageosroms.com
-Start the desktop app and follow the instructions.
+Currently, only linux is supported. 
+
+1. Download the AppImage, .exe or appropriate file for your OS. 
+2. Download the lineageOS image and the custom recovery image. A source for files can be found here: https://lineageosroms.com
+3. Start the desktop app and follow the instructions.
+
 
 ## Run OpenAndroidInstaller for development
 
-1. Clone the main branch of this repository
-2. Follow the steps 2. and 3. from 'Installation' above.
-3. Run `make poetry` and `make install` to setup poetry and the relevant requirements
-4. Run `make app` to start the desktop app from the source.
+Currently development is only supported on Ubunut Linux. MacOS should also work fine.
 
-## Contribute your own installation configurations
+1. Clone the main branch of this repository
+2. Run `make install` to install poetry to manage python and install the requirend dependencies like adb, fastboot and heimdall.
+3. Run `make app` to start the desktop app from the source.
+
+
+## Contributing
+
+### Contribute your own installation configurations
 
 If you want to use the tool for a non-supported smartphone, the fastest way is to adapt an [existing config file](https://github.com/openandroidinstaller-dev/openandroidinstaller/tree/main/openandroidinstaller/assets/configs).
 
@@ -82,9 +79,6 @@ Every step in the config file corresponds to one view in the application. These 
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 
 After you created a config file, you can open a pull request to make the file available to other users. The file should be named after device name output by `adb shell dumpsys bluetooth_manager | grep 'name:' | cut -c9-` when the devices is connected to the computer. Please also add the device to the supported devices table above.
-
-
-## Contributing
 
 
 ## Tools
