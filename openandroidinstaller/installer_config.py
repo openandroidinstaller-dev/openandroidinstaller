@@ -37,17 +37,20 @@ class Step:
 
 
 class InstallerConfig:
-    def __init__(self, steps: List[Step]):
+    def __init__(self, steps: List[Step], metadata: dict):
         self.steps = steps
+        self.metadata = metadata
 
     @classmethod
     def from_file(cls, path):
         with open(path, "r") as stream:
             try:
-                raw_steps = yaml.safe_load(stream)
-                raw_steps = dict(raw_steps)["steps"]
+                raw_config = yaml.safe_load(stream)
+                config = dict(raw_config)
+                raw_steps = config["steps"]
+                metadata = config["metadata"]
             except yaml.YAMLError as exc:
                 print(exc)
 
         steps = [Step(**raw_step) for raw_step in raw_steps]
-        return cls(steps)
+        return cls(steps, metadata)

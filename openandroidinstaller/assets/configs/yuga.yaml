@@ -1,5 +1,6 @@
 metadata:
-  - maintainer: Tobias Sterbak (tsterbak)
+  maintainer: Tobias Sterbak (tsterbak)
+  devicename: Sony Xperia Z
 requirements:
 steps:
   - title: "Unlock the bootloader"

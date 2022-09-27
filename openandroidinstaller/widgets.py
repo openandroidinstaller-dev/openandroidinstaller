@@ -14,10 +14,9 @@
 # Author: Tobias Sterbak
 
 from functools import partial
-from os import path
 from typing import Callable
 
-from flet import Column, Container, ElevatedButton, Image, Row, Text, alignment, icons
+from flet import Column, Container, ElevatedButton, Row, Text, alignment, icons
 
 
 def get_title(title: str):
