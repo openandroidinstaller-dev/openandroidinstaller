@@ -13,12 +13,13 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import sys
 import webbrowser
 from loguru import logger
-from os import path
 from subprocess import STDOUT, CalledProcessError, call, check_output
 from time import sleep
 from typing import Callable
+from pathlib import Path
 
 import flet
 from flet import (
@@ -55,8 +56,11 @@ DEVELOPMENT = False
 DEVELOPMENT_CONFIG = "Xperia Z"  # "Pixel 3a"
 
 
-CONFIG_PATH = path.abspath(path.join(path.dirname(__file__), "assets/configs/"))
-IMAGE_PATH = path.abspath(path.join(path.dirname(__file__), "assets/imgs/"))
+PLATFORM = sys.platform
+logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
+# Define asset paths
+CONFIG_PATH = Path(__file__).parent.joinpath(Path("assets/configs")).resolve()
+IMAGE_PATH = Path(__file__).parent.joinpath(Path("assets/imgs")).resolve()
 
 
 class BaseView(UserControl):
@@ -65,7 +69,7 @@ class BaseView(UserControl):
         self.right_view = Column(expand=True)
         self.left_view = Column(
             width=480,
-            controls=[Image(src=IMAGE_PATH + "/" + image)],
+            controls=[Image(src=IMAGE_PATH.joinpath(Path(image)))],
             expand=True,
             horizontal_alignment="center",
         )
@@ -175,24 +179,46 @@ class WelcomeView(BaseView):
     def search_devices(self, e):
         try:
             # read device properties
-            output = check_output(
-                [
-                    "adb",
-                    "shell",
-                    "dumpsys",
-                    "bluetooth_manager",
-                    "|",
-                    "grep",
-                    "'name:'",
-                    "|",
-                    "cut",
-                    "-c9-",
-                ],
-                stderr=STDOUT,
-            ).decode()
+            # TODO: This is not windows ready...
+            if PLATFORM in ("linux", "MacOS"):
+                output = check_output(
+                    [
+                        "adb",
+                        "shell",
+                        "dumpsys",
+                        "bluetooth_manager",
+                        "|",
+                        "grep",
+                        "'name:'",
+                        "|",
+                        "cut",
+                        "-c9-",
+                    ],
+                    stderr=STDOUT,
+                ).decode()
+            elif PLATFORM == "windows":
+                output = check_output(
+                    [
+                        "adb",
+                        "shell",
+                        "dumpsys",
+                        "bluetooth_manager",
+                        "|",
+                        "findstr",
+                        "'name:'",
+                        "|",
+                        "-split",
+                        "-c9-",
+                    ],
+                    stderr=STDOUT,
+                ).decode()
+            else:
+                raise Exception(f"Unknown platform {PLATFORM}.")
+
             self.device_name.value = output.strip()
             # load config from file
-            path = f"{CONFIG_PATH}/{output.strip()}.yaml"
+            # path = f"{CONFIG_PATH}/{output.strip()}.yaml"
+            path = CONFIG_PATH.joinpath(Path(f"{output.strip()}.yaml"))
             load_config_success = self.load_config(path)
             if load_config_success:
                 self.config_found_box.value = True
@@ -203,7 +229,8 @@ class WelcomeView(BaseView):
                 pass
         except CalledProcessError:
             if DEVELOPMENT:
-                path = f"{CONFIG_PATH}/{DEVELOPMENT_CONFIG}.yaml"
+                path = CONFIG_PATH.joinpath(Path(f"{DEVELOPMENT_CONFIG}.yaml"))
+                # path = f"{CONFIG_PATH}/{DEVELOPMENT_CONFIG}.yaml"
                 load_config_success = self.load_config(path)
                 if load_config_success:
                     self.config_found_box.value = True
@@ -509,9 +536,7 @@ def main(page: Page):
     page.horizontal_alignment = "center"
 
     # header
-    image_path = path.abspath(
-        path.join(path.dirname(__file__), "assets/logo-192x192.png")
-    )
+    image_path = Path(__file__).parent.joinpath(Path("assets/logo-192x192.png"))
     page.appbar = AppBar(
         leading=Image(src=image_path, height=40, width=40, border_radius=40),
         leading_width=56,

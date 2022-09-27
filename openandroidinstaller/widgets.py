@@ -21,9 +21,6 @@ from flet import Column, Container, ElevatedButton, Image, Row, Text, alignment,
 
 
 def get_title(title: str):
-    image_path = path.abspath(
-        path.join(path.dirname(__file__), "assets/logo-192x192.png")
-    )
     return Container(
         content=Row(
             [
