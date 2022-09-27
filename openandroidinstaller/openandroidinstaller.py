@@ -52,8 +52,8 @@ from installer_config import InstallerConfig, Step
 from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
-DEVELOPMENT = False 
-DEVELOPMENT_CONFIG = "Xperia Z"  # "Pixel 3a"
+DEVELOPMENT = True 
+DEVELOPMENT_CONFIG = "Samsung Galaxy A3 2017"  # "Pixel 3a"
 
 
 PLATFORM = sys.platform
@@ -61,6 +61,7 @@ logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
 # Define asset paths
 CONFIG_PATH = Path(__file__).parent.joinpath(Path("assets/configs")).resolve()
 IMAGE_PATH = Path(__file__).parent.joinpath(Path("assets/imgs")).resolve()
+BIN_PATH = Path(__file__).parent.joinpath(Path("bin")).resolve()
 
 
 class BaseView(UserControl):
@@ -183,7 +184,7 @@ class WelcomeView(BaseView):
             if PLATFORM in ("linux", "MacOS"):
                 output = check_output(
                     [
-                        "adb",
+                        BIN_PATH.joinpath(Path("adb")).name,
                         "shell",
                         "dumpsys",
                         "bluetooth_manager",
@@ -199,7 +200,7 @@ class WelcomeView(BaseView):
             elif PLATFORM == "windows":
                 output = check_output(
                     [
-                        "adb",
+                        BIN_PATH.joinpath(Path("adb")).name,
                         "shell",
                         "dumpsys",
                         "bluetooth_manager",
@@ -501,6 +502,10 @@ class StepView(BaseView):
         return self.view
 
     def call_to_phone(self, e, command: str):
+        # TODO: use proper windows paths
+        command = command.replace("adb", BIN_PATH.joinpath(Path("adb")).name)
+        command = command.replace("fastboot", BIN_PATH.joinpath(Path("fastboot")).name)
+
         command = command.replace("<recovery>", self.recovery_path)
         command = command.replace("<image>", self.image_path)
         command = command.replace("<inputtext>", self.inputtext.value)
