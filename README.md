@@ -35,6 +35,8 @@ Samsung | Galaxy A5 2016 | a5xelte |  | under development
 Google | Pixel 3a | sargo | sargo | tested
 Sony | Xperia Z | yuga | C6603 | tested
 Sony | Xperia Z3 | z3 | | under development
+Sony | Xperia ZX | kagura | | under development
+Fairphone | Fairphone 2 | FP2 | | under development
 
 ## Installation
 Currently, only linux is supported. 
