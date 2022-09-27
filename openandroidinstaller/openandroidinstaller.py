@@ -52,7 +52,7 @@ from installer_config import InstallerConfig, Step
 from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
-DEVELOPMENT = True 
+DEVELOPMENT = False
 DEVELOPMENT_CONFIG = "Samsung Galaxy A3 2017"  # "Pixel 3a"
 
 
@@ -505,6 +505,7 @@ class StepView(BaseView):
         # TODO: use proper windows paths
         command = command.replace("adb", BIN_PATH.joinpath(Path("adb")).name)
         command = command.replace("fastboot", BIN_PATH.joinpath(Path("fastboot")).name)
+        command = command.replace("heimdall", BIN_PATH.joinpath(Path("heimdall")).name)
 
         command = command.replace("<recovery>", self.recovery_path)
         command = command.replace("<image>", self.image_path)
