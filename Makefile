@@ -6,7 +6,7 @@ app:
 	poetry run python openandroidinstaller/openandroidinstaller.py
 
 build-app:
-	poetry run pyinstaller openandroidinstaller/openandroidinstaller.py --noconsole --noconfirm --onefile --icon "/assets/favicon.ico" --add-data "openandroidinstaller/assets:assets" --add-binary "openandroidinstaller/bin/adb:bin/adb" --add-binary "openandroidinstaller/bin/fastboot:bin/fastboot" --add-binary "openandroidinstaller/bin/heimdall:bin/heimdall"
+	poetry run pyinstaller openandroidinstaller/openandroidinstaller.py --noconsole --noconfirm --onefile --icon "/assets/favicon.ico" --add-data "openandroidinstaller/assets:assets" --add-binary "openandroidinstaller/bin/adb:bin" --add-binary "openandroidinstaller/bin/fastboot:bin" --add-binary "openandroidinstaller/bin/heimdall:bin"
 
 
 clean-build:

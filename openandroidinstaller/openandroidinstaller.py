@@ -52,7 +52,7 @@ from installer_config import InstallerConfig, Step
 from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
-DEVELOPMENT = False
+DEVELOPMENT = False 
 DEVELOPMENT_CONFIG = "Samsung Galaxy A3 2017"  # "Pixel 3a"
 
 
@@ -184,7 +184,7 @@ class WelcomeView(BaseView):
             if PLATFORM in ("linux", "MacOS"):
                 output = check_output(
                     [
-                        BIN_PATH.joinpath(Path("adb")).name,
+                        str(BIN_PATH.joinpath(Path("adb"))),
                         "shell",
                         "dumpsys",
                         "bluetooth_manager",
@@ -200,7 +200,7 @@ class WelcomeView(BaseView):
             elif PLATFORM == "windows":
                 output = check_output(
                     [
-                        BIN_PATH.joinpath(Path("adb")).name,
+                        str(BIN_PATH.joinpath(Path("adb"))),
                         "shell",
                         "dumpsys",
                         "bluetooth_manager",
@@ -218,7 +218,6 @@ class WelcomeView(BaseView):
 
             self.device_name.value = output.strip()
             # load config from file
-            # path = f"{CONFIG_PATH}/{output.strip()}.yaml"
             path = CONFIG_PATH.joinpath(Path(f"{output.strip()}.yaml"))
             load_config_success = self.load_config(path)
             if load_config_success:
@@ -231,7 +230,6 @@ class WelcomeView(BaseView):
         except CalledProcessError:
             if DEVELOPMENT:
                 path = CONFIG_PATH.joinpath(Path(f"{DEVELOPMENT_CONFIG}.yaml"))
-                # path = f"{CONFIG_PATH}/{DEVELOPMENT_CONFIG}.yaml"
                 load_config_success = self.load_config(path)
                 if load_config_success:
                     self.config_found_box.value = True
@@ -503,9 +501,9 @@ class StepView(BaseView):
 
     def call_to_phone(self, e, command: str):
         # TODO: use proper windows paths
-        command = command.replace("adb", BIN_PATH.joinpath(Path("adb")).name)
-        command = command.replace("fastboot", BIN_PATH.joinpath(Path("fastboot")).name)
-        command = command.replace("heimdall", BIN_PATH.joinpath(Path("heimdall")).name)
+        command = command.replace("adb", str(BIN_PATH.joinpath(Path("adb"))))
+        command = command.replace("fastboot", str(BIN_PATH.joinpath(Path("fastboot"))))
+        command = command.replace("heimdall", str(BIN_PATH.joinpath(Path("heimdall"))))
 
         command = command.replace("<recovery>", self.recovery_path)
         command = command.replace("<image>", self.image_path)
