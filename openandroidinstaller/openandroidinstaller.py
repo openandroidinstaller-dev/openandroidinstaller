@@ -57,7 +57,6 @@ DEVELOPMENT_CONFIG = "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
-logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
 # Define asset paths
 CONFIG_PATH = Path(__file__).parent.joinpath(Path("assets/configs")).resolve()
 IMAGE_PATH = Path(__file__).parent.joinpath(Path("assets/imgs")).resolve()
@@ -228,6 +227,7 @@ class WelcomeView(BaseView):
                 # select a new path and load again
                 pass
         except CalledProcessError:
+            logger.info(f"Did not detect a device.")
             if DEVELOPMENT:
                 path = CONFIG_PATH.joinpath(Path(f"{DEVELOPMENT_CONFIG}.yaml"))
                 load_config_success = self.load_config(path)
@@ -344,7 +344,7 @@ class SuccessView(BaseView):
 
 
 class MainView(UserControl):
-    def __init__(self, page: Page):
+    def __init__(self):
         super().__init__()
         self.config = None
         # initialize the progress bar indicator
@@ -427,8 +427,11 @@ class MainView(UserControl):
         try:
             self.config = InstallerConfig.from_file(path)
             self.num_total_steps = len(self.config.steps)
+            logger.info(f"Loaded device config from {path}.")
+            logger.info(f"Config metadata: {self.config.metadata}.")
             return self.config.metadata.get("devicename", "No device name in config.")
         except FileNotFoundError:
+            logger.info(f"No device config found for {path}.")
             return False
 
     def pick_image_result(self, e: FilePickerResultEvent):
@@ -436,6 +439,7 @@ class MainView(UserControl):
             ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
         )
         self.image_path = e.files[0].path
+        logger.info(f"Selected image from {self.image_path}")
         self.selected_image.update()
 
     def pick_recovery_result(self, e: FilePickerResultEvent):
@@ -443,6 +447,7 @@ class MainView(UserControl):
             ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
         )
         self.recovery_path = e.files[0].path
+        logger.info(f"Selected recovery from {self.recovery_path}")
         self.selected_recovery.update()
 
 
@@ -500,7 +505,11 @@ class StepView(BaseView):
         return self.view
 
     def call_to_phone(self, e, command: str):
-        # TODO: use proper windows paths
+        """
+        Run the command given on the phone.
+        
+        Some parts of the command are changed by placeholders.
+        """
         command = command.replace("adb", str(BIN_PATH.joinpath(Path("adb"))))
         command = command.replace("fastboot", str(BIN_PATH.joinpath(Path("fastboot"))))
         command = command.replace("heimdall", str(BIN_PATH.joinpath(Path("heimdall"))))
@@ -518,6 +527,7 @@ class StepView(BaseView):
         logger.info(f"Run command: {command}")
         res = call(f"{command}", shell=True)
         if res != 0:
+            logger.info(f"Command {command} failed.")
             self.right_view.controls.pop()
             self.right_view.controls.append(Text("Command {command} failed!"))
         else:
@@ -526,10 +536,12 @@ class StepView(BaseView):
             self.right_view.controls.append(
                 ElevatedButton("Confirm and continue", on_click=self.on_confirm)
             )
+            logger.info("Success.")
         self.view.update()
 
 
 def main(page: Page):
+    logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
     page.window_height = 720
@@ -581,11 +593,10 @@ def main(page: Page):
     )
     # TODO: disable the banner for now
     # page.banner.open = True
-
-    page.update()
+    # page.update()
 
     # create application instance
-    app = MainView(page)
+    app = MainView()
 
     # add application's root control to the page
     page.add(app)

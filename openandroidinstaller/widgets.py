@@ -38,6 +38,7 @@ def get_title(title: str):
 def confirm_button(
     text: str, confirm_func: Callable, confirm_text: str = "Confirm and continue"
 ) -> Column:
+    """Get a button, that calls a given function when clicked."""
     return Column(
         [
             Text(f"{text}"),
@@ -59,6 +60,7 @@ def confirm_button(
 def call_button(
     text: str, call_func: Callable, command: str, confirm_text: str = "Confirm and run"
 ) -> Column:
+    """Get a button, that calls a given function with given command when clicked."""
     return Column(
         [
             Text(f"{text}"),
