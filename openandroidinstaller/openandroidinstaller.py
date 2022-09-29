@@ -18,7 +18,7 @@ import webbrowser
 from loguru import logger
 from subprocess import STDOUT, CalledProcessError, call, check_output
 from time import sleep
-from typing import Callable
+from typing import Callable, Optional
 from pathlib import Path
 
 import flet
@@ -50,6 +50,7 @@ from flet import (
 )
 from installer_config import InstallerConfig, Step
 from widgets import call_button, confirm_button, get_title
+from tool_utils import search_device, call_tool_with_command
 
 # Toggle to True for development purposes
 DEVELOPMENT = False 
@@ -178,66 +179,34 @@ class WelcomeView(BaseView):
 
     def search_devices(self, e):
         """Search the device when the button is clicked."""
-        logger.info("Search devices...")
-        try:
-            # read device properties
-            # TODO: This is not windows ready...
-            if PLATFORM in ("linux", "darwin"):
-                output = check_output(
-                    [
-                        str(BIN_PATH.joinpath(Path("adb"))),
-                        "shell",
-                        "getprop",
-                        "|",
-                        "grep",
-                        "ro.product.device"
-                    ],
-                    stderr=STDOUT,
-                ).decode()
-            elif PLATFORM == "windows":
-                output = check_output(
-                    [
-                        str(BIN_PATH.joinpath(Path("adb"))),
-                        "shell",
-                        "getprop",
-                        "|",
-                        "findstr",
-                        "ro.product.device"
-                    ],
-                    stderr=STDOUT,
-                ).decode()
+        # search the device
+        if DEVELOPMENT:
+            # this only happens for testing
+            device_code = DEVELOPMENT_CONFIG
+            logger.info(f"Running search in development mode and loading config {device_code}.yaml.")
+        else:
+            device_code = search_device(platform=PLATFORM, bin_path=BIN_PATH)
+            if device_code:
+                self.device_name.value = device_code
             else:
-                raise Exception(f"Unknown platform {PLATFORM}.")
+                self.device_name.value = "No device detected! Connect to USB and try again."
 
-            output = output.split("[")[-1][:-2]
-            logger.info(f"Detected {output}")
-            # write the device code to the text shown in the box
-            self.device_name.value = output.strip()
+        # load the config, if a device is detected
+        if device_code:
+            self.device_name.value = device_code 
             # load config from file
-            path = CONFIG_PATH.joinpath(Path(f"{output.strip()}.yaml"))
-            load_config_success = self.load_config(path)
+            path = CONFIG_PATH.joinpath(Path(f"{device_code}.yaml"))
+            device_name = self.load_config(path)
+
             # display success in the application
-            if load_config_success:
+            if device_name:
                 self.config_found_box.value = True
                 self.continue_button.disabled = False
                 # overwrite the text field with the real name from the config
-                self.device_name.value = f"{load_config_success} (code: {output.strip()})"
+                self.device_name.value = f"{device_name} (code: {device_code})"
             else:
-                # show alternative configs here
-                # select a new path and load again
-                pass
-        except CalledProcessError:
-            logger.info(f"Did not detect a device.")
-            if DEVELOPMENT:
-                path = CONFIG_PATH.joinpath(Path(f"{DEVELOPMENT_CONFIG}.yaml"))
-                load_config_success = self.load_config(path)
-                if load_config_success:
-                    self.config_found_box.value = True
-                    self.continue_button.disabled = False
-            else:
-                self.device_name.value = (
-                    "No device detected! Connect to USB and try again."
-                )
+                # failed to load config
+                logger.info(f"Failed to load config from {path}.")
         self.view.update()
 
 
@@ -422,7 +391,7 @@ class MainView(UserControl):
             self.view.controls.append(self.final_view)
         self.view.update()
 
-    def load_config(self, path: str):
+    def load_config(self, path: str) -> Optional[str]:
         """Function to load a config file from path."""
         try:
             self.config = InstallerConfig.from_file(path)
@@ -432,7 +401,7 @@ class MainView(UserControl):
             return self.config.metadata.get("devicename", "No device name in config.")
         except FileNotFoundError:
             logger.info(f"No device config found for {path}.")
-            return False
+            return None 
 
     def pick_image_result(self, e: FilePickerResultEvent):
         self.selected_image.value = (

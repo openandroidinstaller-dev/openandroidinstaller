@@ -2,6 +2,20 @@
 
 Inspired by: https://gitlab.com/ubports/installer/android-tools-bin/-/blob/master/build.js
 """
+
+# This file is part of OpenAndroidInstaller.
+# OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation,
+# either version 3 of the License, or (at your option) any later version.
+
+# OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
+# If not, see <https://www.gnu.org/licenses/>."""
+# Author: Tobias Sterbak
+
 import requests
 from pathlib import Path
 import zipfile
@@ -46,7 +60,7 @@ def move_files_to_lib():
     """Move files to the expected path in the openandroidinstaller package."""
     target_path = Path("openandroidinstaller/bin", exist_ok=True)
     logger.info(f"Move executables to {target_path}...")
-    target_path.mkdir()
+    target_path.mkdir(exist_ok=True)
     # move adb
     adb_path = Path(__file__).parent.joinpath(Path("../tools/platform-tools/adb")).resolve()
     adb_target_path = Path(__file__).parent.joinpath(Path("../openandroidinstaller/bin/adb")).resolve()
