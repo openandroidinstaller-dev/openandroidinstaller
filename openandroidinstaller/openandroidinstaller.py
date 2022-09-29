@@ -107,7 +107,7 @@ class WelcomeView(BaseView):
             modal=True,
             title=Text("How to enable developer options and OEM unlocking"),
             content=Text(
-                "To do this, tap seven times on the build number in the System-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."
+                "To do this, tap seven times on the build number in the 'System'- or 'About the phone'-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."
             ),
             actions=[
                 TextButton("Close", on_click=self.close_developer_options_dlg),
@@ -122,7 +122,7 @@ class WelcomeView(BaseView):
                 ),
                 Divider(),
                 Text(
-                    "Before you continue, make sure your devices is on the latest system update. Also make sure you have a backup of all your important data on the phone, since this procedure will erase all data from the phone. Note, that vendor specific back-ups might not work on LineageOS!"
+                    "Before you continue, make sure your devices is on the latest system update. Also make sure you have a backup of all your important data, since this procedure will erase all data from the phone. Please store the backup not on the phone! Note, that vendor specific back-ups might not work on LineageOS!"
                 ),
                 Divider(),
                 Text(
@@ -140,7 +140,7 @@ class WelcomeView(BaseView):
                 ),
                 Divider(),
                 Text(
-                    "Now connect your device to this computer via USB and allow USB debugging in the pop-up on your phone. Then press 'Search device'."
+                    "Now connect your device to this computer via USB and allow USB debugging in the pop-up on your phone. Then press 'Search device'. When everything works correctly you should see your device name here."
                 ),
                 Divider(),
                 Column(
