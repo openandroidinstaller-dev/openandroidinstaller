@@ -19,6 +19,7 @@ from pathlib import Path
 from subprocess import STDOUT, CalledProcessError, call, check_output
 from time import sleep
 from typing import Callable, Optional
+from loguru import logger
 
 import flet
 from flet import (
@@ -47,13 +48,12 @@ from flet import (
     colors,
     icons,
 )
-from installer_config import InstallerConfig, Step
-from loguru import logger
+from installer_config import Step, _load_config
 from tool_utils import call_tool_with_command, search_device
 from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
-DEVELOPMENT = False
+DEVELOPMENT = False 
 DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 
@@ -199,8 +199,7 @@ class WelcomeView(BaseView):
         if device_code:
             self.device_name.value = device_code
             # load config from file
-            path = CONFIG_PATH.joinpath(Path(f"{device_code}.yaml"))
-            device_name = self.load_config(path)
+            device_name = self.load_config(device_code)
 
             # display success in the application
             if device_name:
@@ -394,17 +393,12 @@ class MainView(UserControl):
             self.view.controls.append(self.final_view)
         self.view.update()
 
-    def load_config(self, path: str) -> Optional[str]:
-        """Function to load a config file from path."""
-        try:
-            self.config = InstallerConfig.from_file(path)
+    def load_config(self, device_code: str) -> Optional[str]:
+        """Function to load a config file from device code."""
+        self.config = _load_config(device_code, CONFIG_PATH)
+        if self.config:
             self.num_total_steps = len(self.config.steps)
-            logger.info(f"Loaded device config from {path}.")
-            logger.info(f"Config metadata: {self.config.metadata}.")
             return self.config.metadata.get("devicename", "No device name in config.")
-        except FileNotFoundError:
-            logger.info(f"No device config found for {path}.")
-            return None
 
     def pick_image_result(self, e: FilePickerResultEvent):
         self.selected_image.value = (
@@ -496,10 +490,12 @@ class StepView(BaseView):
 
         Some parts of the command are changed by placeholders.
         """
+        # replace placeholders by the required values
         command = command.replace("<recovery>", self.recovery_path)
         command = command.replace("<image>", self.image_path)
         command = command.replace("<inputtext>", self.inputtext.value)
 
+        # display a progress ring to show something is happening
         self.right_view.controls.append(
             Row(
                 [ProgressRing(color="#00d886")],
