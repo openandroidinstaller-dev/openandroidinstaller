@@ -21,11 +21,32 @@ from time import sleep
 from typing import Callable, Optional
 
 import flet
-from flet import (AlertDialog, AppBar, Banner, Checkbox, Column, Container,
-                  Divider, ElevatedButton, FilePicker, FilePickerResultEvent,
-                  FilledButton, Icon, Image, Page, ProgressBar, ProgressRing,
-                  Row, Text, TextButton, TextField, UserControl,
-                  VerticalDivider, colors, icons)
+from flet import (
+    AlertDialog,
+    AppBar,
+    Banner,
+    Checkbox,
+    Column,
+    Container,
+    Divider,
+    ElevatedButton,
+    FilePicker,
+    FilePickerResultEvent,
+    FilledButton,
+    Icon,
+    Image,
+    Page,
+    ProgressBar,
+    ProgressRing,
+    Row,
+    Text,
+    TextButton,
+    TextField,
+    UserControl,
+    VerticalDivider,
+    colors,
+    icons,
+)
 from installer_config import InstallerConfig, Step
 from loguru import logger
 from tool_utils import call_tool_with_command, search_device
@@ -33,7 +54,7 @@ from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
 DEVELOPMENT = False
-DEVELOPMENT_CONFIG = "a3y17lte"  # "sargo"
+DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
@@ -212,9 +233,7 @@ class SelectFilesView(BaseView):
         self.selected_recovery = selected_recovery
 
     def build(self):
-        self.confirm_button = confirm_button(
-            "If you selected both files you can continue.", self.on_confirm
-        )
+        self.confirm_button = confirm_button(self.on_confirm)
         self.confirm_button.disabled = True
 
         self.pick_recovery_dialog.on_result = self.enable_button_if_ready
@@ -257,7 +276,8 @@ class SelectFilesView(BaseView):
                 ),
                 self.selected_recovery,
                 Divider(),
-                self.confirm_button,
+                Text("If you selected both files you can continue."),
+                Row([self.confirm_button]),
             ]
         )
         return self.view
@@ -423,36 +443,50 @@ class StepView(BaseView):
 
     def build(self):
         """Create the content of a view from step."""
-        self.right_view.controls = [get_title(f"{self.step.title}"), self.progressbar]
+        self.right_view.controls = [
+            get_title(f"{self.step.title}"),
+            self.progressbar,
+            Text(f"{self.step.content}"),
+        ]
         # basic view depending on step.type
         if self.step.type == "confirm_button":
-            self.right_view.controls.append(
-                confirm_button(self.step.content, self.on_confirm)
-            )
+            self.confirm_button = confirm_button(self.on_confirm)
+            self.right_view.controls.append(Row([self.confirm_button]))
         elif self.step.type == "call_button":
+            self.confirm_button = confirm_button(self.on_confirm)
+            self.confirm_button.disabled = True
+            self.call_button = call_button(
+                self.call_to_phone, command=self.step.command
+            )
             self.right_view.controls.append(
-                call_button(
-                    self.step.content, self.call_to_phone, command=self.step.command
-                )
+                Row([self.call_button, self.confirm_button])
             )
         elif self.step.type == "call_button_with_input":
-            self.right_view.controls.extend(
-                [
-                    self.inputtext,
-                    call_button(
-                        self.step.content, self.call_to_phone, command=self.step.command
-                    ),
-                ]
+            self.confirm_button = confirm_button(self.on_confirm)
+            self.confirm_button.disabled = True
+            self.call_button = call_button(
+                self.call_to_phone, command=self.step.command
             )
-        elif self.step.type == "text":
-            self.right_view.controls.append(Text(self.step.content))
-        else:
+            self.right_view.controls.extend(
+                [self.inputtext, Row([self.call_button, self.confirm_button])]
+            )
+        elif self.step.type != "text":
             raise Exception(f"Unknown step type: {self.step.type}")
 
         # if skipping is allowed add a button to the view
         if self.step.allow_skip or DEVELOPMENT:
             self.right_view.controls.append(
-                confirm_button("Already done?", self.on_confirm, confirm_text="Skip")
+                Row(
+                    [
+                        Text("Do you want to skip?"),
+                        ElevatedButton(
+                            "Skip",
+                            on_click=self.on_confirm,
+                            icon=icons.NEXT_PLAN_OUTLINED,
+                            expand=True,
+                        ),
+                    ]
+                )
             )
         return self.view
 
@@ -477,14 +511,19 @@ class StepView(BaseView):
         success = call_tool_with_command(command=command, bin_path=BIN_PATH)
         # update the view accordingly
         if success:
+            # pop the progress ring
             self.right_view.controls.pop()
-            self.right_view.controls.append(Text(f"Command {command} failed!"))
+            self.right_view.controls.append(
+                Text(
+                    f"Command {command} failed! Try again or make sure everything is setup correctly."
+                )
+            )
         else:
             sleep(5)  # wait to make sure everything is fine
-            self.right_view.controls.pop()  # pop the progress ring
-            self.right_view.controls.append(
-                ElevatedButton("Confirm and continue", on_click=self.on_confirm)
-            )
+            # pop the progress ring
+            self.right_view.controls.pop()
+            self.confirm_button.disabled = False
+            self.call_button.disabled = True
         self.view.update()
 
 

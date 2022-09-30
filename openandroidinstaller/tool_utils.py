@@ -29,7 +29,7 @@ def call_tool_with_command(command: str, bin_path: Path) -> bool:
 
     logger.info(f"Run command: {command}")
     res = call(f"{command}", shell=True)
-    if res != 0:
+    if res == 0:
         logger.info("Success.")
         return True
     logger.info(f"Command {command} failed.")
