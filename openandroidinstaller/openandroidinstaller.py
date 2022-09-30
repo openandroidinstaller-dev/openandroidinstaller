@@ -15,45 +15,24 @@
 
 import sys
 import webbrowser
-from loguru import logger
+from pathlib import Path
 from subprocess import STDOUT, CalledProcessError, call, check_output
 from time import sleep
 from typing import Callable, Optional
-from pathlib import Path
 
 import flet
-from flet import (
-    AppBar,
-    Banner,
-    Checkbox,
-    Column,
-    Container,
-    Divider,
-    ElevatedButton,
-    FilePicker,
-    FilePickerResultEvent,
-    Icon,
-    Image,
-    Page,
-    ProgressBar,
-    ProgressRing,
-    Row,
-    Text,
-    TextButton,
-    TextField,
-    UserControl,
-    VerticalDivider,
-    colors,
-    FilledButton,
-    AlertDialog,
-    icons,
-)
+from flet import (AlertDialog, AppBar, Banner, Checkbox, Column, Container,
+                  Divider, ElevatedButton, FilePicker, FilePickerResultEvent,
+                  FilledButton, Icon, Image, Page, ProgressBar, ProgressRing,
+                  Row, Text, TextButton, TextField, UserControl,
+                  VerticalDivider, colors, icons)
 from installer_config import InstallerConfig, Step
+from loguru import logger
+from tool_utils import call_tool_with_command, search_device
 from widgets import call_button, confirm_button, get_title
-from tool_utils import search_device, call_tool_with_command
 
 # Toggle to True for development purposes
-DEVELOPMENT = False 
+DEVELOPMENT = False
 DEVELOPMENT_CONFIG = "a3y17lte"  # "sargo"
 
 
@@ -183,17 +162,21 @@ class WelcomeView(BaseView):
         if DEVELOPMENT:
             # this only happens for testing
             device_code = DEVELOPMENT_CONFIG
-            logger.info(f"Running search in development mode and loading config {device_code}.yaml.")
+            logger.info(
+                f"Running search in development mode and loading config {device_code}.yaml."
+            )
         else:
             device_code = search_device(platform=PLATFORM, bin_path=BIN_PATH)
             if device_code:
                 self.device_name.value = device_code
             else:
-                self.device_name.value = "No device detected! Connect to USB and try again."
+                self.device_name.value = (
+                    "No device detected! Connect to USB and try again."
+                )
 
         # load the config, if a device is detected
         if device_code:
-            self.device_name.value = device_code 
+            self.device_name.value = device_code
             # load config from file
             path = CONFIG_PATH.joinpath(Path(f"{device_code}.yaml"))
             device_name = self.load_config(path)
@@ -401,7 +384,7 @@ class MainView(UserControl):
             return self.config.metadata.get("devicename", "No device name in config.")
         except FileNotFoundError:
             logger.info(f"No device config found for {path}.")
-            return None 
+            return None
 
     def pick_image_result(self, e: FilePickerResultEvent):
         self.selected_image.value = (
@@ -476,36 +459,32 @@ class StepView(BaseView):
     def call_to_phone(self, e, command: str):
         """
         Run the command given on the phone.
-        
+
         Some parts of the command are changed by placeholders.
         """
-        command = command.replace("adb", str(BIN_PATH.joinpath(Path("adb"))))
-        command = command.replace("fastboot", str(BIN_PATH.joinpath(Path("fastboot"))))
-        command = command.replace("heimdall", str(BIN_PATH.joinpath(Path("heimdall"))))
-
         command = command.replace("<recovery>", self.recovery_path)
         command = command.replace("<image>", self.image_path)
         command = command.replace("<inputtext>", self.inputtext.value)
+
         self.right_view.controls.append(
             Row(
-                [ProgressRing(color="#00d886")],  # , Text("Wait for completion...")],
+                [ProgressRing(color="#00d886")],
                 alignment="center",
             )
         )
         self.right_view.update()
-        logger.info(f"Run command: {command}")
-        res = call(f"{command}", shell=True)
-        if res != 0:
-            logger.info(f"Command {command} failed.")
+        # run the command
+        success = call_tool_with_command(command=command, bin_path=BIN_PATH)
+        # update the view accordingly
+        if success:
             self.right_view.controls.pop()
-            self.right_view.controls.append(Text("Command {command} failed!"))
+            self.right_view.controls.append(Text(f"Command {command} failed!"))
         else:
-            sleep(5)
+            sleep(5)  # wait to make sure everything is fine
             self.right_view.controls.pop()  # pop the progress ring
             self.right_view.controls.append(
                 ElevatedButton("Confirm and continue", on_click=self.on_confirm)
             )
-            logger.info("Success.")
         self.view.update()
 
 

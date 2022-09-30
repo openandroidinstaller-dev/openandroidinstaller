@@ -16,23 +16,26 @@ Inspired by: https://gitlab.com/ubports/installer/android-tools-bin/-/blob/maste
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-import requests
-from pathlib import Path
 import zipfile
 from io import BytesIO
-from loguru import logger
+from pathlib import Path
+
 import click
+import requests
+from loguru import logger
 
 
 def download_adb_fastboot(platform: str):
     """Download adb and fastboot executable from dl.google.com, extract the zip and save to file."""
     logger.info(f"Download adb and fastboot for {platform}...")
-    url = f"https://dl.google.com/android/repository/platform-tools-latest-{platform}.zip"
+    url = (
+        f"https://dl.google.com/android/repository/platform-tools-latest-{platform}.zip"
+    )
     # Downloading the file by sending the request to the URL
     response = requests.get(url, allow_redirects=True)
     # Split URL to get the file name
-    filename = url.split('/')[-1]
- 
+    filename = url.split("/")[-1]
+
     # Writing the file to the local file system
     download_path = Path(__file__).parent.joinpath(Path("tools")).resolve()
     file = zipfile.ZipFile(BytesIO(response.content))
@@ -47,8 +50,8 @@ def download_heimdall(platform: str):
     # Downloading the file by sending the request to the URL
     response = requests.get(url, allow_redirects=True)
     # Split URL to get the file name
-    filename = url.split('/')[-1]
- 
+    filename = url.split("/")[-1]
+
     # Writing the file to the local file system
     download_path = Path(__file__).parent.joinpath(Path("heimdall")).resolve()
     file = zipfile.ZipFile(BytesIO(response.content))
@@ -62,16 +65,34 @@ def move_files_to_lib():
     logger.info(f"Move executables to {target_path}...")
     target_path.mkdir(exist_ok=True)
     # move adb
-    adb_path = Path(__file__).parent.joinpath(Path("../tools/platform-tools/adb")).resolve()
-    adb_target_path = Path(__file__).parent.joinpath(Path("../openandroidinstaller/bin/adb")).resolve()
+    adb_path = (
+        Path(__file__).parent.joinpath(Path("../tools/platform-tools/adb")).resolve()
+    )
+    adb_target_path = (
+        Path(__file__)
+        .parent.joinpath(Path("../openandroidinstaller/bin/adb"))
+        .resolve()
+    )
     adb_path.rename(adb_target_path)
     # move fastboot
-    fb_path = Path(__file__).parent.joinpath(Path("../tools/platform-tools/fastboot")).resolve()
-    fb_target_path = Path(__file__).parent.joinpath(Path("../openandroidinstaller/bin/fastboot")).resolve()
+    fb_path = (
+        Path(__file__)
+        .parent.joinpath(Path("../tools/platform-tools/fastboot"))
+        .resolve()
+    )
+    fb_target_path = (
+        Path(__file__)
+        .parent.joinpath(Path("../openandroidinstaller/bin/fastboot"))
+        .resolve()
+    )
     fb_path.rename(fb_target_path)
     # move heimdall
     hd_path = Path(__file__).parent.joinpath(Path("../heimdall/heimdall")).resolve()
-    hd_target_path = Path(__file__).parent.joinpath(Path("../openandroidinstaller/bin/heimdall")).resolve()
+    hd_target_path = (
+        Path(__file__)
+        .parent.joinpath(Path("../openandroidinstaller/bin/heimdall"))
+        .resolve()
+    )
     hd_path.rename(hd_target_path)
     logger.info("DONE.")
     # make executable
@@ -80,9 +101,12 @@ def move_files_to_lib():
     fb_target_path.chmod(0o755)
     hd_target_path.chmod(0o755)
     logger.info("DONE.")
-    
+
+
 @click.command()
-@click.option("--platform", help="On which platform should the tools work?", default="linux")
+@click.option(
+    "--platform", help="On which platform should the tools work?", default="linux"
+)
 def main(platform: str):
     download_adb_fastboot(platform=platform)
     download_heimdall(platform=platform)

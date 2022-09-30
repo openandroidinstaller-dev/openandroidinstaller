@@ -13,15 +13,28 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-from typing import Optional
-from loguru import logger
 from pathlib import Path
 from subprocess import STDOUT, CalledProcessError, call, check_output
+from typing import Optional
+
+import regex as re
+from loguru import logger
 
 
-def call_tool_with_command(command: str, bin_path: Path):
+def call_tool_with_command(command: str, bin_path: Path) -> bool:
     """Call an executable with a specific command."""
-    
+    command = re.sub(r"^adb", str(bin_path.joinpath(Path("adb"))), command)
+    command = re.sub(r"^fastboot", str(bin_path.joinpath(Path("fastboot"))), command)
+    command = re.sub(r"^heimdall", str(bin_path.joinpath(Path("heimdall"))), command)
+
+    logger.info(f"Run command: {command}")
+    res = call(f"{command}", shell=True)
+    if res != 0:
+        logger.info("Success.")
+        return True
+    logger.info(f"Command {command} failed.")
+    return False
+
 
 def search_device(platform: str, bin_path: Path) -> Optional[str]:
     """Search for a connected device."""
@@ -37,7 +50,7 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
                     "getprop",
                     "|",
                     "grep",
-                    "ro.product.device"
+                    "ro.product.device",
                 ],
                 stderr=STDOUT,
             ).decode()
@@ -49,7 +62,7 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
                     "getprop",
                     "|",
                     "findstr",
-                    "ro.product.device"
+                    "ro.product.device",
                 ],
                 stderr=STDOUT,
             ).decode()
