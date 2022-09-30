@@ -209,7 +209,7 @@ class WelcomeView(BaseView):
                 self.device_name.value = f"{device_name} (code: {device_code})"
             else:
                 # failed to load config
-                logger.info(f"Failed to load config from {path}.")
+                logger.info(f"Failed to load config for {device_code}.")
         self.view.update()
 
 

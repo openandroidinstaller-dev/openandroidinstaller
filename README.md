@@ -31,7 +31,7 @@ If you wish to backup the TA partition first, you can find tutorials related to 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
-Samsung | Galaxy A5 2016 | a5xelte |  | under development
+Samsung | Galaxy A5 2016 | a5xelte |  | tested
 Samsung | Galaxy S7 | herolte |  | planned
 Google | Pixel 3a | sargo | sargo | tested
 Sony | Xperia Z | yuga | C6603 | tested
