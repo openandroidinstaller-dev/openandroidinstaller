@@ -16,7 +16,6 @@
 import sys
 import webbrowser
 from pathlib import Path
-from subprocess import STDOUT, CalledProcessError, call, check_output
 from time import sleep
 from typing import Callable, Optional
 from loguru import logger
@@ -52,8 +51,9 @@ from installer_config import Step, _load_config
 from tool_utils import call_tool_with_command, search_device
 from widgets import call_button, confirm_button, get_title
 
+
 # Toggle to True for development purposes
-DEVELOPMENT = False 
+DEVELOPMENT = False
 DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 

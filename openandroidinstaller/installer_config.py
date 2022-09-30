@@ -52,7 +52,7 @@ class InstallerConfig:
                 raw_steps = config["steps"]
                 metadata = config["metadata"]
             except yaml.YAMLError as exc:
-                print(exc)
+                logger.info(exc)
 
         steps = [Step(**raw_step) for raw_step in raw_steps]
         return cls(steps, metadata)
