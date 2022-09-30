@@ -506,7 +506,7 @@ class StepView(BaseView):
         # run the command
         success = call_tool_with_command(command=command, bin_path=BIN_PATH)
         # update the view accordingly
-        if success:
+        if not success:
             # pop the progress ring
             self.right_view.controls.pop()
             self.right_view.controls.append(
