@@ -15,14 +15,14 @@
 
 import sys
 import webbrowser
-from loguru import logger
-from subprocess import STDOUT, CalledProcessError, call, check_output
-from time import sleep
-from typing import Callable
 from pathlib import Path
+from time import sleep
+from typing import Callable, Optional
+from loguru import logger
 
 import flet
 from flet import (
+    AlertDialog,
     AppBar,
     Banner,
     Checkbox,
@@ -32,6 +32,7 @@ from flet import (
     ElevatedButton,
     FilePicker,
     FilePickerResultEvent,
+    FilledButton,
     Icon,
     Image,
     Page,
@@ -44,16 +45,16 @@ from flet import (
     UserControl,
     VerticalDivider,
     colors,
-    FilledButton,
-    AlertDialog,
     icons,
 )
-from installer_config import InstallerConfig, Step
+from installer_config import Step, _load_config
+from tool_utils import call_tool_with_command, search_device
 from widgets import call_button, confirm_button, get_title
 
+
 # Toggle to True for development purposes
-DEVELOPMENT = False 
-DEVELOPMENT_CONFIG = "a3y17lte"  # "sargo"
+DEVELOPMENT = False
+DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
@@ -106,7 +107,7 @@ class WelcomeView(BaseView):
             modal=True,
             title=Text("How to enable developer options and OEM unlocking"),
             content=Text(
-                "To do this, tap seven times on the build number in the System-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."
+                "To do this, tap seven times on the build number in the 'System'- or 'About the phone'-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."
             ),
             actions=[
                 TextButton("Close", on_click=self.close_developer_options_dlg),
@@ -121,7 +122,7 @@ class WelcomeView(BaseView):
                 ),
                 Divider(),
                 Text(
-                    "Before you continue, make sure your devices is on the latest system update. Also make sure you have a backup of all your important data on the phone, since this procedure will erase all data from the phone. Note, that vendor specific back-ups might not work on LineageOS!"
+                    "Before you continue, make sure your devices is on the latest system update. Also make sure you have a backup of all your important data, since this procedure will erase all data from the phone. Please store the backup not on the phone! Note, that vendor specific back-ups might not work on LineageOS!"
                 ),
                 Divider(),
                 Text(
@@ -139,7 +140,7 @@ class WelcomeView(BaseView):
                 ),
                 Divider(),
                 Text(
-                    "Now connect your device to this computer via USB and allow USB debugging in the pop-up on your phone. Then press 'Search device'."
+                    "Now connect your device to this computer via USB and allow USB debugging in the pop-up on your phone. Then press 'Search device'. When everything works correctly you should see your device name here."
                 ),
                 Divider(),
                 Column(
@@ -178,66 +179,37 @@ class WelcomeView(BaseView):
 
     def search_devices(self, e):
         """Search the device when the button is clicked."""
-        logger.info("Search devices...")
-        try:
-            # read device properties
-            # TODO: This is not windows ready...
-            if PLATFORM in ("linux", "darwin"):
-                output = check_output(
-                    [
-                        str(BIN_PATH.joinpath(Path("adb"))),
-                        "shell",
-                        "getprop",
-                        "|",
-                        "grep",
-                        "ro.product.device"
-                    ],
-                    stderr=STDOUT,
-                ).decode()
-            elif PLATFORM == "windows":
-                output = check_output(
-                    [
-                        str(BIN_PATH.joinpath(Path("adb"))),
-                        "shell",
-                        "getprop",
-                        "|",
-                        "findstr",
-                        "ro.product.device"
-                    ],
-                    stderr=STDOUT,
-                ).decode()
-            else:
-                raise Exception(f"Unknown platform {PLATFORM}.")
-
-            output = output.split("[")[-1][:-2]
-            logger.info(f"Detected {output}")
-            # write the device code to the text shown in the box
-            self.device_name.value = output.strip()
-            # load config from file
-            path = CONFIG_PATH.joinpath(Path(f"{output.strip()}.yaml"))
-            load_config_success = self.load_config(path)
-            # display success in the application
-            if load_config_success:
-                self.config_found_box.value = True
-                self.continue_button.disabled = False
-                # overwrite the text field with the real name from the config
-                self.device_name.value = f"{load_config_success} (code: {output.strip()})"
-            else:
-                # show alternative configs here
-                # select a new path and load again
-                pass
-        except CalledProcessError:
-            logger.info(f"Did not detect a device.")
-            if DEVELOPMENT:
-                path = CONFIG_PATH.joinpath(Path(f"{DEVELOPMENT_CONFIG}.yaml"))
-                load_config_success = self.load_config(path)
-                if load_config_success:
-                    self.config_found_box.value = True
-                    self.continue_button.disabled = False
+        # search the device
+        if DEVELOPMENT:
+            # this only happens for testing
+            device_code = DEVELOPMENT_CONFIG
+            logger.info(
+                f"Running search in development mode and loading config {device_code}.yaml."
+            )
+        else:
+            device_code = search_device(platform=PLATFORM, bin_path=BIN_PATH)
+            if device_code:
+                self.device_name.value = device_code
             else:
                 self.device_name.value = (
                     "No device detected! Connect to USB and try again."
                 )
+
+        # load the config, if a device is detected
+        if device_code:
+            self.device_name.value = device_code
+            # load config from file
+            device_name = self.load_config(device_code)
+
+            # display success in the application
+            if device_name:
+                self.config_found_box.value = True
+                self.continue_button.disabled = False
+                # overwrite the text field with the real name from the config
+                self.device_name.value = f"{device_name} (code: {device_code})"
+            else:
+                # failed to load config
+                logger.info(f"Failed to load config from {path}.")
         self.view.update()
 
 
@@ -260,9 +232,7 @@ class SelectFilesView(BaseView):
         self.selected_recovery = selected_recovery
 
     def build(self):
-        self.confirm_button = confirm_button(
-            "If you selected both files you can continue.", self.on_confirm
-        )
+        self.confirm_button = confirm_button(self.on_confirm)
         self.confirm_button.disabled = True
 
         self.pick_recovery_dialog.on_result = self.enable_button_if_ready
@@ -305,7 +275,8 @@ class SelectFilesView(BaseView):
                 ),
                 self.selected_recovery,
                 Divider(),
-                self.confirm_button,
+                Text("If you selected both files you can continue."),
+                Row([self.confirm_button]),
             ]
         )
         return self.view
@@ -422,17 +393,12 @@ class MainView(UserControl):
             self.view.controls.append(self.final_view)
         self.view.update()
 
-    def load_config(self, path: str):
-        """Function to load a config file from path."""
-        try:
-            self.config = InstallerConfig.from_file(path)
+    def load_config(self, device_code: str) -> Optional[str]:
+        """Function to load a config file from device code."""
+        self.config = _load_config(device_code, CONFIG_PATH)
+        if self.config:
             self.num_total_steps = len(self.config.steps)
-            logger.info(f"Loaded device config from {path}.")
-            logger.info(f"Config metadata: {self.config.metadata}.")
             return self.config.metadata.get("devicename", "No device name in config.")
-        except FileNotFoundError:
-            logger.info(f"No device config found for {path}.")
-            return False
 
     def pick_image_result(self, e: FilePickerResultEvent):
         self.selected_image.value = (
@@ -471,72 +437,89 @@ class StepView(BaseView):
 
     def build(self):
         """Create the content of a view from step."""
-        self.right_view.controls = [get_title(f"{self.step.title}"), self.progressbar]
+        self.right_view.controls = [
+            get_title(f"{self.step.title}"),
+            self.progressbar,
+            Text(f"{self.step.content}"),
+        ]
         # basic view depending on step.type
         if self.step.type == "confirm_button":
-            self.right_view.controls.append(
-                confirm_button(self.step.content, self.on_confirm)
-            )
+            self.confirm_button = confirm_button(self.on_confirm)
+            self.right_view.controls.append(Row([self.confirm_button]))
         elif self.step.type == "call_button":
+            self.confirm_button = confirm_button(self.on_confirm)
+            self.confirm_button.disabled = True
+            self.call_button = call_button(
+                self.call_to_phone, command=self.step.command
+            )
             self.right_view.controls.append(
-                call_button(
-                    self.step.content, self.call_to_phone, command=self.step.command
-                )
+                Row([self.call_button, self.confirm_button])
             )
         elif self.step.type == "call_button_with_input":
-            self.right_view.controls.extend(
-                [
-                    self.inputtext,
-                    call_button(
-                        self.step.content, self.call_to_phone, command=self.step.command
-                    ),
-                ]
+            self.confirm_button = confirm_button(self.on_confirm)
+            self.confirm_button.disabled = True
+            self.call_button = call_button(
+                self.call_to_phone, command=self.step.command
             )
-        elif self.step.type == "text":
-            self.right_view.controls.append(Text(self.step.content))
-        else:
+            self.right_view.controls.extend(
+                [self.inputtext, Row([self.call_button, self.confirm_button])]
+            )
+        elif self.step.type != "text":
             raise Exception(f"Unknown step type: {self.step.type}")
 
         # if skipping is allowed add a button to the view
         if self.step.allow_skip or DEVELOPMENT:
             self.right_view.controls.append(
-                confirm_button("Already done?", self.on_confirm, confirm_text="Skip")
+                Row(
+                    [
+                        Text("Do you want to skip?"),
+                        ElevatedButton(
+                            "Skip",
+                            on_click=self.on_confirm,
+                            icon=icons.NEXT_PLAN_OUTLINED,
+                            expand=True,
+                        ),
+                    ]
+                )
             )
         return self.view
 
     def call_to_phone(self, e, command: str):
         """
         Run the command given on the phone.
-        
+
         Some parts of the command are changed by placeholders.
         """
-        command = command.replace("adb", str(BIN_PATH.joinpath(Path("adb"))))
-        command = command.replace("fastboot", str(BIN_PATH.joinpath(Path("fastboot"))))
-        command = command.replace("heimdall", str(BIN_PATH.joinpath(Path("heimdall"))))
-
+        # replace placeholders by the required values
         command = command.replace("<recovery>", self.recovery_path)
         command = command.replace("<image>", self.image_path)
         command = command.replace("<inputtext>", self.inputtext.value)
+
+        # display a progress ring to show something is happening
         self.right_view.controls.append(
             Row(
-                [ProgressRing(color="#00d886")],  # , Text("Wait for completion...")],
+                [ProgressRing(color="#00d886")],
                 alignment="center",
             )
         )
         self.right_view.update()
-        logger.info(f"Run command: {command}")
-        res = call(f"{command}", shell=True)
-        if res != 0:
-            logger.info(f"Command {command} failed.")
+        # run the command
+        success = call_tool_with_command(command=command, bin_path=BIN_PATH)
+        # update the view accordingly
+        if not success:
+            # pop the progress ring
             self.right_view.controls.pop()
-            self.right_view.controls.append(Text("Command {command} failed!"))
-        else:
-            sleep(5)
-            self.right_view.controls.pop()  # pop the progress ring
             self.right_view.controls.append(
-                ElevatedButton("Confirm and continue", on_click=self.on_confirm)
+                Text(
+                    f"Command {command} failed! Try again or make sure everything is setup correctly."
+                )
             )
-            logger.info("Success.")
+        else:
+            sleep(5)  # wait to make sure everything is fine
+            # pop the progress ring
+            self.right_view.controls.pop()
+            self.confirm_button.disabled = False
+            self.call_button.disabled = True
         self.view.update()
 
 

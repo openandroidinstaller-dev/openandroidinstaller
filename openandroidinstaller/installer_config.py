@@ -13,7 +13,9 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-from typing import List
+from typing import List, Optional
+from pathlib import Path
+from loguru import logger
 
 import yaml
 
@@ -50,7 +52,33 @@ class InstallerConfig:
                 raw_steps = config["steps"]
                 metadata = config["metadata"]
             except yaml.YAMLError as exc:
-                print(exc)
+                logger.info(exc)
 
         steps = [Step(**raw_step) for raw_step in raw_steps]
         return cls(steps, metadata)
+
+
+def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfig]:
+    """
+    Function to load a function from given path and directory path.
+    
+    Try to load local file in the same directory as the executable first, then load from assets.
+    """
+    # try loading a custom local file first
+    custom_path = Path.cwd().joinpath(Path(f"{device_code}.yaml"))
+    try:
+        config = InstallerConfig.from_file(custom_path)
+        logger.info(f"Loaded custom device config from {custom_path}.")
+        logger.info(f"Config metadata: {config.metadata}.")
+        return config
+    except FileNotFoundError:
+        # if no localfile, then try to load a config file from assets
+        path = config_path.joinpath(Path(f"{device_code}.yaml"))
+        try:
+            config = InstallerConfig.from_file(path)
+            logger.info(f"Loaded device config from {path}.")
+            logger.info(f"Config metadata: {config.metadata}.")
+            return config
+        except FileNotFoundError:
+            logger.info(f"No device config found for {path}.")
+            return None

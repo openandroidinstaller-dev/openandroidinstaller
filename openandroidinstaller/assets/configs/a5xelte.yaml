@@ -20,10 +20,10 @@ steps:
     content: "Now tap 'Wipe' on your phone. Then tap 'Format Data' and continue with the formatting process. This will remove encryption and delete all files stored in the internal storage. Confirm to continue once you are done."
   - title: "Flash LineageOS"
     type: confirm_button
-    content: "Return to the previous menu on your phone and tap 'Advanced Wipe', then select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'. Confirm to continue once you are done."
+    content: "Return to the previous menu on your phone by going back two times. Them tap 'Advanced Wipe', and select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'. Confirm to continue once you are done."
   - title: "Flash LineageOS"
     type: confirm_button
-    content: "Now connect the phone to the computer again with the USB-cable. On the device, go back and select “Advanced”, “ADB Sideload”, then swipe to begin sideload. Then confirm here."
+    content: "Now connect the phone to the computer again with the USB-cable. On the device, go back three times and select “Advanced”, then “ADB Sideload”. Select 'Wipe cache' and 'Wipe dalvik cache', then swipe to begin sideload. Then confirm here."
   - title: "Flash LineageOS"
     type: call_button
     content: "Now it's time to flash the LineageOS image. Don't remove the USB-Cable and press 'Confirm and run' to start! This might take a while. Confirm after it's done."
