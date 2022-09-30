@@ -36,44 +36,24 @@ def get_title(title: str):
 
 
 def confirm_button(
-    text: str, confirm_func: Callable, confirm_text: str = "Confirm and continue"
-) -> Column:
+    confirm_func: Callable, confirm_text: str = "Confirm and continue"
+) -> ElevatedButton:
     """Get a button, that calls a given function when clicked."""
-    return Column(
-        [
-            Text(f"{text}"),
-            Row(
-                [
-                    ElevatedButton(
-                        f"{confirm_text}",
-                        on_click=confirm_func,
-                        icon=icons.NEXT_PLAN_OUTLINED,
-                        expand=True,
-                    )
-                ]
-            ),
-        ],
-        horizontal_alignment="center",
+    return ElevatedButton(
+        f"{confirm_text}",
+        on_click=confirm_func,
+        icon=icons.NEXT_PLAN_OUTLINED,
+        expand=True,
     )
 
 
 def call_button(
-    text: str, call_func: Callable, command: str, confirm_text: str = "Confirm and run"
-) -> Column:
+    call_func: Callable, command: str, confirm_text: str = "Confirm and run"
+) -> ElevatedButton:
     """Get a button, that calls a given function with given command when clicked."""
-    return Column(
-        [
-            Text(f"{text}"),
-            Row(
-                [
-                    ElevatedButton(
-                        f"{confirm_text}",
-                        on_click=partial(call_func, command=command),
-                        expand=True,
-                        icon=icons.DIRECTIONS_RUN_OUTLINED,
-                    )
-                ]
-            ),
-        ],
-        horizontal_alignment="center",
+    return ElevatedButton(
+        f"{confirm_text}",
+        on_click=partial(call_func, command=command),
+        expand=True,
+        icon=icons.DIRECTIONS_RUN_OUTLINED,
     )
