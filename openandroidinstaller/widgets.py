@@ -16,7 +16,7 @@
 from functools import partial
 from typing import Callable
 
-from flet import Column, Container, ElevatedButton, Row, Text, alignment, icons
+from flet import Container, ElevatedButton, Row, Text, alignment, icons
 
 
 def get_title(title: str):
