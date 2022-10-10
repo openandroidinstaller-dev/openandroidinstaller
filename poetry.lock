@@ -107,6 +107,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "contextlib2"
+version = "21.6.0"
+description = "Backports and enhancements for the contextlib module"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "cryptography"
 version = "38.0.1"
 description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
@@ -430,6 +438,17 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "schema"
+version = "0.7.5"
+description = "Simple data validation library"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+contextlib2 = ">=0.5.5"
+
+[[package]]
 name = "setuptools"
 version = "65.4.0"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
@@ -517,7 +536,7 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "<3.11,>=3.8"
-content-hash = "b8ffc7a61ee67c48568c75a778d899826b7fda6c6b3e5b0e7125190f53e38e4c"
+content-hash = "788d7f9bbcb3b4fa8fa7036ef15d605ee6653479c7e4a3dd55908d02c8dfec14"
 
 [metadata.files]
 altgraph = [
@@ -638,6 +657,10 @@ click = [
 colorama = [
     {file = "colorama-0.4.5-py2.py3-none-any.whl", hash = "sha256:854bf444933e37f5824ae7bfc1e98d5bce2ebe4160d46b5edf346a89358e99da"},
     {file = "colorama-0.4.5.tar.gz", hash = "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"},
+]
+contextlib2 = [
+    {file = "contextlib2-21.6.0-py2.py3-none-any.whl", hash = "sha256:3fbdb64466afd23abaf6c977627b75b6139a5a3e8ce38405c5b413aed7a0471f"},
+    {file = "contextlib2-21.6.0.tar.gz", hash = "sha256:ab1e2bfe1d01d968e1b7e8d9023bc51ef3509bba217bb730cee3827e1ee82869"},
 ]
 cryptography = [
     {file = "cryptography-38.0.1-cp36-abi3-macosx_10_10_universal2.whl", hash = "sha256:10d1f29d6292fc95acb597bacefd5b9e812099d75a6469004fd38ba5471a977f"},
@@ -983,6 +1006,10 @@ ruff = [
     {file = "ruff-0.0.25-py3-none-win32.whl", hash = "sha256:3962b0a8d68631774cd55165bb5976bad0dc3f74d06eded6ab6a6b9f6453bb37"},
     {file = "ruff-0.0.25-py3-none-win_amd64.whl", hash = "sha256:fa4df41b5a9622661402766015588663176f6c4b8abf403b739eec3f058fac2b"},
     {file = "ruff-0.0.25.tar.gz", hash = "sha256:00383f785841f2c04d9eb281d316fd74e0b4f9171b641bd20fab98273b39c097"},
+]
+schema = [
+    {file = "schema-0.7.5-py2.py3-none-any.whl", hash = "sha256:f3ffdeeada09ec34bf40d7d79996d9f7175db93b7a5065de0faa7f41083c1e6c"},
+    {file = "schema-0.7.5.tar.gz", hash = "sha256:f06717112c61895cabc4707752b88716e8420a8819d71404501e114f91043197"},
 ]
 setuptools = [
     {file = "setuptools-65.4.0-py3-none-any.whl", hash = "sha256:c2d2709550f15aab6c9110196ea312f468f41cd546bceb24127a1be6fdcaeeb1"},

@@ -33,7 +33,7 @@ from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
 DEVELOPMENT = True
-DEVELOPMENT_CONFIG = "FP2"  # "a3y17lte"  # "sargo"
+DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
@@ -217,6 +217,7 @@ class WelcomeView(BaseView):
             else:
                 # failed to load config
                 logger.info(f"Failed to load config for {device_code}.")
+                self.device_name.value = f"Failed to load config for {device_code}."
         self.view.update()
 
 

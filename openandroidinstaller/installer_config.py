@@ -15,6 +15,8 @@
 
 from pathlib import Path
 from typing import List, Optional
+import schema
+from schema import Regex, Schema, SchemaError
 
 import yaml
 from loguru import logger
@@ -56,11 +58,16 @@ class InstallerConfig:
         with open(path, "r") as stream:
             try:
                 raw_config = yaml.safe_load(stream)
-                config = dict(raw_config)
-                raw_steps = config["steps"]
-                metadata = config["metadata"]
+                if validate_config(raw_config):
+                    config = dict(raw_config)
+                    raw_steps = config["steps"]
+                    metadata = config["metadata"]
+                else:
+                    logger.info("Validation of config failed.")
+                    return None
             except yaml.YAMLError as exc:
                 logger.info(exc)
+                return None
 
         if raw_steps.get("unlock_bootloader") is not None:
             unlock_bootloader = [
@@ -92,8 +99,42 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
         try:
             config = InstallerConfig.from_file(path)
             logger.info(f"Loaded device config from {path}.")
-            logger.info(f"Config metadata: {config.metadata}.")
+            if config:
+                logger.info(f"Config metadata: {config.metadata}.")
             return config
         except FileNotFoundError:
             logger.info(f"No device config found for {path}.")
             return None
+
+
+def validate_config(config: str) -> bool:
+    """Validate the schema of the config.""" 
+
+    step_schema = {
+        "title": str,
+        "type": Regex(r"text|confirm_button|call_button|call_button_with_input"),
+        "content": str,
+        schema.Optional("command"): Regex(r"^adb\s|^fastboot\s|^heimdall\s"), 
+        schema.Optional("allow_skip"): bool,
+    }
+
+    config_schema = Schema({
+        "metadata": {
+            "maintainer": str,
+            "devicename": str,
+            "devicecode": str,
+        },
+        "requirements": schema.Or(None, []),
+        "steps": {
+            "unlock_bootloader": schema.Or(None, [step_schema]),
+            "flash_recovery": [step_schema],
+            "install_os": [step_schema],
+        }
+    })
+    try:
+        config_schema.validate(config)
+        logger.info("Config is valid.")
+        return True
+    except SchemaError as se:
+        logger.info(f"Config is invalid. Error {se}")
+        return False
