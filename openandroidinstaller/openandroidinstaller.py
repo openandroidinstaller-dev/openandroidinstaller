@@ -104,6 +104,7 @@ class WelcomeView(BaseView):
                 self.state.steps = (
                     self.state.config.flash_recovery + self.state.config.install_os
                 )
+                self.state.num_total_steps = len(self.state.steps)
             else:
                 logger.info("Enabled unlocking the bootloader again.")
                 self.state.steps = (
@@ -111,6 +112,7 @@ class WelcomeView(BaseView):
                     + self.state.config.flash_recovery
                     + self.state.config.install_os
                 )
+                self.state.num_total_steps = len(self.state.steps)
 
         self.bootloader_checkbox = Checkbox(
             label="Bootlaoder is already unlocked.", on_change=check_bootloader_unlocked
@@ -413,7 +415,7 @@ class MainView(UserControl):
         # if a config is loaded, display a progress bar
         if self.config:
             self.progress_bar.value = (self.num_steps - 1) / (
-                self.num_total_steps + 2
+                self.state.num_total_steps + 2
             )  # don't show on the first step
             self.num_steps += 1  # increase the step counter
         # if there are default views left, display them first
@@ -445,7 +447,7 @@ class MainView(UserControl):
                 + self.config.flash_recovery
                 + self.config.install_os
             )
-            self.num_total_steps = len(self.state.steps)
+            self.state.num_total_steps = len(self.state.steps)
             return self.config.metadata.get("devicename", "No device name in config.")
 
     def pick_image_result(self, e: FilePickerResultEvent):
