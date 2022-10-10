@@ -124,7 +124,6 @@ def validate_config(config: str) -> bool:
             "devicename": str,
             "devicecode": str,
         },
-        "requirements": schema.Or(None, []),
         "steps": {
             "unlock_bootloader": schema.Or(None, [step_schema]),
             "flash_recovery": [step_schema],

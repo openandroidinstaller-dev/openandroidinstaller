@@ -2,7 +2,6 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   devicename: Pixel 3a
   devicecode: sargo 
-requirements:
 steps:
   unlock_bootloader:
     - title: "Unlock the bootloader"

@@ -2,7 +2,6 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   devicename: Sony Xperia Z
   devicecode: yuga
-requirements:
 steps:
   unlock_bootloader:
     - title: "Unlock the bootloader"
@@ -10,7 +9,7 @@ steps:
       content: As a first step, you need to unlock the bootloader of your device. On the device, dial *#*#7378423#*#* (*#*#SERVICE#*#*) to launch the service menu.
     - title: "Unlock the bootloader"
       type: confirm_button
-      content: Go to service info > configuration and check rooting status - you can only continue if it says 'Bootloader unlock allowed: Yes.'
+      content: Go to service info > configuration and check rooting status - you can only continue if it says 'Bootloader unlock allowed":" Yes.'
     - title: "Unlock the bootloader"
       type: confirm_button
       content: Connect the device to your PC via USB. And confirm to continue.

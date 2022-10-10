@@ -2,7 +2,6 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   devicename: Fairphone 2
   devicecode: FP2
-requirements:
 steps:
   unlock_bootloader:
   flash_recovery:
