@@ -33,7 +33,7 @@ from widgets import call_button, confirm_button, get_title
 
 # Toggle to True for development purposes
 DEVELOPMENT = True
-DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
+DEVELOPMENT_CONFIG = "FP2"  # "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
@@ -261,7 +261,7 @@ class SelectFilesView(BaseView):
                 Column(
                     [
                         Text(
-                            "You can download supported images and recovery for your device here:"
+                            "You can download supported image and recovery file for your device here:"
                         ),
                         Row(
                             [

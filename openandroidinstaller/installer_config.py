@@ -62,11 +62,14 @@ class InstallerConfig:
             except yaml.YAMLError as exc:
                 logger.info(exc)
 
-        unlock_bootloader = [
-            Step(**raw_step) for raw_step in raw_steps["unlock_bootloader"]
-        ]
-        flash_recovery = [Step(**raw_step) for raw_step in raw_steps["flash_recovery"]]
-        install_os = [Step(**raw_step) for raw_step in raw_steps["install_os"]]
+        if raw_steps.get("unlock_bootloader") is not None:
+            unlock_bootloader = [
+                Step(**raw_step) for raw_step in raw_steps.get("unlock_bootloader")
+            ]
+        else:
+            unlock_bootloader = []
+        flash_recovery = [Step(**raw_step) for raw_step in raw_steps.get("flash_recovery", [])]
+        install_os = [Step(**raw_step) for raw_step in raw_steps.get("install_os", [])]
         return cls(unlock_bootloader, flash_recovery, install_os, metadata)
 
 
