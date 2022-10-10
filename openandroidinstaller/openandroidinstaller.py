@@ -23,7 +23,7 @@ import flet
 from flet import (AlertDialog, AppBar, Banner, Checkbox, Column, Container,
                   Divider, ElevatedButton, FilePicker, FilePickerResultEvent,
                   FilledButton, Icon, Image, Page, ProgressBar, ProgressRing,
-                  Row, Text, TextButton, TextField, UserControl,
+                  Row, Text, TextButton, TextField, UserControl, FloatingActionButton,
                   VerticalDivider, colors, icons)
 from installer_config import InstallerConfig, Step, _load_config
 from loguru import logger
@@ -48,7 +48,7 @@ class BaseView(UserControl):
         super().__init__()
         self.right_view = Column(expand=True)
         self.left_view = Column(
-            width=480,
+            width=600,
             controls=[Image(src=IMAGE_PATH.joinpath(Path(image)))],
             expand=True,
             horizontal_alignment="center",
@@ -361,11 +361,11 @@ class MainView(UserControl):
         self.state = AppState()
         # initialize the progress bar indicator
         self.progress_bar = ProgressBar(
-            width=480, color="#00d886", bgcolor="#eeeeee", bar_height=16
+            width=600, color="#00d886", bgcolor="#eeeeee", bar_height=16
         )
         self.progress_bar.value = 0
         # create the main columns
-        self.view = Column(expand=True, width=800)
+        self.view = Column(expand=True, width=1200)
         # initialize global stuff
         # file pickers
         self.pick_image_dialog = FilePicker(on_result=self.pick_image_result)
@@ -578,10 +578,10 @@ def main(page: Page):
     logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
-    page.window_height = 720
-    page.window_width = int(1.5 * page.window_height)
+    page.window_height = 780 
+    page.window_width = int(1.77 * page.window_height)
     page.window_top = 100
-    page.window_left = 720
+    page.window_left = 120
     page.scroll = "adaptive"
     page.horizontal_alignment = "center"
 
@@ -631,6 +631,21 @@ def main(page: Page):
 
     # create application instance
     app = MainView()
+
+    # add a button that restarts the process
+    def restart_process(e):
+        logger.info("Restarted the process. Reset everything.")
+        page.controls.pop()
+        app = MainView()
+        page.add(app)
+        page.update()
+
+    page.floating_action_button = FloatingActionButton(
+        text="Restart the process",
+        icon=icons.RESTART_ALT_OUTLINED,
+        tooltip="You can safely restart if you missed a step or didn't make it.",
+        on_click=restart_process,
+    )
 
     # add application's root control to the page
     page.add(app)
