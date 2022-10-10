@@ -16,6 +16,7 @@ Inspired by: https://gitlab.com/ubports/installer/android-tools-bin/-/blob/maste
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import sys
 import zipfile
 from io import BytesIO
 from pathlib import Path
@@ -114,4 +115,4 @@ def main(platform: str):
 
 
 if __name__ == "__main__":
-    main()
+    main(platform=sys.platform)

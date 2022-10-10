@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+    - "automatic-builds"
+    #tags:
+    #- '**'           # Push events to every tag including hierarchical tags like v1.0/beta
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['windows-latest', 'ubuntu-latest', 'macos-latest']
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.10.7
+    - run: make install
+    - run: make build-app
+    # Optionally verify that it works (provided that it does not need user interaction)
+    #- run: ./dist/your-code/your-code
+    - uses: actions/upload-artifact@v3
+      with:
+        name: openandroidinstaller-${{ github.sha }}-${{ matrix.os }}
+        path: dist/
