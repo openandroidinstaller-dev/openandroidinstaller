@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   devicename: Sony Xperia Z
+  devicecode: yuga
 requirements:
 steps:
   - title: "Unlock the bootloader"

@@ -13,11 +13,11 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-from typing import List, Optional
 from pathlib import Path
-from loguru import logger
+from typing import List, Optional
 
 import yaml
+from loguru import logger
 
 
 class Step:
@@ -39,8 +39,16 @@ class Step:
 
 
 class InstallerConfig:
-    def __init__(self, steps: List[Step], metadata: dict):
-        self.steps = steps
+    def __init__(
+        self,
+        unlock_bootloader: List[Step],
+        flash_recovery: List[Step],
+        install_os: List[Step],
+        metadata: dict,
+    ):
+        self.unlock_bootloader = unlock_bootloader
+        self.flash_recovery = flash_recovery
+        self.install_os = install_os
         self.metadata = metadata
 
     @classmethod
@@ -54,14 +62,18 @@ class InstallerConfig:
             except yaml.YAMLError as exc:
                 logger.info(exc)
 
-        steps = [Step(**raw_step) for raw_step in raw_steps]
-        return cls(steps, metadata)
+        unlock_bootloader = [
+            Step(**raw_step) for raw_step in raw_steps["unlock_bootloader"]
+        ]
+        flash_recovery = [Step(**raw_step) for raw_step in raw_steps["flash_recovery"]]
+        install_os = [Step(**raw_step) for raw_step in raw_steps["install_os"]]
+        return cls(unlock_bootloader, flash_recovery, install_os, metadata)
 
 
 def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfig]:
     """
     Function to load a function from given path and directory path.
-    
+
     Try to load local file in the same directory as the executable first, then load from assets.
     """
     # try loading a custom local file first

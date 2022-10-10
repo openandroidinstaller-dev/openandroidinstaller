@@ -18,42 +18,21 @@ import webbrowser
 from pathlib import Path
 from time import sleep
 from typing import Callable, Optional
-from loguru import logger
 
 import flet
-from flet import (
-    AlertDialog,
-    AppBar,
-    Banner,
-    Checkbox,
-    Column,
-    Container,
-    Divider,
-    ElevatedButton,
-    FilePicker,
-    FilePickerResultEvent,
-    FilledButton,
-    Icon,
-    Image,
-    Page,
-    ProgressBar,
-    ProgressRing,
-    Row,
-    Text,
-    TextButton,
-    TextField,
-    UserControl,
-    VerticalDivider,
-    colors,
-    icons,
-)
-from installer_config import Step, _load_config
+from flet import (AlertDialog, AppBar, Banner, Checkbox, Column, Container,
+                  Divider, ElevatedButton, FilePicker, FilePickerResultEvent,
+                  FilledButton, Icon, Image, Page, ProgressBar, ProgressRing,
+                  Row, Text, TextButton, TextField, UserControl,
+                  VerticalDivider, colors, icons)
+from installer_config import InstallerConfig, Step, _load_config
+from loguru import logger
 from tool_utils import call_tool_with_command, search_device
+from utils import AppState, get_download_link
 from widgets import call_button, confirm_button, get_title
 
-
 # Toggle to True for development purposes
-DEVELOPMENT = False
+DEVELOPMENT = True
 DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 
@@ -82,11 +61,14 @@ class BaseView(UserControl):
 
 
 class WelcomeView(BaseView):
-    def __init__(self, on_confirm: Callable, load_config: Callable, page: Page):
+    def __init__(
+        self, on_confirm: Callable, load_config: Callable, page: Page, state: AppState
+    ):
         super().__init__(image="connect-to-usb.png")
         self.on_confirm = on_confirm
         self.load_config = load_config
         self.page = page
+        self.state = state
 
     def build(self):
         self.continue_button = ElevatedButton(
@@ -114,6 +96,27 @@ class WelcomeView(BaseView):
             ],
             actions_alignment="end",
         )
+        # checkbox to allow skipping unlocking the bootloader
+        def check_bootloader_unlocked(e):
+            """Enable skipping unlocking the bootloader if selected."""
+            if self.bootloader_checkbox.value:
+                logger.info("Skipping bootloader unlocking.")
+                self.state.steps = (
+                    self.state.config.flash_recovery + self.state.config.install_os
+                )
+            else:
+                logger.info("Enabled unlocking the bootloader again.")
+                self.state.steps = (
+                    self.state.config.unlock_bootloader
+                    + self.state.config.flash_recovery
+                    + self.state.config.install_os
+                )
+
+        self.bootloader_checkbox = Checkbox(
+            label="Bootlaoder is already unlocked.", on_change=check_bootloader_unlocked
+        )
+
+        # build up the main view
         self.right_view.controls.extend(
             [
                 get_title("Welcome to the OpenAndroidInstaller!"),
@@ -147,6 +150,7 @@ class WelcomeView(BaseView):
                     [
                         Row([Text("Detected device:"), self.device_name]),
                         self.config_found_box,
+                        self.bootloader_checkbox,
                     ]
                 ),
                 Row(
@@ -222,6 +226,7 @@ class SelectFilesView(BaseView):
         pick_recovery_dialog: Callable,
         selected_image: Text,
         selected_recovery: Text,
+        state: AppState,
     ):
         super().__init__()
         self.on_confirm = on_confirm
@@ -230,20 +235,52 @@ class SelectFilesView(BaseView):
         self.pick_recovery_dialog = pick_recovery_dialog
         self.selected_image = selected_image
         self.selected_recovery = selected_recovery
+        self.state = state
 
     def build(self):
+        self.download_link = get_download_link(
+            self.state.config.metadata.get("devicecode", "test")
+        )
         self.confirm_button = confirm_button(self.on_confirm)
         self.confirm_button.disabled = True
 
         self.pick_recovery_dialog.on_result = self.enable_button_if_ready
         self.pick_image_dialog.on_result = self.enable_button_if_ready
 
+        # attach hidden dialogues
         self.right_view.controls.append(self.pick_image_dialog)
         self.right_view.controls.append(self.pick_recovery_dialog)
+        # add title and progressbar
+        self.right_view.controls.append(get_title("Pick image and recovery files:"))
+        self.right_view.controls.append(self.progressbar)
+        # if there is an available download, show the button to the page
+        if self.download_link:
+            self.right_view.controls.append(
+                Column(
+                    [
+                        Text(
+                            "You can download supported images and recovery for your device here:"
+                        ),
+                        Row(
+                            [
+                                ElevatedButton(
+                                    "Download",
+                                    icon=icons.DOWNLOAD_OUTLINED,
+                                    on_click=lambda _: webbrowser.open(
+                                        self.download_link
+                                    ),
+                                    expand=True,
+                                ),
+                            ]
+                        ),
+                        Divider(),
+                    ]
+                )
+            )
+        # attach the controls for uploading image and recovery
         self.right_view.controls.extend(
             [
-                get_title("Pick image and recovery files:"),
-                self.progressbar,
+                Text("Now select the operating system image and recovery:"),
                 Row(
                     [
                         ElevatedButton(
@@ -318,6 +355,7 @@ class MainView(UserControl):
     def __init__(self):
         super().__init__()
         self.config = None
+        self.state = AppState()
         # initialize the progress bar indicator
         self.progress_bar = ProgressBar(
             width=480, color="#00d886", bgcolor="#eeeeee", bar_height=16
@@ -329,8 +367,8 @@ class MainView(UserControl):
         # file pickers
         self.pick_image_dialog = FilePicker(on_result=self.pick_image_result)
         self.pick_recovery_dialog = FilePicker(on_result=self.pick_recovery_result)
-        self.selected_image = Text()
-        self.selected_recovery = Text()
+        self.selected_image = Text("Selected image: ")
+        self.selected_recovery = Text("Selected recovery: ")
 
         # text input
         self.inputtext = TextField(
@@ -343,7 +381,10 @@ class MainView(UserControl):
 
         # create default starter views
         welcome = WelcomeView(
-            on_confirm=self.confirm, load_config=self.load_config, page=self.page
+            on_confirm=self.confirm,
+            load_config=self.load_config,
+            page=self.page,
+            state=self.state,
         )
         select_files = SelectFilesView(
             on_confirm=self.confirm,
@@ -352,6 +393,7 @@ class MainView(UserControl):
             pick_recovery_dialog=self.pick_recovery_dialog,
             selected_image=self.selected_image,
             selected_recovery=self.selected_recovery,
+            state=self.state,
         )
         # ordered to allow for pop
         self.default_views = [select_files, welcome]
@@ -377,10 +419,10 @@ class MainView(UserControl):
         # if there are default views left, display them first
         if self.default_views:
             self.view.controls.append(self.default_views.pop())
-        elif self.config.steps:
+        elif self.state.steps:
             self.view.controls.append(
                 StepView(
-                    step=self.config.steps.pop(0),
+                    step=self.state.steps.pop(0),
                     on_confirm=self.confirm,
                     progressbar=self.progress_bar,
                     inputtext=self.inputtext,
@@ -396,12 +438,18 @@ class MainView(UserControl):
     def load_config(self, device_code: str) -> Optional[str]:
         """Function to load a config file from device code."""
         self.config = _load_config(device_code, CONFIG_PATH)
+        self.state.config = self.config
         if self.config:
-            self.num_total_steps = len(self.config.steps)
+            self.state.steps = (
+                self.config.unlock_bootloader
+                + self.config.flash_recovery
+                + self.config.install_os
+            )
+            self.num_total_steps = len(self.state.steps)
             return self.config.metadata.get("devicename", "No device name in config.")
 
     def pick_image_result(self, e: FilePickerResultEvent):
-        self.selected_image.value = (
+        self.selected_image.value += (
             ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
         )
         self.image_path = e.files[0].path
@@ -409,7 +457,7 @@ class MainView(UserControl):
         self.selected_image.update()
 
     def pick_recovery_result(self, e: FilePickerResultEvent):
-        self.selected_recovery.value = (
+        self.selected_recovery.value += (
             ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
         )
         self.recovery_path = e.files[0].path
