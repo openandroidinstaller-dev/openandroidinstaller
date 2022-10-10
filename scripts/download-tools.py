@@ -21,7 +21,6 @@ import zipfile
 from io import BytesIO
 from pathlib import Path
 
-import click
 import requests
 from loguru import logger
 
@@ -104,10 +103,6 @@ def move_files_to_lib():
     logger.info("DONE.")
 
 
-@click.command()
-@click.option(
-    "--platform", help="On which platform should the tools work?", default="linux"
-)
 def main(platform: str):
     download_adb_fastboot(platform=platform)
     download_heimdall(platform=platform)
