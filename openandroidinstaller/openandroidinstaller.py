@@ -115,7 +115,7 @@ class WelcomeView(BaseView):
                 self.state.num_total_steps = len(self.state.steps)
 
         self.bootloader_checkbox = Checkbox(
-            label="Bootlaoder is already unlocked.", on_change=check_bootloader_unlocked
+            label="Bootlaoder is already unlocked.", on_change=check_bootloader_unlocked, disabled=True
         )
 
         # build up the main view
@@ -211,6 +211,7 @@ class WelcomeView(BaseView):
             if device_name:
                 self.config_found_box.value = True
                 self.continue_button.disabled = False
+                self.bootloader_checkbox.disabled = False
                 # overwrite the text field with the real name from the config
                 self.device_name.value = f"{device_name} (code: {device_code})"
             else:
