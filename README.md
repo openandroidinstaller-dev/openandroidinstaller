@@ -32,13 +32,18 @@ Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | a5xelte | SM-A510F | tested
-Samsung | Galaxy S7 | herolte |  | planned
+Samsung | Galaxy S7 | herolte | | planned
+Samsung | Galaxy S9 | starlte | | under development
 Google | Pixel 3a | sargo | sargo | tested
+Google | Pixel 4a | sunfish | sunfish | planned
 Sony | Xperia Z | yuga | C6603 | tested
 Sony | Xperia Z3 | z3 | | under development
 Sony | Xperia ZX | kagura | | planned
 Fairphone | Fairphone 2 | FP2 | | under development
+Fairphone | Fairphone 3 | FP3 | | planned
 Xiaomi | Mi 9 Lite | pyxis | | planned
+Motorola | Moto G5 | cedric | | planned
+LG | G7 Thinq | judyln | | planned
 
 
 ## Usage
@@ -52,7 +57,7 @@ Currently, only linux is supported.
 
 ## Run OpenAndroidInstaller for development
 
-Currently development is only supported on Ubunut Linux. MacOS should also work fine.
+Currently development is only supported on Ubuntu Linux. MacOS should also work fine.
 
 1. Clone the main branch of this repository
 2. Run `make install` to install poetry to manage python and install the requirend dependencies like adb, fastboot and heimdall.
@@ -77,11 +82,18 @@ Every step in the config file corresponds to one view in the application. These 
   - `<image>`: The path of the image file.
   - `<recovery>`: The path of the recovery file.
   - `<inputtext>`: Text from the user input from `call_button_with_input` views.
-- `img`: Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
+- `img`: [OPTIONAL] Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 
-After you created a config file, you can open a pull request to make the file available to other users. The file should be named after device name output by `adb shell dumpsys bluetooth_manager | grep 'name:' | cut -c9-` when the devices is connected to the computer. Please also add the device to the supported devices table above.
+The file should be named after device name output by `adb shell getprop | grep ro.poroduct.device` when the devices is connected to the computer. You can also get the device code by connecting the device to the computer and run OpenAndroidInstaller to detect the device.
 
+To test your config file with the executable without using the developer setup, place it in the same directory as the executable. There it will be detected by name. 
+After you created a config file and it works fine, you can open a pull request to make the file available to other users. Please also add the device to the supported devices table above.
+
+#### On unlocking the bootloader
+Some devices with require manual steps to unlock the bootloader. In general you will need to create an account at a vendor website and receive some code from there. OpenAndroidInstaller will try to guide you as far as possible. These vendors include *Sony, Motorola, Xiaomi* among others.
+
+Other phone vendors stops allowing to unlock the bootloader all together. There is nothing to be done if you didn't unlock your device in time. These vendors include *Huawei and LG* among others. Support for these vendors will always be very limited.
 
 ## Tools
 

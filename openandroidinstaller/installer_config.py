@@ -116,6 +116,7 @@ def validate_config(config: str) -> bool:
         "content": str,
         schema.Optional("command"): Regex(r"^adb\s|^fastboot\s|^heimdall\s"), 
         schema.Optional("allow_skip"): bool,
+        schema.Optional("img"): str,
     }
 
     config_schema = Schema({
