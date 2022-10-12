@@ -1,4 +1,4 @@
-name: Manual build workflow
+name: Manual build workflow for windows
 
 on:
   workflow_dispatch:
