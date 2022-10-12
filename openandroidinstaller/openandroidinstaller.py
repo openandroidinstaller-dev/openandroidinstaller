@@ -325,7 +325,7 @@ class SelectFilesView(BaseView):
 
     def enable_button_if_ready(self, e):
         """Enable the confirm button if both files have been selected."""
-        if self.selected_image.value and self.selected_recovery.value:
+        if (".zip" in self.selected_image.value) and (".img" in self.selected_recovery.value):
             self.confirm_button.disabled = False
             self.right_view.update()
         else:
@@ -457,16 +457,22 @@ class MainView(UserControl):
         self.selected_image.value += (
             ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
         )
-        self.image_path = e.files[0].path
-        logger.info(f"Selected image from {self.image_path}")
+        if e.files:
+            self.image_path = e.files[0].path
+            logger.info(f"Selected image from {self.image_path}")
+        else:
+            logger.info("No image selected.")
         self.selected_image.update()
 
     def pick_recovery_result(self, e: FilePickerResultEvent):
         self.selected_recovery.value += (
             ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
         )
-        self.recovery_path = e.files[0].path
-        logger.info(f"Selected recovery from {self.recovery_path}")
+        if e.files:
+            self.recovery_path = e.files[0].path
+            logger.info(f"Selected recovery from {self.recovery_path}")
+        else:
+            logger.info("No image selected.")
         self.selected_recovery.update()
 
 
