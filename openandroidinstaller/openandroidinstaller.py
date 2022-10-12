@@ -13,6 +13,7 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import os
 import sys
 import webbrowser
 from pathlib import Path
@@ -38,8 +39,8 @@ DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 PLATFORM = sys.platform
 # Define asset paths
-CONFIG_PATH = Path(__file__).parent.joinpath(Path("assets/configs")).resolve()
-IMAGE_PATH = Path(__file__).parent.joinpath(Path("assets/imgs")).resolve()
+CONFIG_PATH = Path(__file__).parent.joinpath(Path(os.sep.join(["assets", "configs"]))).resolve()
+IMAGE_PATH = Path(__file__).parent.joinpath(Path(os.sep.join(["assets", "imgs"]))).resolve()
 BIN_PATH = Path(__file__).parent.joinpath(Path("bin")).resolve()
 
 
@@ -115,7 +116,7 @@ class WelcomeView(BaseView):
                 self.state.num_total_steps = len(self.state.steps)
 
         self.bootloader_checkbox = Checkbox(
-            label="Bootlaoder is already unlocked.", on_change=check_bootloader_unlocked, disabled=True
+            label="Bootloader is already unlocked.", on_change=check_bootloader_unlocked, disabled=True
         )
 
         # build up the main view
@@ -587,7 +588,7 @@ def main(page: Page):
     page.horizontal_alignment = "center"
 
     # header
-    image_path = Path(__file__).parent.joinpath(Path("assets/logo-192x192.png"))
+    image_path = Path(__file__).parent.joinpath(Path(os.sep.join(["assets", "logo-192x192.png"])))
     page.appbar = AppBar(
         leading=Image(src=image_path, height=40, width=40, border_radius=40),
         leading_width=56,
