@@ -27,6 +27,8 @@ from loguru import logger
 
 def download_adb_fastboot(platform: str):
     """Download adb and fastboot executable from dl.google.com, extract the zip and save to file."""
+    if platform == "win32":
+        platform = "windows"
     logger.info(f"Download adb and fastboot for {platform}...")
     url = (
         f"https://dl.google.com/android/repository/platform-tools-latest-{platform}.zip"
@@ -104,6 +106,7 @@ def move_files_to_lib():
 
 
 def main(platform: str):
+    logger.info(f"Run download for {platform}")
     download_adb_fastboot(platform=platform)
     download_heimdall(platform=platform)
     move_files_to_lib()
