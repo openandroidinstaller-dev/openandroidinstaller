@@ -55,7 +55,7 @@ class InstallerConfig:
 
     @classmethod
     def from_file(cls, path):
-        with open(path, "r") as stream:
+        with open(path, "r", encoding="utf-8") as stream:
             try:
                 raw_config = yaml.safe_load(stream)
                 if validate_config(raw_config):
