@@ -60,7 +60,7 @@ Currently, only linux is supported.
 Currently development is only supported on Ubuntu Linux. MacOS should also work fine.
 
 1. Clone the main branch of this repository
-2. Run `make install` to install poetry to manage python and install the requirend dependencies like adb, fastboot and heimdall.
+2. Run `make poetry` and `make install` to install poetry to manage python and install the required dependencies like adb, fastboot and heimdall.
 3. Run `make app` to start the desktop app from the source.
 
 

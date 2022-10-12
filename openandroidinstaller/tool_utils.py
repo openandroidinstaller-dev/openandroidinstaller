@@ -54,10 +54,10 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
                 ],
                 stderr=STDOUT,
             ).decode()
-        elif platform == "windows":
+        elif platform in ("windows", "win32"):
             output = check_output(
                 [
-                    str(bin_path.joinpath(Path("adb"))),
+                    str(bin_path.joinpath(Path("adb.exe"))),
                     "shell",
                     "getprop",
                     "|",
