@@ -76,8 +76,8 @@ def move_files_to_lib(platform: str):
         .resolve()
     )
     if platform == "win32":
-        adb_path /= ".exe"
-        adb_target_path /= ".exe"
+        adb_path = adb_path.parents[0] / "adb.exe"
+        adb_target_path = adb_target_path.parents[0] / "adb.exe"
     logger.info(adb_target_path)
     adb_path.rename(adb_target_path)
     # move fastboot
@@ -92,8 +92,8 @@ def move_files_to_lib(platform: str):
         .resolve()
     )
     if platform == "win32":
-        fb_path /= ".exe"
-        fb_target_path /= ".exe"
+        fb_path = fb_path.parents[0] / "fastboot.exe"
+        fb_target_path = fb_target_path.parents[0] / "fastboot.exe"
     fb_path.rename(fb_target_path)
     # move heimdall
     hd_path = Path(__file__).parent.joinpath(Path(os.sep.join(["..", "heimdall", "heimdall"]))).resolve()
@@ -103,8 +103,8 @@ def move_files_to_lib(platform: str):
         .resolve()
     )
     if platform == "win32":
-        hd_path /= ".exe"
-        hd_target_path /= ".exe"
+        hd_path = hd_path.parents[0] / "heimdall.exe"
+        hd_target_path = hd_target_path.parents[0] / "heimdall.exe"
     hd_path.rename(hd_target_path)
     logger.info("DONE.")
     # make executable
