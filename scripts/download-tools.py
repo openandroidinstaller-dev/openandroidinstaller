@@ -16,6 +16,7 @@ Inspired by: https://gitlab.com/ubports/installer/android-tools-bin/-/blob/maste
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import os
 import sys
 import zipfile
 from io import BytesIO
@@ -35,8 +36,6 @@ def download_adb_fastboot(platform: str):
     )
     # Downloading the file by sending the request to the URL
     response = requests.get(url, allow_redirects=True)
-    # Split URL to get the file name
-    filename = url.split("/")[-1]
 
     # Writing the file to the local file system
     download_path = Path(__file__).parent.joinpath(Path("tools")).resolve()
@@ -51,8 +50,6 @@ def download_heimdall(platform: str):
     url = f"https://people.ubuntu.com/~neothethird/heimdall-{platform}.zip"
     # Downloading the file by sending the request to the URL
     response = requests.get(url, allow_redirects=True)
-    # Split URL to get the file name
-    filename = url.split("/")[-1]
 
     # Writing the file to the local file system
     download_path = Path(__file__).parent.joinpath(Path("heimdall")).resolve()
@@ -63,36 +60,36 @@ def download_heimdall(platform: str):
 
 def move_files_to_lib():
     """Move files to the expected path in the openandroidinstaller package."""
-    target_path = Path("openandroidinstaller/bin", exist_ok=True)
+    target_path = Path(os.sep.join(["openandroidinstaller", "bin"]), exist_ok=True)
     logger.info(f"Move executables to {target_path}...")
     target_path.mkdir(exist_ok=True)
     # move adb
     adb_path = (
-        Path(__file__).parent.joinpath(Path("../tools/platform-tools/adb")).resolve()
+        Path(__file__).parent.joinpath(Path(os.sep.join(["..", "tools", "platform-tools", "adb"]))).resolve()
     )
     adb_target_path = (
         Path(__file__)
-        .parent.joinpath(Path("../openandroidinstaller/bin/adb"))
+        .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "adb"])))
         .resolve()
     )
     adb_path.rename(adb_target_path)
     # move fastboot
     fb_path = (
         Path(__file__)
-        .parent.joinpath(Path("../tools/platform-tools/fastboot"))
+        .parent.joinpath(Path(os.sep.join(["..", "tools", "platform-tools", "fastboot"])))
         .resolve()
     )
     fb_target_path = (
         Path(__file__)
-        .parent.joinpath(Path("../openandroidinstaller/bin/fastboot"))
+        .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "fastboot"])))
         .resolve()
     )
     fb_path.rename(fb_target_path)
     # move heimdall
-    hd_path = Path(__file__).parent.joinpath(Path("../heimdall/heimdall")).resolve()
+    hd_path = Path(__file__).parent.joinpath(Path(os.sep.join(["..", "heimdall", "heimdall"]))).resolve()
     hd_target_path = (
         Path(__file__)
-        .parent.joinpath(Path("../openandroidinstaller/bin/heimdall"))
+        .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "heimdall"])))
         .resolve()
     )
     hd_path.rename(hd_target_path)
