@@ -5,6 +5,9 @@ install:
 	poetry install
 	poetry run python scripts/download-tools.py
 
+export:
+	poetry export -f requirements.txt --output requirements.txt
+
 test:
 	poetry run pytest tests/
 
