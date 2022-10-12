@@ -67,11 +67,13 @@ def move_files_to_lib():
     adb_path = (
         Path(__file__).parent.joinpath(Path(os.sep.join(["..", "tools", "platform-tools", "adb"]))).resolve()
     )
+    logger.info(adb_path)
     adb_target_path = (
         Path(__file__)
         .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "adb"])))
         .resolve()
     )
+    logger.info(adb_target_path)
     adb_path.rename(adb_target_path)
     # move fastboot
     fb_path = (
