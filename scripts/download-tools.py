@@ -60,7 +60,7 @@ def download_heimdall(platform: str):
     logger.info("DONE.")
 
 
-def move_files_to_lib():
+def move_files_to_lib(platform: str):
     """Move files to the expected path in the openandroidinstaller package."""
     target_path = Path(os.sep.join(["openandroidinstaller", "bin"]), exist_ok=True)
     logger.info(f"Move executables to {target_path}...")
@@ -75,6 +75,9 @@ def move_files_to_lib():
         .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "adb"])))
         .resolve()
     )
+    if platform == "win32":
+        adb_path = adb_path + ".exe"
+        adb_target_path = adb_target_path + ".exe"
     logger.info(adb_target_path)
     adb_path.rename(adb_target_path)
     # move fastboot
@@ -88,6 +91,9 @@ def move_files_to_lib():
         .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "fastboot"])))
         .resolve()
     )
+    if platform == "win32":
+        fb_path = fb_path + ".exe"
+        fb_target_path = fb_target_path + ".exe"
     fb_path.rename(fb_target_path)
     # move heimdall
     hd_path = Path(__file__).parent.joinpath(Path(os.sep.join(["..", "heimdall", "heimdall"]))).resolve()
@@ -96,6 +102,9 @@ def move_files_to_lib():
         .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "heimdall"])))
         .resolve()
     )
+    if platform == "win32":
+        hd_path = hd_path + ".exe"
+        hd_target_path = hd_target_path + ".exe"
     hd_path.rename(hd_target_path)
     logger.info("DONE.")
     # make executable
@@ -107,10 +116,10 @@ def move_files_to_lib():
 
 
 def main(platform: str):
-    logger.info(f"Run download for {platform}")
+    logger.info(f"Run downloads for {platform} ...")
     download_adb_fastboot(platform=platform)
     download_heimdall(platform=platform)
-    move_files_to_lib()
+    move_files_to_lib(platform=platform)
 
 
 if __name__ == "__main__":
