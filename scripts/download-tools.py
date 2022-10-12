@@ -39,6 +39,7 @@ def download_adb_fastboot(platform: str):
 
     # Writing the file to the local file system
     download_path = Path(__file__).parent.joinpath(Path("tools")).resolve()
+    logger.info(download_path)
     file = zipfile.ZipFile(BytesIO(response.content))
     file.extractall(download_path.name)
     logger.info("DONE.")
@@ -53,6 +54,7 @@ def download_heimdall(platform: str):
 
     # Writing the file to the local file system
     download_path = Path(__file__).parent.joinpath(Path("heimdall")).resolve()
+    logger.info(download_path)
     file = zipfile.ZipFile(BytesIO(response.content))
     file.extractall(download_path.name)
     logger.info("DONE.")
