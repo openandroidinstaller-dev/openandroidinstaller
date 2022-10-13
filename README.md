@@ -32,7 +32,7 @@ Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | a5xelte | SM-A510F | tested
-Samsung | Galaxy S7 | herolte | | planned
+Samsung | Galaxy S7 | herolte | | under development 
 Samsung | Galaxy S9 | starlte | | under development
 Google | Pixel 3a | sargo | sargo | tested
 Google | Pixel 4a | sunfish | sunfish | planned
@@ -41,9 +41,8 @@ Sony | Xperia Z3 | z3 | | under development
 Sony | Xperia ZX | kagura | | planned
 Fairphone | Fairphone 2 | FP2 | | under development
 Fairphone | Fairphone 3 | FP3 | | planned
-Xiaomi | Mi 9 Lite | pyxis | | planned
 Motorola | Moto G5 | cedric | | planned
-LG | G7 Thinq | judyln | | planned
+Motorola | moto g7 power | ocean | | under development
 
 
 ## Usage
