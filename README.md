@@ -32,7 +32,7 @@ Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | a5xelte | SM-A510F | tested
-Samsung | Galaxy S7 | herolte | | under development 
+Samsung | Galaxy S7 | herolte | SM-G930F | tested
 Samsung | Galaxy S9 | starlte | | under development
 Google | Pixel 3a | sargo | sargo | tested
 Google | Pixel 4a | sunfish | sunfish | planned
@@ -47,10 +47,10 @@ Motorola | moto g7 power | ocean | | under development
 
 ## Usage
 
-Currently, only linux is supported. 
+Currently, Linux (tested with Ubuntu 20.04 LTS) and MacOS are supported. 
 
-1. Download the AppImage, .exe or appropriate file for your OS. 
-2. Download the lineageOS image and the custom recovery image. A source for files can be found here: https://lineageosroms.com
+1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
+2. Download the lineageOS image and the custom recovery image. A source for files can be found on https://lineageosroms.com or you can just search the web for an appropriate version for your device.
 3. Start the desktop app and follow the instructions.
 
 
