@@ -43,6 +43,7 @@ class Step:
 
 
 class InstallerConfig:
+
     def __init__(
         self,
         unlock_bootloader: List[Step],

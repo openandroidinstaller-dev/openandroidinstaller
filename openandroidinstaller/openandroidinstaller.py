@@ -34,7 +34,7 @@ from utils import AppState, get_download_link
 from widgets import call_button, confirm_button, get_title, link_button
 
 # Toggle to True for development purposes
-DEVELOPMENT = True 
+DEVELOPMENT = False
 DEVELOPMENT_CONFIG = "yuga"  # "a3y17lte"  # "sargo"
 
 
@@ -187,6 +187,10 @@ class WelcomeView(BaseView):
 
     def search_devices(self, e):
         """Search the device when the button is clicked."""
+        # map some detected device codes to their real code.
+        device_code_mapping = {
+            "C6603": "yuga",
+        }
         # search the device
         if DEVELOPMENT:
             # this only happens for testing
@@ -197,6 +201,7 @@ class WelcomeView(BaseView):
         else:
             device_code = search_device(platform=PLATFORM, bin_path=BIN_PATH)
             if device_code:
+                device_code = device_code_mapping.get(device_code, device_code)
                 self.device_name.value = device_code
             else:
                 self.device_name.value = (

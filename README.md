@@ -86,7 +86,7 @@ Every step in the config file corresponds to one view in the application. These 
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 - `link`: [OPTIONAL] Link to use for the link button if type is `link_button_with_confirm`.
 
-The file should be named after device name output by `adb shell getprop | grep ro.poroduct.device` when the devices is connected to the computer. You can also get the device code by connecting the device to the computer and run OpenAndroidInstaller to detect the device.
+The file should be named after device name output by `adb shell getprop | grep ro.product.device` when the devices is connected to the computer. You can also get the device code by connecting the device to the computer and run OpenAndroidInstaller to detect the device.
 
 To test your config file with the executable without using the developer setup, place it in the same directory as the executable. There it will be detected by name. 
 After you created a config file and it works fine, you can open a pull request to make the file available to other users. Please also add the device to the supported devices table above.
