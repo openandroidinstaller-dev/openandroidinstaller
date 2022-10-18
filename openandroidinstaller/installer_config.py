@@ -31,6 +31,7 @@ class Step:
         command: str = None,
         img: str = "placeholder.png",
         allow_skip: bool = False,
+        link: str = None,
     ):
         self.title = title
         self.type = type
@@ -38,6 +39,7 @@ class Step:
         self.command = command
         self.img = img
         self.allow_skip = allow_skip
+        self.link = link
 
 
 class InstallerConfig:
@@ -112,11 +114,12 @@ def validate_config(config: str) -> bool:
 
     step_schema = {
         "title": str,
-        "type": Regex(r"text|confirm_button|call_button|call_button_with_input"),
+        "type": Regex(r"text|confirm_button|call_button|call_button_with_input|link_button_with_confirm"),
         "content": str,
         schema.Optional("command"): Regex(r"^adb\s|^fastboot\s|^heimdall\s"), 
         schema.Optional("allow_skip"): bool,
         schema.Optional("img"): str,
+        schema.Optional("link"): str,
     }
 
     config_schema = Schema({

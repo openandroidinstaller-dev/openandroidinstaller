@@ -18,10 +18,11 @@ steps:
       content: Press the button to reboot into the bootloader now. Then confirm to continue.
       command: "adb reboot bootloader"
     - title: "Unlock the bootloader"
-      type: confirm_button
+      type: link_button_with_confirm
       content: >
-        Follow the instructions on Sonys official unlocking website to generate an unlock code for your bootloader: 
-        https://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/"
+        Click on the button to open the instructions on Sonys official unlocking website to generate an unlock code for your bootloader.
+        Once you got the code, continue to input the code. 
+      link: https://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/
     - title: "Unlock the bootloader"
       type: call_button_with_input
       content: >
@@ -29,16 +30,16 @@ steps:
         If you already did that, you can skip this step.
       command: "fastboot oem unlock <inputtext>"
       allow_skip: True
-  flash_recovery:
-    - title: "Flash temporary recovery"
+    - title: "Unlock the bootloader"
       type: call_button
       content: >
         Press the button to reboot. Since the device resets completely, you will need to re-enable USB debugging to continue. 
         Connect your device to your PC via USB. Then confirm here to continue.
       command: "fastboot reboot"
+  flash_recovery:
     - title: "Flash temporary recovery"
       type: call_button
-      content: Now you have to reboot into bootloader again. Press the button to do it and continue once it is done.
+      content: Now you have to reboot into bootloader again. With your phone turned on, press the button to do so and continue once it is done.
       command: "adb reboot bootloader"
       allow_skip: True
     - title: "Flash temporary recovery"

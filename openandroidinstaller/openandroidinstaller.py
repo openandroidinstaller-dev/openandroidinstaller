@@ -15,6 +15,7 @@
 
 import os
 import sys
+import turtle
 import webbrowser
 from pathlib import Path
 from time import sleep
@@ -30,11 +31,11 @@ from installer_config import InstallerConfig, Step, _load_config
 from loguru import logger
 from tool_utils import call_tool_with_command, search_device
 from utils import AppState, get_download_link
-from widgets import call_button, confirm_button, get_title
+from widgets import call_button, confirm_button, get_title, link_button
 
 # Toggle to True for development purposes
-DEVELOPMENT = False
-DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
+DEVELOPMENT = True 
+DEVELOPMENT_CONFIG = "yuga"  # "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
@@ -523,6 +524,12 @@ class StepView(BaseView):
             self.right_view.controls.extend(
                 [self.inputtext, Row([self.call_button, self.confirm_button])]
             )
+        elif self.step.type == "link_button_with_confirm":
+            self.confirm_button = confirm_button(self.on_confirm)
+            self.right_view.controls.extend(
+                [Row([link_button(self.step.link, "Open Link"), self.confirm_button])]
+            )
+
         elif self.step.type != "text":
             raise Exception(f"Unknown step type: {self.step.type}")
 

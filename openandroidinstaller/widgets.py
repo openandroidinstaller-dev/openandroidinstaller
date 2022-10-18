@@ -15,6 +15,7 @@
 
 from functools import partial
 from typing import Callable
+import webbrowser
 
 from flet import Container, ElevatedButton, Row, Text, alignment, icons
 
@@ -56,4 +57,13 @@ def call_button(
         on_click=partial(call_func, command=command),
         expand=True,
         icon=icons.DIRECTIONS_RUN_OUTLINED,
+    )
+
+
+def link_button(link: str, text: str) -> ElevatedButton:
+    """Get a button that opens a link in a browser."""
+    return ElevatedButton(
+        f"{text}",
+        on_click=lambda _: webbrowser.open(link),
+        expand=True,
     )
