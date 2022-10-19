@@ -23,9 +23,9 @@ from loguru import logger
 
 def call_tool_with_command(command: str, bin_path: Path) -> bool:
     """Call an executable with a specific command."""
-    command = re.sub(r"^adb", str(bin_path.joinpath(Path("adb"))), command)
-    command = re.sub(r"^fastboot", str(bin_path.joinpath(Path("fastboot"))), command)
-    command = re.sub(r"^heimdall", str(bin_path.joinpath(Path("heimdall"))), command)
+    command = re.sub(r"^adb", re.escape(str(bin_path.joinpath(Path("adb")))), command)
+    command = re.sub(r"^fastboot", re.escape(str(bin_path.joinpath(Path("fastboot")))), command)
+    command = re.sub(r"^heimdall", re.escape(str(bin_path.joinpath(Path("heimdall")))), command)
 
     logger.info(f"Run command: {command}")
     res = call(f"{command}", shell=True)
