@@ -1,60 +1,83 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   devicename: Sony Xperia Z
-requirements:
+  devicecode: yuga
 steps:
-  - title: "Unlock the bootloader"
-    type: confirm_button
-    content: "As a first step, you need to unlock the bootloader of your device. On the device, dial *#*#7378423#*#* (*#*#SERVICE#*#*) to launch the service menu."
-  - title: "Unlock the bootloader"
-    type: confirm_button
-    content: "Go to service info > configuration and check rooting status - you can only continue if it says 'Bootloader unlock allowed: Yes.'"
-  - title: "Unlock the bootloader"
-    type: confirm_button
-    content: "Connect the device to your PC via USB. And confirm to continue."
-  - title: "Unlock the bootloader"
-    type: call_button
-    content: "Press the button to reboot into the bootloader now. Then confirm to continue."
-    command: "adb reboot bootloader"
-  - title: "Unlock the bootloader"
-    type: confirm_button
-    content: "Follow the instructions on Sonys official unlocking website to generate an unlock code for your bootloader. https://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/"
-  - title: "Unlock the bootloader"
-    type: call_button_with_input
-    content: "Use your code to unlock the bootloader of your device. Type in the full 18 character code starting with 0x (Example: 0x3EC4F7AD6E0B32B6). If you already did that, you can skip this step."
-    command: "fastboot oem unlock <inputtext>"
-    allow_skip: True
-  - title: "Flash temporary recovery"
-    type: call_button
-    content: "Press the button to reboot. Since the device resets completely, you will need to re-enable USB debugging to continue. Connect your device to your PC via USB. Then confirm here to continue."
-    command: "fastboot reboot"
-  - title: "Flash temporary recovery"
-    type: call_button
-    content: "Now you have to reboot into bootloader again. Press the button to do it and continue once it is done."
-    command: "adb reboot bootloader"
-    allow_skip: True
-  - title: "Flash temporary recovery"
-    type: call_button
-    content: "Next, you need to flash a custom recovery image. Press the button to flash the selected image. Then continue."
-    command: "fastboot flash boot <recovery>"
-  - title: "Flash LineageOS"
-    type: call_button
-    content: "Now, boot into recovery by pressing the button. Once it's booted again, continue."
-    command: "fastboot reboot"
-  - title: "Flash LineageOS"
-    type: confirm_button
-    content: "Now tap 'Wipe'. Then tap 'Format Data' and continue with the formatting process on your phone. This will remove encryption and delete all files stored in the internal storage. Then press the button to continue."
-  - title: "Flash LineageOS"
-    type: confirm_button
-    content: "Return to the previous menu and tap 'Advanced Wipe', then select the 'Cache' and 'System' partitions and then 'Swipe to Wipe' on the phone. Once it's finished, confirm here to continue."
-  - title: "Flash LineageOS"
-    type: confirm_button
-    content: "On the device, go back to the main menu and select “Advanced”, “ADB Sideload”, then swipe to begin sideload. Then confirm here"
-  - title: "Flash LineageOS"
-    type: call_button
-    content: "By pressing the button, you flash lineageOS image now. This can take a while. Don't remove the USB-Cable!"
-    command: "adb sideload <image>"
-  - title: "Reboot"
-    type: call_button
-    content: "As a final step, reboot into LineageOS to finish the installation by pressing the button."
-    command: "adb reboot"
+  unlock_bootloader:
+    - title: "Unlock the bootloader"
+      type: confirm_button
+      content: As a first step, you need to unlock the bootloader of your device. On the device, dial *#*#7378423#*#* (*#*#SERVICE#*#*) to launch the service menu.
+    - title: "Unlock the bootloader"
+      type: confirm_button
+      content: Go to service info > configuration and check rooting status - you can only continue if it says 'Bootloader unlock allowed":" Yes.'
+    - title: "Unlock the bootloader"
+      type: confirm_button
+      content: >
+        Now go to Settings 'About the phone' and then Status. Write down the IMEI of your device. You will need it in the next step.
+    - title: "Unlock the bootloader"
+      type: link_button_with_confirm
+      content: >
+        Click on the button to open the instructions on Sonys official unlocking website to generate an unlock code for your bootloader.
+        Once you got the code write it down somewhere and continue to input the code. 
+      link: https://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/
+    - title: "Unlock the bootloader"
+      type: confirm_button
+      content: Connect the device to your PC via USB. And confirm to continue.
+    - title: "Unlock the bootloader"
+      type: call_button
+      content: Press the button to reboot into the bootloader now. When the notification light turns blue, confirm to continue.
+      command: "adb reboot bootloader"
+    - title: "Unlock the bootloader"
+      type: call_button_with_input
+      content: >
+        Use your code to unlock the bootloader of your device. Type in the full 18 character code starting with 0x (Example: 0x3EC4F7AD6E0B32B6).
+        If you already did that, you can skip this step.
+      command: "fastboot oem unlock <inputtext>"
+      allow_skip: True
+    - title: "Unlock the bootloader"
+      type: call_button
+      content: >
+        Press the button to reboot. Since the device resets completely, you will need to re-enable USB debugging to continue. 
+        Connect your device to your PC via USB. Then confirm here to continue.
+      command: "fastboot reboot"
+  flash_recovery:
+    - title: "Flash temporary recovery"
+      type: call_button
+      content: Now you have to reboot into bootloader again. With your phone turned on, press the button to do so and continue once it is done.
+      command: "adb reboot bootloader"
+      allow_skip: True
+    - title: "Flash temporary recovery"
+      type: call_button
+      content: Next, you need to flash a custom recovery image. Press the button to flash the selected image. Then continue.
+      command: "fastboot flash boot <recovery>"
+  install_os:
+    - title: "Flash LineageOS"
+      type: call_button
+      content: Now, boot into recovery by pressing the button. Once it's booted again, continue.
+      command: "fastboot reboot"
+    - title: "Flash LineageOS"
+      type: confirm_button
+      content: >
+        Now tap 'Wipe'. Then tap 'Format Data' and continue with the formatting process on your phone. 
+        This will remove encryption and delete all files stored in the internal storage. Then press the button to continue.
+    - title: "Flash LineageOS"
+      type: confirm_button
+      content: >
+        Return to the previous menu on your phone by going back two times. 
+        Them tap 'Advanced Wipe', and select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'. 
+        Confirm to continue once you are done.
+    - title: "Flash LineageOS"
+      type: confirm_button
+      content: >
+        Now connect the phone to the computer again with the USB-cable. On the device, go back three times and select “Advanced”, 
+        then “ADB Sideload”. Select 'Wipe cache' and 'Wipe dalvik cache', then swipe to begin sideload. Then confirm here.
+    - title: "Flash LineageOS"
+      type: call_button
+      content: >
+        Now it's time to flash the LineageOS image. Don't remove the USB-Cable and press 'Confirm and run' to start! 
+        This might take a while. Confirm after it's done.
+      command: "adb sideload <image>"
+    - title: "Reboot"
+      type: call_button
+      content: As a final step, reboot into LineageOS to finish the installation by pressing the button.
+      command: "adb reboot"

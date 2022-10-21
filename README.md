@@ -31,31 +31,35 @@ If you wish to backup the TA partition first, you can find tutorials related to 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
-Samsung | Galaxy A5 2016 | a5xelte |  | under development
-Samsung | Galaxy S7 | herolte |  | planned
+Samsung | Galaxy A5 2016 | a5xelte | SM-A510F | tested
+Samsung | Galaxy S7 | herolte | SM-G930F | tested
+Samsung | Galaxy S9 | starlte | | under development
 Google | Pixel 3a | sargo | sargo | tested
+Google | Pixel 4a | sunfish | sunfish | planned
 Sony | Xperia Z | yuga | C6603 | tested
 Sony | Xperia Z3 | z3 | | under development
 Sony | Xperia ZX | kagura | | planned
 Fairphone | Fairphone 2 | FP2 | | under development
-Xiaomi | Mi 9 Lite | pyxis | | planned
+Fairphone | Fairphone 3 | FP3 | | planned
+Motorola | Moto G5 | cedric | | planned
+Motorola | moto g7 power | ocean | | under development
 
 
 ## Usage
 
-Currently, only linux is supported. 
+Currently, Linux (tested with Ubuntu 20.04 LTS) and MacOS are supported. 
 
-1. Download the AppImage, .exe or appropriate file for your OS. 
-2. Download the lineageOS image and the custom recovery image. A source for files can be found here: https://lineageosroms.com
+1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
+2. Download the lineageOS image and the custom recovery image. A source for files can be found on https://lineageosroms.com or you can just search the web for an appropriate version for your device.
 3. Start the desktop app and follow the instructions.
 
 
 ## Run OpenAndroidInstaller for development
 
-Currently development is only supported on Ubunut Linux. MacOS should also work fine.
+Currently development is only supported on Ubuntu Linux. MacOS should also work fine.
 
 1. Clone the main branch of this repository
-2. Run `make install` to install poetry to manage python and install the requirend dependencies like adb, fastboot and heimdall.
+2. Run `make poetry` and `make install` to install poetry to manage python and install the required dependencies like adb, fastboot and heimdall.
 3. Run `make app` to start the desktop app from the source.
 
 
@@ -72,16 +76,25 @@ Every step in the config file corresponds to one view in the application. These 
   - `confirm_button`: Display the content, as well as a button to allow the user to go to the next step.
   - `call_button`: Display the content text and a button that runs a given command. After the command is run, a confirm button is displayed to allow the user to move to the next step.
   - `call_button_with_input`: Display the content text, an input field and a button that runs a given command. The inputtext, can be used in the command by using the `<inputtext>` placeholder in the command field. After the command is run, a confirm button is displayed to allow the user to move to the next step.
+  - `link_button_with_confirm`: Display a button that opens a browser with a given link, confirm afterwards. Link is given in `link`.
 - `content`: str; The content text displayed alongside the action of the step. Used to inform the user about whats going on.
 - `command`: [ONLY for call_button* steps] str; This is a terminal command run in a shell. (For example fastboot or adb). There are three types of placeholders supported, that will be filled by the tool as soon as information is given.
-  - `<image>`: The path of the image file.
+  - `<image>`: The path of the ROM image file.
   - `<recovery>`: The path of the recovery file.
   - `<inputtext>`: Text from the user input from `call_button_with_input` views.
-- `img`: Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
+- `img`: [OPTIONAL] Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
+- `link`: [OPTIONAL] Link to use for the link button if type is `link_button_with_confirm`.
 
-After you created a config file, you can open a pull request to make the file available to other users. The file should be named after device code output by `adb shell getprop | grep ro.product.device` when the devices is connected to the computer. Please also add the device to the supported devices table above.
+The file should be named after device name output by `adb shell getprop | grep ro.product.device` when the devices is connected to the computer. You can also get the device code by connecting the device to the computer and run OpenAndroidInstaller to detect the device.
 
+To test your config file with the executable without using the developer setup, place it in the same directory as the executable. There it will be detected by name. 
+After you created a config file and it works fine, you can open a pull request to make the file available to other users. Please also add the device to the supported devices table above.
+
+#### On unlocking the bootloader
+Some devices with require manual steps to unlock the bootloader. In general you will need to create an account at a vendor website and receive some code from there. OpenAndroidInstaller will try to guide you as far as possible. These vendors include *Sony, Motorola, Xiaomi* among others.
+
+Other phone vendors stops allowing to unlock the bootloader all together. There is nothing to be done if you didn't unlock your device in time. These vendors include *Huawei and LG* among others. Support for these vendors will always be very limited.
 
 ## Tools
 

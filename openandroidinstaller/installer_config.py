@@ -13,11 +13,13 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-from typing import List, Optional
 from pathlib import Path
-from loguru import logger
+from typing import List, Optional
+import schema
+from schema import Regex, Schema, SchemaError
 
 import yaml
+from loguru import logger
 
 
 class Step:
@@ -29,6 +31,7 @@ class Step:
         command: str = None,
         img: str = "placeholder.png",
         allow_skip: bool = False,
+        link: str = None,
     ):
         self.title = title
         self.type = type
@@ -36,32 +39,55 @@ class Step:
         self.command = command
         self.img = img
         self.allow_skip = allow_skip
+        self.link = link
 
 
 class InstallerConfig:
-    def __init__(self, steps: List[Step], metadata: dict):
-        self.steps = steps
+    def __init__(
+        self,
+        unlock_bootloader: List[Step],
+        flash_recovery: List[Step],
+        install_os: List[Step],
+        metadata: dict,
+    ):
+        self.unlock_bootloader = unlock_bootloader
+        self.flash_recovery = flash_recovery
+        self.install_os = install_os
         self.metadata = metadata
 
     @classmethod
     def from_file(cls, path):
-        with open(path, "r") as stream:
+        with open(path, "r", encoding="utf-8") as stream:
             try:
                 raw_config = yaml.safe_load(stream)
-                config = dict(raw_config)
-                raw_steps = config["steps"]
-                metadata = config["metadata"]
+                if validate_config(raw_config):
+                    config = dict(raw_config)
+                    raw_steps = config["steps"]
+                    metadata = config["metadata"]
+                else:
+                    logger.info("Validation of config failed.")
+                    return None
             except yaml.YAMLError as exc:
                 logger.info(exc)
+                return None
 
-        steps = [Step(**raw_step) for raw_step in raw_steps]
-        return cls(steps, metadata)
+        if raw_steps.get("unlock_bootloader") is not None:
+            unlock_bootloader = [
+                Step(**raw_step) for raw_step in raw_steps.get("unlock_bootloader")
+            ]
+        else:
+            unlock_bootloader = []
+        flash_recovery = [
+            Step(**raw_step) for raw_step in raw_steps.get("flash_recovery", [])
+        ]
+        install_os = [Step(**raw_step) for raw_step in raw_steps.get("install_os", [])]
+        return cls(unlock_bootloader, flash_recovery, install_os, metadata)
 
 
 def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfig]:
     """
     Function to load a function from given path and directory path.
-    
+
     Try to load local file in the same directory as the executable first, then load from assets.
     """
     # try loading a custom local file first
@@ -77,8 +103,47 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
         try:
             config = InstallerConfig.from_file(path)
             logger.info(f"Loaded device config from {path}.")
-            logger.info(f"Config metadata: {config.metadata}.")
+            if config:
+                logger.info(f"Config metadata: {config.metadata}.")
             return config
         except FileNotFoundError:
             logger.info(f"No device config found for {path}.")
             return None
+
+
+def validate_config(config: str) -> bool:
+    """Validate the schema of the config."""
+
+    step_schema = {
+        "title": str,
+        "type": Regex(
+            r"text|confirm_button|call_button|call_button_with_input|link_button_with_confirm"
+        ),
+        "content": str,
+        schema.Optional("command"): Regex(r"^adb\s|^fastboot\s|^heimdall\s"),
+        schema.Optional("allow_skip"): bool,
+        schema.Optional("img"): str,
+        schema.Optional("link"): str,
+    }
+
+    config_schema = Schema(
+        {
+            "metadata": {
+                "maintainer": str,
+                "devicename": str,
+                "devicecode": str,
+            },
+            "steps": {
+                "unlock_bootloader": schema.Or(None, [step_schema]),
+                "flash_recovery": [step_schema],
+                "install_os": [step_schema],
+            },
+        }
+    )
+    try:
+        config_schema.validate(config)
+        logger.info("Config is valid.")
+        return True
+    except SchemaError as se:
+        logger.info(f"Config is invalid. Error {se}")
+        return False
