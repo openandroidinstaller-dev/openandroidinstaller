@@ -19,7 +19,7 @@ jobs:
         python-version: 3.9
     - run: pip install -r requirements.txt
     - run: python scripts/download-tools.py
-    - run: pyinstaller openandroidinstaller/openandroidinstaller.py --noconsole --noconfirm --onefile --icon "openandroidinstaller/assets/favicon.ico" --add-data "openandroidinstaller/assets:assets" --add-binary "openandroidinstaller/bin/adb:bin" --add-binary "openandroidinstaller/bin/fastboot:bin" --add-binary "openandroidinstaller/bin/heimdall:bin"
+    - run: pyinstaller openandroidinstaller/openandroidinstaller.py --noconsole --noconfirm --onefile --icon "openandroidinstaller/assets/favicon.ico" --add-data "openandroidinstaller/assets:assets" --add-binary "openandroidinstaller/bin/adb:bin" --add-binary "openandroidinstaller/bin/fastboot:bin" --add-binary "openandroidinstaller/bin/heimdall:bin" --windowed
     # Optionally verify that it works (provided that it does not need user interaction)
     #- run: ./dist/your-code/your-code
     - uses: actions/upload-artifact@v3
