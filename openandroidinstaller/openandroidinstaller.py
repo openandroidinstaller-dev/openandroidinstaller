@@ -30,11 +30,11 @@ from flet import (AlertDialog, AppBar, Banner, Checkbox, Column, Container,
 from installer_config import InstallerConfig, Step, _load_config
 from loguru import logger
 from tool_utils import call_tool_with_command, search_device
-from utils import AppState, get_download_link
+from utils import AppState, get_download_link, image_recovery_works_with_device
 from widgets import call_button, confirm_button, get_title, link_button
 
 # Toggle to True for development purposes
-DEVELOPMENT = False
+DEVELOPMENT = True
 DEVELOPMENT_CONFIG = "yuga"  # "a3y17lte"  # "sargo"
 
 
@@ -250,7 +250,7 @@ class SelectFilesView(BaseView):
 
     def build(self):
         self.download_link = get_download_link(
-            self.state.config.metadata.get("devicecode", "test")
+            self.state.config.metadata.get("devicecode", "ERROR")
         )
         self.confirm_button = confirm_button(self.on_confirm)
         self.confirm_button.disabled = True
@@ -264,6 +264,8 @@ class SelectFilesView(BaseView):
         # add title and progressbar
         self.right_view.controls.append(get_title("Pick image and recovery files:"))
         self.right_view.controls.append(self.progressbar)
+        # text row to show infos during the process
+        self.info_field = Row()
         # if there is an available download, show the button to the page
         if self.download_link:
             self.right_view.controls.append(
@@ -323,7 +325,8 @@ class SelectFilesView(BaseView):
                 ),
                 self.selected_recovery,
                 Divider(),
-                Text("If you selected both files you can continue."),
+                Text("If you selected both files and they work for your device you can continue."),
+                self.info_field,
                 Row([self.confirm_button]),
             ]
         )
@@ -331,7 +334,16 @@ class SelectFilesView(BaseView):
 
     def enable_button_if_ready(self, e):
         """Enable the confirm button if both files have been selected."""
+
         if (".zip" in self.selected_image.value) and (".img" in self.selected_recovery.value):
+            if not image_recovery_works_with_device(
+                device_code=self.state.config.metadata.get("devicecode"), image_path=self.state.image_path
+                ):
+                # if image and recovery work for device allow to move on, otherwise display message
+                self.info_field.controls.append(Text("Image and recovery don't work with the device. Please select different ones."))
+                self.right_view.update()
+                return
+            self.info_field.controls = []
             self.confirm_button.disabled = False
             self.right_view.update()
         else:
@@ -465,6 +477,7 @@ class MainView(UserControl):
         )
         if e.files:
             self.image_path = e.files[0].path
+            self.state.image_path = e.files[0].path
             logger.info(f"Selected image from {self.image_path}")
         else:
             logger.info("No image selected.")
@@ -476,6 +489,7 @@ class MainView(UserControl):
         )
         if e.files:
             self.recovery_path = e.files[0].path
+            self.state.recovery_path = e.files[0].path
             logger.info(f"Selected recovery from {self.recovery_path}")
         else:
             logger.info("No image selected.")

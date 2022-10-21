@@ -15,6 +15,7 @@
 
 from typing import Optional
 
+import zipfile
 import requests
 from loguru import logger
 
@@ -36,6 +37,20 @@ def get_download_link(devicecode: str) -> Optional[str]:
     except requests.exceptions.RequestException as e:
         logger.info(f"{url} doesn't exist, error: {e}")
         return
+
+
+def image_recovery_works_with_device(device_code: str, image_path: str) -> bool:
+    """Determine if an image and recovery works for the given device."""
+    with zipfile.ZipFile(image_path) as image_zip:
+        with image_zip.open("META-INF/com/android/metadata", mode="r") as image_metadata:
+            metadata = image_metadata.readlines()
+            supported_devices = str(metadata[-1]).split("=")[-1][:-3].split(",")
+            logger.info(f"Image works with device: {supported_devices}")
+
+            if device_code in supported_devices:
+                logger.info("Device supported by the image.")
+                return True
+    return False
 
 
 class AppState:
