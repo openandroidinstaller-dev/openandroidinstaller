@@ -67,12 +67,16 @@ def move_files_to_lib(platform: str):
     target_path.mkdir(exist_ok=True)
     # move adb
     adb_path = (
-        Path(__file__).parent.joinpath(Path(os.sep.join(["..", "tools", "platform-tools", "adb"]))).resolve()
+        Path(__file__)
+        .parent.joinpath(Path(os.sep.join(["..", "tools", "platform-tools", "adb"])))
+        .resolve()
     )
     logger.info(adb_path)
     adb_target_path = (
         Path(__file__)
-        .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "adb"])))
+        .parent.joinpath(
+            Path(os.sep.join(["..", "openandroidinstaller", "bin", "adb"]))
+        )
         .resolve()
     )
     if platform == "win32":
@@ -83,12 +87,16 @@ def move_files_to_lib(platform: str):
     # move fastboot
     fb_path = (
         Path(__file__)
-        .parent.joinpath(Path(os.sep.join(["..", "tools", "platform-tools", "fastboot"])))
+        .parent.joinpath(
+            Path(os.sep.join(["..", "tools", "platform-tools", "fastboot"]))
+        )
         .resolve()
     )
     fb_target_path = (
         Path(__file__)
-        .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "fastboot"])))
+        .parent.joinpath(
+            Path(os.sep.join(["..", "openandroidinstaller", "bin", "fastboot"]))
+        )
         .resolve()
     )
     if platform == "win32":
@@ -96,10 +104,16 @@ def move_files_to_lib(platform: str):
         fb_target_path = fb_target_path.parents[0] / "fastboot.exe"
     fb_path.rename(fb_target_path)
     # move heimdall
-    hd_path = Path(__file__).parent.joinpath(Path(os.sep.join(["..", "heimdall", "heimdall"]))).resolve()
+    hd_path = (
+        Path(__file__)
+        .parent.joinpath(Path(os.sep.join(["..", "heimdall", "heimdall"])))
+        .resolve()
+    )
     hd_target_path = (
         Path(__file__)
-        .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "heimdall"])))
+        .parent.joinpath(
+            Path(os.sep.join(["..", "openandroidinstaller", "bin", "heimdall"]))
+        )
         .resolve()
     )
     if platform == "win32":

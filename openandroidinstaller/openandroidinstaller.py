@@ -22,11 +22,33 @@ from time import sleep
 from typing import Callable, Optional
 
 import flet
-from flet import (AlertDialog, AppBar, Banner, Checkbox, Column, Container,
-                  Divider, ElevatedButton, FilePicker, FilePickerResultEvent,
-                  FilledButton, Icon, Image, Page, ProgressBar, ProgressRing,
-                  Row, Text, TextButton, TextField, UserControl, FloatingActionButton,
-                  VerticalDivider, colors, icons)
+from flet import (
+    AlertDialog,
+    AppBar,
+    Banner,
+    Checkbox,
+    Column,
+    Container,
+    Divider,
+    ElevatedButton,
+    FilePicker,
+    FilePickerResultEvent,
+    FilledButton,
+    Icon,
+    Image,
+    Page,
+    ProgressBar,
+    ProgressRing,
+    Row,
+    Text,
+    TextButton,
+    TextField,
+    UserControl,
+    FloatingActionButton,
+    VerticalDivider,
+    colors,
+    icons,
+)
 from installer_config import InstallerConfig, Step, _load_config
 from loguru import logger
 from tool_utils import call_tool_with_command, search_device
@@ -34,14 +56,18 @@ from utils import AppState, get_download_link, image_recovery_works_with_device
 from widgets import call_button, confirm_button, get_title, link_button
 
 # Toggle to True for development purposes
-DEVELOPMENT = True
+DEVELOPMENT = False
 DEVELOPMENT_CONFIG = "yuga"  # "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
 # Define asset paths
-CONFIG_PATH = Path(__file__).parent.joinpath(Path(os.sep.join(["assets", "configs"]))).resolve()
-IMAGE_PATH = Path(__file__).parent.joinpath(Path(os.sep.join(["assets", "imgs"]))).resolve()
+CONFIG_PATH = (
+    Path(__file__).parent.joinpath(Path(os.sep.join(["assets", "configs"]))).resolve()
+)
+IMAGE_PATH = (
+    Path(__file__).parent.joinpath(Path(os.sep.join(["assets", "imgs"]))).resolve()
+)
 BIN_PATH = Path(__file__).parent.joinpath(Path("bin")).resolve()
 
 
@@ -117,7 +143,9 @@ class WelcomeView(BaseView):
                 self.state.num_total_steps = len(self.state.steps)
 
         self.bootloader_checkbox = Checkbox(
-            label="Bootloader is already unlocked.", on_change=check_bootloader_unlocked, disabled=True
+            label="Bootloader is already unlocked.",
+            on_change=check_bootloader_unlocked,
+            disabled=True,
         )
 
         # build up the main view
@@ -325,7 +353,9 @@ class SelectFilesView(BaseView):
                 ),
                 self.selected_recovery,
                 Divider(),
-                Text("If you selected both files and they work for your device you can continue."),
+                Text(
+                    "If you selected both files and they work for your device you can continue."
+                ),
                 self.info_field,
                 Row([self.confirm_button]),
             ]
@@ -335,12 +365,20 @@ class SelectFilesView(BaseView):
     def enable_button_if_ready(self, e):
         """Enable the confirm button if both files have been selected."""
 
-        if (".zip" in self.selected_image.value) and (".img" in self.selected_recovery.value):
+        if (".zip" in self.selected_image.value) and (
+            ".img" in self.selected_recovery.value
+        ):
             if not image_recovery_works_with_device(
-                device_code=self.state.config.metadata.get("devicecode"), image_path=self.state.image_path
-                ):
+                device_code=self.state.config.metadata.get("devicecode"),
+                image_path=self.state.image_path,
+                recovery_path=self.state.recovery_path,
+            ):
                 # if image and recovery work for device allow to move on, otherwise display message
-                self.info_field.controls.append(Text("Image and recovery don't work with the device. Please select different ones."))
+                self.info_field.controls.append(
+                    Text(
+                        "Image and recovery don't work with the device. Please select different ones."
+                    )
+                )
                 self.right_view.update()
                 return
             self.info_field.controls = []
@@ -612,7 +650,7 @@ def main(page: Page):
     logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
-    page.window_height = 780 
+    page.window_height = 780
     page.window_width = int(1.77 * page.window_height)
     page.window_top = 100
     page.window_left = 120
@@ -620,7 +658,9 @@ def main(page: Page):
     page.horizontal_alignment = "center"
 
     # header
-    image_path = Path(__file__).parent.joinpath(Path(os.sep.join(["assets", "logo-192x192.png"])))
+    image_path = Path(__file__).parent.joinpath(
+        Path(os.sep.join(["assets", "logo-192x192.png"]))
+    )
     page.appbar = AppBar(
         leading=Image(src=image_path, height=40, width=40, border_radius=40),
         leading_width=56,

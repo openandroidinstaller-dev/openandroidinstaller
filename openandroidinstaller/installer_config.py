@@ -43,7 +43,6 @@ class Step:
 
 
 class InstallerConfig:
-
     def __init__(
         self,
         unlock_bootloader: List[Step],
@@ -78,7 +77,9 @@ class InstallerConfig:
             ]
         else:
             unlock_bootloader = []
-        flash_recovery = [Step(**raw_step) for raw_step in raw_steps.get("flash_recovery", [])]
+        flash_recovery = [
+            Step(**raw_step) for raw_step in raw_steps.get("flash_recovery", [])
+        ]
         install_os = [Step(**raw_step) for raw_step in raw_steps.get("install_os", [])]
         return cls(unlock_bootloader, flash_recovery, install_os, metadata)
 
@@ -111,30 +112,34 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
 
 
 def validate_config(config: str) -> bool:
-    """Validate the schema of the config.""" 
+    """Validate the schema of the config."""
 
     step_schema = {
         "title": str,
-        "type": Regex(r"text|confirm_button|call_button|call_button_with_input|link_button_with_confirm"),
+        "type": Regex(
+            r"text|confirm_button|call_button|call_button_with_input|link_button_with_confirm"
+        ),
         "content": str,
-        schema.Optional("command"): Regex(r"^adb\s|^fastboot\s|^heimdall\s"), 
+        schema.Optional("command"): Regex(r"^adb\s|^fastboot\s|^heimdall\s"),
         schema.Optional("allow_skip"): bool,
         schema.Optional("img"): str,
         schema.Optional("link"): str,
     }
 
-    config_schema = Schema({
-        "metadata": {
-            "maintainer": str,
-            "devicename": str,
-            "devicecode": str,
-        },
-        "steps": {
-            "unlock_bootloader": schema.Or(None, [step_schema]),
-            "flash_recovery": [step_schema],
-            "install_os": [step_schema],
+    config_schema = Schema(
+        {
+            "metadata": {
+                "maintainer": str,
+                "devicename": str,
+                "devicecode": str,
+            },
+            "steps": {
+                "unlock_bootloader": schema.Or(None, [step_schema]),
+                "flash_recovery": [step_schema],
+                "install_os": [step_schema],
+            },
         }
-    })
+    )
     try:
         config_schema.validate(config)
         logger.info("Config is valid.")
