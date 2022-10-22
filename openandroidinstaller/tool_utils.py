@@ -28,9 +28,9 @@ PLATFORM = sys.platform
 def call_tool_with_command(command: str, bin_path: Path) -> bool:
     """Call an executable with a specific command."""
     if PLATFORM == "win32":
-        command = re.sub(r"^adb", re.escape(str(bin_path.joinpath(Path("adb.exe")))), command)
-        command = re.sub(r"^fastboot", re.escape(str(bin_path.joinpath(Path("fastboot.exe")))), command)
-        command = re.sub(r"^heimdall", re.escape(str(bin_path.joinpath(Path("heimdall.exe")))), command)
+        command = re.sub(r"^adb", re.escape(str(bin_path.joinpath(Path("adb")))) + ".exe", command)
+        command = re.sub(r"^fastboot", re.escape(str(bin_path.joinpath(Path("fastboot.exe")))) + ".exe", command)
+        command = re.sub(r"^heimdall", re.escape(str(bin_path.joinpath(Path("heimdall.exe")))) + ".exe", command)
     else:
         command = re.sub(r"^adb", re.escape(str(bin_path.joinpath(Path("adb")))), command)
         command = re.sub(r"^fastboot", re.escape(str(bin_path.joinpath(Path("fastboot")))), command)
@@ -73,11 +73,13 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
                     "findstr",
                     "ro.product.device",
                 ],
-                stderr=STDOUT,
+                stderr=STDOUT, shell=True,
             ).decode()
         else:
             raise Exception(f"Unknown platform {platform}.")
-        return output.split("[")[-1].strip()[:-1].strip()
+        device_code = output.split("[")[-1].strip()[:-1].strip()
+        logger.info(device_code)
+        return device_code
     except CalledProcessError:
         logger.info(f"Did not detect a device.")
         return None
