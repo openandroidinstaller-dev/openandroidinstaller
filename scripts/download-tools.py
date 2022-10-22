@@ -84,6 +84,12 @@ def move_files_to_lib(platform: str):
         adb_target_path = adb_target_path.parents[0] / "adb.exe"
     logger.info(adb_target_path)
     adb_path.rename(adb_target_path)
+    # if windows, also move dll
+    if platform == "win32":
+        adb_path = adb_path.parents[0] / "AdbWinApi.dll"
+        adb_target_path = adb_target_path.parents[0] / "AdbWinApi.dll"
+        logger.info(adb_target_path)
+        adb_path.rename(adb_target_path)
     # move fastboot
     fb_path = (
         Path(__file__)
