@@ -47,10 +47,10 @@ Motorola | moto g7 power | ocean | | under development
 
 ## Usage
 
-Linux (tested with Ubuntu 20.04 LTS), Windows and MacOS are supported. 
+Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
 
 1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
-    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other drivers needed for your device.
+    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
 2. Download the lineageOS image and the custom recovery image. A source for files can be found on https://lineageosroms.com or you can just search the web for an appropriate version for your device.
 3. Start the desktop app and follow the instructions.
 
