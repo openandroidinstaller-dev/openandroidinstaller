@@ -124,7 +124,7 @@ def move_files_to_lib(platform: str):
     logger.info("Allow the executables to be executed.")
     for executable_name in ["fastboot", "adb", "mke2fs", "heimdall"]:
         if platform == "win32":
-            (pt_target_path / executable_name + ".exe").chmod(0o755)
+            (pt_target_path / (executable_name + ".exe")).chmod(0o755)
         else:
             (pt_target_path / executable_name).chmod(0o755)
     logger.info("DONE.")
