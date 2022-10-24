@@ -19,6 +19,7 @@ Inspired by: https://gitlab.com/ubports/installer/android-tools-bin/-/blob/maste
 import os
 import sys
 import zipfile
+import py7zr
 from io import BytesIO
 from pathlib import Path
 
@@ -60,55 +61,37 @@ def download_heimdall(platform: str):
     logger.info("DONE.")
 
 
+def download_libusb(platform: str):
+    """Download libusb-1.0, extract the 7z and save to file."""
+    logger.info(f"Download libusb-1.0 for {platform}...")
+    url = "https://github.com/libusb/libusb/releases/download/v1.0.24/libusb-1.0.24.7z"
+    # Downloading the file by sending the request to the URL
+    response = requests.get(url, allow_redirects=True)
+
+    # Writing the file to the local file system
+    download_path = Path(__file__).parent.joinpath(Path("libusb-windows")).resolve()
+    logger.info(download_path)
+    with py7zr.SevenZipFile(BytesIO(response.content)) as file:
+        file.extractall(download_path.name)
+    logger.info("DONE.")
+
+
 def move_files_to_lib(platform: str):
     """Move files to the expected path in the openandroidinstaller package."""
     target_path = Path(os.sep.join(["openandroidinstaller", "bin"]), exist_ok=True)
     logger.info(f"Move executables to {target_path}...")
-    target_path.mkdir(exist_ok=True)
-    # move adb
-    adb_path = (
+    # move the platformtools
+    pt_path = (
+        Path(__file__).parent.joinpath(Path(os.sep.join(["..", "tools", "platform-tools"]))).resolve()
+    )
+    logger.info(pt_path)
+    pt_target_path = (
         Path(__file__)
-        .parent.joinpath(Path(os.sep.join(["..", "tools", "platform-tools", "adb"])))
+        .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin"])))
         .resolve()
     )
-    logger.info(adb_path)
-    adb_target_path = (
-        Path(__file__)
-        .parent.joinpath(
-            Path(os.sep.join(["..", "openandroidinstaller", "bin", "adb"]))
-        )
-        .resolve()
-    )
-    if platform == "win32":
-        adb_path = adb_path.parents[0] / "adb.exe"
-        adb_target_path = adb_target_path.parents[0] / "adb.exe"
-    logger.info(adb_target_path)
-    adb_path.rename(adb_target_path)
-    # if windows, also move dll
-    if platform == "win32":
-        adb_path = adb_path.parents[0] / "AdbWinApi.dll"
-        adb_target_path = adb_target_path.parents[0] / "AdbWinApi.dll"
-        logger.info(adb_target_path)
-        adb_path.rename(adb_target_path)
-    # move fastboot
-    fb_path = (
-        Path(__file__)
-        .parent.joinpath(
-            Path(os.sep.join(["..", "tools", "platform-tools", "fastboot"]))
-        )
-        .resolve()
-    )
-    fb_target_path = (
-        Path(__file__)
-        .parent.joinpath(
-            Path(os.sep.join(["..", "openandroidinstaller", "bin", "fastboot"]))
-        )
-        .resolve()
-    )
-    if platform == "win32":
-        fb_path = fb_path.parents[0] / "fastboot.exe"
-        fb_target_path = fb_target_path.parents[0] / "fastboot.exe"
-    fb_path.rename(fb_target_path)
+    logger.info(pt_target_path)
+    pt_path.rename(pt_target_path)
     # move heimdall
     hd_path = (
         Path(__file__)
@@ -126,12 +109,24 @@ def move_files_to_lib(platform: str):
         hd_path = hd_path.parents[0] / "heimdall.exe"
         hd_target_path = hd_target_path.parents[0] / "heimdall.exe"
     hd_path.rename(hd_target_path)
+    # move libusb
+    libusb_path = Path(__file__).parent.joinpath(Path(os.sep.join(["..", "libusb-windows", "MinGW32", "dll", "libusb-1.0.dll"]))).resolve()
+    logger.info(libusb_path)
+    libusb_target_path = (
+        Path(__file__)
+        .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "libusb-1.0.dll"])))
+        .resolve()
+    )
+    logger.info(libusb_target_path)
+    libusb_path.rename(libusb_target_path)
     logger.info("DONE.")
     # make executable
     logger.info("Allow the executables to be executed.")
-    adb_target_path.chmod(0o755)
-    fb_target_path.chmod(0o755)
-    hd_target_path.chmod(0o755)
+    for executable_name in ["fastboot", "adb", "mke2fs", "heimdall"]:
+        if platform == "win32":
+            (pt_target_path / executable_name + ".exe").chmod(0o755)
+        else:
+            (pt_target_path / executable_name).chmod(0o755)
     logger.info("DONE.")
 
 
@@ -139,6 +134,7 @@ def main(platform: str):
     logger.info(f"Run downloads for {platform} ...")
     download_adb_fastboot(platform=platform)
     download_heimdall(platform=platform)
+    download_libusb(platform=platform)
     move_files_to_lib(platform=platform)
 
 
