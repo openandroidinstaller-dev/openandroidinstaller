@@ -22,11 +22,33 @@ from time import sleep
 from typing import Callable, Optional
 
 import flet
-from flet import (AlertDialog, AppBar, Banner, Checkbox, Column, Container,
-                  Divider, ElevatedButton, FilePicker, FilePickerResultEvent,
-                  FilledButton, Icon, Image, Page, ProgressBar, ProgressRing,
-                  Row, Text, TextButton, TextField, UserControl, FloatingActionButton,
-                  VerticalDivider, colors, icons)
+from flet import (
+    AlertDialog,
+    AppBar,
+    Banner,
+    Checkbox,
+    Column,
+    Container,
+    Divider,
+    ElevatedButton,
+    FilePicker,
+    FilePickerResultEvent,
+    FilledButton,
+    Icon,
+    Image,
+    Page,
+    ProgressBar,
+    ProgressRing,
+    Row,
+    Text,
+    TextButton,
+    TextField,
+    UserControl,
+    FloatingActionButton,
+    VerticalDivider,
+    colors,
+    icons,
+)
 from installer_config import Step, _load_config
 from loguru import logger
 from tool_utils import call_tool_with_command, search_device
@@ -34,7 +56,7 @@ from utils import AppState, get_download_link, image_recovery_works_with_device
 from widgets import call_button, confirm_button, get_title, link_button
 
 # Toggle to True for development purposes
-DEVELOPMENT = False 
+DEVELOPMENT = False
 DEVELOPMENT_CONFIG = "yuga"  # "a3y17lte"  # "sargo"
 
 
@@ -339,7 +361,6 @@ class SelectFilesView(BaseView):
 
     def enable_button_if_ready(self, e):
         """Enable the confirm button if both files have been selected."""
-
         if (".zip" in self.selected_image.value) and (
             ".img" in self.selected_recovery.value
         ):
@@ -634,7 +655,9 @@ def main(page: Page):
 
     # header
     page.appbar = AppBar(
-        leading=Image(src=f"/assets/logo-192x192.png", height=40, width=40, border_radius=40),
+        leading=Image(
+            src=f"/assets/logo-192x192.png", height=40, width=40, border_radius=40
+        ),
         leading_width=56,
         toolbar_height=72,
         elevation=0,

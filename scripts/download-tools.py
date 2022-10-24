@@ -82,7 +82,9 @@ def move_files_to_lib(platform: str):
     logger.info(f"Move executables to {target_path}...")
     # move the platformtools
     pt_path = (
-        Path(__file__).parent.joinpath(Path(os.sep.join(["..", "tools", "platform-tools"]))).resolve()
+        Path(__file__)
+        .parent.joinpath(Path(os.sep.join(["..", "tools", "platform-tools"])))
+        .resolve()
     )
     logger.info(pt_path)
     pt_target_path = (
@@ -110,11 +112,23 @@ def move_files_to_lib(platform: str):
         hd_target_path = hd_target_path.parents[0] / "heimdall.exe"
     hd_path.rename(hd_target_path)
     # move libusb
-    libusb_path = Path(__file__).parent.joinpath(Path(os.sep.join(["..", "libusb-windows", "MinGW32", "dll", "libusb-1.0.dll"]))).resolve()
+    libusb_path = (
+        Path(__file__)
+        .parent.joinpath(
+            Path(
+                os.sep.join(
+                    ["..", "libusb-windows", "MinGW32", "dll", "libusb-1.0.dll"]
+                )
+            )
+        )
+        .resolve()
+    )
     logger.info(libusb_path)
     libusb_target_path = (
         Path(__file__)
-        .parent.joinpath(Path(os.sep.join(["..", "openandroidinstaller", "bin", "libusb-1.0.dll"])))
+        .parent.joinpath(
+            Path(os.sep.join(["..", "openandroidinstaller", "bin", "libusb-1.0.dll"]))
+        )
         .resolve()
     )
     logger.info(libusb_target_path)
