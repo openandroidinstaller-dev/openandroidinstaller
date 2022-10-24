@@ -13,6 +13,7 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import sys
 from pathlib import Path
 from subprocess import STDOUT, CalledProcessError, call, check_output
 from typing import Optional
@@ -21,11 +22,35 @@ import regex as re
 from loguru import logger
 
 
+PLATFORM = sys.platform
+
+
 def call_tool_with_command(command: str, bin_path: Path) -> bool:
     """Call an executable with a specific command."""
-    command = re.sub(r"^adb", str(bin_path.joinpath(Path("adb"))), command)
-    command = re.sub(r"^fastboot", str(bin_path.joinpath(Path("fastboot"))), command)
-    command = re.sub(r"^heimdall", str(bin_path.joinpath(Path("heimdall"))), command)
+    if PLATFORM == "win32":
+        command = re.sub(
+            r"^adb", re.escape(str(bin_path.joinpath(Path("adb")))) + ".exe", command
+        )
+        command = re.sub(
+            r"^fastboot",
+            re.escape(str(bin_path.joinpath(Path("fastboot.exe")))) + ".exe",
+            command,
+        )
+        command = re.sub(
+            r"^heimdall",
+            re.escape(str(bin_path.joinpath(Path("heimdall.exe")))) + ".exe",
+            command,
+        )
+    else:
+        command = re.sub(
+            r"^adb", re.escape(str(bin_path.joinpath(Path("adb")))), command
+        )
+        command = re.sub(
+            r"^fastboot", re.escape(str(bin_path.joinpath(Path("fastboot")))), command
+        )
+        command = re.sub(
+            r"^heimdall", re.escape(str(bin_path.joinpath(Path("heimdall")))), command
+        )
 
     logger.info(f"Run command: {command}")
     res = call(f"{command}", shell=True)
@@ -65,10 +90,13 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
                     "ro.product.device",
                 ],
                 stderr=STDOUT,
+                shell=True,
             ).decode()
         else:
             raise Exception(f"Unknown platform {platform}.")
-        return output.split("[")[-1].strip()[:-1].strip()
+        device_code = output.split("[")[-1].strip()[:-1].strip()
+        logger.info(device_code)
+        return device_code
     except CalledProcessError:
         logger.info(f"Did not detect a device.")
         return None

@@ -15,8 +15,8 @@
 
 import os
 import sys
-import turtle
 import webbrowser
+import regex as re
 from pathlib import Path
 from time import sleep
 from typing import Callable, Optional
@@ -49,7 +49,7 @@ from flet import (
     colors,
     icons,
 )
-from installer_config import InstallerConfig, Step, _load_config
+from installer_config import Step, _load_config
 from loguru import logger
 from tool_utils import call_tool_with_command, search_device
 from utils import AppState, get_download_link, image_recovery_works_with_device
@@ -65,9 +65,6 @@ PLATFORM = sys.platform
 CONFIG_PATH = (
     Path(__file__).parent.joinpath(Path(os.sep.join(["assets", "configs"]))).resolve()
 )
-IMAGE_PATH = (
-    Path(__file__).parent.joinpath(Path(os.sep.join(["assets", "imgs"]))).resolve()
-)
 BIN_PATH = Path(__file__).parent.joinpath(Path("bin")).resolve()
 
 
@@ -77,7 +74,7 @@ class BaseView(UserControl):
         self.right_view = Column(expand=True)
         self.left_view = Column(
             width=600,
-            controls=[Image(src=IMAGE_PATH.joinpath(Path(image)))],
+            controls=[Image(src=f"/assets/imgs/{image}")],
             expand=True,
             horizontal_alignment="center",
         )
@@ -364,7 +361,6 @@ class SelectFilesView(BaseView):
 
     def enable_button_if_ready(self, e):
         """Enable the confirm button if both files have been selected."""
-
         if (".zip" in self.selected_image.value) and (
             ".img" in self.selected_recovery.value
         ):
@@ -658,11 +654,10 @@ def main(page: Page):
     page.horizontal_alignment = "center"
 
     # header
-    image_path = Path(__file__).parent.joinpath(
-        Path(os.sep.join(["assets", "logo-192x192.png"]))
-    )
     page.appbar = AppBar(
-        leading=Image(src=image_path, height=40, width=40, border_radius=40),
+        leading=Image(
+            src=f"/assets/logo-192x192.png", height=40, width=40, border_radius=40
+        ),
         leading_width=56,
         toolbar_height=72,
         elevation=0,
