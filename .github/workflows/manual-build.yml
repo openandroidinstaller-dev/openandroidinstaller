@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-latest', 'macos-latest']
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
 
     steps:
     - uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
         python-version: 3.9
     - run: pip install -r requirements.txt
     - run: python scripts/download-tools.py
-    - run: pyinstaller openandroidinstaller/openandroidinstaller.py --noconsole --noconfirm --onefile --icon "openandroidinstaller/assets/favicon.ico" --add-data "openandroidinstaller/assets:assets" --add-data "openandroidinstaller/bin:bin" --windowed
+    - run: python scripts/build.py
     # Optionally verify that it works (provided that it does not need user interaction)
     #- run: ./dist/your-code/your-code
     - uses: actions/upload-artifact@v3
