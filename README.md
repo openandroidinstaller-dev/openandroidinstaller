@@ -57,7 +57,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). W
 
 ## Run OpenAndroidInstaller for development
 
-Currently development is only supported on Ubuntu Linux. MacOS should also work fine.
+Currently development is only supported on Ubuntu Linux. MacOS and Windows should also work fine. You might need to install additional USB-drivers on Windows.
 
 1. Clone the main branch of this repository
 2. Run `make poetry` and `make install` to install poetry to manage python and install the required dependencies like adb, fastboot and heimdall.
@@ -66,7 +66,14 @@ Currently development is only supported on Ubuntu Linux. MacOS should also work 
 
 ## Contributing
 
-### Contribute your own installation configurations
+All kinds of contributions are welcome. These include:
+- Fix and improve texts in configs and in the application.
+- Test the tool for a supported device.
+- Create a config for a new device.
+- Test the application on your computer.
+- Contribute an application build for a new platform.
+
+### How to contribute your own installation configurations
 
 If you want to use the tool for a non-supported smartphone, the fastest way is to adapt an [existing config file](https://github.com/openandroidinstaller-dev/openandroidinstaller/tree/main/openandroidinstaller/assets/configs).
 
@@ -92,7 +99,15 @@ The file should be named after device name output by `adb shell getprop | grep r
 To test your config file with the executable without using the developer setup, place it in the same directory as the executable. There it will be detected by name. 
 After you created a config file and it works fine, you can open a pull request to make the file available to other users. Please also add the device to the supported devices table above.
 
+### How to build the application for your platform
+
+The executables for the OpenAndroidInstaller are build with [pyinstaller](https://pyinstaller.org/en/stable/index.html). You can create builds for MacOS or Linux with `make build-app`. For Windows the paths need to be modified. For now, you can have a look [here](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/v0.1.2-alpha/.github/workflows/manual-build-windows.yml#L22) on how it's done.
+
+If you build the application for your platform and want to contribute the build, please reach out to me.
+
 #### On unlocking the bootloader
+Devices by *Samsung*, *Google* and *Fairphone* make it fairly easy to unlock the bootloader and receive good support in the installer.
+
 Some devices with require manual steps to unlock the bootloader. In general you will need to create an account at a vendor website and receive some code from there. OpenAndroidInstaller will try to guide you as far as possible. These vendors include *Sony, Motorola, Xiaomi* among others.
 
 Other phone vendors stops allowing to unlock the bootloader all together. There is nothing to be done if you didn't unlock your device in time. These vendors include *Huawei and LG* among others. Support for these vendors will always be very limited.
