@@ -75,7 +75,7 @@ def build_windows():
         "--noconfirm",
         "--windowed",
         "--clean",
-        "--icon=openandroidinstaller\assetsf\avicon.ico",
+        "--icon=openandroidinstaller/assets/favicon.ico",
     ] + added_data
 
     logger.info(f"Running pyinstaller with: {' '.join(pyinstaller_options)}")
