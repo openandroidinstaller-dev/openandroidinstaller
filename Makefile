@@ -15,7 +15,7 @@ app:
 	poetry run python openandroidinstaller/openandroidinstaller.py
 
 build-app:
-	poetry run pyinstaller openandroidinstaller/openandroidinstaller.py --noconsole --noconfirm --onefile --icon "openandroidinstaller/assets/favicon.ico" --add-data "openandroidinstaller/assets:assets" --add-binary "openandroidinstaller/bin/adb:bin" --add-binary "openandroidinstaller/bin/fastboot:bin" --add-binary "openandroidinstaller/bin/heimdall:bin" --windowed
+	poetry run python scripts/build.py
 
 clean-build:
 	rm -rf build/ dist/
