@@ -19,16 +19,11 @@ steps:
       content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: "fastboot flash recovery <recovery>"
     - title: "Flash temporary recovery"
-      type: call_button
-      content: Press the button to reboot. Then confirm here to continue.
-      command: "fastboot reboot"
-  install_os:
-    - title: "Flash LineageOS"
       type: confirm_button 
-      content: In this step, you finally flash LineageOS. Confirm to continue.
-    - title: "Flash LineageOS"
-      type: confirm_button
-      content: Select 'Recovery Mode' on your smartphone screen and press the Start-Button to confirm. Then confirm here.
+      content: >
+        Now reboot into recovery to verify the installation. Do not reboot into the existing OS, since it will overwrite the recovery you just installed!
+        With the device powered off, hold 'Volume Up + Power'. Release when boot logo appears.
+  install_os:
     - title: "Flash LineageOS"
       type: confirm_button
       content: >
