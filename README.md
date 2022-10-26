@@ -40,7 +40,7 @@ Sony | Xperia Z | yuga | C6603 | tested
 Sony | Xperia Z3 | z3 | | under development
 Sony | Xperia ZX | kagura | | planned
 Fairphone | Fairphone 2 | FP2 | | under development
-Fairphone | Fairphone 3 | FP3 | | planned
+Fairphone | Fairphone 3 | FP3 | | under development
 Motorola | Moto G5 | cedric | | planned
 Motorola | moto g7 power | ocean | | under development
 
