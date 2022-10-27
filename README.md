@@ -40,7 +40,7 @@ Sony | Xperia Z | yuga | C6603 | tested
 Sony | Xperia Z3 | z3 | | under development
 Sony | Xperia ZX | kagura | | planned
 Fairphone | Fairphone 2 | FP2 | | under development
-Fairphone | Fairphone 3 | FP3 | | planned
+Fairphone | Fairphone 3 | FP3 | | under development
 Motorola | Moto G5 | cedric | | planned
 Motorola | moto g7 power | ocean | | under development
 
@@ -75,7 +75,11 @@ All kinds of contributions are welcome. These include:
 
 ### How to contribute your own installation configurations
 
-If you want to use the tool for a non-supported smartphone, the fastest way is to adapt an [existing config file](https://github.com/openandroidinstaller-dev/openandroidinstaller/tree/main/openandroidinstaller/assets/configs).
+If you want to use the tool for a non-supported smartphone, the fastest way is to adapt an [existing config file](https://github.com/openandroidinstaller-dev/openandroidinstaller/tree/main/openandroidinstaller/assets/configs). The file should be named after the `device code` of your device. This is in general the output by `adb shell getprop | grep ro.product.device` when the devices is connected to the computer. You can also get the device code by connecting the device to the computer and run OpenAndroidInstaller to detect the device.
+
+**To test your config file with the executable** without using the developer setup, place it in the same directory as the executable. There it will be detected by name. After you created a config file and it works fine, you can open a pull request to make the file available to other users. Please also add the device to the supported devices table above.
+
+#### Content of a config file
 
 Every step in the config file corresponds to one view in the application. These steps should contain the following fields:
 - `title`: str; Describing the overall goal of the step. Will be displayed in the header of the view.
@@ -93,11 +97,6 @@ Every step in the config file corresponds to one view in the application. These 
 - `img`: [OPTIONAL] Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 - `link`: [OPTIONAL] Link to use for the link button if type is `link_button_with_confirm`.
-
-The file should be named after device name output by `adb shell getprop | grep ro.product.device` when the devices is connected to the computer. You can also get the device code by connecting the device to the computer and run OpenAndroidInstaller to detect the device.
-
-To test your config file with the executable without using the developer setup, place it in the same directory as the executable. There it will be detected by name. 
-After you created a config file and it works fine, you can open a pull request to make the file available to other users. Please also add the device to the supported devices table above.
 
 ### How to build the application for your platform
 
