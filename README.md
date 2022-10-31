@@ -1,6 +1,11 @@
 <br />
 <div align="center">
   <h1>OpenAndroidInstaller</h1>
+
+  ![License](https://img.shields.io/github/license/openandroidinstaller-dev/openandroidinstaller?color=green&style=flat-square)
+  ![Release](https://img.shields.io/github/v/release/openandroidinstaller-dev/openandroidinstaller?include_prereleases)
+  ![Downloads](https://img.shields.io/github/downloads/openandroidinstaller-dev/openandroidinstaller/total)
+  ![Twitter](https://img.shields.io/twitter/follow/oainstaller?style=social)
   <p>Makes installing alternative Android distributions nice and easy.</p>
   <a href="https://github.com/openandroidinstaller-dev/openandroidinstaller">
     <img src="openandroidinstaller/assets/logo-192x192.png" alt="OpenAndroidInstaller" height="80">
