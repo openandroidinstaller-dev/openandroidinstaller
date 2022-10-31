@@ -22,7 +22,7 @@ from loguru import logger
 
 def get_download_link(devicecode: str) -> Optional[str]:
     """Check if a lineageOS version for this device exists on lineageosroms.com and return the respective download link."""
-    url = f"https://lineageosroms.com/{devicecode.lower()}/"
+    url = f"https://download.lineageos.org/{devicecode.lower()}/"
     try:
         logger.info(f"Checking {url}")
         # Get Url
