@@ -114,8 +114,13 @@ class WelcomeView(BaseView):
         self.dlg_help_developer_options = AlertDialog(
             modal=True,
             title=Text("How to enable developer options and OEM unlocking"),
-            content=Text(
-                "To do this, tap seven times on the build number in the 'System'- or 'About the phone'-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."
+            content=Markdown(
+"""
+To do this, tap seven times on the build number in the 'System'- or 'About the phone'-Menu in Settings. You can also use the phones own search to look for `build number`. 
+Then go back to the main menu and look for 'developer options'. You can also search for it in your phone.
+When you are in developer options, toggle OEM unlocking and USB-Debugging. If your phone is already connected to your PC, a pop-up might appear. Allow USB debugging in the pop-up on your phone.
+Now you are ready to continue.
+"""
             ),
             actions=[
                 TextButton("Close", on_click=self.close_developer_options_dlg),
@@ -163,7 +168,7 @@ class WelcomeView(BaseView):
                 ),
                 Row(
                     [
-                        FilledButton(
+                        ElevatedButton(
                             "How do I enable developer mode?",
                             on_click=self.open_developer_options_dlg,
                             expand=True,
@@ -185,7 +190,7 @@ class WelcomeView(BaseView):
                 ),
                 Row(
                     [
-                        ElevatedButton(
+                        FilledButton(
                             "Search device",
                             on_click=self.search_devices,
                             icon=icons.PHONE_ANDROID,
