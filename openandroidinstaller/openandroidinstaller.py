@@ -46,6 +46,7 @@ from flet import (
     UserControl,
     FloatingActionButton,
     VerticalDivider,
+    Markdown,
     colors,
     icons,
 )
@@ -297,7 +298,7 @@ class SelectFilesView(BaseView):
                 Column(
                     [
                         Text(
-                            "You can download supported image and recovery file for your device here:"
+                            "You can bring your own image and recovery or you download the officially supported image and recovery file for your device here:"
                         ),
                         Row(
                             [
@@ -310,6 +311,13 @@ class SelectFilesView(BaseView):
                                     expand=True,
                                 ),
                             ]
+                        ),
+                        Markdown(
+                            f"""
+The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip` 
+and the recovery like `lineage-19.1-20221101-recovery-{self.state.config.metadata.get('devicecode')}.img` 
+or `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`.
+"""
                         ),
                         Divider(),
                     ]
@@ -371,7 +379,9 @@ class SelectFilesView(BaseView):
             ):
                 # if image and recovery work for device allow to move on, otherwise display message
                 self.info_field.controls = [
-                    Text("Image and recovery don't work with the device. Please select different ones.")
+                    Text(
+                        "Image and recovery don't work with the device. Please select different ones."
+                    )
                 ]
                 self.right_view.update()
                 return
@@ -504,8 +514,10 @@ class MainView(UserControl):
             return self.config.metadata.get("devicename", "No device name in config.")
 
     def pick_image_result(self, e: FilePickerResultEvent):
-        path = (", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!")
-        self.selected_image.value = self.selected_image.value.split(":")[0] + f": {path}"
+        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        self.selected_image.value = (
+            self.selected_image.value.split(":")[0] + f": {path}"
+        )
         if e.files:
             self.image_path = e.files[0].path
             self.state.image_path = e.files[0].path
@@ -515,8 +527,10 @@ class MainView(UserControl):
         self.selected_image.update()
 
     def pick_recovery_result(self, e: FilePickerResultEvent):
-        path = (", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!")
-        self.selected_recovery.value = self.selected_recovery.value.split(":")[0] + f": {path}"
+        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        self.selected_recovery.value = (
+            self.selected_recovery.value.split(":")[0] + f": {path}"
+        )
         if e.files:
             self.recovery_path = e.files[0].path
             self.state.recovery_path = e.files[0].path
