@@ -684,15 +684,14 @@ def main(page: Page):
         bgcolor=colors.AMBER_100,
         leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
         content=Text(
-            "Important: Please read through the instructions at least once before actually following them, so as to avoid any problems due to any missed steps!"
+            "These instructions only work if you follow every section and step precisely. Do not continue after something fails!"
         ),
         actions=[
             TextButton("I understand", on_click=close_banner),
         ],
     )
-    # TODO: disable the banner for now
-    # page.banner.open = True
-    # page.update()
+    page.banner.open = True
+    page.update()
 
     # create application instance
     app = MainView()
