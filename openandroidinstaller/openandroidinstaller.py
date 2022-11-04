@@ -56,8 +56,8 @@ from utils import AppState, get_download_link, image_recovery_works_with_device
 from widgets import call_button, confirm_button, get_title, link_button
 
 # Toggle to True for development purposes
-DEVELOPMENT = False
-DEVELOPMENT_CONFIG = "yuga"  # "a3y17lte"  # "sargo"
+DEVELOPMENT = True
+DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
@@ -370,11 +370,9 @@ class SelectFilesView(BaseView):
                 recovery_path=self.state.recovery_path,
             ):
                 # if image and recovery work for device allow to move on, otherwise display message
-                self.info_field.controls.append(
-                    Text(
-                        "Image and recovery don't work with the device. Please select different ones."
-                    )
-                )
+                self.info_field.controls = [
+                    Text("Image and recovery don't work with the device. Please select different ones.")
+                ]
                 self.right_view.update()
                 return
             self.info_field.controls = []
@@ -506,9 +504,8 @@ class MainView(UserControl):
             return self.config.metadata.get("devicename", "No device name in config.")
 
     def pick_image_result(self, e: FilePickerResultEvent):
-        self.selected_image.value += (
-            ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
-        )
+        path = (", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!")
+        self.selected_image.value = self.selected_image.value.split(":")[0] + f": {path}"
         if e.files:
             self.image_path = e.files[0].path
             self.state.image_path = e.files[0].path
@@ -518,9 +515,8 @@ class MainView(UserControl):
         self.selected_image.update()
 
     def pick_recovery_result(self, e: FilePickerResultEvent):
-        self.selected_recovery.value += (
-            ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
-        )
+        path = (", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!")
+        self.selected_recovery.value = self.selected_recovery.value.split(":")[0] + f": {path}"
         if e.files:
             self.recovery_path = e.files[0].path
             self.state.recovery_path = e.files[0].path
