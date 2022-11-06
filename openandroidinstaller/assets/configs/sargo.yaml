@@ -54,11 +54,10 @@ steps:
       command: "fastboot flash boot <recovery>"
   install_os:
     - title: "Flash LineageOS"
-      type: confirm_button 
-      content: In this step, you finally flash LineageOS. Confirm to continue.
-    - title: "Flash LineageOS"
       type: confirm_button
-      content: Select 'Recovery Mode' on your smartphone screen and press the Start-Button to confirm. Then confirm here.
+      content: >
+        In the next steps, you finally flash LineageOS.
+        Select 'Recovery Mode' on your smartphone screen and press the Start-Button to confirm. Then confirm here.
     - title: "Flash LineageOS"
       type: confirm_button
       content: >
@@ -66,10 +65,9 @@ steps:
         This will remove encryption and delete all files stored in the internal storage, as well as format your cache partition (if you have one).
     - title: "Flash LineageOS"
       type: confirm_button
-      content: Return to the main menu on the phone.
-    - title: "Flash LineageOS"
-      type: confirm_button
-      content: On the device, select “Apply Update”, then “Apply from ADB” to begin sideload. Then confirm here.
+      content: >
+        Return to the main menu on the phone by pressing the back button.
+        On the device, select “Apply Update”, then “Apply from ADB” to begin sideload. Then confirm here.
     - title: "Flash LineageOS"
       type: call_button
       content: >

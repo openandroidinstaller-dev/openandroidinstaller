@@ -31,10 +31,9 @@ steps:
         This will remove encryption and delete all files stored in the internal storage, as well as format your cache partition (if you have one).
     - title: "Flash LineageOS"
       type: confirm_button
-      content: Return to the main menu on the phone.
-    - title: "Flash LineageOS"
-      type: confirm_button
-      content: On the device, select “Apply Update”, then “Apply from ADB” to begin sideload. Then confirm here.
+      content: >
+      Return to the main menu on the phone by pressing the back button on the screen.
+      On the device, select “Apply Update”, then “Apply from ADB” to begin sideload. Then confirm here.
     - title: "Flash LineageOS"
       type: call_button
       content: >
