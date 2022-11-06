@@ -96,14 +96,15 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
     Only works for twrp recovery.
     """
     logger.info("Wipe and format data with twrp, then install os image.")
-    sleep(1)
+    sleep(7)
     result = run_command("adb", ["shell", "twrp", "format", "data"], bin_path)
     if result.returncode != 0:
         logger.info("Formatting data failed.")
         return False
     # wipe some partitions
-    for partition in ["cache", "system", "dalvik"]:
+    for partition in ["cache", "system"]:
         result = run_command("adb", ["shell", "twrp", "wipe", partition], bin_path)
+        sleep(1)
         if result.returncode != 0:
             logger.info(f"Wiping {partition} failed.")
             return False
@@ -114,21 +115,22 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
         logger.info("Activating sideload failed.")
         return False
     # now flash os image
-    sleep(1)
+    sleep(5)
     logger.info("Sideload and install os image.")
     result = run_command("adb", ["sideload", f"{target}"], bin_path)
     if result.returncode != 0:
         logger.info(f"Sideloading {target} failed.")
         return False
     # wipe some cache partitions
-    sleep(1)
+    sleep(5)
     for partition in ["cache", "dalvik"]:
         result = run_command("adb", ["shell", "twrp", "wipe", partition], bin_path)
+        sleep(1)
         if result.returncode != 0:
             logger.info(f"Wiping {partition} failed.")
             return False
     # finally reboot into os
-    sleep(1)
+    sleep(5)
     logger.info("Reboot into OS.")
     result = run_command("adb", ["shell", "twrp", "reboot"], bin_path)
     if result.returncode != 0:
