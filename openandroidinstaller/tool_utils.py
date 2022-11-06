@@ -15,6 +15,7 @@
 
 import sys
 from pathlib import Path
+from time import sleep
 from subprocess import STDOUT, CalledProcessError, call, check_output, PIPE, run, CompletedProcess
 from typing import Optional, List
 
@@ -30,9 +31,9 @@ def run_command(tool: str, command: List[str], bin_path: Path) -> CompletedProce
     if tool not in ["adb", "fastboot", "heimdall"]:
         raise Exception(f"Unknown tool {tool}. Use adb, fastboot or heimdall.")
     if PLATFORM == "win32":
-        full_command = [str(bin_path + f"{tool}.exe")] + command
+        full_command = [str(bin_path.joinpath(Path(f"{tool}"))) + ".exe"] + command
     else:
-        full_command = [str(bin_path + f"{tool}")] + command
+        full_command = [str(bin_path.joinpath(Path(f"{tool}")))] + command
 
     logger.info(f"Run command: {full_command}")
     result = run(full_command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
@@ -79,7 +80,6 @@ def adb_reboot_download(bin_path: Path) -> bool:
     return True
 
 
-
 def adb_sideload(bin_path: Path, target: str) -> bool:
     """Sideload the target to device and return success."""
     logger.info("Rebooting device into bootloader with adb.")
@@ -90,40 +90,102 @@ def adb_sideload(bin_path: Path, target: str) -> bool:
     return True
 
 
-def call_tool_with_command(command: str, bin_path: Path) -> bool:
-    """Call an executable with a specific command."""
-    if PLATFORM == "win32":
-        command = re.sub(
-            r"^adb", re.escape(str(bin_path.joinpath(Path("adb")))) + ".exe", command
-        )
-        command = re.sub(
-            r"^fastboot",
-            re.escape(str(bin_path.joinpath(Path("fastboot.exe")))) + ".exe",
-            command,
-        )
-        command = re.sub(
-            r"^heimdall",
-            re.escape(str(bin_path.joinpath(Path("heimdall.exe")))) + ".exe",
-            command,
-        )
-    else:
-        command = re.sub(
-            r"^adb", re.escape(str(bin_path.joinpath(Path("adb")))), command
-        )
-        command = re.sub(
-            r"^fastboot", re.escape(str(bin_path.joinpath(Path("fastboot")))), command
-        )
-        command = re.sub(
-            r"^heimdall", re.escape(str(bin_path.joinpath(Path("heimdall")))), command
-        )
+def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
+    """Wipe and format data with twrp, then flash os image with adb.
+    
+    Only works for twrp recovery.
+    """
+    logger.info("Wipe and format data with twrp, then install os image.")
+    sleep(1)
+    result = run_command("adb", ["shell", "twrp", "format", "data"], bin_path)
+    if result.returncode != 0:
+        logger.info("Formatting data failed.")
+        return False
+    # wipe some partitions
+    for partition in ["cache", "system", "dalvik"]:
+        result = run_command("adb", ["shell", "twrp", "wipe", partition], bin_path)
+        if result.returncode != 0:
+            logger.info(f"Wiping {partition} failed.")
+            return False
+    # activate sideload
+    logger.info("Wiping is done, now activate sideload.")
+    result = run_command("adb", ["shell", "twrp", "sideload"], bin_path)
+    if result.returncode != 0:
+        logger.info("Activating sideload failed.")
+        return False
+    # now flash os image
+    sleep(1)
+    logger.info("Sideload and install os image.")
+    result = run_command("adb", ["sideload", f"{target}"], bin_path)
+    if result.returncode != 0:
+        logger.info(f"Sideloading {target} failed.")
+        return False
+    # wipe some cache partitions
+    sleep(1)
+    for partition in ["cache", "dalvik"]:
+        result = run_command("adb", ["shell", "twrp", "wipe", partition], bin_path)
+        if result.returncode != 0:
+            logger.info(f"Wiping {partition} failed.")
+            return False
+    # finally reboot into os
+    sleep(1)
+    logger.info("Reboot into OS.")
+    result = run_command("adb", ["shell", "twrp", "reboot"], bin_path)
+    if result.returncode != 0:
+        logger.info("Rebooting with twrp failed.")
+        return False
 
-    logger.info(f"Run command: {command}")
-    res = call(f"{command}", shell=True)
-    if res == 0:
-        logger.info("Success.")
-        return True
-    logger.info(f"Command {command} failed.")
-    return False
+    return True 
+
+
+def fastboot_unlock_with_code(bin_path: Path, unlock_code: str) -> bool:
+    """Unlock the device with fastboot and code given."""
+    logger.info(f"Unlock the device with fastboot and code: {unlock_code}.")
+    result = run_command("fastboot", ["oem", "unlock", f"{unlock_code}"], bin_path)
+    if result.returncode != 0:
+        logger.info(f"Unlocking with code {unlock_code} failed.")
+        return False
+    return True
+    
+
+def fastboot_unlock(bin_path: Path) -> bool:
+    """Unlock the device with fastboot and without code."""
+    logger.info(f"Unlock the device with fastboot.")
+    result = run_command("fastboot", ["flashing", "unlock"] , bin_path)
+    if result.returncode != 0:
+        logger.info(f"Unlocking failed.")
+        return False
+    return True
+    
+
+def fastboot_reboot(bin_path: Path) -> bool:
+    """Reboot with fastboot"""
+    logger.info(f"Rebooting device with fastboot.")
+    result = run_command("fastboot", ["reboot"] , bin_path)
+    if result.returncode != 0:
+        logger.info(f"Rebooting with fastboot failed.")
+        return False
+    return True
+    
+
+def fastboot_flash_recovery(bin_path: Path, recovery: str) -> bool:
+    """Temporarily, flash custom recovery with fastboot."""
+    logger.info(f"Flash custom recovery with fastboot.")
+    result = run_command("fastboot", ["flash", "boot", f"{recovery}"] , bin_path)
+    if result.returncode != 0:
+        logger.info(f"Flashing recovery failed.")
+        return False
+    return True
+    
+
+def heimdall_flash_recovery(bin_path: Path, recovery: str) -> bool:
+    """Temporarily, flash custom recovery with heimdall."""
+    logger.info(f"Flash custom recovery with heimdall.")
+    result = run_command("heimdall", ["flash", "--no-reboot", "--RECOVERY", f"{recovery}"] , bin_path)
+    if result.returncode != 0:
+        logger.info(f"Flashing recovery failed.")
+        return False
+    return True
 
 
 def search_device(platform: str, bin_path: Path) -> Optional[str]:

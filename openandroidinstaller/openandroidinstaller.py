@@ -51,7 +51,20 @@ from flet import (
 )
 from installer_config import Step, _load_config
 from loguru import logger
-from tool_utils import call_tool_with_command, search_device
+from tool_utils import (
+    call_tool_with_command,
+    search_device,
+    adb_reboot,
+    adb_reboot_bootloader,
+    adb_reboot_download,
+    adb_sideload,
+    adb_twrp_wipe_and_install,
+    fastboot_reboot,
+    fastboot_flash_recovery,
+    fastboot_unlock,
+    fastboot_unlock_with_code,
+    heimdall_flash_recovery
+)
 from utils import AppState, get_download_link, image_recovery_works_with_device
 from widgets import call_button, confirm_button, get_title, link_button
 
@@ -556,11 +569,10 @@ class StepView(BaseView):
             Text(f"{self.step.content}"),
         ]
         # basic view depending on step.type
+        self.confirm_button = confirm_button(self.on_confirm)
         if self.step.type == "confirm_button":
-            self.confirm_button = confirm_button(self.on_confirm)
             self.right_view.controls.append(Row([self.confirm_button]))
         elif self.step.type == "call_button":
-            self.confirm_button = confirm_button(self.on_confirm)
             self.confirm_button.disabled = True
             self.call_button = call_button(
                 self.call_to_phone, command=self.step.command
@@ -569,7 +581,6 @@ class StepView(BaseView):
                 Row([self.call_button, self.confirm_button])
             )
         elif self.step.type == "call_button_with_input":
-            self.confirm_button = confirm_button(self.on_confirm)
             self.confirm_button.disabled = True
             self.call_button = call_button(
                 self.call_to_phone, command=self.step.command
@@ -578,7 +589,6 @@ class StepView(BaseView):
                 [self.inputtext, Row([self.call_button, self.confirm_button])]
             )
         elif self.step.type == "link_button_with_confirm":
-            self.confirm_button = confirm_button(self.on_confirm)
             self.right_view.controls.extend(
                 [Row([link_button(self.step.link, "Open Link"), self.confirm_button])]
             )
@@ -609,11 +619,6 @@ class StepView(BaseView):
 
         Some parts of the command are changed by placeholders.
         """
-        # replace placeholders by the required values
-        command = command.replace("<recovery>", self.recovery_path)
-        command = command.replace("<image>", self.image_path)
-        command = command.replace("<inputtext>", self.inputtext.value)
-
         # display a progress ring to show something is happening
         self.right_view.controls.append(
             Row(
@@ -622,8 +627,29 @@ class StepView(BaseView):
             )
         )
         self.right_view.update()
-        # run the command
-        success = call_tool_with_command(command=command, bin_path=BIN_PATH)
+
+        # run the right command
+        if command == "adb_reboot":
+            success = adb_reboot(bin_path=BIN_PATH)
+        elif command == "adb_reboot_bootloader":
+            success = adb_reboot_bootloader(bin_path=BIN_PATH)
+        elif command == "adb_reboot_download":
+            success = adb_reboot_download(bin_path=BIN_PATH)
+        elif command == "adb_sideload":
+            success = adb_sideload(bin_path=BIN_PATH, target=self.image_path)
+        elif command == "adb_twrp_wipe_and_install":
+            success = adb_twrp_wipe_and_install(bin_path=BIN_PATH, target=self.image_path)
+        elif command == "fastboot_unlock_with_code":
+            success = fastboot_unlock_with_code(bin_path=BIN_PATH, unlock_code=self.inputtext.value)
+        elif command == "fastboot_unlock":
+            success = fastboot_unlock(bin_path=BIN_PATH)
+        elif command == "fastboot_reboot":
+            success = fastboot_reboot(bin_path=BIN_PATH)
+        elif command == "heimdall_flash_recovery":
+            success = heimdall_flash_recovery(bin_path=BIN_PATH, recovery=self.recovery_path)
+        else:
+            raise Exception(f"Unknown command type: {command}. Stopping.")
+
         # update the view accordingly
         if not success:
             # pop the progress ring
