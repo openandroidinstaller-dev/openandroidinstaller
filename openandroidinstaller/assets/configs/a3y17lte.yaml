@@ -27,29 +27,38 @@ steps:
         hold *Volume Up* + *Home* + *Power*.
   install_os:
     - title: "Flash LineageOS"
-      type: confirm_button
+      type: call_button
       content: >
-        Now swipe right to allow modifications then tap 'Wipe' on your phone. Next tap 'Format Data' and follow 
-        the instructions on your phone to continue with the formatting process. This will remove encryption and delete all files stored 
-        in the internal storage. Confirm to continue once you are done.
+        This step will remove encryption and delete all files stored 
+        in the internal storage. Confirm to format. Confirm when it's done.
+      command: adb shell twrp format data
     - title: "Flash LineageOS"
-      type: confirm_button
-      content: >
-        Return to the previous menu on your phone by going back two times. 
-        Them tap 'Advanced Wipe', and select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'. 
-        Confirm to continue once you are done.
+      type: call_button
+      content: Wipe cache.
+      command: adb shell twrp wipe cache
     - title: "Flash LineageOS"
-      type: confirm_button
-      content: >
-        Now connect the phone to the computer again with the USB-cable. On the device, go back three times and select “Advanced”, 
-        then “ADB Sideload”. Select 'Wipe cache' and 'Wipe dalvik cache', then swipe to begin sideload. Then confirm here.
+      type: call_button
+      content: Wipe system
+      command: adb shell twrp wipe system
+    - title: "Flash LineageOS"
+      type: call_button
+      content: activate sideload
+      command: adb shell twrp sideload
     - title: "Flash LineageOS"
       type: call_button
       content: >
         Now it's time to flash the LineageOS image. Don't remove the USB-Cable and press 'Confirm and run' to start! 
         This might take a while. Confirm after it's done.
       command: "adb sideload <image>"
+    - title: "Flash LineageOS"
+      type: call_button
+      content: Wipe cache.
+      command: adb shell twrp wipe cache
+    - title: "Flash LineageOS"
+      type: call_button
+      content: Wipe dalvik cache 
+      command: adb shell twrp wipe dalvik
     - title: "Reboot into LineageOS"
       type: call_button
       content: As a final step, reboot into LineageOS to finish the installation by pressing the button.
-      command: "adb reboot"
+      command: adb shell twrp reboot 
