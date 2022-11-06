@@ -73,14 +73,14 @@ class InstallerConfig:
 
         if raw_steps.get("unlock_bootloader") is not None:
             unlock_bootloader = [
-                Step(**raw_step) for raw_step in raw_steps.get("unlock_bootloader")
+                Step(**raw_step, title="Unlock the bootloader") for raw_step in raw_steps.get("unlock_bootloader")
             ]
         else:
             unlock_bootloader = []
         flash_recovery = [
-            Step(**raw_step) for raw_step in raw_steps.get("flash_recovery", [])
+            Step(**raw_step, title="Flash custom recovery") for raw_step in raw_steps.get("flash_recovery", [])
         ]
-        install_os = [Step(**raw_step) for raw_step in raw_steps.get("install_os", [])]
+        install_os = [Step(**raw_step, title="Install OS") for raw_step in raw_steps.get("install_os", [])]
         return cls(unlock_bootloader, flash_recovery, install_os, metadata)
 
 
@@ -115,7 +115,6 @@ def validate_config(config: str) -> bool:
     """Validate the schema of the config."""
 
     step_schema = {
-        "title": str,
         "type": Regex(
             r"text|confirm_button|call_button|call_button_with_input|link_button_with_confirm"
         ),

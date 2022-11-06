@@ -52,7 +52,6 @@ from flet import (
 from installer_config import Step, _load_config
 from loguru import logger
 from tool_utils import (
-    call_tool_with_command,
     search_device,
     adb_reboot,
     adb_reboot_bootloader,
