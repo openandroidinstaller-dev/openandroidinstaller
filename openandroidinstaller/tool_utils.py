@@ -15,14 +15,79 @@
 
 import sys
 from pathlib import Path
-from subprocess import STDOUT, CalledProcessError, call, check_output
-from typing import Optional
+from subprocess import STDOUT, CalledProcessError, call, check_output, PIPE, run, CompletedProcess
+from typing import Optional, List
 
 import regex as re
 from loguru import logger
 
 
 PLATFORM = sys.platform
+
+
+def run_command(tool: str, command: List[str], bin_path: Path) -> CompletedProcess:
+    """Run a command with a tool (adb, fastboot, heimdall)."""
+    if tool not in ["adb", "fastboot", "heimdall"]:
+        raise Exception(f"Unknown tool {tool}. Use adb, fastboot or heimdall.")
+    if PLATFORM == "win32":
+        full_command = [str(bin_path + f"{tool}.exe")] + command
+    else:
+        full_command = [str(bin_path + f"{tool}")] + command
+
+    logger.info(f"Run command: {full_command}")
+    result = run(full_command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
+    # result contains result.returncode, result.stdout, result.stderr
+    return result 
+
+
+def adb_reboot(bin_path: Path) -> bool:
+    """Run adb reboot on the device and return success."""
+    logger.info("Rebooting device with adb.")
+    result = run_command("adb", ["reboot"], bin_path)
+    if result.returncode != 0:
+        logger.info("Reboot failed.")
+        return False
+    return True
+
+
+def adb_reboot_bootloader(bin_path: Path) -> bool:
+    """Reboot the device into bootloader and return success."""
+    logger.info("Rebooting device into bootloader with adb.")
+    result = run_command("adb", ["reboot", "bootloader"], bin_path)
+    if result.returncode != 0:
+        logger.info("Reboot into bootloader failed.")
+        return False
+    # check if in fastboot mode
+    result = run_command("fastboot", ["devices"], bin_path)
+    if result.returncode != 0:
+        logger.info("Reboot into bootloader failed.")
+        logger.info(result.returncode)
+        logger.info(result.stdout)
+        logger.info(result.stderr)
+        return False
+    return True
+
+
+def adb_reboot_download(bin_path: Path) -> bool:
+    """Reboot the device into download mode of samsung devices and return success."""
+    logger.info("Rebooting device into download mode with adb.")
+    result = run_command("adb", ["reboot", "download"], bin_path)
+    if result.returncode != 0:
+        logger.info("Reboot into download mode failed.")
+        return False
+    # check if in download mode with heimdall?
+    return True
+
+
+
+def adb_sideload(bin_path: Path, target: str) -> bool:
+    """Sideload the target to device and return success."""
+    logger.info("Rebooting device into bootloader with adb.")
+    result = run_command("adb", ["sideload", target], bin_path)
+    if result.returncode != 0:
+        logger.info(f"Sideloading {target} failed.")
+        return False
+    return True
 
 
 def call_tool_with_command(command: str, bin_path: Path) -> bool:
