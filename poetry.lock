@@ -134,27 +134,8 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
-name = "cryptography"
-version = "38.0.1"
-description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
-category = "main"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-cffi = ">=1.12"
-
-[package.extras]
-docs = ["sphinx (>=1.6.5,!=1.8.0,!=3.1.0,!=3.1.1)", "sphinx-rtd-theme"]
-docstest = ["pyenchant (>=1.6.11)", "sphinxcontrib-spelling (>=4.0.1)", "twine (>=1.12.0)"]
-pep8test = ["black", "flake8", "flake8-import-order", "pep8-naming"]
-sdist = ["setuptools-rust (>=0.11.4)"]
-ssh = ["bcrypt (>=3.1.5)"]
-test = ["hypothesis (>=1.11.4,!=3.79.2)", "iso8601", "pretend", "pytest (>=6.2.0)", "pytest-benchmark", "pytest-cov", "pytest-subtests", "pytest-xdist", "pytz"]
-
-[[package]]
 name = "flet"
-version = "0.1.60"
+version = "0.1.63"
 description = "Flet for Python - easily build interactive multi-platform apps in Python"
 category = "main"
 optional = false
@@ -162,7 +143,6 @@ python-versions = ">=3.7"
 
 [package.dependencies]
 beartype = ">=0.9.1"
-cryptography = ">=38.0.1"
 oauthlib = ">=3.2.0"
 repath = ">=0.9.0"
 requests = ">=2.28.1"
@@ -891,45 +871,17 @@ contextlib2 = [
     {file = "contextlib2-21.6.0-py2.py3-none-any.whl", hash = "sha256:3fbdb64466afd23abaf6c977627b75b6139a5a3e8ce38405c5b413aed7a0471f"},
     {file = "contextlib2-21.6.0.tar.gz", hash = "sha256:ab1e2bfe1d01d968e1b7e8d9023bc51ef3509bba217bb730cee3827e1ee82869"},
 ]
-cryptography = [
-    {file = "cryptography-38.0.1-cp36-abi3-macosx_10_10_universal2.whl", hash = "sha256:10d1f29d6292fc95acb597bacefd5b9e812099d75a6469004fd38ba5471a977f"},
-    {file = "cryptography-38.0.1-cp36-abi3-macosx_10_10_x86_64.whl", hash = "sha256:3fc26e22840b77326a764ceb5f02ca2d342305fba08f002a8c1f139540cdfaad"},
-    {file = "cryptography-38.0.1-cp36-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:3b72c360427889b40f36dc214630e688c2fe03e16c162ef0aa41da7ab1455153"},
-    {file = "cryptography-38.0.1-cp36-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:194044c6b89a2f9f169df475cc167f6157eb9151cc69af8a2a163481d45cc407"},
-    {file = "cryptography-38.0.1-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ca9f6784ea96b55ff41708b92c3f6aeaebde4c560308e5fbbd3173fbc466e94e"},
-    {file = "cryptography-38.0.1-cp36-abi3-manylinux_2_24_x86_64.whl", hash = "sha256:16fa61e7481f4b77ef53991075de29fc5bacb582a1244046d2e8b4bb72ef66d0"},
-    {file = "cryptography-38.0.1-cp36-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:d4ef6cc305394ed669d4d9eebf10d3a101059bdcf2669c366ec1d14e4fb227bd"},
-    {file = "cryptography-38.0.1-cp36-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:3261725c0ef84e7592597606f6583385fed2a5ec3909f43bc475ade9729a41d6"},
-    {file = "cryptography-38.0.1-cp36-abi3-musllinux_1_1_aarch64.whl", hash = "sha256:0297ffc478bdd237f5ca3a7dc96fc0d315670bfa099c04dc3a4a2172008a405a"},
-    {file = "cryptography-38.0.1-cp36-abi3-musllinux_1_1_x86_64.whl", hash = "sha256:89ed49784ba88c221756ff4d4755dbc03b3c8d2c5103f6d6b4f83a0fb1e85294"},
-    {file = "cryptography-38.0.1-cp36-abi3-win32.whl", hash = "sha256:ac7e48f7e7261207d750fa7e55eac2d45f720027d5703cd9007e9b37bbb59ac0"},
-    {file = "cryptography-38.0.1-cp36-abi3-win_amd64.whl", hash = "sha256:ad7353f6ddf285aeadfaf79e5a6829110106ff8189391704c1d8801aa0bae45a"},
-    {file = "cryptography-38.0.1-pp37-pypy37_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:896dd3a66959d3a5ddcfc140a53391f69ff1e8f25d93f0e2e7830c6de90ceb9d"},
-    {file = "cryptography-38.0.1-pp37-pypy37_pp73-manylinux_2_24_x86_64.whl", hash = "sha256:d3971e2749a723e9084dd507584e2a2761f78ad2c638aa31e80bc7a15c9db4f9"},
-    {file = "cryptography-38.0.1-pp37-pypy37_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:79473cf8a5cbc471979bd9378c9f425384980fcf2ab6534b18ed7d0d9843987d"},
-    {file = "cryptography-38.0.1-pp38-pypy38_pp73-macosx_10_10_x86_64.whl", hash = "sha256:d9e69ae01f99abe6ad646947bba8941e896cb3aa805be2597a0400e0764b5818"},
-    {file = "cryptography-38.0.1-pp38-pypy38_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5067ee7f2bce36b11d0e334abcd1ccf8c541fc0bbdaf57cdd511fdee53e879b6"},
-    {file = "cryptography-38.0.1-pp38-pypy38_pp73-manylinux_2_24_x86_64.whl", hash = "sha256:3e3a2599e640927089f932295a9a247fc40a5bdf69b0484532f530471a382750"},
-    {file = "cryptography-38.0.1-pp38-pypy38_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:c2e5856248a416767322c8668ef1845ad46ee62629266f84a8f007a317141013"},
-    {file = "cryptography-38.0.1-pp38-pypy38_pp73-win_amd64.whl", hash = "sha256:64760ba5331e3f1794d0bcaabc0d0c39e8c60bf67d09c93dc0e54189dfd7cfe5"},
-    {file = "cryptography-38.0.1-pp39-pypy39_pp73-macosx_10_10_x86_64.whl", hash = "sha256:b6c9b706316d7b5a137c35e14f4103e2115b088c412140fdbd5f87c73284df61"},
-    {file = "cryptography-38.0.1-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b0163a849b6f315bf52815e238bc2b2346604413fa7c1601eea84bcddb5fb9ac"},
-    {file = "cryptography-38.0.1-pp39-pypy39_pp73-manylinux_2_24_x86_64.whl", hash = "sha256:d1a5bd52d684e49a36582193e0b89ff267704cd4025abefb9e26803adeb3e5fb"},
-    {file = "cryptography-38.0.1-pp39-pypy39_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:765fa194a0f3372d83005ab83ab35d7c5526c4e22951e46059b8ac678b44fa5a"},
-    {file = "cryptography-38.0.1-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:52e7bee800ec869b4031093875279f1ff2ed12c1e2f74923e8f49c916afd1d3b"},
-    {file = "cryptography-38.0.1.tar.gz", hash = "sha256:1db3d807a14931fa317f96435695d9ec386be7b84b618cc61cfa5d08b0ae33d7"},
-]
 flet = [
-    {file = "flet-0.1.60-py3-none-any.whl", hash = "sha256:35b3161aaefdeb6e8c9031dd358027a29e50fe462fa2dca5afcee8f4c05f2fc4"},
-    {file = "flet-0.1.60-py3-none-macosx_10_14_x86_64.whl", hash = "sha256:814afe291434bd5d5de95b224572def9548efae687ed5a11d3317e61e2c70738"},
-    {file = "flet-0.1.60-py3-none-macosx_12_0_arm64.whl", hash = "sha256:f4d1775486e92e696486eb585434be1c504c5a596421942d525e6ba8aa2b74d7"},
-    {file = "flet-0.1.60-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:0c2be047909987887469b9e3531b28814ef3cecebd3b27db91a0fa9f04a9c519"},
-    {file = "flet-0.1.60-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:d9c0076afd2d4adff29d456b73739c6d67f0841d8b2c46e571e92df88d2567b8"},
-    {file = "flet-0.1.60-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ff932fc35ac6e3e2a9ed022a1cf6a5d6a76704d34dc004488bd8ffd39845dae4"},
-    {file = "flet-0.1.60-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:1b64c70a60db76cc8f483b492fa6f0927c3be3d1168c73f03f913ed680d90136"},
-    {file = "flet-0.1.60-py3-none-win32.whl", hash = "sha256:32487cfad11bcaf18d62179e4fc854173153a1e9060b1b26c8536af3ee1a4626"},
-    {file = "flet-0.1.60-py3-none-win_amd64.whl", hash = "sha256:3e095b13dd3d65984d6d3f90ddb3a9745b4ee84ba00e3ce7e795564f193db372"},
-    {file = "flet-0.1.60.tar.gz", hash = "sha256:673983aaa7582e6020b36655bd17a3d9bf85dac0e5e43893cef485954bd2182b"},
+    {file = "flet-0.1.63-py3-none-any.whl", hash = "sha256:a37948114b130c35942d181b9df67c0c70381c72f3e3b7cf9d88aee662226de6"},
+    {file = "flet-0.1.63-py3-none-macosx_10_14_x86_64.whl", hash = "sha256:5df068a8a4755c8d13fca7069a540469836bf8ca110d60ee951aad800dcdcda9"},
+    {file = "flet-0.1.63-py3-none-macosx_12_0_arm64.whl", hash = "sha256:6faaf712c62b8bd22556f4ec5b68ca96433e3c3c78d97f1a494517981f5c568f"},
+    {file = "flet-0.1.63-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:e901309e1a75a87e6a9c5fac1f908ce603ef3ac13c072f4435004290987ab6d2"},
+    {file = "flet-0.1.63-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:be7f2881960473894cf9b640f52283d34d4b75d39e9c0d5f45ac398be28543f5"},
+    {file = "flet-0.1.63-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:d3cfa1de09aaca359e96cccc2f57a452988db91710f87cfcca7689fae6bace5c"},
+    {file = "flet-0.1.63-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:d56c22d6f08bcfc42e62d581fb6c6bdee470f9c65eb3fe9699b5add27860642c"},
+    {file = "flet-0.1.63-py3-none-win32.whl", hash = "sha256:f1fac581b3018defe0fc99775241f8494322ee2ba82f248826bc597fe8ae7569"},
+    {file = "flet-0.1.63-py3-none-win_amd64.whl", hash = "sha256:1d9511f851cb419657fda50de2c8f92b78010d28befb50134aca5e69ab69088b"},
+    {file = "flet-0.1.63.tar.gz", hash = "sha256:c3cf1c4a8e06814d150419d6b31617ebae2e8acc001aaa86f5c586239b2dc392"},
 ]
 future = [
     {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},

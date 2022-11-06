@@ -41,18 +41,18 @@ steps:
       content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_flash_recovery
   install_os:
-    - type: confirm_button 
-      content: In this step, you finally flash LineageOS. Confirm to continue.
     - type: confirm_button
-      content: Select 'Recovery Mode' on your smartphone screen and press the Start-Button to confirm. Then confirm here.
+      content: >
+        In the next steps, you finally flash LineageOS.
+        Select 'Recovery Mode' on your smartphone screen and press the Start-Button to confirm. Then confirm here.
     - type: confirm_button
       content: >
         Now tap Factory Reset, then Format data / Factory reset on your phone screen and continue with the formatting process.
         This will remove encryption and delete all files stored in the internal storage, as well as format your cache partition (if you have one).
     - type: confirm_button
-      content: Return to the main menu on the phone.
-    - type: confirm_button
-      content: On the device, select “Apply Update”, then “Apply from ADB” to begin sideload. Then confirm here.
+      content: >
+        Return to the main menu on the phone by pressing the back button.
+        On the device, select “Apply Update”, then “Apply from ADB” to begin sideload. Then confirm here.
     - type: call_button
       content: >
         Now it's time to flash the LineageOS image. Don't remove the USB-Cable and press 'Confirm and run' to start!

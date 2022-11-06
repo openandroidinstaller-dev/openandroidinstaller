@@ -46,6 +46,7 @@ from flet import (
     UserControl,
     FloatingActionButton,
     VerticalDivider,
+    Markdown,
     colors,
     icons,
 )
@@ -68,8 +69,8 @@ from utils import AppState, get_download_link, image_recovery_works_with_device
 from widgets import call_button, confirm_button, get_title, link_button
 
 # Toggle to True for development purposes
-DEVELOPMENT = False
-DEVELOPMENT_CONFIG = "yuga"  # "a3y17lte"  # "sargo"
+DEVELOPMENT = False 
+DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
@@ -125,8 +126,13 @@ class WelcomeView(BaseView):
         self.dlg_help_developer_options = AlertDialog(
             modal=True,
             title=Text("How to enable developer options and OEM unlocking"),
-            content=Text(
-                "To do this, tap seven times on the build number in the 'System'- or 'About the phone'-Menu in Settings. Then in developer options, toggle OEM unlocking and USB-Debugging."
+            content=Markdown(
+"""
+To do this, tap seven times on the build number in the 'System'- or 'About the phone'-Menu in Settings. You can also use the phones own search to look for `build number`. 
+Then go back to the main menu and look for 'developer options'. You can also search for it in your phone.
+When you are in developer options, toggle OEM unlocking and USB-Debugging. If your phone is already connected to your PC, a pop-up might appear. Allow USB debugging in the pop-up on your phone.
+Now you are ready to continue.
+"""
             ),
             actions=[
                 TextButton("Close", on_click=self.close_developer_options_dlg),
@@ -174,7 +180,7 @@ class WelcomeView(BaseView):
                 ),
                 Row(
                     [
-                        FilledButton(
+                        ElevatedButton(
                             "How do I enable developer mode?",
                             on_click=self.open_developer_options_dlg,
                             expand=True,
@@ -196,7 +202,7 @@ class WelcomeView(BaseView):
                 ),
                 Row(
                     [
-                        ElevatedButton(
+                        FilledButton(
                             "Search device",
                             on_click=self.search_devices,
                             icon=icons.PHONE_ANDROID,
@@ -309,7 +315,7 @@ class SelectFilesView(BaseView):
                 Column(
                     [
                         Text(
-                            "You can download supported image and recovery file for your device here:"
+                            "You can bring your own image and recovery or you download the officially supported image and recovery file for your device here:"
                         ),
                         Row(
                             [
@@ -322,6 +328,13 @@ class SelectFilesView(BaseView):
                                     expand=True,
                                 ),
                             ]
+                        ),
+                        Markdown(
+                            f"""
+The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip` 
+and the recovery like `lineage-19.1-20221101-recovery-{self.state.config.metadata.get('devicecode')}.img` 
+or `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`.
+"""
                         ),
                         Divider(),
                     ]
@@ -382,11 +395,11 @@ class SelectFilesView(BaseView):
                 recovery_path=self.state.recovery_path,
             ):
                 # if image and recovery work for device allow to move on, otherwise display message
-                self.info_field.controls.append(
+                self.info_field.controls = [
                     Text(
                         "Image and recovery don't work with the device. Please select different ones."
                     )
-                )
+                ]
                 self.right_view.update()
                 return
             self.info_field.controls = []
@@ -518,8 +531,9 @@ class MainView(UserControl):
             return self.config.metadata.get("devicename", "No device name in config.")
 
     def pick_image_result(self, e: FilePickerResultEvent):
-        self.selected_image.value += (
-            ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        self.selected_image.value = (
+            self.selected_image.value.split(":")[0] + f": {path}"
         )
         if e.files:
             self.image_path = e.files[0].path
@@ -530,8 +544,9 @@ class MainView(UserControl):
         self.selected_image.update()
 
     def pick_recovery_result(self, e: FilePickerResultEvent):
-        self.selected_recovery.value += (
-            ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        self.selected_recovery.value = (
+            self.selected_recovery.value.split(":")[0] + f": {path}"
         )
         if e.files:
             self.recovery_path = e.files[0].path
@@ -713,15 +728,14 @@ def main(page: Page):
         bgcolor=colors.AMBER_100,
         leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
         content=Text(
-            "Important: Please read through the instructions at least once before actually following them, so as to avoid any problems due to any missed steps!"
+            "These instructions only work if you follow every section and step precisely. Do not continue after something fails!"
         ),
         actions=[
             TextButton("I understand", on_click=close_banner),
         ],
     )
-    # TODO: disable the banner for now
-    # page.banner.open = True
-    # page.update()
+    page.banner.open = True
+    page.update()
 
     # create application instance
     app = MainView()
