@@ -69,8 +69,11 @@ from tool_utils import (
 from utils import AppState, get_download_link, image_recovery_works_with_device
 from widgets import call_button, confirm_button, get_title, link_button
 
+# where to write the logs
+logger.add("openandroidinstaller.log")
+
 # Toggle to True for development purposes
-DEVELOPMENT = False 
+DEVELOPMENT = True
 DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 
