@@ -4,49 +4,59 @@ metadata:
   devicecode: FP3
 steps:
   unlock_bootloader:
-    - title: "Unlock the bootloader"
-      type: link_button_with_confirm
+    - type: link_button_with_confirm
       content: >
+        As a first step, you need to unlock the bootloader. A bootloader is the piece of software, that tells your phone
+        how to start and run an operating system (like Android). Your device should be turned on.
         Click on the button to open the instructions on the Fairphone Support official unlocking website to generate an unlock code for your device.
-        Once you done that, continue.
+        Once you've done that, continue.
       link: https://www.fairphone.com/en/bootloader-unlocking-code-for-fairphone-3/
+    - type: call_button
+      content: Press 'Confirm and run' to reboot into the bootloader.
+      command: adb_reboot_bootloader
+    - type: confirm_button
+      content: >
+        Select 'Restart bootloader' on your smartphone screen by pressing the volume button and the confirm by pushing the power button.
+        Then press 'Confirm and continue' here.
+    - type: call_button
+      content: In this step you actually unlock the bootloader. Just press 'Confirm and run' here. Once it's done, press continue here.
+      command: fastboot_oem_unlock
+    - type: confirm_button
+      content: >
+        Follow the instructions on the Fairphone screen. This command will wipe all the personal data on your phone.
+    - type: call_button
+      content: To finish the unlocking, the phone needs to reboot. Just press 'Confirm and run' here to reboot. Then continue.
+      command: fastboot_reboot
+    - type: confirm_button
+      content: The bootloader is now unlocked. Since the device resets completely, you will need to re-enable USB debugging to continue.
   flash_recovery:
-    - title: "Flash a custom recovery"
-      type: confirm_button 
+    - type: confirm_button 
       content: >
         Now you need to flash a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating, 
         adapting and repairing of the operating system.
-    - title: "Flash a custom recovery"
-      type: call_button
+    - type: call_button
       content: Turn on your device. Once the device is fully booted, you need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
-      command: "adb reboot bootloader"
-    - title: "Flash a custom recovery"
-      type: call_button
+      command: adb_reboot_bootloader
+    - type: call_button
       content: Once the device is in fastboot mode, flash the custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
-      command: "fastboot flash boot <recovery>"
-    - title: "Flash temporary recovery"
-      type: confirm_button 
+      command: fastboot_flash_recovery
+    - type: confirm_button 
       content: >
         Now reboot into recovery to verify the installation. Do not reboot into the existing OS, since it will overwrite the recovery you just installed!
         With the device powered off, hold 'Volume Up + Power'. Release when boot logo appears.
   install_os:
-    - title: "Flash LineageOS"
-      type: confirm_button
+    - type: confirm_button
       content: >
         Now tap 'Factory Reset', then 'Format data / Factory reset' on your phone screen and continue with the formatting process.
         This will remove encryption and delete all files stored in the internal storage, as well as format your cache partition (if you have one).
-    - title: "Flash LineageOS"
-      type: confirm_button
-      content: Return to the main menu on the phone.
-    - title: "Flash LineageOS"
-      type: confirm_button
-      content: On the device, select “Apply Update”, then “Apply from ADB” to begin sideload. Then confirm here.
-    - title: "Flash LineageOS"
-      type: call_button
+    - type: confirm_button
+      content: >
+        Return to the main menu on the phone by pressing the back button.
+        On the device, select “Apply Update”, then “Apply from ADB” to begin sideload. Then confirm here.
+    - type: call_button
       content: >
         Now it's time to flash the LineageOS image. Don't remove the USB-Cable and press 'Confirm and run' to start!
         This might take a while. Confirm after it's done.
-      command: "adb sideload <image>"
-    - title: "Flash LineageOS"
-      type: confirm_button
+      command: adb_sideload
+    - type: confirm_button
       content: Flashing finished. Now press 'back' (arrow) and then 'Reboot system now' on the phone screen to finish the installation. Then confirm here.

@@ -5,49 +5,26 @@ metadata:
 steps:
   unlock_bootloader:
   flash_recovery:
-    - title: "Boot into bootloader"
-      type: call_button
+    - type: call_button
       content: >
         As a first step, you need to boot into the bootloader. A bootloader is the piece of software, 
         that tells your phone who to start and run an operating system (like Android). Your device should be turned on. 
         Then press 'Confirm and run' to reboot into the bootloader. Continue once it's done.
-      command: "adb reboot download"
-    - title: "Flash custom recovery"
-      type: call_button
+      command: adb_reboot_download
+    - type: call_button
       content: In this step, you need to flash a custom recovery on your device. Press 'Confirm and run' to start the process. Confirm afterwards to continue.
-      command: "heimdall flash --no-reboot --RECOVERY <recovery>"
-    - title: "Boot into recovery"
-      type: confirm_button
+      command: heimdall_flash_recovery
+    - type: confirm_button
       img: samsung-buttons.png
       content: >
         Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for 8~10 seconds 
         until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
         hold *Volume Up* + *Home* + *Power button*.
   install_os:
-    - title: "Flash LineageOS"
-      type: confirm_button
+    - type: call_button 
       content: >
-        Now swipe right to allow modifications then tap 'Wipe' on your phone. 
-        Next tap 'Format Data' and follow the instructions on your phone to continue with the formatting process. 
-        This will remove encryption and delete all files stored in the internal storage. Confirm to continue once you are done.
-    - title: "Flash LineageOS"
-      type: confirm_button
-      content: >
-        Return to the previous menu on your phone by going back two times. 
-        Them tap 'Advanced Wipe', and select the 'Cache' and 'System' partitions and then 'Swipe to Wipe'. 
-        Confirm to continue once you are done.
-    - title: "Flash LineageOS"
-      type: confirm_button
-      content: >
-        Now connect the phone to the computer again with the USB-cable. On the device, go back three times and select “Advanced”, 
-        then “ADB Sideload”. Select 'Wipe cache' and 'Wipe dalvik cache', then swipe to begin sideload. Then confirm here.
-    - title: "Flash LineageOS"
-      type: call_button
-      content: >
-        Now it's time to flash the LineageOS image. Don't remove the USB-Cable and press 'Confirm and run' to start! 
-        This might take a while. Confirm after it's done.
-      command: "adb sideload <image>"
-    - title: "Reboot into LineageOS"
-      type: call_button
-      content: As a final step, reboot into LineageOS to finish the installation by pressing the button.
-      command: "adb reboot"
+        In the next steps, you finally flash the selected OS image.
+        Connect your device with your computer with the USB-Cable.
+        This step will format your phone and wipe all the data. It will also remove encryption and delete all files stored 
+        in the internal storage. Then the OS image will be installed. Confirm to run. This might take a while. At the end your phone will boot into the new OS.
+      command: adb_twrp_wipe_and_install
