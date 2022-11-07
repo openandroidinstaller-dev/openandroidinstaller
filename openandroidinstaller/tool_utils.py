@@ -16,7 +16,15 @@
 import sys
 from pathlib import Path
 from time import sleep
-from subprocess import STDOUT, CalledProcessError, call, check_output, PIPE, run, CompletedProcess
+from subprocess import (
+    STDOUT,
+    CalledProcessError,
+    call,
+    check_output,
+    PIPE,
+    run,
+    CompletedProcess,
+)
 from typing import Optional, List
 
 import regex as re
@@ -38,7 +46,7 @@ def run_command(tool: str, command: List[str], bin_path: Path) -> CompletedProce
     logger.info(f"Run command: {full_command}")
     result = run(full_command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
     # result contains result.returncode, result.stdout, result.stderr
-    return result 
+    return result
 
 
 def adb_reboot(bin_path: Path) -> bool:
@@ -92,7 +100,7 @@ def adb_sideload(bin_path: Path, target: str) -> bool:
 
 def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
     """Wipe and format data with twrp, then flash os image with adb.
-    
+
     Only works for twrp recovery.
     """
     logger.info("Wipe and format data with twrp, then install os image.")
@@ -137,7 +145,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
         logger.info("Rebooting with twrp failed.")
         return False
 
-    return True 
+    return True
 
 
 def fastboot_unlock_with_code(bin_path: Path, unlock_code: str) -> bool:
@@ -148,22 +156,22 @@ def fastboot_unlock_with_code(bin_path: Path, unlock_code: str) -> bool:
         logger.info(f"Unlocking with code {unlock_code} failed.")
         return False
     return True
-    
+
 
 def fastboot_unlock(bin_path: Path) -> bool:
     """Unlock the device with fastboot and without code."""
     logger.info(f"Unlock the device with fastboot.")
-    result = run_command("fastboot", ["flashing", "unlock"] , bin_path)
+    result = run_command("fastboot", ["flashing", "unlock"], bin_path)
     if result.returncode != 0:
         logger.info(f"Unlocking failed.")
         return False
     return True
-    
+
 
 def fastboot_oem_unlock(bin_path: Path) -> bool:
     """OEM unlock the device with fastboot and without code."""
     logger.info(f"OEM unlocking the device with fastboot.")
-    result = run_command("fastboot", ["oem", "unlock"] , bin_path)
+    result = run_command("fastboot", ["oem", "unlock"], bin_path)
     if result.returncode != 0:
         logger.info(f"OEM unlocking failed.")
         return False
@@ -173,27 +181,29 @@ def fastboot_oem_unlock(bin_path: Path) -> bool:
 def fastboot_reboot(bin_path: Path) -> bool:
     """Reboot with fastboot"""
     logger.info(f"Rebooting device with fastboot.")
-    result = run_command("fastboot", ["reboot"] , bin_path)
+    result = run_command("fastboot", ["reboot"], bin_path)
     if result.returncode != 0:
         logger.info(f"Rebooting with fastboot failed.")
         return False
     return True
-    
+
 
 def fastboot_flash_recovery(bin_path: Path, recovery: str) -> bool:
     """Temporarily, flash custom recovery with fastboot."""
     logger.info(f"Flash custom recovery with fastboot.")
-    result = run_command("fastboot", ["boot", f"{recovery}"] , bin_path)
+    result = run_command("fastboot", ["boot", f"{recovery}"], bin_path)
     if result.returncode != 0:
         logger.info(f"Flashing recovery failed.")
         return False
     return True
-    
+
 
 def heimdall_flash_recovery(bin_path: Path, recovery: str) -> bool:
     """Temporarily, flash custom recovery with heimdall."""
     logger.info(f"Flash custom recovery with heimdall.")
-    result = run_command("heimdall", ["flash", "--no-reboot", "--RECOVERY", f"{recovery}"] , bin_path)
+    result = run_command(
+        "heimdall", ["flash", "--no-reboot", "--RECOVERY", f"{recovery}"], bin_path
+    )
     if result.returncode != 0:
         logger.info(f"Flashing recovery failed.")
         return False

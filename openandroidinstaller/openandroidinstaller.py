@@ -64,7 +64,7 @@ from tool_utils import (
     fastboot_unlock,
     fastboot_oem_unlock,
     fastboot_unlock_with_code,
-    heimdall_flash_recovery
+    heimdall_flash_recovery,
 )
 from utils import AppState, get_download_link, image_recovery_works_with_device
 from widgets import call_button, confirm_button, get_title, link_button
@@ -131,7 +131,7 @@ class WelcomeView(BaseView):
             modal=True,
             title=Text("How to enable developer options and OEM unlocking"),
             content=Markdown(
-"""
+                """
 To do this, tap seven times on the build number in the 'System'- or 'About the phone'-Menu in Settings. You can also use the phones own search to look for `build number`. 
 Then go back to the main menu and look for 'developer options'. You can also search for it in your phone.
 When you are in developer options, toggle OEM unlocking and USB-Debugging. If your phone is already connected to your PC, a pop-up might appear. Allow USB debugging in the pop-up on your phone.
@@ -656,11 +656,17 @@ class StepView(BaseView):
         elif command == "adb_sideload":
             success = adb_sideload(bin_path=BIN_PATH, target=self.image_path)
         elif command == "adb_twrp_wipe_and_install":
-            success = adb_twrp_wipe_and_install(bin_path=BIN_PATH, target=self.image_path)
+            success = adb_twrp_wipe_and_install(
+                bin_path=BIN_PATH, target=self.image_path
+            )
         elif command == "fastboot_flash_recovery":
-            success = fastboot_flash_recovery(bin_path=BIN_PATH, recovery=self.recovery_path)
+            success = fastboot_flash_recovery(
+                bin_path=BIN_PATH, recovery=self.recovery_path
+            )
         elif command == "fastboot_unlock_with_code":
-            success = fastboot_unlock_with_code(bin_path=BIN_PATH, unlock_code=self.inputtext.value)
+            success = fastboot_unlock_with_code(
+                bin_path=BIN_PATH, unlock_code=self.inputtext.value
+            )
         elif command == "fastboot_unlock":
             success = fastboot_unlock(bin_path=BIN_PATH)
         elif command == "fastboot_oem_unlock":
@@ -668,7 +674,9 @@ class StepView(BaseView):
         elif command == "fastboot_reboot":
             success = fastboot_reboot(bin_path=BIN_PATH)
         elif command == "heimdall_flash_recovery":
-            success = heimdall_flash_recovery(bin_path=BIN_PATH, recovery=self.recovery_path)
+            success = heimdall_flash_recovery(
+                bin_path=BIN_PATH, recovery=self.recovery_path
+            )
         else:
             raise Exception(f"Unknown command type: {command}. Stopping.")
 
