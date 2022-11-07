@@ -160,6 +160,16 @@ def fastboot_unlock(bin_path: Path) -> bool:
     return True
     
 
+def fastboot_oem_unlock(bin_path: Path) -> bool:
+    """OEM unlock the device with fastboot and without code."""
+    logger.info(f"OEM unlocking the device with fastboot.")
+    result = run_command("fastboot", ["oem", "unlock"] , bin_path)
+    if result.returncode != 0:
+        logger.info(f"OEM unlocking failed.")
+        return False
+    return True
+
+
 def fastboot_reboot(bin_path: Path) -> bool:
     """Reboot with fastboot"""
     logger.info(f"Rebooting device with fastboot.")

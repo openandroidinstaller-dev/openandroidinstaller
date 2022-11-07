@@ -62,6 +62,7 @@ from tool_utils import (
     fastboot_reboot,
     fastboot_flash_recovery,
     fastboot_unlock,
+    fastboot_oem_unlock,
     fastboot_unlock_with_code,
     heimdall_flash_recovery
 )
@@ -659,6 +660,8 @@ class StepView(BaseView):
             success = fastboot_unlock_with_code(bin_path=BIN_PATH, unlock_code=self.inputtext.value)
         elif command == "fastboot_unlock":
             success = fastboot_unlock(bin_path=BIN_PATH)
+        elif command == "fastboot_oem_unlock":
+            success = fastboot_oem_unlock(bin_path=BIN_PATH)
         elif command == "fastboot_reboot":
             success = fastboot_reboot(bin_path=BIN_PATH)
         elif command == "heimdall_flash_recovery":
