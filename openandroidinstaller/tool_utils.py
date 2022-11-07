@@ -173,7 +173,7 @@ def fastboot_reboot(bin_path: Path) -> bool:
 def fastboot_flash_recovery(bin_path: Path, recovery: str) -> bool:
     """Temporarily, flash custom recovery with fastboot."""
     logger.info(f"Flash custom recovery with fastboot.")
-    result = run_command("fastboot", ["flash", "boot", f"{recovery}"] , bin_path)
+    result = run_command("fastboot", ["boot", f"{recovery}"] , bin_path)
     if result.returncode != 0:
         logger.info(f"Flashing recovery failed.")
         return False

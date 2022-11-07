@@ -653,6 +653,8 @@ class StepView(BaseView):
             success = adb_sideload(bin_path=BIN_PATH, target=self.image_path)
         elif command == "adb_twrp_wipe_and_install":
             success = adb_twrp_wipe_and_install(bin_path=BIN_PATH, target=self.image_path)
+        elif command == "fastboot_flash_recovery":
+            success = fastboot_flash_recovery(bin_path=BIN_PATH, recovery=self.recovery_path)
         elif command == "fastboot_unlock_with_code":
             success = fastboot_unlock_with_code(bin_path=BIN_PATH, unlock_code=self.inputtext.value)
         elif command == "fastboot_unlock":

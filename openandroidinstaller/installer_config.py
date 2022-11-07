@@ -119,7 +119,7 @@ def validate_config(config: str) -> bool:
             r"text|confirm_button|call_button|call_button_with_input|link_button_with_confirm"
         ),
         "content": str,
-        schema.Optional("command"): Regex(r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|fastboot_unlock_with_code|fastboot_unlock|fastboot_reboot|heimdall_flash_recovery"),
+        schema.Optional("command"): Regex(r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|fastboot_flash_recovery|fastboot_unlock_with_code|fastboot_unlock|fastboot_reboot|heimdall_flash_recovery"),
         schema.Optional("allow_skip"): bool,
         schema.Optional("img"): str,
         schema.Optional("link"): str,
