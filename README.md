@@ -45,8 +45,8 @@ Sony | Xperia Z | yuga | C6603 | tested
 Sony | Xperia Z3 | z3 | | under development
 Sony | Xperia ZX | kagura | | planned
 Fairphone | Fairphone 2 | FP2 | | under development
-Fairphone | Fairphone 3 | FP3 | | under development
-Motorola | Moto G5 | cedric | | planned
+Fairphone | Fairphone 3 | FP3 | | tested
+Motorola | moto G5 | cedric | | planned
 Motorola | moto g7 power | ocean | | under development
 
 
@@ -87,7 +87,6 @@ If you want to use the tool for a non-supported smartphone, the fastest way is t
 #### Content of a config file
 
 Every step in the config file corresponds to one view in the application. These steps should contain the following fields:
-- `title`: str; Describing the overall goal of the step. Will be displayed in the header of the view.
 - `type`: str; Corresponds to the type of view to generate. There are the following options:
   - `text`: Just display the text given in content.
   - `confirm_button`: Display the content, as well as a button to allow the user to go to the next step.
@@ -95,10 +94,7 @@ Every step in the config file corresponds to one view in the application. These 
   - `call_button_with_input`: Display the content text, an input field and a button that runs a given command. The inputtext, can be used in the command by using the `<inputtext>` placeholder in the command field. After the command is run, a confirm button is displayed to allow the user to move to the next step.
   - `link_button_with_confirm`: Display a button that opens a browser with a given link, confirm afterwards. Link is given in `link`.
 - `content`: str; The content text displayed alongside the action of the step. Used to inform the user about whats going on.
-- `command`: [ONLY for call_button* steps] str; This is a terminal command run in a shell. (For example fastboot or adb). There are three types of placeholders supported, that will be filled by the tool as soon as information is given.
-  - `<image>`: The path of the ROM image file.
-  - `<recovery>`: The path of the recovery file.
-  - `<inputtext>`: Text from the user input from `call_button_with_input` views.
+- `command`: [ONLY for call_button* steps] str; The command to run. One of `adb_reboot`, `adb_reboot_bootloader`, `adb_reboot_download`, `adb_sideload`, `adb_twrp_wipe_and_install`, `fastboot_flash_recovery`, `fastboot_unlock_with_code`, `fastboot_unlock`, `fastboot_oem_unlock`, `fastboot_reboot`, `heimdall_flash_recovery`.
 - `img`: [OPTIONAL] Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 - `link`: [OPTIONAL] Link to use for the link button if type is `link_button_with_confirm`.

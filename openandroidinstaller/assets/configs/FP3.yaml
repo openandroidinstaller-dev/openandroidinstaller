@@ -4,8 +4,7 @@ metadata:
   devicecode: FP3
 steps:
   unlock_bootloader:
-    - title: "Unlock the bootloader"
-      type: link_button_with_confirm
+    - type: link_button_with_confirm
       content: >
         As a first step, you need to unlock the bootloader. A bootloader is the piece of software, that tells your phone
         how to start and run an operating system (like Android). Your device should be turned on.
