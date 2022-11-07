@@ -13,9 +13,9 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import webbrowser
 from functools import partial
 from typing import Callable
-import webbrowser
 
 from flet import Container, ElevatedButton, Row, Text, alignment, icons
 

@@ -15,21 +15,20 @@
 
 import sys
 from pathlib import Path
-from time import sleep
 from subprocess import (
+    PIPE,
     STDOUT,
     CalledProcessError,
+    CompletedProcess,
     call,
     check_output,
-    PIPE,
     run,
-    CompletedProcess,
 )
-from typing import Optional, List
+from time import sleep
+from typing import List, Optional
 
 import regex as re
 from loguru import logger
-
 
 PLATFORM = sys.platform
 

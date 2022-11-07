@@ -15,11 +15,11 @@
 
 from pathlib import Path
 from typing import List, Optional
-import schema
-from schema import Regex, Schema, SchemaError
 
+import schema
 import yaml
 from loguru import logger
+from schema import Regex, Schema, SchemaError
 
 
 class Step:

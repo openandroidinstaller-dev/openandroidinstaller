@@ -13,10 +13,11 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import zipfile
 from typing import Optional
 
-import zipfile
 import requests
+from installer_config import Step
 from loguru import logger
 
 
@@ -60,10 +61,3 @@ def image_recovery_works_with_device(
                 logger.info("Device supported by the image and recovery.")
                 return True
     return False
-
-
-class AppState:
-    """Container class to store all kinds of state."""
-
-    def __init__(self):
-        self.steps = None
