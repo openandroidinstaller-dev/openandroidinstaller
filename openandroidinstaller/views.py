@@ -22,8 +22,6 @@ import flet
 from flet import (
     AlertDialog,
     alignment,
-    AppBar,
-    Banner,
     Checkbox,
     Column,
     Container,
@@ -32,13 +30,9 @@ from flet import (
     FilePicker,
     FilePickerResultEvent,
     FilledButton,
-    FloatingActionButton,
-    Icon,
     Image,
     Markdown,
-    Page,
     ProgressBar,
-    ProgressRing,
     Row,
     Text,
     TextButton,
@@ -151,6 +145,22 @@ Now you are ready to continue.
             disabled=True,
         )
 
+        # checkbox to enable advanced output - here it means show terminal input/output in tool
+        def check_advanced_box(e):
+            """Check the box to enable advanced output."""
+            if self.advanced_checkbox.value:
+                logger.info("Enable advanced output.")
+                self.state.advanced = True
+            else:
+                logger.info("Disable advanced output.")
+                self.state.advanced = False
+
+        self.advanced_checkbox = Checkbox(
+            label="Advanced output",
+            on_change=check_advanced_box,
+            disabled=False,
+        )
+
         # build up the main view
         self.right_view.controls.extend(
             [
@@ -185,7 +195,7 @@ Now you are ready to continue.
                     [
                         Row([Text("Detected device:"), self.device_name]),
                         self.config_found_box,
-                        self.bootloader_checkbox,
+                        Row([self.bootloader_checkbox, self.advanced_checkbox]),
                     ]
                 ),
                 Row(
@@ -441,6 +451,18 @@ class StepView(BaseView):
 
     def build(self):
         """Create the content of a view from step."""
+        # text box for terminal output
+        self.terminal_box = Container(
+            content=Column(scroll="auto", expand=True),
+            margin=10,
+            padding=10,
+            alignment=alignment.top_left,
+            bgcolor=colors.BLACK38,
+            height=300,
+            border_radius=2,
+            expand=True,
+        )
+        # main controls
         self.right_view.controls = [
             get_title(f"{self.step.title}"),
             self.state.progressbar,
@@ -456,8 +478,13 @@ class StepView(BaseView):
                 self.call_to_phone, command=self.step.command
             )
             self.right_view.controls.append(
-                Row([self.call_button, self.confirm_button])
+                Row([self.call_button, self.confirm_button]),
             )
+            # add terminal box if enabled
+            if self.state.advanced:
+                self.right_view.controls.append(
+                    Row([self.terminal_box])
+                )
         elif self.step.type == "call_button_with_input":
             self.confirm_button.disabled = True
             self.call_button = call_button(
@@ -497,10 +524,13 @@ class StepView(BaseView):
 
         Some parts of the command are changed by placeholders.
         """
-        # display a progress ring to show something is happening
+        # reset terminal output
+        if self.state.advanced:
+            self.terminal_box.content.controls = []
+        # display a progress bar to show something is happening
         self.right_view.controls.append(
             Row(
-                [ProgressRing(color="#00d886")],
+                [ProgressBar(color="#00d886")],
                 alignment="center",
             ),
         )
@@ -517,33 +547,47 @@ class StepView(BaseView):
 
         # run the right command
         if command in cmd_mapping.keys():
-            success = cmd_mapping.get(command)(bin_path=self.state.bin_path)
+            for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):
+                if self.state.advanced and (type(line) == str) and line.strip():
+                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.update()
+            success = line
         elif command == "adb_sideload":
-            success = adb_sideload(
-                bin_path=self.state.bin_path, target=self.state.image_path
-            )
+            for line in adb_sideload(bin_path=self.state.bin_path, target=self.state.image_path):
+                if self.state.advanced and (type(line) == str) and line.strip():
+                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.update()
+            success = line
         elif command == "adb_twrp_wipe_and_install":
-            success = adb_twrp_wipe_and_install(
-                bin_path=self.state.bin_path, target=self.state.image_path
-            )
+            for line in adb_twrp_wipe_and_install(bin_path=self.state.bin_path, target=self.state.image_path):
+                if self.state.advanced and (type(line) == str) and line.strip():
+                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.update()
+            success = line
         elif command == "fastboot_flash_recovery":
-            success = fastboot_flash_recovery(
-                bin_path=self.state.bin_path, recovery=self.state.recovery_path
-            )
+            for line in fastboot_flash_recovery(bin_path=self.state.bin_path, recovery=self.state.recovery_path):
+                if self.state.advanced and (type(line) == str) and line.strip():
+                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.update()
+            success = line
         elif command == "fastboot_unlock_with_code":
-            success = fastboot_unlock_with_code(
-                bin_path=self.state.bin_path, unlock_code=self.inputtext.value
-            )
+            for line in fastboot_unlock_with_code(bin_path=self.state.bin_path, unlock_code=self.inputtext.value):
+                if self.state.advanced and (type(line) == str) and line.strip():
+                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.update()
+            success = line
         elif command == "heimdall_flash_recovery":
-            success = heimdall_flash_recovery(
-                bin_path=self.state.bin_path, recovery=self.state.recovery_path
-            )
+            for line in heimdall_flash_recovery(bin_path=self.state.bin_path, recovery=self.state.recovery_path):
+                if self.state.advanced and (type(line) == str) and line.strip():
+                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.update()
+            success = line
         else:
             raise Exception(f"Unknown command type: {command}. Stopping.")
 
         # update the view accordingly
         if not success:
-            # pop the progress ring
+            # pop the progress bar 
             self.right_view.controls.pop()
             self.right_view.controls.append(
                 Text(
@@ -552,7 +596,7 @@ class StepView(BaseView):
             )
         else:
             sleep(5)  # wait to make sure everything is fine
-            # pop the progress ring
+            # pop the progress bar
             self.right_view.controls.pop()
             self.confirm_button.disabled = False
             self.call_button.disabled = True

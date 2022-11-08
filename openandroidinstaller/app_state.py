@@ -45,6 +45,7 @@ class AppState:
         self.progressbar.value = 0
 
         # placeholders
+        self.advanced = False
         self.config = None
         self.image_path = None
         self.recovery_path = None

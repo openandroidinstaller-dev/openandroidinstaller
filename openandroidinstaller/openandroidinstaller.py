@@ -24,30 +24,19 @@ import flet
 import regex as re
 from app_state import AppState
 from flet import (
-    AlertDialog,
     AppBar,
     Banner,
-    Checkbox,
     Column,
     Container,
-    Divider,
     ElevatedButton,
-    FilePicker,
-    FilePickerResultEvent,
-    FilledButton,
     FloatingActionButton,
     Icon,
     Image,
-    Markdown,
     Page,
     ProgressBar,
-    ProgressRing,
-    Row,
     Text,
     TextButton,
-    TextField,
     UserControl,
-    VerticalDivider,
     colors,
     icons,
 )
@@ -59,7 +48,7 @@ from views import SelectFilesView, StepView, SuccessView, WelcomeView
 logger.add("openandroidinstaller.log")
 
 # Toggle to True for development purposes
-DEVELOPMENT = True
+DEVELOPMENT = False 
 DEVELOPMENT_CONFIG = "yuga"  # "a3y17lte"  # "sargo"
 
 
