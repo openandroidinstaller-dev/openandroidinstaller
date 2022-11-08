@@ -55,9 +55,13 @@ def image_recovery_works_with_device(
             supported_devices = str(metadata[-1]).split("=")[-1][:-3].split(",")
             logger.info(f"Image works with device: {supported_devices}")
 
+            recovery_file_name = recovery_path.split("/")[-1]
             if (device_code in supported_devices) and (
-                device_code in recovery_path.split("/")[-1]
-            ):
+                device_code in recovery_file_name
+            ) and ("twrp" in recovery_file_name):
                 logger.info("Device supported by the image and recovery.")
                 return True
+            else:
+                logger.info(f"Recovery {recovery_file_name} and/or image {image_path.split('/')[-1]} are not supported or don't match.")
+
     return False

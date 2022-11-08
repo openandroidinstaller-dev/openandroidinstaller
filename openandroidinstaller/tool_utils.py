@@ -45,7 +45,7 @@ def run_command(tool: str, command: List[str], bin_path: Path) -> CompletedProce
     logger.info(f"Run command: {full_command}")
     with Popen(full_command, stdout=PIPE, stderr=STDOUT, bufsize=1, universal_newlines=True) as p:
         for line in p.stdout:
-            logger.info(line)
+            logger.info(line.strip())
             yield line
 
     yield p.returncode == 0
@@ -149,8 +149,8 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
         yield False
         return 
     # wipe some cache partitions
-    sleep(5)
-    for partition in ["cache", "dalvik"]:
+    sleep(7)
+    for partition in ["dalvik", "cache"]:
         for line in run_command("adb", ["shell", "twrp", "wipe", partition], bin_path):
             yield line
         sleep(1)

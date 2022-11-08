@@ -313,15 +313,23 @@ class SelectFilesView(BaseView):
                 Column(
                     [
                         Text(
-                            "You can bring your own image and recovery or you download the officially supported image and recovery file for your device here:"
+                            "You can bring your own image and recovery or you download the officially supported image file for your device here:"
                         ),
                         Row(
                             [
                                 ElevatedButton(
-                                    "Download",
+                                    "Download LineageOS image",
                                     icon=icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
                                         self.download_link
+                                    ),
+                                    expand=True,
+                                ),
+                                ElevatedButton(
+                                    "Download TWRP recovery",
+                                    icon=icons.DOWNLOAD_OUTLINED,
+                                    on_click=lambda _: webbrowser.open(
+                                       f"https://dl.twrp.me/{self.state.config.metadata.get('devicecode')}"
                                     ),
                                     expand=True,
                                 ),
@@ -330,8 +338,7 @@ class SelectFilesView(BaseView):
                         Markdown(
                             f"""
 The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip` 
-and the recovery like `lineage-19.1-20221101-recovery-{self.state.config.metadata.get('devicecode')}.img` 
-or `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`.
+and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`. Note that this tool only supports TWRP recoveries for now.
 """
                         ),
                         Divider(),
@@ -341,7 +348,7 @@ or `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`.
         # attach the controls for uploading image and recovery
         self.right_view.controls.extend(
             [
-                Text("Now select the operating system image and recovery:"),
+                Text("Now select the operating system image and recovery (note, that only TWRP recoveries are supported):"),
                 Row(
                     [
                         ElevatedButton(
@@ -530,7 +537,7 @@ class StepView(BaseView):
         # display a progress bar to show something is happening
         self.right_view.controls.append(
             Row(
-                [ProgressBar(color="#00d886")],
+                [ProgressBar(width=600, color="#00d886", bgcolor="#eeeeee", bar_height=16)],
                 alignment="center",
             ),
         )
@@ -549,37 +556,37 @@ class StepView(BaseView):
         if command in cmd_mapping.keys():
             for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
             success = line
         elif command == "adb_sideload":
             for line in adb_sideload(bin_path=self.state.bin_path, target=self.state.image_path):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
             success = line
         elif command == "adb_twrp_wipe_and_install":
             for line in adb_twrp_wipe_and_install(bin_path=self.state.bin_path, target=self.state.image_path):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
             success = line
         elif command == "fastboot_flash_recovery":
             for line in fastboot_flash_recovery(bin_path=self.state.bin_path, recovery=self.state.recovery_path):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
             success = line
         elif command == "fastboot_unlock_with_code":
             for line in fastboot_unlock_with_code(bin_path=self.state.bin_path, unlock_code=self.inputtext.value):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
             success = line
         elif command == "heimdall_flash_recovery":
             for line in heimdall_flash_recovery(bin_path=self.state.bin_path, recovery=self.state.recovery_path):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line}"))
+                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
             success = line
         else:
