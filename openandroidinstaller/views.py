@@ -21,6 +21,7 @@ from loguru import logger
 import flet
 from flet import (
     AlertDialog,
+    alignment,
     AppBar,
     Banner,
     Checkbox,
@@ -501,17 +502,22 @@ class StepView(BaseView):
             Row(
                 [ProgressRing(color="#00d886")],
                 alignment="center",
-            )
+            ),
         )
         self.right_view.update()
 
+        cmd_mapping = {
+            "adb_reboot": adb_reboot,
+            "adb_reboot_bootloader": adb_reboot_bootloader,
+            "adb_reboot_download": adb_reboot_download,
+            "fastboot_unlock": fastboot_unlock,
+            "fastboot_oem_unlock": fastboot_oem_unlock,
+            "fastboot_reboot": fastboot_reboot,
+        }
+
         # run the right command
-        if command == "adb_reboot":
-            success = adb_reboot(bin_path=self.state.bin_path)
-        elif command == "adb_reboot_bootloader":
-            success = adb_reboot_bootloader(bin_path=self.state.bin_path)
-        elif command == "adb_reboot_download":
-            success = adb_reboot_download(bin_path=self.state.bin_path)
+        if command in cmd_mapping.keys():
+            success = cmd_mapping.get(command)(bin_path=self.state.bin_path)
         elif command == "adb_sideload":
             success = adb_sideload(
                 bin_path=self.state.bin_path, target=self.state.image_path
@@ -528,12 +534,6 @@ class StepView(BaseView):
             success = fastboot_unlock_with_code(
                 bin_path=self.state.bin_path, unlock_code=self.inputtext.value
             )
-        elif command == "fastboot_unlock":
-            success = fastboot_unlock(bin_path=self.state.bin_path)
-        elif command == "fastboot_oem_unlock":
-            success = fastboot_oem_unlock(bin_path=self.state.bin_path)
-        elif command == "fastboot_reboot":
-            success = fastboot_reboot(bin_path=self.state.bin_path)
         elif command == "heimdall_flash_recovery":
             success = heimdall_flash_recovery(
                 bin_path=self.state.bin_path, recovery=self.state.recovery_path

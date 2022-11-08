@@ -20,7 +20,6 @@ from subprocess import (
     STDOUT,
     CalledProcessError,
     CompletedProcess,
-    call,
     check_output,
     run,
 )
@@ -214,7 +213,6 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
     logger.info(f"Search devices on {platform} with {bin_path}...")
     try:
         # read device properties
-        # TODO: This is not windows ready...
         if platform in ("linux", "darwin"):
             output = check_output(
                 [
@@ -246,5 +244,5 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
         logger.info(device_code)
         return device_code
     except CalledProcessError:
-        logger.info(f"Did not detect a device.")
+        logger.info(f"Failed to detect a device.")
         return None
