@@ -148,8 +148,8 @@ def validate_config(config: str) -> bool:
     )
     try:
         config_schema.validate(config)
-        logger.info("Config is valid.")
+        logger.success("Config is valid.")
         return True
     except SchemaError as se:
-        logger.info(f"Config is invalid. Error {se}")
+        logger.error(f"Config is invalid. Error {se}")
         return False

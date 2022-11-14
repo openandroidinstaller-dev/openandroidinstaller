@@ -119,6 +119,7 @@ class MainView(UserControl):
         else:
             # display the final view
             self.view.controls.append(self.final_view)
+        logger.info("Confirmed.")
         self.view.update()
 
 

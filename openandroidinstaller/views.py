@@ -247,6 +247,7 @@ Now you are ready to continue.
                 device_code = device_code_mapping.get(device_code, device_code)
                 self.device_name.value = device_code
             else:
+                logger.info("No device detected! Connect to USB and try again.")
                 self.device_name.value = (
                     "No device detected! Connect to USB and try again."
                 )
@@ -269,7 +270,7 @@ Now you are ready to continue.
                 self.device_name.value = f"{device_name} (code: {device_code})"
             else:
                 # failed to load config
-                logger.info(f"Failed to load config for {device_code}.")
+                logger.error(f"Failed to load config for {device_code}.")
                 self.device_name.value = f"Failed to load config for {device_code}."
         self.view.update()
 
@@ -426,6 +427,7 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
                 recovery_path=self.state.recovery_path,
             ):
                 # if image and recovery work for device allow to move on, otherwise display message
+                logger.error("Image and recovery don't work with the device. Please select different ones.")
                 self.info_field.controls = [
                     Text(
                         "Image and recovery don't work with the device. Please select different ones."
@@ -433,6 +435,7 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
                 ]
                 self.right_view.update()
                 return
+            logger.info("Image and recovery work with the device. You can continue.")
             self.info_field.controls = []
             self.confirm_button.disabled = False
             self.right_view.update()
@@ -476,6 +479,7 @@ class StepView(BaseView):
             Text(f"{self.step.content}"),
         ]
         # basic view depending on step.type
+        logger.info(f"Starting step of type {self.step.type}.")
         self.confirm_button = confirm_button(self.on_confirm)
         if self.step.type == "confirm_button":
             self.right_view.controls.append(Row([self.confirm_button]))
@@ -506,6 +510,7 @@ class StepView(BaseView):
             )
 
         elif self.step.type != "text":
+            logger.error(f"Unknown step type: {self.step.type}")
             raise Exception(f"Unknown step type: {self.step.type}")
 
         # if skipping is allowed add a button to the view
@@ -590,6 +595,7 @@ class StepView(BaseView):
                     self.terminal_box.update()
             success = line
         else:
+            logger.error(f"Unknown command type: {command}. Stopping.")
             raise Exception(f"Unknown command type: {command}. Stopping.")
 
         # update the view accordingly
@@ -603,6 +609,7 @@ class StepView(BaseView):
             )
         else:
             sleep(5)  # wait to make sure everything is fine
+            logger.success(f"Command {command} run successfully. Allow to continue.")
             # pop the progress bar
             self.right_view.controls.pop()
             self.confirm_button.disabled = False

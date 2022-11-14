@@ -57,7 +57,7 @@ def adb_reboot(bin_path: Path) -> bool:
     for line in run_command("adb", ["reboot"], bin_path):
         yield line
     if (type(line) == bool) and line:
-        logger.info("Reboot failed.")
+        logger.debug("Reboot failed.")
         yield False
     else: 
         yield True
@@ -69,7 +69,7 @@ def adb_reboot_bootloader(bin_path: Path) -> bool:
     for line in run_command("adb", ["reboot", "bootloader"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info("Reboot into bootloader failed.")
+        logger.error("Reboot into bootloader failed.")
         yield False
         return 
     sleep(1)
@@ -77,7 +77,7 @@ def adb_reboot_bootloader(bin_path: Path) -> bool:
     for line in run_command("fastboot", ["devices"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info("No fastboot mode detected. Reboot into bootloader failed.")
+        logger.error("No fastboot mode detected. Reboot into bootloader failed.")
         yield False
     else:
         yield True
@@ -89,7 +89,7 @@ def adb_reboot_download(bin_path: Path) -> bool:
     for line in run_command("adb", ["reboot", "download"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info("Reboot into download mode failed.")
+        logger.error("Reboot into download mode failed.")
         yield False
     else: 
         # check if in download mode with heimdall?
@@ -118,7 +118,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
     for line in run_command("adb", ["shell", "twrp", "format", "data"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info("Formatting data failed.")
+        logger.error("Formatting data failed.")
         yield False
         return 
     sleep(1)
@@ -128,7 +128,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
             yield not line
         sleep(1)
         if (type(line) == bool) and not line:
-            logger.info(f"Wiping {partition} failed.")
+            logger.error(f"Wiping {partition} failed.")
             yield False
             return 
     # activate sideload
@@ -136,7 +136,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
     for line in run_command("adb", ["shell", "twrp", "sideload"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info("Activating sideload failed.")
+        logger.error("Activating sideload failed.")
         yield False
         return 
     # now flash os image
@@ -145,7 +145,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
     for line in run_command("adb", ["sideload", f"{target}"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info(f"Sideloading {target} failed.")
+        logger.error(f"Sideloading {target} failed.")
         yield False
         return 
     # wipe some cache partitions
@@ -155,7 +155,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
             yield line
         sleep(1)
         if (type(line) == bool) and not line:
-            logger.info(f"Wiping {partition} failed.")
+            logger.error(f"Wiping {partition} failed.")
             yield False
             return 
     # finally reboot into os
@@ -164,7 +164,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
     for line in run_command("adb", ["shell", "twrp", "reboot"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info("Rebooting with twrp failed.")
+        logger.error("Rebooting with twrp failed.")
         yield False
         return 
     else:
@@ -177,7 +177,7 @@ def fastboot_unlock_with_code(bin_path: Path, unlock_code: str) -> bool:
     for line in run_command("adb", ["oem", "unlock", f"{unlock_code}"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info(f"Unlocking with code {unlock_code} failed.")
+        logger.error(f"Unlocking with code {unlock_code} failed.")
         yield False
     else: 
         yield True
@@ -189,7 +189,7 @@ def fastboot_unlock(bin_path: Path) -> bool:
     for line in run_command("adb", ["flashing", "unlock"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info(f"Unlocking failed.")
+        logger.error(f"Unlocking failed.")
         yield False
     else: 
         yield True
@@ -201,7 +201,7 @@ def fastboot_oem_unlock(bin_path: Path) -> bool:
     for line in run_command("adb", ["oem", "unlock"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info(f"OEM unlocking failed.")
+        logger.error(f"OEM unlocking failed.")
         yield False
     else: 
         yield True
@@ -213,7 +213,7 @@ def fastboot_reboot(bin_path: Path) -> bool:
     for line in run_command("fastboot", ["reboot"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info(f"Rebooting with fastboot failed.")
+        logger.error(f"Rebooting with fastboot failed.")
         yield False
     else: 
         yield True
@@ -225,7 +225,7 @@ def fastboot_flash_recovery(bin_path: Path, recovery: str) -> bool:
     for line in run_command("fastboot", ["boot", f"{recovery}"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info(f"Flashing recovery failed.")
+        logger.error(f"Flashing recovery failed.")
         yield False
     else: 
         yield True
@@ -237,7 +237,7 @@ def heimdall_flash_recovery(bin_path: Path, recovery: str) -> bool:
     for line in run_command("heimdall", ["flash", "--no-reboot", "--RECOVERY", f"{recovery}"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.info(f"Flashing recovery with heimdall failed.")
+        logger.error(f"Flashing recovery with heimdall failed.")
         yield False
     else: 
         yield True
@@ -279,5 +279,5 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
         logger.info(device_code)
         return device_code
     except CalledProcessError:
-        logger.info(f"Failed to detect a device.")
+        logger.error(f"Failed to detect a device.")
         return None
