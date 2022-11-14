@@ -13,10 +13,11 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import zipfile
 from typing import Optional
 
-import zipfile
 import requests
+from installer_config import Step
 from loguru import logger
 
 
@@ -35,7 +36,7 @@ def get_download_link(devicecode: str) -> Optional[str]:
             logger.info(f"{url} doesn't exist, status_code: {res.status_code}")
             return
     except requests.exceptions.RequestException as e:
-        logger.info(f"{url} doesn't exist, error: {e}")
+        logger.error(f"{url} doesn't exist, error: {e}")
         return
 
 
@@ -54,16 +55,13 @@ def image_recovery_works_with_device(
             supported_devices = str(metadata[-1]).split("=")[-1][:-3].split(",")
             logger.info(f"Image works with device: {supported_devices}")
 
+            recovery_file_name = recovery_path.split("/")[-1]
             if (device_code in supported_devices) and (
-                device_code in recovery_path.split("/")[-1]
-            ):
-                logger.info("Device supported by the image and recovery.")
+                device_code in recovery_file_name
+            ) and ("twrp" in recovery_file_name):
+                logger.success("Device supported by the image and recovery.")
                 return True
+            else:
+                logger.error(f"Recovery {recovery_file_name} and/or image {image_path.split('/')[-1]} are not supported or don't match.")
+
     return False
-
-
-class AppState:
-    """Container class to store all kinds of state."""
-
-    def __init__(self):
-        self.steps = None
