@@ -44,7 +44,7 @@ steps:
     - type: call_button 
       content: >
         In the next steps, you finally flash the selected OS image.
-        Connect your device with your computer with the USB-Cable.
+        Wait until the TWRP screen appears. Then run the command.
         This step will format your phone and wipe all the data. It will also remove encryption and delete all files stored 
         in the internal storage. Then the OS image will be installed. Confirm to run. This might take a while. At the end your phone will boot into the new OS.
       command: adb_twrp_wipe_and_install

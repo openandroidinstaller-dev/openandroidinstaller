@@ -108,7 +108,7 @@ def adb_sideload(bin_path: Path, target: str) -> bool:
         yield True
 
 
-def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
+def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) -> bool:
     """Wipe and format data with twrp, then flash os image with adb.
 
     Only works for twrp recovery.
@@ -156,15 +156,21 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str) -> bool:
         sleep(1)
         if (type(line) == bool) and not line:
             logger.error(f"Wiping {partition} failed.")
-            yield False
-            return 
+            # TODO: if this fails, a fix can be to just sideload something and then adb reboot
+            for line in run_command("adb", ["sideload", str(config_path)], bin_path):
+                yield line
+            sleep(1)
+            if (type(line) == bool) and not line:
+                yield False
+                return 
+            break
     # finally reboot into os
     sleep(5)
     logger.info("Reboot into OS.")
-    for line in run_command("adb", ["shell", "twrp", "reboot"], bin_path):
+    for line in run_command("adb", ["reboot"], bin_path):  # "shell", "twrp", 
         yield line
     if (type(line) == bool) and not line:
-        logger.error("Rebooting with twrp failed.")
+        logger.error("Rebooting failed.")
         yield False
         return 
     else:

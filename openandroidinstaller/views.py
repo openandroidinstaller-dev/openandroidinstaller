@@ -16,6 +16,7 @@
 import webbrowser
 from time import sleep
 from typing import Callable
+from pathlib import Path
 from loguru import logger
 
 import flet
@@ -571,7 +572,11 @@ class StepView(BaseView):
                     self.terminal_box.update()
             success = line
         elif command == "adb_twrp_wipe_and_install":
-            for line in adb_twrp_wipe_and_install(bin_path=self.state.bin_path, target=self.state.image_path):
+            for line in adb_twrp_wipe_and_install(
+                    bin_path=self.state.bin_path,
+                    target=self.state.image_path,
+                    config_path=self.state.config_path.joinpath(Path(f"{self.state.config.metadata.get('devicecode')}.yaml"))
+                ):
                 if self.state.advanced and (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
