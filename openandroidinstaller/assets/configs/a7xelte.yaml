@@ -1,7 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy A5 (2016)
-  devicecode: a5xelte
+  devicename: Samsung Galaxy A7 (2016) 
+  devicecode: a7xelte
 steps:
   unlock_bootloader:
   flash_recovery:

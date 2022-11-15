@@ -15,11 +15,11 @@
 
 from pathlib import Path
 from typing import List, Optional
-import schema
-from schema import Regex, Schema, SchemaError
 
+import schema
 import yaml
 from loguru import logger
+from schema import Regex, Schema, SchemaError
 
 
 class Step:
@@ -73,14 +73,19 @@ class InstallerConfig:
 
         if raw_steps.get("unlock_bootloader") is not None:
             unlock_bootloader = [
-                Step(**raw_step) for raw_step in raw_steps.get("unlock_bootloader")
+                Step(**raw_step, title="Unlock the bootloader")
+                for raw_step in raw_steps.get("unlock_bootloader")
             ]
         else:
             unlock_bootloader = []
         flash_recovery = [
-            Step(**raw_step) for raw_step in raw_steps.get("flash_recovery", [])
+            Step(**raw_step, title="Flash custom recovery")
+            for raw_step in raw_steps.get("flash_recovery", [])
         ]
-        install_os = [Step(**raw_step) for raw_step in raw_steps.get("install_os", [])]
+        install_os = [
+            Step(**raw_step, title="Install OS")
+            for raw_step in raw_steps.get("install_os", [])
+        ]
         return cls(unlock_bootloader, flash_recovery, install_os, metadata)
 
 
@@ -115,12 +120,13 @@ def validate_config(config: str) -> bool:
     """Validate the schema of the config."""
 
     step_schema = {
-        "title": str,
         "type": Regex(
             r"text|confirm_button|call_button|call_button_with_input|link_button_with_confirm"
         ),
         "content": str,
-        schema.Optional("command"): Regex(r"^adb\s|^fastboot\s|^heimdall\s"),
+        schema.Optional("command"): Regex(
+            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|fastboot_flash_recovery|fastboot_unlock_with_code|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
+        ),
         schema.Optional("allow_skip"): bool,
         schema.Optional("img"): str,
         schema.Optional("link"): str,
@@ -142,8 +148,8 @@ def validate_config(config: str) -> bool:
     )
     try:
         config_schema.validate(config)
-        logger.info("Config is valid.")
+        logger.success("Config is valid.")
         return True
     except SchemaError as se:
-        logger.info(f"Config is invalid. Error {se}")
+        logger.error(f"Config is invalid. Error {se}")
         return False

@@ -19,10 +19,10 @@ Inspired by: https://gitlab.com/ubports/installer/android-tools-bin/-/blob/maste
 import os
 import sys
 import zipfile
-import py7zr
 from io import BytesIO
 from pathlib import Path
 
+import py7zr
 import requests
 from loguru import logger
 

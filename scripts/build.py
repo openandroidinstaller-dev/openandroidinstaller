@@ -13,10 +13,10 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-import sys
 import subprocess
-from loguru import logger
+import sys
 
+from loguru import logger
 
 added_files = [
     ("openandroidinstaller/assets", "assets"),

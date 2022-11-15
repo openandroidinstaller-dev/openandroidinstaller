@@ -13,9 +13,9 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import webbrowser
 from functools import partial
 from typing import Callable
-import webbrowser
 
 from flet import Container, ElevatedButton, Row, Text, alignment, icons
 
@@ -37,7 +37,7 @@ def get_title(title: str):
 
 
 def confirm_button(
-    confirm_func: Callable, confirm_text: str = "Confirm and continue"
+    confirm_func: Callable, confirm_text: str = "Continue"
 ) -> ElevatedButton:
     """Get a button, that calls a given function when clicked."""
     return ElevatedButton(

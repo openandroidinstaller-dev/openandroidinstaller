@@ -1,7 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy A5 (2016)
-  devicecode: a5xelte
+  devicename: Samsung Galaxy A72
+  devicecode: a72q 
 steps:
   unlock_bootloader:
   flash_recovery:
@@ -17,9 +17,9 @@ steps:
     - type: confirm_button
       img: samsung-buttons.png
       content: >
-        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for 8~10 seconds 
+        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power* for 8~10 seconds 
         until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
-        hold *Volume Up* + *Home* + *Power button*.
+        hold *Volume Up* + *Power button*.
   install_os:
     - type: call_button 
       content: >

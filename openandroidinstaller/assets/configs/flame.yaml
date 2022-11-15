@@ -1,7 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Pixel 3a
-  devicecode: sargo 
+  devicename: Pixel 4
+  devicecode: flame 
 steps:
   unlock_bootloader:
     - type: confirm_button

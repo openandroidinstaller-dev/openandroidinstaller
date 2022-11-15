@@ -1,7 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Sony Xperia Z
-  devicecode: yuga
+  devicename: Sony Xperia Z3
+  devicecode: z3 
 steps:
   unlock_bootloader:
     - type: confirm_button
