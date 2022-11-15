@@ -73,14 +73,15 @@ def adb_reboot_bootloader(bin_path: Path) -> bool:
         yield False
         return 
     sleep(1)
-    # check if in fastboot mode
-    for line in run_command("fastboot", ["devices"], bin_path):
-        yield line
-    if (type(line) == bool) and not line:
-        logger.error("No fastboot mode detected. Reboot into bootloader failed.")
-        yield False
-    else:
-        yield True
+    yield True
+    # TODO: check if in fastboot mode
+    # for line in run_command("fastboot", ["devices"], bin_path):
+    #     yield line
+    # if (type(line) == bool) and not line:
+    #     logger.error("No fastboot mode detected. Reboot into bootloader failed.")
+    #     yield False
+    # else:
+    #     yield True
 
 
 def adb_reboot_download(bin_path: Path) -> bool:
