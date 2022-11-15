@@ -36,19 +36,29 @@ If you wish to backup the TA partition first, you can find tutorials related to 
 ## Officially supported devices
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
+Samsung | Galaxy J7 2015 | j7elte | | tested
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | a5xelte | SM-A510F | tested
+Samsung | Galaxy A7 2016 | a7xelte | | tested
 Samsung | Galaxy S7 | herolte | SM-G930F | tested
-Samsung | Galaxy S9 | starlte | | under development
+Samsung | Galaxy S9 | starlte | | tested
+Samsung | Galaxy S10 | beyond1lte | | tested
 Google | Pixel 3a | sargo | sargo | tested
-Google | Pixel 4a | sunfish | sunfish | planned
+Google | Pixel 4 | flame | flame | tested 
+Google | Pixel 4a | sunfish | sunfish | tested 
+Google | Pixel 5 | redfin | redfin | tested
+Google | Pixel 5a | barbet | barbet | tested
 Sony | Xperia Z | yuga | C6603 | tested
-Sony | Xperia Z3 | z3 | | under development
+Sony | Xperia Z3 | z3 | | tested
 Sony | Xperia ZX | kagura | | planned
-Fairphone | Fairphone 2 | FP2 | | under development
+Fairphone | Fairphone 2 | FP2 | | tested
 Fairphone | Fairphone 3 | FP3 | | tested
 Motorola | moto G5 | cedric | | planned
 Motorola | moto g7 power | ocean | | under development
+OnePlus | 6 | enchilada | | under development
+OnePlus | 6T | fajita | | under development
+OnePlus | 7T | hotdogb | | under development
+OnePlus | 9 | lemonade | | under development
 
 
 ## Usage

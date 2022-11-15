@@ -1,0 +1,50 @@
+metadata:
+  maintainer: Tobias Sterbak (tsterbak)
+  devicename: Pixel 4a
+  devicecode: sunfish 
+steps:
+  unlock_bootloader:
+    - type: confirm_button
+      content: >
+        As a first step, you need to unlock the bootloader. A bootloader is the piece of software, that tells your phone
+        how to start and run an operating system (like Android). Your device should be turned on.
+    - type: call_button
+      content: Press 'Confirm and run' to reboot into the bootloader.
+      command: adb_reboot_bootloader
+    - type: confirm_button
+      content: >
+        Select 'Restart bootloader' on your smartphone screen by pressing the volume button and the confirm by pushing the power button.
+        Then press 'Confirm and continue' here.
+    - type: call_button
+      content: In this step you actually unlock the bootloader. Just press 'Confirm and run' here. Once it's done, press continue here.
+      command: fastboot_unlock
+    - type: confirm_button
+      content: >
+        At this point the device may display on-screen prompts which will require interaction to continue the process of unlocking the bootloader.
+        Please take whatever actions the device asks you to to proceed.
+    - type: call_button
+      content: To finish the unlocking, the phone needs to reboot. Just press 'Confirm and run' here to reboot. Then continue.
+      command: fastboot_reboot
+    - type: confirm_button
+      content: The bootloader is now unlocked. Since the device resets completely, you will need to re-enable USB debugging to continue.
+  flash_recovery:
+    - type: confirm_button 
+      content: >
+        Now you need to flash a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
+        adapting and repairing of the operating system.
+    - type: call_button
+      content: Once the device is fully booted, you need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
+      command: adb_reboot_bootloader
+    - type: confirm_button
+      content: Select 'Restart bootloader' on your smartphone screen. Then confirm to continue.
+    - type: call_button
+      content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
+      command: fastboot_flash_recovery
+  install_os:
+    - type: call_button 
+      content: >
+        In the next steps, you finally flash the selected OS image.
+        Wait until the TWRP screen appears. Then run the command.
+        This step will format your phone and wipe all the data. It will also remove encryption and delete all files stored 
+        in the internal storage. Then the OS image will be installed. Confirm to run. This might take a while. At the end your phone will boot into the new OS.
+      command: adb_twrp_wipe_and_install

@@ -1,0 +1,30 @@
+metadata:
+  maintainer: Tobias Sterbak (tsterbak)
+  devicename: Samsung Galaxy A72
+  devicecode: a72q 
+steps:
+  unlock_bootloader:
+  flash_recovery:
+    - type: call_button
+      content: >
+        As a first step, you need to boot into the bootloader. A bootloader is the piece of software, 
+        that tells your phone who to start and run an operating system (like Android). Your device should be turned on. 
+        Then press 'Confirm and run' to reboot into the bootloader. Continue once it's done.
+      command: adb_reboot_download
+    - type: call_button
+      content: In this step, you need to flash a custom recovery on your device. Press 'Confirm and run' to start the process. Confirm afterwards to continue.
+      command: heimdall_flash_recovery
+    - type: confirm_button
+      img: samsung-buttons.png
+      content: >
+        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power* for 8~10 seconds 
+        until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
+        hold *Volume Up* + *Power button*.
+  install_os:
+    - type: call_button 
+      content: >
+        In the next steps, you finally flash the selected OS image.
+        Connect your device with your computer with the USB-Cable.
+        This step will format your phone and wipe all the data. It will also remove encryption and delete all files stored 
+        in the internal storage. Then the OS image will be installed. Confirm to run. This might take a while. At the end your phone will boot into the new OS.
+      command: adb_twrp_wipe_and_install
