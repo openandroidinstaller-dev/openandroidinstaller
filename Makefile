@@ -8,6 +8,9 @@ install:
 export:
 	poetry export -f requirements.txt --output requirements.txt
 
+lint:
+	poetry run ruff openandroidinstaller/ --ignore E501
+
 test:
 	poetry run pytest tests/
 

@@ -19,7 +19,6 @@ from typing import Callable
 from pathlib import Path
 from loguru import logger
 
-import flet
 from flet import (
     AlertDialog,
     alignment,
@@ -331,7 +330,7 @@ class SelectFilesView(BaseView):
                                     "Download TWRP recovery",
                                     icon=icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
-                                       f"https://dl.twrp.me/{self.state.config.metadata.get('devicecode')}"
+                                        f"https://dl.twrp.me/{self.state.config.metadata.get('devicecode')}"
                                     ),
                                     expand=True,
                                 ),
@@ -350,7 +349,9 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
         # attach the controls for uploading image and recovery
         self.right_view.controls.extend(
             [
-                Text("Now select the operating system image and recovery (note, that only TWRP recoveries are supported):"),
+                Text(
+                    "Now select the operating system image and recovery (note, that only TWRP recoveries are supported):"
+                ),
                 Row(
                     [
                         ElevatedButton(
@@ -428,7 +429,9 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
                 recovery_path=self.state.recovery_path,
             ):
                 # if image and recovery work for device allow to move on, otherwise display message
-                logger.error("Image and recovery don't work with the device. Please select different ones.")
+                logger.error(
+                    "Image and recovery don't work with the device. Please select different ones."
+                )
                 self.info_field.controls = [
                     Text(
                         "Image and recovery don't work with the device. Please select different ones."
@@ -494,9 +497,7 @@ class StepView(BaseView):
             )
             # add terminal box if enabled
             if self.state.advanced:
-                self.right_view.controls.append(
-                    Row([self.terminal_box])
-                )
+                self.right_view.controls.append(Row([self.terminal_box]))
         elif self.step.type == "call_button_with_input":
             self.confirm_button.disabled = True
             self.call_button = call_button(
@@ -543,7 +544,11 @@ class StepView(BaseView):
         # display a progress bar to show something is happening
         self.right_view.controls.append(
             Row(
-                [ProgressBar(width=600, color="#00d886", bgcolor="#eeeeee", bar_height=16)],
+                [
+                    ProgressBar(
+                        width=600, color="#00d886", bgcolor="#eeeeee", bar_height=16
+                    )
+                ],
                 alignment="center",
             ),
         )
@@ -566,35 +571,45 @@ class StepView(BaseView):
                     self.terminal_box.update()
             success = line
         elif command == "adb_sideload":
-            for line in adb_sideload(bin_path=self.state.bin_path, target=self.state.image_path):
+            for line in adb_sideload(
+                bin_path=self.state.bin_path, target=self.state.image_path
+            ):
                 if self.state.advanced and (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
             success = line
         elif command == "adb_twrp_wipe_and_install":
             for line in adb_twrp_wipe_and_install(
-                    bin_path=self.state.bin_path,
-                    target=self.state.image_path,
-                    config_path=self.state.config_path.joinpath(Path(f"{self.state.config.metadata.get('devicecode')}.yaml"))
-                ):
+                bin_path=self.state.bin_path,
+                target=self.state.image_path,
+                config_path=self.state.config_path.joinpath(
+                    Path(f"{self.state.config.metadata.get('devicecode')}.yaml")
+                ),
+            ):
                 if self.state.advanced and (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
             success = line
         elif command == "fastboot_flash_recovery":
-            for line in fastboot_flash_recovery(bin_path=self.state.bin_path, recovery=self.state.recovery_path):
+            for line in fastboot_flash_recovery(
+                bin_path=self.state.bin_path, recovery=self.state.recovery_path
+            ):
                 if self.state.advanced and (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
             success = line
         elif command == "fastboot_unlock_with_code":
-            for line in fastboot_unlock_with_code(bin_path=self.state.bin_path, unlock_code=self.inputtext.value):
+            for line in fastboot_unlock_with_code(
+                bin_path=self.state.bin_path, unlock_code=self.inputtext.value
+            ):
                 if self.state.advanced and (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
             success = line
         elif command == "heimdall_flash_recovery":
-            for line in heimdall_flash_recovery(bin_path=self.state.bin_path, recovery=self.state.recovery_path):
+            for line in heimdall_flash_recovery(
+                bin_path=self.state.bin_path, recovery=self.state.recovery_path
+            ):
                 if self.state.advanced and (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
                     self.terminal_box.update()
@@ -605,7 +620,7 @@ class StepView(BaseView):
 
         # update the view accordingly
         if not success:
-            # pop the progress bar 
+            # pop the progress bar
             self.right_view.controls.pop()
             self.right_view.controls.append(
                 Text(

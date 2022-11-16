@@ -17,11 +17,8 @@ import os
 import sys
 import webbrowser
 from pathlib import Path
-from time import sleep
-from typing import Callable, Optional
 
 import flet
-import regex as re
 from app_state import AppState
 from flet import (
     AppBar,
@@ -40,7 +37,6 @@ from flet import (
     colors,
     icons,
 )
-from installer_config import Step
 from loguru import logger
 from views import SelectFilesView, StepView, SuccessView, WelcomeView
 
@@ -48,7 +44,7 @@ from views import SelectFilesView, StepView, SuccessView, WelcomeView
 logger.add("openandroidinstaller.log")
 
 # Toggle to True for development purposes
-DEVELOPMENT = False 
+DEVELOPMENT = False
 DEVELOPMENT_CONFIG = "yuga"  # "a3y17lte"  # "sargo"
 
 
@@ -137,7 +133,7 @@ def main(page: Page):
     # header
     page.appbar = AppBar(
         leading=Image(
-            src=f"/assets/logo-192x192.png", height=40, width=40, border_radius=40
+            src="/assets/logo-192x192.png", height=40, width=40, border_radius=40
         ),
         leading_width=56,
         toolbar_height=72,
