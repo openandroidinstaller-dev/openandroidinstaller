@@ -20,7 +20,7 @@ steps:
         Then press 'Confirm and continue' here.
     - type: call_button
       content: In this step you actually unlock the bootloader. Just press 'Confirm and run' here. Once it's done, press continue here.
-      command: fastboot_oem_unlock
+      command: fastboot_unlock
     - type: confirm_button
       content: >
         Follow the instructions on the Fairphone screen. This command will wipe all the personal data on your phone.
