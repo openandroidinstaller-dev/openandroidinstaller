@@ -538,6 +538,8 @@ class StepView(BaseView):
 
         Some parts of the command are changed by placeholders.
         """
+        # disable the call button while the command is running
+        self.call_button.disabled = True
         # reset terminal output
         if self.state.advanced:
             self.terminal_box.content.controls = []
@@ -620,8 +622,13 @@ class StepView(BaseView):
 
         # update the view accordingly
         if not success:
+            # enable call button to retry
+            self.call_button.disabled = False
             # pop the progress bar
             self.right_view.controls.pop()
+            # also remove the last error text if it happened
+            if isinstance(self.right_view.controls[-1], Text):
+                self.right_view.controls.pop()
             self.right_view.controls.append(
                 Text(
                     f"Command {command} failed! Try again or make sure everything is setup correctly."
@@ -632,6 +639,7 @@ class StepView(BaseView):
             logger.success(f"Command {command} run successfully. Allow to continue.")
             # pop the progress bar
             self.right_view.controls.pop()
+            # emable the confirm buton and disable the call button
             self.confirm_button.disabled = False
             self.call_button.disabled = True
         self.view.update()
