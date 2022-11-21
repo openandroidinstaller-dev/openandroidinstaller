@@ -182,7 +182,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
 def fastboot_unlock_with_code(bin_path: Path, unlock_code: str) -> bool:
     """Unlock the device with fastboot and code given."""
     logger.info(f"Unlock the device with fastboot and code: {unlock_code}.")
-    for line in run_command("adb", ["oem", "unlock", f"{unlock_code}"], bin_path):
+    for line in run_command("fastboot", ["oem", "unlock", f"{unlock_code}"], bin_path):
         yield line
     if (type(line) == bool) and not line:
         logger.error(f"Unlocking with code {unlock_code} failed.")
@@ -194,7 +194,7 @@ def fastboot_unlock_with_code(bin_path: Path, unlock_code: str) -> bool:
 def fastboot_unlock(bin_path: Path) -> bool:
     """Unlock the device with fastboot and without code."""
     logger.info("Unlock the device with fastboot.")
-    for line in run_command("adb", ["flashing", "unlock"], bin_path):
+    for line in run_command("fastboot", ["flashing", "unlock"], bin_path):
         yield line
     if (type(line) == bool) and not line:
         logger.error("Unlocking failed.")
@@ -206,7 +206,7 @@ def fastboot_unlock(bin_path: Path) -> bool:
 def fastboot_oem_unlock(bin_path: Path) -> bool:
     """OEM unlock the device with fastboot and without code."""
     logger.info("OEM unlocking the device with fastboot.")
-    for line in run_command("adb", ["oem", "unlock"], bin_path):
+    for line in run_command("fastboot", ["oem", "unlock"], bin_path):
         yield line
     if (type(line) == bool) and not line:
         logger.error("OEM unlocking failed.")
