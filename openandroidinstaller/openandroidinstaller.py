@@ -39,6 +39,7 @@ from flet import (
 )
 from loguru import logger
 from views import SelectFilesView, StepView, SuccessView, WelcomeView
+from tool_utils import run_command
 
 # where to write the logs
 logger.add("openandroidinstaller.log")
@@ -119,8 +120,24 @@ class MainView(UserControl):
         self.view.update()
 
 
+def log_version_infos(bin_path):
+    """Log the version infos of adb, fastboot and heimdall."""
+    # adb
+    adbversion = [line for line in run_command("adb", ["version"], bin_path)]
+    adbversion = '\n'.join(adbversion[:1])
+    logger.info(f"{adbversion}")
+    # fastboot
+    fbversion = [line for line in run_command("fastboot", ["--version"], bin_path)]
+    logger.info(f"{fbversion[0]}")
+    # heimdall
+    hdversion = [line for line in run_command("heimdall", ["info"], bin_path)]
+    logger.info(f"Heimdall version: {hdversion[0]}")
+
+
 def main(page: Page):
     logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
+    log_version_infos(bin_path=BIN_PATH)
+    logger.info(20*"-")
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
     page.window_height = 780
