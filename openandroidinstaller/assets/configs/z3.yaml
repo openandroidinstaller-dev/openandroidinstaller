@@ -2,6 +2,8 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   devicename: Sony Xperia Z3
   devicecode: z3 
+requirements:
+  firmware: 23.5.A.1.291
 steps:
   unlock_bootloader:
     - type: confirm_button

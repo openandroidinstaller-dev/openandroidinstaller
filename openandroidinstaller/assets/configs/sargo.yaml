@@ -2,6 +2,8 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   devicename: Pixel 3a
   devicecode: sargo 
+requirements:
+  android: 12.1.0
 steps:
   unlock_bootloader:
     - type: confirm_button

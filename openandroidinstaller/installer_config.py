@@ -49,11 +49,13 @@ class InstallerConfig:
         flash_recovery: List[Step],
         install_os: List[Step],
         metadata: dict,
+        requirements: dict,
     ):
         self.unlock_bootloader = unlock_bootloader
         self.flash_recovery = flash_recovery
         self.install_os = install_os
         self.metadata = metadata
+        self.requirements = requirements
 
     @classmethod
     def from_file(cls, path):
@@ -64,6 +66,7 @@ class InstallerConfig:
                     config = dict(raw_config)
                     raw_steps = config["steps"]
                     metadata = config["metadata"]
+                    requirements = config.get("requirements", None)
                 else:
                     logger.info("Validation of config failed.")
                     return None
@@ -86,7 +89,9 @@ class InstallerConfig:
             Step(**raw_step, title="Install OS")
             for raw_step in raw_steps.get("install_os", [])
         ]
-        return cls(unlock_bootloader, flash_recovery, install_os, metadata)
+        return cls(
+            unlock_bootloader, flash_recovery, install_os, metadata, requirements
+        )
 
 
 def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfig]:
@@ -138,6 +143,10 @@ def validate_config(config: str) -> bool:
                 "maintainer": str,
                 "devicename": str,
                 "devicecode": str,
+            },
+            schema.Optional("requirements"): {
+                schema.Optional("android"): str,
+                schema.Optional("firmware"): str,
             },
             "steps": {
                 "unlock_bootloader": schema.Or(None, [step_schema]),
