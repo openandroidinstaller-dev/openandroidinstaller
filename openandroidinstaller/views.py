@@ -791,6 +791,7 @@ class SuccessView(BaseView):
         self.right_view.controls = [
             get_title("Installation completed successfully!"),
             self.state.progressbar,
+            Text("Now your devices boots into the new OS. Have fun with it!"),
             Row(
                 [
                     ElevatedButton(
