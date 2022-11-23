@@ -45,8 +45,8 @@ from tool_utils import run_command
 logger.add("openandroidinstaller.log")
 
 # Toggle to True for development purposes
-DEVELOPMENT = True
-DEVELOPMENT_CONFIG = "z3"  # "a3y17lte"  # "sargo"
+DEVELOPMENT = False
+DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
@@ -144,7 +144,7 @@ def main(page: Page):
     logger.info(100 * "-")
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
-    page.window_height = 780
+    page.window_height = 820
     page.window_width = int(1.77 * page.window_height)
     page.window_top = 100
     page.window_left = 120

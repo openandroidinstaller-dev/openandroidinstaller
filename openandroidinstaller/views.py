@@ -234,13 +234,8 @@ class WelcomeView(BaseView):
             disabled=True,
             expand=True,
         )
-        self.device_name = Text("")
-        self.config_found_box = Checkbox(
-            label="Device config found:",
-            value=False,
-            disabled=True,
-            label_position="left",
-        )
+
+        # dialog box to help with developer options
         self.dlg_help_developer_options = AlertDialog(
             modal=True,
             title=Text("How to enable developer options and OEM unlocking"),
@@ -297,6 +292,12 @@ Now you are ready to continue.
             disabled=False,
         )
 
+        # inform the user about the device detection
+        self.device_name = Text("", weight="bold")
+        self.device_detection_infobox = Row(
+            [Text("Detected device:"), self.device_name]
+        )
+
         # build up the main view
         self.right_view.controls.extend(
             [
@@ -305,17 +306,28 @@ Now you are ready to continue.
                     "We will walk you through the installation process nice and easy."
                 ),
                 Divider(),
-                Text(
-                    "Before you continue, make sure your devices is on the latest system update. Also make sure you have a backup of all your important data, since this procedure will erase all data from the phone. Please store the backup not on the phone! Note, that vendor specific back-ups might not work on LineageOS!"
+                Markdown(
+                    """
+Before you continue, make sure
+- your devices is on the latest system update.
+- you have a backup of all your important data, since this procedure will **erase all data from the phone**.
+- to not store the backup not the phone! 
+
+Please note, that vendor specific back-ups will most likely not work on LineageOS!
+                """
                 ),
                 Divider(),
-                Text(
-                    "Enable USB debugging and OEM unlocking on your device by enabling developer options."
+                Markdown(
+                    """
+To get started you need to 
+- **enable developer options** on your device
+- and then **enable USB debugging** and **OEM unlocking** in the developer options.
+                """
                 ),
                 Row(
                     [
                         ElevatedButton(
-                            "How do I enable developer mode?",
+                            "How do I enable developer options?",
                             on_click=self.open_developer_options_dlg,
                             expand=True,
                             tooltip="Get help to enable developer options and OEM unlocking.",
@@ -323,14 +335,19 @@ Now you are ready to continue.
                     ]
                 ),
                 Divider(),
-                Text(
-                    "Now connect your device to this computer via USB and allow USB debugging in the pop-up on your phone. Then press 'Search device'. When everything works correctly you should see your device name here."
+                Markdown(
+                    """
+Now 
+- **connect your device to this computer via USB** and
+- **allow USB debugging in the pop-up on your phone**.
+- Then **press the button 'Search device'**.
+When everything works correctly you should see your device name here and you can continue.
+                """
                 ),
                 Divider(),
                 Column(
                     [
-                        Row([Text("Detected device:"), self.device_name]),
-                        self.config_found_box,
+                        self.device_detection_infobox,
                         Row([self.bootloader_checkbox, self.advanced_checkbox]),
                     ]
                 ),
@@ -382,32 +399,40 @@ Now you are ready to continue.
             if device_code:
                 device_code = device_code_mapping.get(device_code, device_code)
                 self.device_name.value = device_code
+                self.device_name.color = colors.BLACK
             else:
                 logger.info("No device detected! Connect to USB and try again.")
                 self.device_name.value = (
                     "No device detected! Connect to USB and try again."
                 )
+                self.device_name.color = colors.RED
 
         # load the config, if a device is detected
         if device_code:
             self.device_name.value = device_code
             # load config from file
             self.state.load_config(device_code)
-            device_name = self.state.config.metadata.get(
-                "devicename", "No device name in config."
-            )
+            if self.state.config:
+                device_name = self.state.config.metadata.get(
+                    "devicename", "No device name in config."
+                )
+            else:
+                device_name = None
 
             # display success in the application
             if device_name:
-                self.config_found_box.value = True
                 self.continue_button.disabled = False
                 self.bootloader_checkbox.disabled = False
                 # overwrite the text field with the real name from the config
                 self.device_name.value = f"{device_name} (code: {device_code})"
+                self.device_name.color = colors.GREEN
             else:
                 # failed to load config
                 logger.error(f"Failed to load config for {device_code}.")
-                self.device_name.value = f"Failed to load config for {device_code}."
+                self.device_name.value = (
+                    f"Failed to load config for device with code {device_code}."
+                )
+                self.device_name.color = colors.RED
         self.view.update()
 
 
@@ -705,7 +730,9 @@ class StepView(BaseView):
         if command in cmd_mapping.keys():
             for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         elif command == "adb_sideload":
@@ -713,7 +740,9 @@ class StepView(BaseView):
                 bin_path=self.state.bin_path, target=self.state.image_path
             ):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         elif command == "adb_twrp_wipe_and_install":
@@ -725,7 +754,9 @@ class StepView(BaseView):
                 ),
             ):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         elif command == "fastboot_flash_recovery":
@@ -733,7 +764,9 @@ class StepView(BaseView):
                 bin_path=self.state.bin_path, recovery=self.state.recovery_path
             ):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         elif command == "fastboot_unlock_with_code":
@@ -741,7 +774,9 @@ class StepView(BaseView):
                 bin_path=self.state.bin_path, unlock_code=self.inputtext.value
             ):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         elif command == "heimdall_flash_recovery":
@@ -749,7 +784,9 @@ class StepView(BaseView):
                 bin_path=self.state.bin_path, recovery=self.state.recovery_path
             ):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         else:
