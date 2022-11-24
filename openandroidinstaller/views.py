@@ -91,7 +91,7 @@ class RequirementsView(BaseView):
         state: AppState,
         on_confirm: Callable,
     ):
-        super().__init__(state=state)
+        super().__init__(state=state, image="requirements-default.png")
         self.on_confirm = on_confirm
 
     def build(self):
@@ -119,7 +119,6 @@ class RequirementsView(BaseView):
             """Enable the continue button if all checkboxes are ticked."""
             for checkbox in self.checkboxes:
                 if not checkbox.value:
-                    logger.info(checkbox)
                     self.continue_button.disabled = True
                     return
             logger.info("All requirements ticked. Allow to continue")

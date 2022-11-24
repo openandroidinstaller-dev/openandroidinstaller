@@ -45,7 +45,7 @@ from tool_utils import run_command
 logger.add("openandroidinstaller.log")
 
 # Toggle to True for development purposes
-DEVELOPMENT = False
+DEVELOPMENT = True
 DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 

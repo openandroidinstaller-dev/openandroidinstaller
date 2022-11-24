@@ -23,13 +23,19 @@ from schema import Regex, Schema, SchemaError
 
 
 class Step:
+    """Class representing on step in the installer."""
+
+    default_images = {
+        "Unlock the bootloader": "unlock-bootloader-default.png",
+    }
+
     def __init__(
         self,
         title: str,
         type: str,
         content: str,
         command: str = None,
-        img: str = "placeholder.png",
+        img: str = None,
         allow_skip: bool = False,
         link: str = None,
     ):
@@ -37,7 +43,7 @@ class Step:
         self.type = type
         self.content = content
         self.command = command
-        self.img = img
+        self.img = img if img else self.default_images.get(title, "placeholder.png")
         self.allow_skip = allow_skip
         self.link = link
 
