@@ -18,7 +18,7 @@ import sys
 import webbrowser
 from pathlib import Path
 
-import flet
+import flet as ft
 from app_state import AppState
 from flet import (
     AppBar,
@@ -26,6 +26,7 @@ from flet import (
     Column,
     Container,
     ElevatedButton,
+    CircleAvatar,
     FloatingActionButton,
     Icon,
     Image,
@@ -217,4 +218,4 @@ def main(page: Page):
     page.add(app)
 
 
-flet.app(target=main, assets_dir="assets")
+ft.app(target=main, assets_dir="assets")

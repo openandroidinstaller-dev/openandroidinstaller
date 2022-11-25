@@ -23,6 +23,7 @@ from flet import (
     AlertDialog,
     alignment,
     Checkbox,
+    Switch,
     Column,
     Container,
     Divider,
@@ -251,10 +252,10 @@ Now you are ready to continue.
             ],
             actions_alignment="end",
         )
-        # checkbox to allow skipping unlocking the bootloader
+        # toggleswitch to allow skipping unlocking the bootloader
         def check_bootloader_unlocked(e):
             """Enable skipping unlocking the bootloader if selected."""
-            if self.bootloader_checkbox.value:
+            if self.bootloader_switch.value:
                 logger.info("Skipping bootloader unlocking.")
                 self.state.steps = (
                     self.state.config.flash_recovery + self.state.config.install_os
@@ -269,25 +270,25 @@ Now you are ready to continue.
                 )
                 self.state.num_total_steps = len(self.state.steps)
 
-        self.bootloader_checkbox = Checkbox(
+        self.bootloader_switch = Switch(
             label="Bootloader is already unlocked.",
             on_change=check_bootloader_unlocked,
             disabled=True,
         )
 
-        # checkbox to enable advanced output - here it means show terminal input/output in tool
-        def check_advanced_box(e):
+        # switch to enable advanced output - here it means show terminal input/output in tool
+        def check_advanced_switch(e):
             """Check the box to enable advanced output."""
-            if self.advanced_checkbox.value:
+            if self.advanced_switch.value:
                 logger.info("Enable advanced output.")
                 self.state.advanced = True
             else:
                 logger.info("Disable advanced output.")
                 self.state.advanced = False
 
-        self.advanced_checkbox = Checkbox(
+        self.advanced_switch = Switch(
             label="Advanced output",
-            on_change=check_advanced_box,
+            on_change=check_advanced_switch,
             disabled=False,
         )
 
@@ -347,7 +348,7 @@ When everything works correctly you should see your device name here and you can
                 Column(
                     [
                         self.device_detection_infobox,
-                        Row([self.bootloader_checkbox, self.advanced_checkbox]),
+                        Row([self.bootloader_switch, self.advanced_switch]),
                     ]
                 ),
                 Row(
@@ -421,7 +422,7 @@ When everything works correctly you should see your device name here and you can
             # display success in the application
             if device_name:
                 self.continue_button.disabled = False
-                self.bootloader_checkbox.disabled = False
+                self.bootloader_switch.disabled = False
                 # overwrite the text field with the real name from the config
                 self.device_name.value = f"{device_name} (code: {device_code})"
                 self.device_name.color = colors.GREEN
