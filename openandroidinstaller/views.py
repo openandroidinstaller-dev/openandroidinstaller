@@ -402,10 +402,6 @@ When everything works correctly you should see your device name here and you can
 
     def search_devices(self, e):
         """Search the device when the button is clicked."""
-        # map some detected device codes to their real code.
-        device_code_mapping = {
-            "C6603": "yuga",
-        }
         # search the device
         if self.state.test:
             # this only happens for testing
@@ -418,7 +414,6 @@ When everything works correctly you should see your device name here and you can
                 platform=self.state.platform, bin_path=self.state.bin_path
             )
             if device_code:
-                device_code = device_code_mapping.get(device_code, device_code)
                 self.device_name.value = device_code
                 self.device_name.color = colors.BLACK
             else:

@@ -260,6 +260,10 @@ def heimdall_flash_recovery(bin_path: Path, recovery: str) -> bool:
 def search_device(platform: str, bin_path: Path) -> Optional[str]:
     """Search for a connected device."""
     logger.info(f"Search devices on {platform} with {bin_path}...")
+    # map some detected device codes to their real code.
+    device_code_mapping = {
+        "C6603": "yuga",
+    }
     try:
         # read device properties
         if platform in ("linux", "darwin"):
@@ -291,7 +295,7 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
             raise Exception(f"Unknown platform {platform}.")
         device_code = output.split("[")[-1].strip()[:-1].strip()
         logger.info(device_code)
-        return device_code
+        return device_code_mapping.get(device_code, device_code)
     except CalledProcessError:
         logger.error("Failed to detect a device.")
         return None
