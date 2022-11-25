@@ -14,7 +14,6 @@
 # Author: Tobias Sterbak
 
 from app_state import AppState
-from loguru import logger
 
 from flet import (
     Column,

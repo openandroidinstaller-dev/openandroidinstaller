@@ -32,6 +32,10 @@ class SuccessView(BaseView):
     def build(
         self,
     ):
+        def close_window():
+            logger.success("Success! Close the window.")
+            self.page.window_close()
+
         self.right_view.controls = [
             get_title("Installation completed successfully!"),
             self.state.progressbar,
@@ -41,7 +45,7 @@ class SuccessView(BaseView):
                     ElevatedButton(
                         "Finish and close",
                         expand=True,
-                        on_click=lambda _: self.page.window_close(),
+                        on_click=close_window,
                     )
                 ]
             ),

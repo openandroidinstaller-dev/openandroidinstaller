@@ -16,13 +16,13 @@
 from pathlib import Path
 from subprocess import CalledProcessError
 
-from tooling import search_device
+from openandroidinstaller.tooling import search_device
 
 
 def test_search_device_success(mocker):
     """Test if search works fine."""
     mocker.patch(
-        "openandroidinstaller.tool_utils.check_output",
+        "openandroidinstaller.tooling.check_output",
         return_value=b"[ro.product.device]: [sargo]",
     )
 
@@ -48,7 +48,7 @@ def test_search_device_failure(mocker):
         raise CalledProcessError(returncode=1, cmd="search device failed")
 
     mocker.patch(
-        "openandroidinstaller.tool_utils.check_output",
+        "openandroidinstaller.tooling.check_output",
         patched_check_output,
     )
 
