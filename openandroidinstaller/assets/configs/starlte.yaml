@@ -2,6 +2,8 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   devicename: Samsung Galaxy S9
   devicecode: starlte
+requirements:
+  android: 10
 steps:
   unlock_bootloader:
   flash_recovery:

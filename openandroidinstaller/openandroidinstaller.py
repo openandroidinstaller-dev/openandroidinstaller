@@ -18,7 +18,7 @@ import sys
 import webbrowser
 from pathlib import Path
 
-import flet
+import flet as ft
 from app_state import AppState
 from flet import (
     AppBar,
@@ -26,6 +26,7 @@ from flet import (
     Column,
     Container,
     ElevatedButton,
+    CircleAvatar,
     FloatingActionButton,
     Icon,
     Image,
@@ -38,15 +39,15 @@ from flet import (
     icons,
 )
 from loguru import logger
-from views import SelectFilesView, StepView, SuccessView, WelcomeView
+from views import SelectFilesView, StepView, SuccessView, WelcomeView, RequirementsView
 from tool_utils import run_command
 
 # where to write the logs
 logger.add("openandroidinstaller.log")
 
 # Toggle to True for development purposes
-DEVELOPMENT = False
-DEVELOPMENT_CONFIG = "yuga"  # "a3y17lte"  # "sargo"
+DEVELOPMENT = True
+DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 
 PLATFORM = sys.platform
@@ -75,16 +76,20 @@ class MainView(UserControl):
         self.view = Column(expand=True, width=1200)
 
         # create default starter views
-        welcome = WelcomeView(
+        welcome_view = WelcomeView(
             on_confirm=self.confirm,
             state=self.state,
         )
-        select_files = SelectFilesView(
+        requirements_view = RequirementsView(
+            on_confirm=self.confirm,
+            state=self.state,
+        )
+        select_files_view = SelectFilesView(
             on_confirm=self.confirm,
             state=self.state,
         )
         # ordered to allow for pop
-        self.default_views = [select_files, welcome]
+        self.default_views = [select_files_view, requirements_view, welcome_view]
         # create the final success view
         self.final_view = SuccessView(state=self.state)
 
@@ -124,7 +129,7 @@ def log_version_infos(bin_path):
     """Log the version infos of adb, fastboot and heimdall."""
     # adb
     adbversion = [line for line in run_command("adb", ["version"], bin_path)]
-    adbversion = '\n'.join(adbversion[:1])
+    adbversion = "\n".join(adbversion[:1])
     logger.info(f"{adbversion}")
     # fastboot
     fbversion = [line for line in run_command("fastboot", ["--version"], bin_path)]
@@ -137,10 +142,10 @@ def log_version_infos(bin_path):
 def main(page: Page):
     logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
     log_version_infos(bin_path=BIN_PATH)
-    logger.info(20*"-")
+    logger.info(100 * "-")
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
-    page.window_height = 780
+    page.window_height = 820
     page.window_width = int(1.77 * page.window_height)
     page.window_top = 100
     page.window_left = 120
@@ -213,4 +218,4 @@ def main(page: Page):
     page.add(app)
 
 
-flet.app(target=main, assets_dir="assets")
+ft.app(target=main, assets_dir="assets")

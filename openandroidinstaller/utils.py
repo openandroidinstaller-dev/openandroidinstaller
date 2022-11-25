@@ -21,12 +21,12 @@ from loguru import logger
 
 
 def get_download_link(devicecode: str) -> Optional[str]:
-    """Check if a lineageOS version for this device exists on lineageosroms.com and return the respective download link."""
+    """Check if a lineageOS version for this device exists on download.lineageos.com and return the respective download link."""
     url = f"https://download.lineageos.org/{devicecode.lower()}"
     try:
         logger.info(f"Checking {url}")
         # Get Url
-        res = requests.get(url)
+        res = requests.get(url, timeout=5)
         # if the request succeeds
         if res.status_code == 200:
             logger.info(f"{url} exists.")

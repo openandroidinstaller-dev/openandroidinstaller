@@ -23,6 +23,8 @@ from flet import (
     AlertDialog,
     alignment,
     Checkbox,
+    Switch,
+    Card,
     Column,
     Container,
     Divider,
@@ -67,7 +69,9 @@ class BaseView(UserControl):
     def __init__(self, state: AppState, image: str = "placeholder.png"):
         super().__init__()
         self.state = state
+        # right part of the display, add content here.
         self.right_view = Column(expand=True)
+        # left part of the display: used for displaying the images
         self.left_view = Column(
             width=600,
             controls=[Image(src=f"/assets/imgs/{image}")],
@@ -79,6 +83,159 @@ class BaseView(UserControl):
             [self.left_view, VerticalDivider(), self.right_view],
             alignment="spaceEvenly",
         )
+
+
+class RequirementsView(BaseView):
+    """View to display requirements and ask for confirmation."""
+
+    def __init__(
+        self,
+        state: AppState,
+        on_confirm: Callable,
+    ):
+        super().__init__(state=state, image="requirements-default.png")
+        self.on_confirm = on_confirm
+
+    def build(self):
+        self.continue_button = ElevatedButton(
+            "Continue",
+            on_click=self.on_confirm,
+            icon=icons.NEXT_PLAN_OUTLINED,
+            disabled=True,
+            expand=True,
+        )
+
+        # build up the main view
+        self.right_view.controls.extend(
+            [
+                get_title("Check the Requirements"),
+                Text(
+                    "Before continuing you need to check some requirements to progress. Please read the instructions and check the boxes if everything is fine."
+                ),
+                Divider(),
+            ]
+        )
+        self.checkboxes = []
+
+        def enable_continue_button(e):
+            """Enable the continue button if all checkboxes are ticked."""
+            for checkbox in self.checkboxes:
+                if not checkbox.value:
+                    self.continue_button.disabled = True
+                    return
+            logger.info("All requirements ticked. Allow to continue")
+            self.continue_button.disabled = False
+            self.right_view.update()
+
+        # check if there are additional requirements given in the config
+        if self.state.config.requirements:
+            # android version
+            required_android_version = self.state.config.requirements.get("android")
+            if required_android_version:
+                android_checkbox = Checkbox(
+                    label="The required android version is installed. (Or I know the risk of continuing)",
+                    on_change=enable_continue_button,
+                )
+                android_version_check = Card(
+                    Container(
+                        content=Column(
+                            [
+                                Markdown(
+                                    f"""
+#### Android Version {required_android_version}:
+Before following these instructions please ensure that the device is currently using Android {required_android_version} firmware.
+If the vendor provided multiple updates for that version, e.g. security updates, make sure you are on the latest!
+If your current installation is newer or older than Android {required_android_version}, please upgrade or downgrade to the required
+version before proceeding (guides can be found on the internet!).
+                    """
+                                ),
+                                android_checkbox,
+                            ]
+                        ),
+                        padding=10,
+                    )
+                )
+                self.checkboxes.append(android_checkbox)
+                self.right_view.controls.append(android_version_check)
+
+            # firmware version
+            required_firmware_version = self.state.config.requirements.get("firmware")
+            if required_firmware_version:
+                firmware_checkbox = Checkbox(
+                    label="The required firmware version is installed. (Or I know the risk of continuing)",
+                    on_change=enable_continue_button,
+                )
+                firmware_version_check = Card(
+                    Container(
+                        content=Column(
+                            [
+                                Markdown(
+                                    f"""
+#### Firmware Version {required_firmware_version}:
+Before following these instructions please ensure that the device is on firmware version {required_firmware_version}.
+To discern this, you can run the command `adb shell getprop ro.build.display.id` on the stock ROM.
+If the device is not on the specified version, please follow the instructions below to install it.
+                    """
+                                ),
+                                firmware_checkbox,
+                            ]
+                        ),
+                        padding=10,
+                    )
+                )
+                self.checkboxes.append(firmware_checkbox)
+                self.right_view.controls.append(firmware_version_check)
+
+        # default requirements: battery level
+        battery_checkbox = Checkbox(
+            label="The battery level is over 80%.",
+            on_change=enable_continue_button,
+        )
+        battery_version_check = Card(
+            Container(
+                content=Column(
+                    [
+                        Markdown(
+                            f"""
+#### Battery level over 80%
+Before continuing make sure your device battery level is above 80%.
+            """
+                        ),
+                        battery_checkbox,
+                    ]
+                ),
+                padding=10,
+            ),
+        )
+        self.checkboxes.append(battery_checkbox)
+        self.right_view.controls.append(battery_version_check)
+
+        # default requirement: disable lock code and fingerprint
+        lock_checkbox = Checkbox(
+            label="No lock code or fingerprint lock enabled.",
+            on_change=enable_continue_button,
+        )
+        lock_check = Card(
+            Container(
+                content=Column(
+                    [
+                        Markdown(
+                            f"""
+#### Disable all device lock codes and fingerprint locks.
+            """
+                        ),
+                        lock_checkbox,
+                    ]
+                ),
+                padding=10,
+            ),
+        )
+        self.checkboxes.append(lock_checkbox)
+        self.right_view.controls.append(lock_check)
+
+        # add the final confirm and continue button
+        self.right_view.controls.append(Row([self.continue_button], alignment="center"))
+        return self.view
 
 
 class WelcomeView(BaseView):
@@ -98,13 +255,8 @@ class WelcomeView(BaseView):
             disabled=True,
             expand=True,
         )
-        self.device_name = Text("")
-        self.config_found_box = Checkbox(
-            label="Device config found:",
-            value=False,
-            disabled=True,
-            label_position="left",
-        )
+
+        # dialog box to help with developer options
         self.dlg_help_developer_options = AlertDialog(
             modal=True,
             title=Text("How to enable developer options and OEM unlocking"),
@@ -121,10 +273,10 @@ Now you are ready to continue.
             ],
             actions_alignment="end",
         )
-        # checkbox to allow skipping unlocking the bootloader
+        # toggleswitch to allow skipping unlocking the bootloader
         def check_bootloader_unlocked(e):
             """Enable skipping unlocking the bootloader if selected."""
-            if self.bootloader_checkbox.value:
+            if self.bootloader_switch.value:
                 logger.info("Skipping bootloader unlocking.")
                 self.state.steps = (
                     self.state.config.flash_recovery + self.state.config.install_os
@@ -139,26 +291,32 @@ Now you are ready to continue.
                 )
                 self.state.num_total_steps = len(self.state.steps)
 
-        self.bootloader_checkbox = Checkbox(
+        self.bootloader_switch = Switch(
             label="Bootloader is already unlocked.",
             on_change=check_bootloader_unlocked,
             disabled=True,
         )
 
-        # checkbox to enable advanced output - here it means show terminal input/output in tool
-        def check_advanced_box(e):
+        # switch to enable advanced output - here it means show terminal input/output in tool
+        def check_advanced_switch(e):
             """Check the box to enable advanced output."""
-            if self.advanced_checkbox.value:
+            if self.advanced_switch.value:
                 logger.info("Enable advanced output.")
                 self.state.advanced = True
             else:
                 logger.info("Disable advanced output.")
                 self.state.advanced = False
 
-        self.advanced_checkbox = Checkbox(
+        self.advanced_switch = Switch(
             label="Advanced output",
-            on_change=check_advanced_box,
+            on_change=check_advanced_switch,
             disabled=False,
+        )
+
+        # inform the user about the device detection
+        self.device_name = Text("", weight="bold")
+        self.device_detection_infobox = Row(
+            [Text("Detected device:"), self.device_name]
         )
 
         # build up the main view
@@ -169,17 +327,28 @@ Now you are ready to continue.
                     "We will walk you through the installation process nice and easy."
                 ),
                 Divider(),
-                Text(
-                    "Before you continue, make sure your devices is on the latest system update. Also make sure you have a backup of all your important data, since this procedure will erase all data from the phone. Please store the backup not on the phone! Note, that vendor specific back-ups might not work on LineageOS!"
+                Markdown(
+                    """
+Before you continue, make sure
+- your devices is on the latest system update.
+- you have a backup of all your important data, since this procedure will **erase all data from the phone**.
+- to not store the backup not the phone! 
+
+Please note, that vendor specific back-ups will most likely not work on LineageOS!
+                """
                 ),
                 Divider(),
-                Text(
-                    "Enable USB debugging and OEM unlocking on your device by enabling developer options."
+                Markdown(
+                    """
+To get started you need to 
+- **enable developer options** on your device
+- and then **enable USB debugging** and **OEM unlocking** in the developer options.
+                """
                 ),
                 Row(
                     [
                         ElevatedButton(
-                            "How do I enable developer mode?",
+                            "How do I enable developer options?",
                             on_click=self.open_developer_options_dlg,
                             expand=True,
                             tooltip="Get help to enable developer options and OEM unlocking.",
@@ -187,15 +356,20 @@ Now you are ready to continue.
                     ]
                 ),
                 Divider(),
-                Text(
-                    "Now connect your device to this computer via USB and allow USB debugging in the pop-up on your phone. Then press 'Search device'. When everything works correctly you should see your device name here."
+                Markdown(
+                    """
+Now 
+- **connect your device to this computer via USB** and
+- **allow USB debugging in the pop-up on your phone**.
+- Then **press the button 'Search device'**.
+When everything works correctly you should see your device name here and you can continue.
+                """
                 ),
                 Divider(),
                 Column(
                     [
-                        Row([Text("Detected device:"), self.device_name]),
-                        self.config_found_box,
-                        Row([self.bootloader_checkbox, self.advanced_checkbox]),
+                        self.device_detection_infobox,
+                        Row([self.bootloader_switch, self.advanced_switch]),
                     ]
                 ),
                 Row(
@@ -246,32 +420,40 @@ Now you are ready to continue.
             if device_code:
                 device_code = device_code_mapping.get(device_code, device_code)
                 self.device_name.value = device_code
+                self.device_name.color = colors.BLACK
             else:
                 logger.info("No device detected! Connect to USB and try again.")
                 self.device_name.value = (
                     "No device detected! Connect to USB and try again."
                 )
+                self.device_name.color = colors.RED
 
         # load the config, if a device is detected
         if device_code:
             self.device_name.value = device_code
             # load config from file
             self.state.load_config(device_code)
-            device_name = self.state.config.metadata.get(
-                "devicename", "No device name in config."
-            )
+            if self.state.config:
+                device_name = self.state.config.metadata.get(
+                    "devicename", "No device name in config."
+                )
+            else:
+                device_name = None
 
             # display success in the application
             if device_name:
-                self.config_found_box.value = True
                 self.continue_button.disabled = False
-                self.bootloader_checkbox.disabled = False
+                self.bootloader_switch.disabled = False
                 # overwrite the text field with the real name from the config
                 self.device_name.value = f"{device_name} (code: {device_code})"
+                self.device_name.color = colors.GREEN
             else:
                 # failed to load config
                 logger.error(f"Failed to load config for {device_code}.")
-                self.device_name.value = f"Failed to load config for {device_code}."
+                self.device_name.value = (
+                    f"Failed to load config for device with code {device_code}."
+                )
+                self.device_name.color = colors.RED
         self.view.update()
 
 
@@ -569,7 +751,9 @@ class StepView(BaseView):
         if command in cmd_mapping.keys():
             for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         elif command == "adb_sideload":
@@ -577,7 +761,9 @@ class StepView(BaseView):
                 bin_path=self.state.bin_path, target=self.state.image_path
             ):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         elif command == "adb_twrp_wipe_and_install":
@@ -589,7 +775,9 @@ class StepView(BaseView):
                 ),
             ):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         elif command == "fastboot_flash_recovery":
@@ -597,7 +785,9 @@ class StepView(BaseView):
                 bin_path=self.state.bin_path, recovery=self.state.recovery_path
             ):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         elif command == "fastboot_unlock_with_code":
@@ -605,7 +795,9 @@ class StepView(BaseView):
                 bin_path=self.state.bin_path, unlock_code=self.inputtext.value
             ):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         elif command == "heimdall_flash_recovery":
@@ -613,7 +805,9 @@ class StepView(BaseView):
                 bin_path=self.state.bin_path, recovery=self.state.recovery_path
             ):
                 if self.state.advanced and (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(Text(f">{line.strip()}"))
+                    self.terminal_box.content.controls.append(
+                        Text(f">{line.strip()}", selectable=True)
+                    )
                     self.terminal_box.update()
             success = line
         else:
