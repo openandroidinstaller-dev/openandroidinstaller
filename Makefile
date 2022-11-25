@@ -12,6 +12,8 @@ lint:
 	poetry run ruff openandroidinstaller/ --ignore E501
 
 test:
+	poetry run black .
+	poetry run ruff openandroidinstaller/ --ignore E501
 	poetry run pytest --cov=openandroidinstaller tests/
 
 app:
