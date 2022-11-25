@@ -38,8 +38,8 @@ from flet import (
     icons,
 )
 from loguru import logger
-from views import SelectFilesView, StepView, SuccessView, WelcomeView, RequirementsView
-from tool_utils import run_command
+from views import SelectFilesView, StepView, SuccessView, StartView, RequirementsView
+from tooling import run_command
 
 # where to write the logs
 logger.add("openandroidinstaller.log")
@@ -75,7 +75,7 @@ class MainView(UserControl):
         self.view = Column(expand=True, width=1200)
 
         # create default starter views
-        welcome_view = WelcomeView(
+        welcome_view = StartView(
             on_confirm=self.confirm,
             state=self.state,
         )

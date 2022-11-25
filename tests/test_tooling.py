@@ -16,7 +16,7 @@
 from pathlib import Path
 from subprocess import CalledProcessError
 
-from openandroidinstaller.tool_utils import search_device
+from tooling import search_device
 
 
 def test_search_device_success(mocker):
