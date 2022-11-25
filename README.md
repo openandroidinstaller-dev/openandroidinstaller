@@ -110,6 +110,8 @@ Every step in the config file corresponds to one view in the application. These 
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 - `link`: [OPTIONAL] Link to use for the link button if type is `link_button_with_confirm`.
 
+You can also use the `requirements` field in the yaml, to specify `firmware` or `android` version requirements. The user will then be prompted if these requirements are satisfied. 
+
 ### How to build the application for your platform
 
 The executables for the OpenAndroidInstaller are build with [pyinstaller](https://pyinstaller.org/en/stable/index.html). You can create builds for MacOS or Linux with `make build-app`. For Windows the paths need to be modified. For now, you can have a look [here](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/v0.1.2-alpha/.github/workflows/manual-build-windows.yml#L22) on how it's done.
