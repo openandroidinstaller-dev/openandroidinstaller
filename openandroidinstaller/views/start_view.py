@@ -96,22 +96,6 @@ Now you are ready to continue.
             disabled=True,
         )
 
-        # switch to enable advanced output - here it means show terminal input/output in tool
-        def check_advanced_switch(e):
-            """Check the box to enable advanced output."""
-            if self.advanced_switch.value:
-                logger.info("Enable advanced output.")
-                self.state.advanced = True
-            else:
-                logger.info("Disable advanced output.")
-                self.state.advanced = False
-
-        self.advanced_switch = Switch(
-            label="Advanced output",
-            on_change=check_advanced_switch,
-            disabled=False,
-        )
-
         # inform the user about the device detection
         self.device_name = Text("", weight="bold")
         self.device_detection_infobox = Row(
@@ -168,7 +152,7 @@ When everything works correctly you should see your device name here and you can
                 Column(
                     [
                         self.device_detection_infobox,
-                        Row([self.bootloader_switch, self.advanced_switch]),
+                        Row([self.bootloader_switch]),
                     ]
                 ),
                 Row(

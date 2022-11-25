@@ -26,6 +26,7 @@ from flet import (
     icons,
     TextField,
     Container,
+    Switch,
     alignment,
     colors,
     ProgressBar,
@@ -68,6 +69,29 @@ class StepView(BaseView):
 
     def build(self):
         """Create the content of a view from step."""
+        # error text
+        self.error_text = Text("", color=colors.RED)
+
+        # switch to enable advanced output - here it means show terminal input/output in tool
+        def check_advanced_switch(e):
+            """Check the box to enable advanced output."""
+            if self.advanced_switch.value:
+                logger.info("Enable advanced output.")
+                self.state.advanced = True
+                self.terminal_box.visible = True
+                # add terminal box if enabled
+                self.right_view.update()
+            else:
+                logger.info("Disable advanced output.")
+                self.state.advanced = False
+                self.terminal_box.visible = False
+                self.right_view.update()
+
+        self.advanced_switch = Switch(
+            label="Advanced output",
+            on_change=check_advanced_switch,
+            disabled=False,
+        )
         # text box for terminal output
         self.terminal_box = Container(
             content=Column(scroll="auto", expand=True),
@@ -78,6 +102,7 @@ class StepView(BaseView):
             height=300,
             border_radius=2,
             expand=True,
+            visible=False
         )
         # main controls
         self.right_view.controls = [
@@ -95,19 +120,33 @@ class StepView(BaseView):
             self.call_button = call_button(
                 self.call_to_phone, command=self.step.command
             )
-            self.right_view.controls.append(
-                Row([self.call_button, self.confirm_button]),
-            )
-            # add terminal box if enabled
-            if self.state.advanced:
-                self.right_view.controls.append(Row([self.terminal_box]))
+            self.right_view.controls.extend([
+                Row([self.error_text]),
+                Column(
+                    [
+                        self.advanced_switch,
+                        Row([self.call_button, self.confirm_button]),
+                    ]
+                ),
+                Row([self.terminal_box])
+            ])
         elif self.step.type == "call_button_with_input":
             self.confirm_button.disabled = True
             self.call_button = call_button(
                 self.call_to_phone, command=self.step.command
             )
             self.right_view.controls.extend(
-                [self.inputtext, Row([self.call_button, self.confirm_button])]
+                [
+                    self.inputtext,
+                    Row([self.error_text]),
+                    Column(
+                        [
+                            self.advanced_switch,
+                            Row([self.call_button, self.confirm_button]),
+                        ]
+                    ),
+                    Row([self.terminal_box])
+                ]
             )
         elif self.step.type == "link_button_with_confirm":
             self.right_view.controls.extend(
@@ -147,16 +186,11 @@ class StepView(BaseView):
         if self.state.advanced:
             self.terminal_box.content.controls = []
         # display a progress bar to show something is happening
-        self.right_view.controls.append(
-            Row(
-                [
-                    ProgressBar(
-                        width=600, color="#00d886", bgcolor="#eeeeee", bar_height=16
-                    )
-                ],
-                alignment="center",
-            ),
+        progress_bar = Row(
+            [ProgressBar(width=600, color="#00d886", bgcolor="#eeeeee", bar_height=16)],
+            alignment="center",
         )
+        self.right_view.controls.append(progress_bar)
         self.right_view.update()
 
         cmd_mapping = {
@@ -171,7 +205,7 @@ class StepView(BaseView):
         # run the right command
         if command in cmd_mapping.keys():
             for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):
-                if self.state.advanced and (type(line) == str) and line.strip():
+                if (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(
                         Text(f">{line.strip()}", selectable=True)
                     )
@@ -181,7 +215,7 @@ class StepView(BaseView):
             for line in adb_sideload(
                 bin_path=self.state.bin_path, target=self.state.image_path
             ):
-                if self.state.advanced and (type(line) == str) and line.strip():
+                if (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(
                         Text(f">{line.strip()}", selectable=True)
                     )
@@ -195,7 +229,7 @@ class StepView(BaseView):
                     Path(f"{self.state.config.metadata.get('devicecode')}.yaml")
                 ),
             ):
-                if self.state.advanced and (type(line) == str) and line.strip():
+                if (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(
                         Text(f">{line.strip()}", selectable=True)
                     )
@@ -205,7 +239,7 @@ class StepView(BaseView):
             for line in fastboot_flash_recovery(
                 bin_path=self.state.bin_path, recovery=self.state.recovery_path
             ):
-                if self.state.advanced and (type(line) == str) and line.strip():
+                if (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(
                         Text(f">{line.strip()}", selectable=True)
                     )
@@ -215,7 +249,7 @@ class StepView(BaseView):
             for line in fastboot_unlock_with_code(
                 bin_path=self.state.bin_path, unlock_code=self.inputtext.value
             ):
-                if self.state.advanced and (type(line) == str) and line.strip():
+                if (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(
                         Text(f">{line.strip()}", selectable=True)
                     )
@@ -225,35 +259,31 @@ class StepView(BaseView):
             for line in heimdall_flash_recovery(
                 bin_path=self.state.bin_path, recovery=self.state.recovery_path
             ):
-                if self.state.advanced and (type(line) == str) and line.strip():
+                if (type(line) == str) and line.strip():
                     self.terminal_box.content.controls.append(
                         Text(f">{line.strip()}", selectable=True)
                     )
                     self.terminal_box.update()
             success = line
         else:
-            logger.error(f"Unknown command type: {command}. Stopping.")
-            raise Exception(f"Unknown command type: {command}. Stopping.")
+            msg = f"Unknown command type: {command}. Stopping."
+            logger.error(msg)
+            self.error_text.value = msg
+            raise Exception(msg)
 
         # update the view accordingly
         if not success:
             # enable call button to retry
             self.call_button.disabled = False
             # pop the progress bar
-            self.right_view.controls.pop()
+            self.right_view.controls.remove(progress_bar)
             # also remove the last error text if it happened
-            if isinstance(self.right_view.controls[-1], Text):
-                self.right_view.controls.pop()
-            self.right_view.controls.append(
-                Text(
-                    f"Command {command} failed! Try again or make sure everything is setup correctly."
-                )
-            )
+            self.error_text.value = f"Command {command} failed! Try again or make sure everything is setup correctly."
         else:
             sleep(5)  # wait to make sure everything is fine
             logger.success(f"Command {command} run successfully. Allow to continue.")
             # pop the progress bar
-            self.right_view.controls.pop()
+            self.right_view.controls.remove(progress_bar)
             # emable the confirm buton and disable the call button
             self.confirm_button.disabled = False
             self.call_button.disabled = True
