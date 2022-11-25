@@ -151,7 +151,7 @@ def validate_config(config: str) -> bool:
                 "devicecode": str,
             },
             schema.Optional("requirements"): {
-                schema.Optional("android"): str,
+                schema.Optional("android"): schema.Or(str, int),
                 schema.Optional("firmware"): str,
             },
             "steps": {
