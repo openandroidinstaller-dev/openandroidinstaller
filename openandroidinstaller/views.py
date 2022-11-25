@@ -24,6 +24,7 @@ from flet import (
     alignment,
     Checkbox,
     Switch,
+    Card,
     Column,
     Container,
     Divider,
@@ -135,19 +136,24 @@ class RequirementsView(BaseView):
                     label="The required android version is installed. (Or I know the risk of continuing)",
                     on_change=enable_continue_button,
                 )
-                android_version_check = Column(
-                    [
-                        Markdown(
-                            f"""
+                android_version_check = Card(
+                    Container(
+                        content=Column(
+                            [
+                                Markdown(
+                                    f"""
 #### Android Version {required_android_version}:
 Before following these instructions please ensure that the device is currently using Android {required_android_version} firmware.
 If the vendor provided multiple updates for that version, e.g. security updates, make sure you are on the latest!
 If your current installation is newer or older than Android {required_android_version}, please upgrade or downgrade to the required
 version before proceeding (guides can be found on the internet!).
                     """
+                                ),
+                                android_checkbox,
+                            ]
                         ),
-                        android_checkbox,
-                    ]
+                        padding=10,
+                    )
                 )
                 self.checkboxes.append(android_checkbox)
                 self.right_view.controls.append(android_version_check)
@@ -159,18 +165,23 @@ version before proceeding (guides can be found on the internet!).
                     label="The required firmware version is installed. (Or I know the risk of continuing)",
                     on_change=enable_continue_button,
                 )
-                firmware_version_check = Column(
-                    [
-                        Markdown(
-                            f"""
+                firmware_version_check = Card(
+                    Container(
+                        content=Column(
+                            [
+                                Markdown(
+                                    f"""
 #### Firmware Version {required_firmware_version}:
 Before following these instructions please ensure that the device is on firmware version {required_firmware_version}.
 To discern this, you can run the command `adb shell getprop ro.build.display.id` on the stock ROM.
 If the device is not on the specified version, please follow the instructions below to install it.
                     """
+                                ),
+                                firmware_checkbox,
+                            ]
                         ),
-                        firmware_checkbox,
-                    ]
+                        padding=10,
+                    )
                 )
                 self.checkboxes.append(firmware_checkbox)
                 self.right_view.controls.append(firmware_version_check)
@@ -180,16 +191,21 @@ If the device is not on the specified version, please follow the instructions be
             label="The battery level is over 80%.",
             on_change=enable_continue_button,
         )
-        battery_version_check = Column(
-            [
-                Markdown(
-                    f"""
+        battery_version_check = Card(
+            Container(
+                content=Column(
+                    [
+                        Markdown(
+                            f"""
 #### Battery level over 80%
 Before continuing make sure your device battery level is above 80%.
             """
+                        ),
+                        battery_checkbox,
+                    ]
                 ),
-                battery_checkbox,
-            ]
+                padding=10,
+            ),
         )
         self.checkboxes.append(battery_checkbox)
         self.right_view.controls.append(battery_version_check)
@@ -199,15 +215,20 @@ Before continuing make sure your device battery level is above 80%.
             label="No lock code or fingerprint lock enabled.",
             on_change=enable_continue_button,
         )
-        lock_check = Column(
-            [
-                Markdown(
-                    f"""
+        lock_check = Card(
+            Container(
+                content=Column(
+                    [
+                        Markdown(
+                            f"""
 #### Disable all device lock codes and fingerprint locks.
             """
+                        ),
+                        lock_checkbox,
+                    ]
                 ),
-                lock_checkbox,
-            ]
+                padding=10,
+            ),
         )
         self.checkboxes.append(lock_checkbox)
         self.right_view.controls.append(lock_check)
