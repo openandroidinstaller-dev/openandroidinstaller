@@ -196,7 +196,7 @@ If the device is not on the specified version, please follow the instructions be
                 content=Column(
                     [
                         Markdown(
-                            f"""
+                            """
 #### Battery level over 80%
 Before continuing make sure your device battery level is above 80%.
             """
@@ -220,7 +220,7 @@ Before continuing make sure your device battery level is above 80%.
                 content=Column(
                     [
                         Markdown(
-                            f"""
+                            """
 #### Disable all device lock codes and fingerprint locks.
             """
                         ),

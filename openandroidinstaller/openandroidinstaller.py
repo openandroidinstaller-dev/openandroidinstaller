@@ -26,7 +26,6 @@ from flet import (
     Column,
     Container,
     ElevatedButton,
-    CircleAvatar,
     FloatingActionButton,
     Icon,
     Image,
