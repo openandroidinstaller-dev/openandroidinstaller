@@ -17,6 +17,7 @@ from loguru import logger
 from time import sleep
 from typing import Callable
 from pathlib import Path
+from functools import partial
 
 from flet import (
     UserControl,
@@ -182,45 +183,24 @@ class StepView(BaseView):
         self.right_view.controls.append(progress_bar)
         self.right_view.update()
 
+        # get the appropriate function to run for every possible command.
         cmd_mapping = {
             "adb_reboot": adb_reboot,
             "adb_reboot_bootloader": adb_reboot_bootloader,
             "adb_reboot_download": adb_reboot_download,
+            "adb_sideload": partial(adb_sideload, target=self.state.image_path),
+            "adb_twrp_wipe_and_install": partial(adb_twrp_wipe_and_install, target=self.state.image_path, config_path=self.state.config_path),
             "fastboot_unlock": fastboot_unlock,
+            "fastboot_unlock_with_code": partial(fastboot_unlock_with_code, unlock_code=self.inputtext.value),
             "fastboot_oem_unlock": fastboot_oem_unlock,
+            "fastboot_flash_recovery": partial(fastboot_flash_recovery, recovery=self.state.recovery_path),
             "fastboot_reboot": fastboot_reboot,
+            "heimdall_flash_recovery": partial(heimdall_flash_recovery, recovery=self.state.recovery_path),
         }
 
         # run the right command
         if command in cmd_mapping.keys():
             for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):
-                self.terminal_box.write_line(line)
-        elif command == "adb_sideload":
-            for line in adb_sideload(
-                bin_path=self.state.bin_path, target=self.state.image_path
-            ):
-                self.terminal_box.write_line(line)
-        elif command == "adb_twrp_wipe_and_install":
-            for line in adb_twrp_wipe_and_install(
-                bin_path=self.state.bin_path,
-                target=self.state.image_path,
-                config_path=self.state.config_path,
-            ):
-                self.terminal_box.write_line(line)
-        elif command == "fastboot_flash_recovery":
-            for line in fastboot_flash_recovery(
-                bin_path=self.state.bin_path, recovery=self.state.recovery_path
-            ):
-                self.terminal_box.write_line(line)
-        elif command == "fastboot_unlock_with_code":
-            for line in fastboot_unlock_with_code(
-                bin_path=self.state.bin_path, unlock_code=self.inputtext.value
-            ):
-                self.terminal_box.write_line(line)
-        elif command == "heimdall_flash_recovery":
-            for line in heimdall_flash_recovery(
-                bin_path=self.state.bin_path, recovery=self.state.recovery_path
-            ):
                 self.terminal_box.write_line(line)
         else:
             msg = f"Unknown command type: {command}. Stopping."
