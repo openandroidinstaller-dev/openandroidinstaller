@@ -13,7 +13,7 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-from app_state import AppState
+from openandroidinstaller.app_state import AppState
 
 from flet import (
     Column,

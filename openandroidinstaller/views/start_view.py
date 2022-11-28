@@ -31,10 +31,10 @@ from flet import (
     icons,
 )
 
-from views import BaseView
-from app_state import AppState
-from widgets import get_title
-from tooling import search_device
+from openandroidinstaller.views import BaseView
+from openandroidinstaller.app_state import AppState
+from openandroidinstaller.widgets import get_title
+from openandroidinstaller.tooling import search_device
 
 
 class StartView(BaseView):

@@ -16,7 +16,6 @@
 from loguru import logger
 from time import sleep
 from typing import Callable
-from pathlib import Path
 from functools import partial
 
 from flet import (
@@ -34,10 +33,10 @@ from flet import (
     ProgressBar,
 )
 
-from views import BaseView
-from installer_config import Step
-from app_state import AppState
-from tooling import (
+from openandroidinstaller.views import BaseView
+from openandroidinstaller.installer_config import Step
+from openandroidinstaller.app_state import AppState
+from openandroidinstaller.tooling import (
     adb_reboot,
     adb_reboot_bootloader,
     adb_reboot_download,
@@ -50,7 +49,12 @@ from tooling import (
     fastboot_unlock_with_code,
     heimdall_flash_recovery,
 )
-from widgets import call_button, confirm_button, get_title, link_button
+from openandroidinstaller.widgets import (
+    call_button,
+    confirm_button,
+    get_title,
+    link_button,
+)
 
 
 class StepView(BaseView):
@@ -110,16 +114,18 @@ class StepView(BaseView):
             self.call_button = call_button(
                 self.call_to_phone, command=self.step.command
             )
-            self.right_view.controls.extend([
-                Row([self.error_text]),
-                Column(
-                    [
-                        self.advanced_switch,
-                        Row([self.call_button, self.confirm_button]),
-                    ]
-                ),
-                Row([self.terminal_box])
-            ])
+            self.right_view.controls.extend(
+                [
+                    Row([self.error_text]),
+                    Column(
+                        [
+                            self.advanced_switch,
+                            Row([self.call_button, self.confirm_button]),
+                        ]
+                    ),
+                    Row([self.terminal_box]),
+                ]
+            )
         elif self.step.type == "call_button_with_input":
             self.confirm_button.disabled = True
             self.call_button = call_button(
@@ -135,7 +141,7 @@ class StepView(BaseView):
                             Row([self.call_button, self.confirm_button]),
                         ]
                     ),
-                    Row([self.terminal_box])
+                    Row([self.terminal_box]),
                 ]
             )
         elif self.step.type == "link_button_with_confirm":
@@ -189,13 +195,23 @@ class StepView(BaseView):
             "adb_reboot_bootloader": adb_reboot_bootloader,
             "adb_reboot_download": adb_reboot_download,
             "adb_sideload": partial(adb_sideload, target=self.state.image_path),
-            "adb_twrp_wipe_and_install": partial(adb_twrp_wipe_and_install, target=self.state.image_path, config_path=self.state.config_path),
+            "adb_twrp_wipe_and_install": partial(
+                adb_twrp_wipe_and_install,
+                target=self.state.image_path,
+                config_path=self.state.config_path,
+            ),
             "fastboot_unlock": fastboot_unlock,
-            "fastboot_unlock_with_code": partial(fastboot_unlock_with_code, unlock_code=self.inputtext.value),
+            "fastboot_unlock_with_code": partial(
+                fastboot_unlock_with_code, unlock_code=self.inputtext.value
+            ),
             "fastboot_oem_unlock": fastboot_oem_unlock,
-            "fastboot_flash_recovery": partial(fastboot_flash_recovery, recovery=self.state.recovery_path),
+            "fastboot_flash_recovery": partial(
+                fastboot_flash_recovery, recovery=self.state.recovery_path
+            ),
             "fastboot_reboot": fastboot_reboot,
-            "heimdall_flash_recovery": partial(heimdall_flash_recovery, recovery=self.state.recovery_path),
+            "heimdall_flash_recovery": partial(
+                heimdall_flash_recovery, recovery=self.state.recovery_path
+            ),
         }
 
         # run the right command
@@ -229,12 +245,11 @@ class StepView(BaseView):
 
 
 class TerminalBox(UserControl):
-
     def __init__(self, expand: bool = True):
         super().__init__(expand=expand)
 
     def build(self):
-        self.box = Container(
+        self._box = Container(
             content=Column(scroll="auto", expand=True),
             margin=10,
             padding=10,
@@ -243,28 +258,30 @@ class TerminalBox(UserControl):
             height=300,
             border_radius=2,
             expand=True,
-            visible=False
+            visible=False,
         )
-        return self.box
+        return self._box
 
     def write_line(self, line: str):
         """
         Write the line to the window box and update.
-        
+
         Ignores empty lines.
         """
         if (type(line) == str) and line.strip():
-            self.box.content.controls.append(
-                Text(f">{line.strip()}", selectable=True)
-            )
-            self.box.update()
-    
+            self._box.content.controls.append(Text(f">{line.strip()}", selectable=True))
+            self.update()
+
     def toggle_visibility(self):
         """Toogle the visibility of the terminal box."""
-        self.box.visible = not self.box.visible
-        self.box.update()
+        self._box.visible = not self._box.visible
+        self.update()
 
     def clear(self):
         """Clear terminal output."""
-        self.box.content.controls = []
-        self.box.update()
+        self._box.content.controls = []
+        self.update()
+
+    def update(self):
+        """Update the view."""
+        self._box.update()
