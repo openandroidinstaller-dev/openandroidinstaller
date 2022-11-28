@@ -14,7 +14,7 @@ lint:
 test:
 	poetry run black .
 	poetry run ruff openandroidinstaller/ --ignore E501
-	poetry run pytest --cov=openandroidinstaller tests/
+	PYTHONPATH=openandroidinstaller:$(PYTHONPATH) poetry run pytest --cov=openandroidinstaller tests/
 
 app:
 	poetry run python openandroidinstaller/openandroidinstaller.py

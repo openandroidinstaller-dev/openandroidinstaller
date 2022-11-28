@@ -29,10 +29,10 @@ from flet import (
     FilePickerResultEvent,
 )
 
-from openandroidinstaller.views import BaseView
-from openandroidinstaller.app_state import AppState
-from openandroidinstaller.widgets import get_title, confirm_button
-from openandroidinstaller.utils import (
+from views import BaseView
+from app_state import AppState
+from widgets import get_title, confirm_button
+from utils import (
     get_download_link,
     image_recovery_works_with_device,
 )

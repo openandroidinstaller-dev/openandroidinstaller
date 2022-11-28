@@ -20,9 +20,9 @@ from flet import (
     Text,
 )
 
-from openandroidinstaller.views import BaseView
-from openandroidinstaller.app_state import AppState
-from openandroidinstaller.widgets import get_title
+from views import BaseView
+from app_state import AppState
+from widgets import get_title
 
 
 class SuccessView(BaseView):

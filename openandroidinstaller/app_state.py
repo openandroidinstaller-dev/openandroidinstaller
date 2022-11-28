@@ -16,7 +16,7 @@
 from pathlib import Path
 
 from flet import ProgressBar
-from openandroidinstaller.installer_config import _load_config
+from installer_config import _load_config
 
 
 class AppState:

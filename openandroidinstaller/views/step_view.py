@@ -33,10 +33,10 @@ from flet import (
     ProgressBar,
 )
 
-from openandroidinstaller.views import BaseView
-from openandroidinstaller.installer_config import Step
-from openandroidinstaller.app_state import AppState
-from openandroidinstaller.tooling import (
+from views import BaseView
+from installer_config import Step
+from app_state import AppState
+from tooling import (
     adb_reboot,
     adb_reboot_bootloader,
     adb_reboot_download,
@@ -49,7 +49,7 @@ from openandroidinstaller.tooling import (
     fastboot_unlock_with_code,
     heimdall_flash_recovery,
 )
-from openandroidinstaller.widgets import (
+from widgets import (
     call_button,
     confirm_button,
     get_title,

@@ -19,7 +19,6 @@ import webbrowser
 from pathlib import Path
 
 import flet as ft
-from app_state import AppState
 from flet import (
     AppBar,
     Banner,
@@ -38,6 +37,8 @@ from flet import (
     icons,
 )
 from loguru import logger
+
+from app_state import AppState
 from views import SelectFilesView, StepView, SuccessView, StartView, RequirementsView
 from tooling import run_command
 
