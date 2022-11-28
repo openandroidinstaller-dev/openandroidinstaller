@@ -202,7 +202,9 @@ class StepView(BaseView):
                 target=self.state.image_path,
                 config_path=self.state.config_path,
             ),
-            "adb_twrp_copy_partitions": partial(adb_twrp_copy_partitions, config_path=self.state.config_path),
+            "adb_twrp_copy_partitions": partial(
+                adb_twrp_copy_partitions, config_path=self.state.config_path
+            ),
             "fastboot_unlock": fastboot_unlock,
             "fastboot_unlock_with_code": partial(
                 fastboot_unlock_with_code, unlock_code=self.inputtext.value

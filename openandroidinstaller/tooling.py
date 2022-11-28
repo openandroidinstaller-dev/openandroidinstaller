@@ -139,9 +139,7 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
     return True
 
 
-def adb_twrp_wipe_and_install(
-    bin_path: Path, target: str, config_path: Path
-) -> bool:
+def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) -> bool:
     """Wipe and format data with twrp, then flash os image with adb.
 
     Only works for twrp recovery.

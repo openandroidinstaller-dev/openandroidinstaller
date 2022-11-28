@@ -53,7 +53,7 @@ Sony | Xperia Z3 | [z3](https://wiki.lineageos.org/devices/z3/) | | tested
 Sony | Xperia ZX | kagura | | planned
 Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2/) | | tested
 Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3/) | | tested
-Motorola | moto G5 | cedric | | planned
+Motorola | moto G5 | [cedric](https://wiki.lineageos.org/devices/cedric/) | | tested
 Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean/) | | tested
 OnePlus | 6 | enchilada | | under development
 OnePlus | 6T | fajita | | under development
