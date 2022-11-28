@@ -2,6 +2,8 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   devicename: Samsung Galaxy S10
   devicecode: beyond1lte 
+requirements:
+  android: 12
 steps:
   unlock_bootloader:
   flash_recovery:

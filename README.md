@@ -42,12 +42,12 @@ Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte/
 Samsung | Galaxy A7 2016 | a7xelte | | tested
 Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte/) | SM-G930F | tested
 Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte/) | | tested
-Samsung | Galaxy S10 | beyond1lte | | tested
+Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte/) | | tested
 Google | Pixel 3a | [sargo](https://wiki.lineageos.org/devices/sargo/) | sargo | tested
 Google | Pixel 4 | [flame](https://wiki.lineageos.org/devices/flame/) | flame | tested 
-Google | Pixel 4a | sunfish | sunfish | tested 
-Google | Pixel 5 | redfin | redfin | tested
-Google | Pixel 5a | barbet | barbet | tested
+Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish/) | sunfish | tested 
+Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin/) | redfin | tested
+Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet/) | barbet | tested
 Sony | Xperia Z | [yuga](https://wiki.lineageos.org/devices/yuga/) | C6603 | tested
 Sony | Xperia Z3 | [z3](https://wiki.lineageos.org/devices/z3/) | | tested
 Sony | Xperia ZX | kagura | | planned
