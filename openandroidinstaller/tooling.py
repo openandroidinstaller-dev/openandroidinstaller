@@ -74,14 +74,6 @@ def adb_reboot_bootloader(bin_path: Path) -> bool:
         return
     sleep(1)
     yield True
-    # TODO: check if in fastboot mode
-    # for line in run_command("fastboot", ["devices"], bin_path):
-    #     yield line
-    # if (type(line) == bool) and not line:
-    #     logger.error("No fastboot mode detected. Reboot into bootloader failed.")
-    #     yield False
-    # else:
-    #     yield True
 
 
 def adb_reboot_download(bin_path: Path) -> bool:
@@ -109,6 +101,44 @@ def adb_sideload(bin_path: Path, target: str) -> bool:
         yield True
 
 
+def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
+    # some devices like one plus 6t or motorola moto g7 power need the partitions copied to prevent a hard brick
+    logger.info("Sideload copy_partitions script with adb.")
+    # activate sideload
+    for line in run_command("adb", ["shell", "twrp", "sideload"], bin_path):
+        yield line
+    if (type(line) == bool) and not line:
+        logger.error("Activating sideload failed.")
+        yield False
+        return
+    # now sideload the script
+    sleep(5)
+    logger.info("Sideload the copy_partitions script")
+    for line in run_command(
+        "adb",
+        [
+            "sideload",
+            str(config_path.parent) + "/copy-partitions-20220613-signed.zip",
+        ],
+        bin_path,
+    ):
+        yield line
+    if (type(line) == bool) and not line:
+        logger.error("Sideloading copy-partitions-20220613-signed.zip failed.")
+    sleep(10)
+    # reboot into the bootloader again
+    logger.info("Rebooting device into bootloader with adb.")
+    for line in run_command("adb", ["reboot", "bootloader"], bin_path):
+        yield line
+    if (type(line) == bool) and not line:
+        logger.error("Reboot into bootloader failed.")
+        yield False
+        return
+    sleep(7)
+    # Copy partitions end #
+    return True
+
+
 def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) -> bool:
     """Wipe and format data with twrp, then flash os image with adb.
 
@@ -116,6 +146,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
     """
     logger.info("Wipe and format data with twrp, then install os image.")
     sleep(7)
+    # now perform a factory reset
     for line in run_command("adb", ["shell", "twrp", "format", "data"], bin_path):
         yield line
     if (type(line) == bool) and not line:
@@ -161,7 +192,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
             # TODO: if this fails, a fix can be to just sideload something and then adb reboot
             for line in run_command(
                 "adb",
-                ["sideload", str(config_path.parent.parent) + "/helper.txt"],
+                ["sideload", str(config_path.parent) + "/helper.txt"],
                 bin_path,
             ):
                 yield line
@@ -171,7 +202,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
                 return
             break
     # finally reboot into os
-    sleep(5)
+    sleep(7)
     logger.info("Reboot into OS.")
     for line in run_command("adb", ["reboot"], bin_path):  # "shell", "twrp",
         yield line
@@ -219,6 +250,18 @@ def fastboot_oem_unlock(bin_path: Path) -> bool:
         yield True
 
 
+def fastboot_get_unlock_data(bin_path: Path) -> bool:
+    """Get the unlock data with fastboot"""
+    logger.info("Get unlock data with fastboot")
+    for line in run_command("fastboot", ["oem", "get_unlock_data"], bin_path):
+        yield line
+    if (type(line) == bool) and not line:
+        logger.error("Getting unlock data failed.")
+        yield False
+    else:
+        yield True
+
+
 def fastboot_reboot(bin_path: Path) -> bool:
     """Reboot with fastboot"""
     logger.info("Rebooting device with fastboot.")
@@ -260,6 +303,10 @@ def heimdall_flash_recovery(bin_path: Path, recovery: str) -> bool:
 def search_device(platform: str, bin_path: Path) -> Optional[str]:
     """Search for a connected device."""
     logger.info(f"Search devices on {platform} with {bin_path}...")
+    # map some detected device codes to their real code.
+    device_code_mapping = {
+        "C6603": "yuga",
+    }
     try:
         # read device properties
         if platform in ("linux", "darwin"):
@@ -291,7 +338,7 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
             raise Exception(f"Unknown platform {platform}.")
         device_code = output.split("[")[-1].strip()[:-1].strip()
         logger.info(device_code)
-        return device_code
+        return device_code_mapping.get(device_code, device_code)
     except CalledProcessError:
         logger.error("Failed to detect a device.")
         return None

@@ -19,14 +19,12 @@ import webbrowser
 from pathlib import Path
 
 import flet as ft
-from app_state import AppState
 from flet import (
     AppBar,
     Banner,
     Column,
     Container,
     ElevatedButton,
-    CircleAvatar,
     FloatingActionButton,
     Icon,
     Image,
@@ -39,14 +37,16 @@ from flet import (
     icons,
 )
 from loguru import logger
-from views import SelectFilesView, StepView, SuccessView, WelcomeView, RequirementsView
-from tool_utils import run_command
+
+from app_state import AppState
+from views import SelectFilesView, StepView, SuccessView, StartView, RequirementsView
+from tooling import run_command
 
 # where to write the logs
 logger.add("openandroidinstaller.log")
 
 # Toggle to True for development purposes
-DEVELOPMENT = True
+DEVELOPMENT = False
 DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
 
@@ -76,7 +76,7 @@ class MainView(UserControl):
         self.view = Column(expand=True, width=1200)
 
         # create default starter views
-        welcome_view = WelcomeView(
+        welcome_view = StartView(
             on_confirm=self.confirm,
             state=self.state,
         )
