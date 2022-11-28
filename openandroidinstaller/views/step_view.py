@@ -42,11 +42,13 @@ from tooling import (
     adb_reboot_download,
     adb_sideload,
     adb_twrp_wipe_and_install,
+    adb_twrp_copy_partitions,
     fastboot_flash_recovery,
     fastboot_oem_unlock,
     fastboot_reboot,
     fastboot_unlock,
     fastboot_unlock_with_code,
+    fastboot_get_unlock_data,
     heimdall_flash_recovery,
 )
 from widgets import (
@@ -199,13 +201,14 @@ class StepView(BaseView):
                 adb_twrp_wipe_and_install,
                 target=self.state.image_path,
                 config_path=self.state.config_path,
-                copy_partitions=self.state.config.copy_partitions,
             ),
+            "adb_twrp_copy_partitions": partial(adb_twrp_copy_partitions, config_path=self.state.config_path),
             "fastboot_unlock": fastboot_unlock,
             "fastboot_unlock_with_code": partial(
                 fastboot_unlock_with_code, unlock_code=self.inputtext.value
             ),
             "fastboot_oem_unlock": fastboot_oem_unlock,
+            "fastboot_get_unlock_data": fastboot_get_unlock_data,
             "fastboot_flash_recovery": partial(
                 fastboot_flash_recovery, recovery=self.state.recovery_path
             ),

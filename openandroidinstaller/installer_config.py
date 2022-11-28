@@ -62,7 +62,6 @@ class InstallerConfig:
         self.install_os = install_os
         self.metadata = metadata
         self.requirements = requirements
-        self.copy_partitions = requirements.get("copy_partitions", False)
 
     @classmethod
     def from_file(cls, path):
@@ -137,7 +136,7 @@ def validate_config(config: str) -> bool:
         ),
         "content": str,
         schema.Optional("command"): Regex(
-            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|fastboot_flash_recovery|fastboot_unlock_with_code|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
+r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|fastboot_flash_recovery|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
         ),
         schema.Optional("allow_skip"): bool,
         schema.Optional("img"): str,
@@ -154,7 +153,6 @@ def validate_config(config: str) -> bool:
             schema.Optional("requirements"): {
                 schema.Optional("android"): schema.Or(str, int),
                 schema.Optional("firmware"): str,
-                schema.Optional("copy_partitions"): bool,
             },
             "steps": {
                 "unlock_bootloader": schema.Or(None, [step_schema]),
