@@ -42,7 +42,9 @@ Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte/
 Samsung | Galaxy A7 2016 | a7xelte | | tested
 Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte/) | SM-G930F | tested
 Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte/) | | tested
+Samsung | Galaxy Note 9 | [crownlte](https://wiki.lineageos.org/devices/crownlte/) | | tested
 Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte/) | | tested
+Samsung | Galaxy Note 10 | [d1](https://wiki.lineageos.org/devices/d1/) | | tested
 Google | Pixel 3a | [sargo](https://wiki.lineageos.org/devices/sargo/) | sargo | tested
 Google | Pixel 4 | [flame](https://wiki.lineageos.org/devices/flame/) | flame | tested 
 Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish/) | sunfish | tested 
