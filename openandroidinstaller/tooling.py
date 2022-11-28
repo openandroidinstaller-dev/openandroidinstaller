@@ -74,14 +74,6 @@ def adb_reboot_bootloader(bin_path: Path) -> bool:
         return
     sleep(1)
     yield True
-    # TODO: check if in fastboot mode
-    # for line in run_command("fastboot", ["devices"], bin_path):
-    #     yield line
-    # if (type(line) == bool) and not line:
-    #     logger.error("No fastboot mode detected. Reboot into bootloader failed.")
-    #     yield False
-    # else:
-    #     yield True
 
 
 def adb_reboot_download(bin_path: Path) -> bool:
@@ -161,7 +153,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
             # TODO: if this fails, a fix can be to just sideload something and then adb reboot
             for line in run_command(
                 "adb",
-                ["sideload", str(config_path.parent.parent) + "/helper.txt"],
+                ["sideload", str(config_path.parent) + "/helper.txt"],
                 bin_path,
             ):
                 yield line

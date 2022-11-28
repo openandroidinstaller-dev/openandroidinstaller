@@ -19,6 +19,7 @@ from typing import Callable
 from pathlib import Path
 
 from flet import (
+    UserControl,
     Column,
     ElevatedButton,
     Row,
@@ -78,14 +79,11 @@ class StepView(BaseView):
             if self.advanced_switch.value:
                 logger.info("Enable advanced output.")
                 self.state.advanced = True
-                self.terminal_box.visible = True
-                # add terminal box if enabled
-                self.right_view.update()
+                self.terminal_box.toggle_visibility()
             else:
                 logger.info("Disable advanced output.")
                 self.state.advanced = False
-                self.terminal_box.visible = False
-                self.right_view.update()
+                self.terminal_box.toggle_visibility()
 
         self.advanced_switch = Switch(
             label="Advanced output",
@@ -93,17 +91,8 @@ class StepView(BaseView):
             disabled=False,
         )
         # text box for terminal output
-        self.terminal_box = Container(
-            content=Column(scroll="auto", expand=True),
-            margin=10,
-            padding=10,
-            alignment=alignment.top_left,
-            bgcolor=colors.BLACK38,
-            height=300,
-            border_radius=2,
-            expand=True,
-            visible=False
-        )
+        self.terminal_box = TerminalBox(expand=True)
+
         # main controls
         self.right_view.controls = [
             get_title(f"{self.step.title}"),
@@ -184,7 +173,7 @@ class StepView(BaseView):
         self.call_button.disabled = True
         # reset terminal output
         if self.state.advanced:
-            self.terminal_box.content.controls = []
+            self.terminal_box.clear()
         # display a progress bar to show something is happening
         progress_bar = Row(
             [ProgressBar(width=600, color="#00d886", bgcolor="#eeeeee", bar_height=16)],
@@ -205,71 +194,40 @@ class StepView(BaseView):
         # run the right command
         if command in cmd_mapping.keys():
             for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):
-                if (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(
-                        Text(f">{line.strip()}", selectable=True)
-                    )
-                    self.terminal_box.update()
-            success = line
+                self.terminal_box.write_line(line)
         elif command == "adb_sideload":
             for line in adb_sideload(
                 bin_path=self.state.bin_path, target=self.state.image_path
             ):
-                if (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(
-                        Text(f">{line.strip()}", selectable=True)
-                    )
-                    self.terminal_box.update()
-            success = line
+                self.terminal_box.write_line(line)
         elif command == "adb_twrp_wipe_and_install":
             for line in adb_twrp_wipe_and_install(
                 bin_path=self.state.bin_path,
                 target=self.state.image_path,
-                config_path=self.state.config_path.joinpath(
-                    Path(f"{self.state.config.metadata.get('devicecode')}.yaml")
-                ),
+                config_path=self.state.config_path,
             ):
-                if (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(
-                        Text(f">{line.strip()}", selectable=True)
-                    )
-                    self.terminal_box.update()
-            success = line
+                self.terminal_box.write_line(line)
         elif command == "fastboot_flash_recovery":
             for line in fastboot_flash_recovery(
                 bin_path=self.state.bin_path, recovery=self.state.recovery_path
             ):
-                if (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(
-                        Text(f">{line.strip()}", selectable=True)
-                    )
-                    self.terminal_box.update()
-            success = line
+                self.terminal_box.write_line(line)
         elif command == "fastboot_unlock_with_code":
             for line in fastboot_unlock_with_code(
                 bin_path=self.state.bin_path, unlock_code=self.inputtext.value
             ):
-                if (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(
-                        Text(f">{line.strip()}", selectable=True)
-                    )
-                    self.terminal_box.update()
-            success = line
+                self.terminal_box.write_line(line)
         elif command == "heimdall_flash_recovery":
             for line in heimdall_flash_recovery(
                 bin_path=self.state.bin_path, recovery=self.state.recovery_path
             ):
-                if (type(line) == str) and line.strip():
-                    self.terminal_box.content.controls.append(
-                        Text(f">{line.strip()}", selectable=True)
-                    )
-                    self.terminal_box.update()
-            success = line
+                self.terminal_box.write_line(line)
         else:
             msg = f"Unknown command type: {command}. Stopping."
             logger.error(msg)
             self.error_text.value = msg
             raise Exception(msg)
+        success = line  # the last element of the iterable is a boolean encoding success/failure
 
         # update the view accordingly
         if not success:
@@ -288,3 +246,45 @@ class StepView(BaseView):
             self.confirm_button.disabled = False
             self.call_button.disabled = True
         self.view.update()
+
+
+class TerminalBox(UserControl):
+
+    def __init__(self, expand: bool = True):
+        super().__init__(expand=expand)
+
+    def build(self):
+        self.box = Container(
+            content=Column(scroll="auto", expand=True),
+            margin=10,
+            padding=10,
+            alignment=alignment.top_left,
+            bgcolor=colors.BLACK38,
+            height=300,
+            border_radius=2,
+            expand=True,
+            visible=False
+        )
+        return self.box
+
+    def write_line(self, line: str):
+        """
+        Write the line to the window box and update.
+        
+        Ignores empty lines.
+        """
+        if (type(line) == str) and line.strip():
+            self.box.content.controls.append(
+                Text(f">{line.strip()}", selectable=True)
+            )
+            self.box.update()
+    
+    def toggle_visibility(self):
+        """Toogle the visibility of the terminal box."""
+        self.box.visible = not self.box.visible
+        self.box.update()
+
+    def clear(self):
+        """Clear terminal output."""
+        self.box.content.controls = []
+        self.box.update()
