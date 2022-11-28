@@ -101,13 +101,43 @@ def adb_sideload(bin_path: Path, target: str) -> bool:
         yield True
 
 
-def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) -> bool:
+def adb_twrp_wipe_and_install(
+    bin_path: Path, target: str, config_path: Path, copy_partitions: bool = False
+) -> bool:
     """Wipe and format data with twrp, then flash os image with adb.
 
     Only works for twrp recovery.
     """
     logger.info("Wipe and format data with twrp, then install os image.")
     sleep(7)
+    # some devices like one plus 6t or motorola moto g7 power need the partitions copied to prevent a hardbrick
+    if copy_partitions:
+        logger.info("Sideload copy_partitions script with adb.")
+        # activate sideload
+        for line in run_command("adb", ["shell", "twrp", "sideload"], bin_path):
+            yield line
+        if (type(line) == bool) and not line:
+            logger.error("Activating sideload failed.")
+            yield False
+            return
+        # now sideload the script
+        sleep(5)
+        logger.info("Sideload the copy_partitions script")
+        for line in run_command(
+            "adb",
+            [
+                "sideload",
+                str(config_path.parent) + "/copy-partitions-20220613-signed.zip",
+            ],
+            bin_path,
+        ):
+            yield line
+        if (type(line) == bool) and not line:
+            logger.error("Sideloading copy-partitions-20220613-signed.zip failed.")
+        sleep(5)
+    # Copy partitions end #
+
+    # now perform a factory reset
     for line in run_command("adb", ["shell", "twrp", "format", "data"], bin_path):
         yield line
     if (type(line) == bool) and not line:

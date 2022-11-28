@@ -62,6 +62,7 @@ class InstallerConfig:
         self.install_os = install_os
         self.metadata = metadata
         self.requirements = requirements
+        self.copy_partitions = requirements.get("copy_partitions", False)
 
     @classmethod
     def from_file(cls, path):
@@ -153,6 +154,7 @@ def validate_config(config: str) -> bool:
             schema.Optional("requirements"): {
                 schema.Optional("android"): schema.Or(str, int),
                 schema.Optional("firmware"): str,
+                schema.Optional("copy_partitions"): bool,
             },
             "steps": {
                 "unlock_bootloader": schema.Or(None, [step_schema]),

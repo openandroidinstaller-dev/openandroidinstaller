@@ -199,6 +199,7 @@ class StepView(BaseView):
                 adb_twrp_wipe_and_install,
                 target=self.state.image_path,
                 config_path=self.state.config_path,
+                copy_partitions=self.state.config.copy_partitions,
             ),
             "fastboot_unlock": fastboot_unlock,
             "fastboot_unlock_with_code": partial(
