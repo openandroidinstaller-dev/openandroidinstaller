@@ -118,7 +118,7 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
         "adb",
         [
             "sideload",
-            str(config_path.parent) + "/copy-partitions-20220613-signed.zip",
+            f"{config_path.parent.joinpath(Path('copy-partitions-20220613-signed.zip'))}",
         ],
         bin_path,
     ):
@@ -192,7 +192,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
             # TODO: if this fails, a fix can be to just sideload something and then adb reboot
             for line in run_command(
                 "adb",
-                ["sideload", str(config_path.parent) + "/helper.txt"],
+                ["sideload", f"{config_path.parent.joinpath(Path('helper.txt'))}"],
                 bin_path,
             ):
                 yield line
