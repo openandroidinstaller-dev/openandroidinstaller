@@ -57,9 +57,13 @@ Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2/) | | tes
 Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3/) | | tested
 Motorola | moto G5 | [cedric](https://wiki.lineageos.org/devices/cedric/) | | tested
 Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean/) | | tested
-OnePlus | 6 | enchilada | | under development
-OnePlus | 6T | fajita | | under development
-OnePlus | 7T | hotdogb | | under development
+OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada/) | | tested
+OnePlus | 6T | [fajita](https://wiki.lineageos.org/devices/fajita/) | | tested
+OnePlus | 7 | [guacamoleb](https://wiki.lineageos.org/devices/guacamoleb/) | | tested
+OnePlus | 7 Pro | [guacamole](https://wiki.lineageos.org/devices/guacamole/) | | tested
+OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb/) | | tested
+OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog/) | | tested
+OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre/) | | tested
 OnePlus | 9 | lemonade | | under development
 
 

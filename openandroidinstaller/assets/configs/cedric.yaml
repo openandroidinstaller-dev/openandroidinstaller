@@ -1,6 +1,6 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Moto G5
+  devicename: Motorola Moto G5
   devicecode: cedric
 steps:
   unlock_bootloader:
