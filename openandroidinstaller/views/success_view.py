@@ -32,7 +32,7 @@ class SuccessView(BaseView):
     def build(
         self,
     ):
-        def close_window():
+        def close_window(e):
             logger.success("Success! Close the window.")
             self.page.window_close()
 
