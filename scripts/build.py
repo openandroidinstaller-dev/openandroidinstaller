@@ -33,6 +33,7 @@ def build_linux():
         "--windowed",
         "--clean",
         "--icon=openandroidinstaller/assets/favicon.ico",
+        "--paths=openandroidinstaller",
     ] + added_data
 
     logger.info(f"Running pyinstaller with: {' '.join(pyinstaller_options)}")
@@ -54,6 +55,7 @@ def build_macos():
         "--windowed",
         "--clean",
         "--icon=openandroidinstaller/assets/favicon.ico",
+        "--paths=openandroidinstaller",
     ] + added_data
 
     logger.info(f"Running pyinstaller with: {' '.join(pyinstaller_options)}")
@@ -76,6 +78,7 @@ def build_windows():
         "--windowed",
         "--clean",
         "--icon=openandroidinstaller/assets/favicon.ico",
+        "--paths=openandroidinstaller",
     ] + added_data
 
     logger.info(f"Running pyinstaller with: {' '.join(pyinstaller_options)}")
