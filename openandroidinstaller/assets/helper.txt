@@ -1,0 +1,2 @@
+This file is sideloaded by OpenAndroidInstaller to help with a TWRP issue on A/B-partioned devices.
+Please visit https://github.com/openandroidinstaller-dev/openandroidinstaller to find out more.

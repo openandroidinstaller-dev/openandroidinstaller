@@ -1,9 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy S10
-  devicecode: beyond1lte 
+  devicename: Samsung Galaxy Note 9 
+  devicecode: crownlte 
 requirements:
-  android: 12
+  android: 10
 steps:
   unlock_bootloader:
   flash_recovery:

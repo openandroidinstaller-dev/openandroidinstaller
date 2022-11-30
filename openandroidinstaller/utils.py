@@ -17,17 +17,16 @@ import zipfile
 from typing import Optional
 
 import requests
-from installer_config import Step
 from loguru import logger
 
 
 def get_download_link(devicecode: str) -> Optional[str]:
-    """Check if a lineageOS version for this device exists on lineageosroms.com and return the respective download link."""
-    url = f"https://download.lineageos.org/{devicecode.lower()}"
+    """Check if a lineageOS version for this device exists on download.lineageos.com and return the respective download link."""
+    url = f"https://download.lineageos.org/{devicecode}"
     try:
         logger.info(f"Checking {url}")
         # Get Url
-        res = requests.get(url)
+        res = requests.get(url, timeout=5)
         # if the request succeeds
         if res.status_code == 200:
             logger.info(f"{url} exists.")
@@ -56,12 +55,16 @@ def image_recovery_works_with_device(
             logger.info(f"Image works with device: {supported_devices}")
 
             recovery_file_name = recovery_path.split("/")[-1]
-            if (device_code in supported_devices) and (
-                device_code in recovery_file_name
-            ) and ("twrp" in recovery_file_name):
+            if (
+                (device_code in supported_devices)
+                and (device_code in recovery_file_name)
+                and ("twrp" in recovery_file_name)
+            ):
                 logger.success("Device supported by the image and recovery.")
                 return True
             else:
-                logger.error(f"Recovery {recovery_file_name} and/or image {image_path.split('/')[-1]} are not supported or don't match.")
+                logger.error(
+                    f"Recovery {recovery_file_name} and/or image {image_path.split('/')[-1]} are not supported or don't match."
+                )
 
     return False

@@ -2,6 +2,8 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   devicename: Pixel 4a
   devicecode: sunfish 
+requirements:
+  android: 12.1.0
 steps:
   unlock_bootloader:
     - type: confirm_button

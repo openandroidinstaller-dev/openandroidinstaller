@@ -23,13 +23,19 @@ from schema import Regex, Schema, SchemaError
 
 
 class Step:
+    """Class representing on step in the installer."""
+
+    default_images = {
+        "Unlock the bootloader": "unlock-bootloader-default.png",
+    }
+
     def __init__(
         self,
         title: str,
         type: str,
         content: str,
         command: str = None,
-        img: str = "placeholder.png",
+        img: str = None,
         allow_skip: bool = False,
         link: str = None,
     ):
@@ -37,7 +43,7 @@ class Step:
         self.type = type
         self.content = content
         self.command = command
-        self.img = img
+        self.img = img if img else self.default_images.get(title, "placeholder.png")
         self.allow_skip = allow_skip
         self.link = link
 
@@ -49,11 +55,13 @@ class InstallerConfig:
         flash_recovery: List[Step],
         install_os: List[Step],
         metadata: dict,
+        requirements: dict,
     ):
         self.unlock_bootloader = unlock_bootloader
         self.flash_recovery = flash_recovery
         self.install_os = install_os
         self.metadata = metadata
+        self.requirements = requirements
 
     @classmethod
     def from_file(cls, path):
@@ -64,6 +72,7 @@ class InstallerConfig:
                     config = dict(raw_config)
                     raw_steps = config["steps"]
                     metadata = config["metadata"]
+                    requirements = config.get("requirements", None)
                 else:
                     logger.info("Validation of config failed.")
                     return None
@@ -86,7 +95,9 @@ class InstallerConfig:
             Step(**raw_step, title="Install OS")
             for raw_step in raw_steps.get("install_os", [])
         ]
-        return cls(unlock_bootloader, flash_recovery, install_os, metadata)
+        return cls(
+            unlock_bootloader, flash_recovery, install_os, metadata, requirements
+        )
 
 
 def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfig]:
@@ -125,7 +136,7 @@ def validate_config(config: str) -> bool:
         ),
         "content": str,
         schema.Optional("command"): Regex(
-            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|fastboot_flash_recovery|fastboot_unlock_with_code|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
+            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|fastboot_flash_recovery|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
         ),
         schema.Optional("allow_skip"): bool,
         schema.Optional("img"): str,
@@ -138,6 +149,10 @@ def validate_config(config: str) -> bool:
                 "maintainer": str,
                 "devicename": str,
                 "devicecode": str,
+            },
+            schema.Optional("requirements"): {
+                schema.Optional("android"): schema.Or(str, int),
+                schema.Optional("firmware"): str,
             },
             "steps": {
                 "unlock_bootloader": schema.Or(None, [step_schema]),

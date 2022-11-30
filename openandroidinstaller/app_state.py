@@ -17,7 +17,6 @@ from pathlib import Path
 
 from flet import ProgressBar
 from installer_config import _load_config
-from loguru import logger
 
 
 class AppState:
@@ -67,6 +66,6 @@ class AppState:
     def increment_progressbar(self):
         """Increment the progressbar and step counter."""
         self.progressbar.value = (self.num_steps - 1) / (
-            self.num_total_steps + 2
+            self.num_total_steps + 3
         )  # don't show on the first step
         self.num_steps += 1  # increase the step counter

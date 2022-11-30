@@ -1,9 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Pixel 3a
-  devicecode: sargo 
+  devicename: OnePlus 7 Pro
+  devicecode: guacamole 
 requirements:
-  android: 12.1.0
+  android: 12
 steps:
   unlock_bootloader:
     - type: call_button
@@ -14,7 +14,7 @@ steps:
       command: adb_reboot_bootloader
     - type: call_button
       content: In this step you actually unlock the bootloader. Just press 'Confirm and run' here. Once it's done, press continue here.
-      command: fastboot_unlock
+      command: fastboot_oem_unlock
     - type: confirm_button
       content: >
         At this point the device may display on-screen prompts which will require interaction to continue the process of unlocking the bootloader.
