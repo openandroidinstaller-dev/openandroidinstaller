@@ -25,6 +25,8 @@ from flet import (
     Row,
     Text,
     icons,
+    TextButton,
+    AlertDialog,
     FilePicker,
     FilePickerResultEvent,
 )
@@ -48,6 +50,25 @@ class SelectFilesView(BaseView):
         self.on_confirm = on_confirm
 
     def build(self):
+        # dialog box to explain OS images and recovery
+        self.dlg_explain_images = AlertDialog(
+            modal=True,
+            title=Text("What is an OS image and recovery and why do I need it?"),
+            content=Markdown(
+                """
+To do this, tap seven times on the build number in the 'System'- or 'About the phone'-Menu in Settings. You can also use the phones own search to look for `build number`. 
+Then go back to the main menu and look for 'developer options'. You can also search for it in your phone.
+When you are in developer options, toggle OEM unlocking and USB-Debugging. If your phone is already connected to your PC, a pop-up might appear. Allow USB debugging in the pop-up on your phone.
+Now you are ready to continue.
+"""
+            ),
+            actions=[
+                TextButton("Close", on_click=self.close_developer_options_dlg),
+            ],
+            actions_alignment="end",
+        )
+
+        # download link
         self.download_link = get_download_link(
             self.state.config.metadata.get("devicecode", "ERROR")
         )
@@ -67,12 +88,27 @@ class SelectFilesView(BaseView):
         self.right_view.controls.append(self.pick_image_dialog)
         self.right_view.controls.append(self.pick_recovery_dialog)
         # add title and progressbar
-        self.right_view.controls.append(get_title("Pick image and recovery files:"))
+        self.right_view.controls.append(get_title("Now pick an OS image and a recovery file:"))
         self.right_view.controls.append(self.state.progressbar)
+        # button to show the explainaition dialoge
+        self.right_view.controls.append(
+            Row(
+                    [
+                        ElevatedButton(
+                            "What is an OS image and a recovery file?",
+                            on_click=self.open_explain_images_dlg,
+                            expand=True,
+                            tooltip="Get some details about those files and why you need them.",
+                        )
+                    ]
+                )
+        )
+
         # text row to show infos during the process
         self.info_field = Row()
         # if there is an available download, show the button to the page
         if self.download_link:
+            self.right_view.controls.append(Divider())
             self.right_view.controls.append(
                 Column(
                     [
@@ -154,6 +190,17 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
             ]
         )
         return self.view
+
+    def open_explain_images_dlg(self, e):
+        """Open the dialog to explain OS and recovery image."""
+        self.page.dialog = self.dlg_explain_images
+        self.dlg_explain_images.open = True
+        self.page.update()
+
+    def close_developer_options_dlg(self, e):
+        """Close the dialog to explain OS and recovery image."""
+        self.dlg_explain_images.open = False
+        self.page.update()
 
     def pick_image_result(self, e: FilePickerResultEvent):
         path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
