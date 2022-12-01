@@ -30,6 +30,7 @@ from flet import (
     FilePicker,
     FilePickerResultEvent,
 )
+from flet.buttons import CountinuosRectangleBorder
 
 from views import BaseView
 from app_state import AppState
@@ -56,16 +57,30 @@ class SelectFilesView(BaseView):
             title=Text("What is an OS image and recovery and why do I need it?"),
             content=Markdown(
                 """
-To do this, tap seven times on the build number in the 'System'- or 'About the phone'-Menu in Settings. You can also use the phones own search to look for `build number`. 
-Then go back to the main menu and look for 'developer options'. You can also search for it in your phone.
-When you are in developer options, toggle OEM unlocking and USB-Debugging. If your phone is already connected to your PC, a pop-up might appear. Allow USB debugging in the pop-up on your phone.
-Now you are ready to continue.
-"""
+## OS image or ROM
+An operating system (OS) is system software that manages computer hardware, software resources, and provides common services for computer programs. 
+Popular, custom operating systems for mobile devices based on Android are 
+- [LineageOS](https://lineageos.org/)
+- [/e/OS](https://e.foundation/e-os/) or
+- [LineageOS for microG](https://lineage.microg.org/)
+- and many others.
+
+Often, the related OS images are called 'ROM'. 'ROM' stands for *R*ead-*o*nly *m*emory, which is a type of non-volatile memory used in computers
+for storing software that is rarely changed during the life of the system, also known as firmware.
+
+# Recovery Image
+A custom recovery is used for installing custom software on your device.
+This custom software can include smaller modifications like rooting your device or even
+replacing the firmware of the device with a completely custom ROM. .
+
+OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about/).
+""", on_tap_link=lambda e: self.page.launch_url(e.data)
             ),
             actions=[
                 TextButton("Close", on_click=self.close_developer_options_dlg),
             ],
             actions_alignment="end",
+            shape=CountinuosRectangleBorder(radius=0),
         )
 
         # download link

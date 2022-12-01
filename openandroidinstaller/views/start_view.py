@@ -30,6 +30,7 @@ from flet import (
     colors,
     icons,
 )
+from flet.buttons import CountinuosRectangleBorder
 
 from views import BaseView
 from app_state import AppState
@@ -71,6 +72,7 @@ Now you are ready to continue.
                 TextButton("Close", on_click=self.close_developer_options_dlg),
             ],
             actions_alignment="end",
+            shape=CountinuosRectangleBorder(radius=0),
         )
         # toggleswitch to allow skipping unlocking the bootloader
         def check_bootloader_unlocked(e):
