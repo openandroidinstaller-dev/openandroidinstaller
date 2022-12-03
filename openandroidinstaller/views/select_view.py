@@ -24,6 +24,7 @@ from flet import (
     Markdown,
     Row,
     Text,
+    colors,
     icons,
     TextButton,
     AlertDialog,
@@ -259,8 +260,9 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
                 )
                 self.info_field.controls = [
                     Text(
-                        "Image and recovery don't work with the device. Please select different ones."
-                    )
+                        "Image and/or recovery don't work with the device. Make sure you use a TWRP-based recovery.",
+                        color=colors.RED
+                        )
                 ]
                 self.right_view.update()
                 return
