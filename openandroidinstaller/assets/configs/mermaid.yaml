@@ -1,0 +1,60 @@
+metadata:
+  maintainer: Tobias Sterbak (tsterbak)
+  devicename: Sony Xperia 10 Plus
+  devicecode: mermaid 
+steps:
+  unlock_bootloader:
+    - type: confirm_button
+      content: As a first step, you need to unlock the bootloader of your device. On the device, dial *#*#7378423#*#* (*#*#SERVICE#*#*) to launch the service menu.
+    - type: confirm_button
+      content: Go to service info > configuration and check rooting status - you can only continue if it says 'Bootloader unlock allowed":" Yes.'
+    - type: confirm_button
+      content: >
+        Now go to Settings 'About the phone' and then Status. Write down the IMEI of your device. You will need it in the next step.
+    - type: link_button_with_confirm
+      content: >
+        Click on the button to open the instructions on Sonys official unlocking website to generate an unlock code for your bootloader.
+        Once you got the code write it down somewhere and continue to input the code. 
+      link: https://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/
+    - type: confirm_button
+      content: Connect the device to your PC via USB. And confirm to continue.
+    - type: call_button
+      content: Press the button to reboot into the bootloader now. When the notification light turns blue, confirm to continue.
+      command: adb_reboot_bootloader
+    - type: call_button_with_input
+      content: >
+        Use your code to unlock the bootloader of your device. Type in the full 18 character code starting with 0x (Example: 0x3EC4F7AD6E0B32B6).
+        If you already did that, you can skip this step.
+      command: fastboot_unlock_with_code
+    - type: call_button
+      content: >
+        Press the button to reboot. Since the device resets completely, you will need to re-enable USB debugging to continue. 
+        Connect your device to your PC via USB. Then confirm here to continue.
+      command: fastboot_reboot
+  flash_recovery:
+    - type: call_button
+      content: >
+        Now you need to flash a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
+        adapting and repairing of the operating system.
+        Make sure your device is turned on. You need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
+      command: adb_reboot_bootloader
+    - type: call_button
+      content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
+      command: fastboot_flash_recovery
+    - type: call_button
+      command: adb_twrp_copy_partitions
+      content: >
+        In some cases, the inactive slot can be unpopulated or contain much older firmware than the active slot, leading to various issues including a potential hard-brick.
+        We can ensure none of that will happen by copying the contents of the active slot to the inactive slot. Press 'confirm and run' to to this. Once you are in the bootloader again, continue.
+    - type: call_button
+      command: fastboot_flash_recovery
+      content: >
+        Now we need to boot into recovery again. Press run and when you see the TWRP screen you can continue.
+  install_os:
+    - type: call_button 
+      content: >
+        In the next steps, you finally flash the selected OS image.
+        Connect your device with your computer with the USB-Cable.
+        This step will format your phone and wipe all the data. It will also remove encryption and delete all files stored 
+        in the internal storage. Then the OS image will be installed. Confirm to run. This might take a while. At the end your phone will boot into the new OS.
+      command: adb_twrp_wipe_and_install

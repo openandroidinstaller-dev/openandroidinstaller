@@ -52,6 +52,11 @@ Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin/) | redfin
 Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet/) | barbet | tested
 Sony | Xperia Z | [yuga](https://wiki.lineageos.org/devices/yuga/) | C6603 | tested
 Sony | Xperia Z3 | [z3](https://wiki.lineageos.org/devices/z3/) | | tested
+Sony | Xperia 10 | [kirin](https://wiki.lineageos.org/devices/kirin/) | | tested
+Sony | Xperia 10 Plus | [mermaid](https://wiki.lineageos.org/devices/mermaid/) | | tested
+Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer/) | | tested
+Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari/) | | tested
+Sony | Xperia XZ3 | [akatsuki](https://wiki.lineageos.org/devices/akatsuki/) | | tested
 Sony | Xperia ZX | kagura | | planned
 Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2/) | | tested
 Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3/) | | tested

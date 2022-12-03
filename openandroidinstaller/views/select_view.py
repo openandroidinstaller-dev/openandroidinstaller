@@ -75,7 +75,8 @@ This custom software can include smaller modifications like rooting your device 
 replacing the firmware of the device with a completely custom ROM. .
 
 OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about/).
-""", on_tap_link=lambda e: self.page.launch_url(e.data)
+""",
+                on_tap_link=lambda e: self.page.launch_url(e.data),
             ),
             actions=[
                 TextButton("Close", on_click=self.close_developer_options_dlg),
@@ -104,20 +105,22 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.right_view.controls.append(self.pick_image_dialog)
         self.right_view.controls.append(self.pick_recovery_dialog)
         # add title and progressbar
-        self.right_view.controls.append(get_title("Now pick an OS image and a recovery file:"))
+        self.right_view.controls.append(
+            get_title("Now pick an OS image and a recovery file:")
+        )
         self.right_view.controls.append(self.state.progressbar)
         # button to show the explainaition dialoge
         self.right_view.controls.append(
             Row(
-                    [
-                        ElevatedButton(
-                            "What is an OS image and a recovery file?",
-                            on_click=self.open_explain_images_dlg,
-                            expand=True,
-                            tooltip="Get some details about those files and why you need them.",
-                        )
-                    ]
-                )
+                [
+                    ElevatedButton(
+                        "What is an OS image and a recovery file?",
+                        on_click=self.open_explain_images_dlg,
+                        expand=True,
+                        tooltip="Get some details about those files and why you need them.",
+                    )
+                ]
+            )
         )
 
         # text row to show infos during the process
@@ -261,8 +264,8 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
                 self.info_field.controls = [
                     Text(
                         "Image and/or recovery don't work with the device. Make sure you use a TWRP-based recovery.",
-                        color=colors.RED
-                        )
+                        color=colors.RED,
+                    )
                 ]
                 self.right_view.update()
                 return
