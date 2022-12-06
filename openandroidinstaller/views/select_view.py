@@ -201,9 +201,6 @@ Note that this tool only supports TWRP recoveries for now."""
                 ),
                 self.selected_recovery,
                 Divider(),
-                Text(
-                    "If you selected both files and they work for your device you can continue."
-                ),
                 self.info_field,
                 Row([self.confirm_button]),
             ]
