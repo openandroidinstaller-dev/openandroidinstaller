@@ -160,7 +160,7 @@ When everything works correctly you should see your device name here and you can
                 Row(
                     [
                         FilledButton(
-                            "Search device",
+                            "Search for device",
                             on_click=self.search_devices,
                             icon=icons.PHONE_ANDROID,
                             expand=True,
