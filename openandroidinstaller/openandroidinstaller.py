@@ -25,7 +25,6 @@ from flet import (
     Column,
     Container,
     ElevatedButton,
-    FloatingActionButton,
     Icon,
     Image,
     Page,
@@ -200,19 +199,19 @@ def main(page: Page):
     app = MainView()
 
     # add a button that restarts the process
-    def restart_process(e):
-        logger.info("Restarted the process. Reset everything.")
-        page.controls.pop()
-        app = MainView()
-        page.add(app)
-        page.update()
+    # def restart_process(e):
+    #    logger.info("Restarted the process. Reset everything.")
+    #    page.controls.pop()
+    #    app = MainView()
+    #    page.add(app)
+    #    page.update()
 
-    page.floating_action_button = FloatingActionButton(
-        text="Restart the process",
-        icon=icons.RESTART_ALT_OUTLINED,
-        tooltip="You can safely restart if you missed a step or didn't make it.",
-        on_click=restart_process,
-    )
+    # page.floating_action_button = FloatingActionButton(
+    #    text="Restart the process",
+    #    icon=icons.RESTART_ALT_OUTLINED,
+    #    tooltip="You can safely restart if you missed a step or didn't make it.",
+    #    on_click=restart_process,
+    # )
 
     # add application's root control to the page
     page.add(app)

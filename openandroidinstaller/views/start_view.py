@@ -117,7 +117,7 @@ Now you are ready to continue.
 Before you continue, make sure
 - your devices is on the latest system update.
 - you have a backup of all your important data, since this procedure will **erase all data from the phone**.
-- to not store the backup not the phone! 
+- to not store the backup on the phone! 
 
 Please note, that vendor specific back-ups will most likely not work on LineageOS!
                 """
