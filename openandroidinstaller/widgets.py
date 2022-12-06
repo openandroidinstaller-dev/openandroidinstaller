@@ -17,16 +17,16 @@ import webbrowser
 from functools import partial
 from typing import Callable
 
-from flet import Container, ElevatedButton, Row, Text, alignment, icons
+from flet import Container, ElevatedButton, Row, Text, alignment, icons, IconButton
 
 
-def get_title(title: str):
+def get_title(title: str, info_button: IconButton=None) -> Container:
+    if info_button:
+        content = [Text(f"{title}", style="titleMedium"), info_button]
+    else:
+        content = [Text(f"{title}", style="titleMedium")]
     return Container(
-        content=Row(
-            [
-                Text(f"{title}", style="titleMedium"),
-            ]
-        ),
+        content=Row(content),
         margin=0,
         padding=0,
         alignment=alignment.center,

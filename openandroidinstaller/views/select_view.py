@@ -24,6 +24,7 @@ from flet import (
     Markdown,
     Row,
     Text,
+    IconButton,
     colors,
     icons,
     TextButton,
@@ -104,24 +105,20 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         # attach hidden dialogues
         self.right_view.controls.append(self.pick_image_dialog)
         self.right_view.controls.append(self.pick_recovery_dialog)
+
+        # create help/info button to show the help dialog
+        info_button = IconButton(
+            icon=icons.HELP_OUTLINE_OUTLINED,
+            icon_color="blue400",
+            icon_size=20,
+            on_click=self.open_explain_images_dlg,
+            tooltip="What is an OS image and a recovery file?",
+        )
         # add title and progressbar
         self.right_view.controls.append(
-            get_title("Now pick an OS image and a recovery file:")
+            get_title("Now pick an OS image and a recovery file:", info_button=info_button)
         )
         self.right_view.controls.append(self.state.progressbar)
-        # button to show the explainaition dialoge
-        self.right_view.controls.append(
-            Row(
-                [
-                    ElevatedButton(
-                        "What is an OS image and a recovery file?",
-                        on_click=self.open_explain_images_dlg,
-                        expand=True,
-                        tooltip="Get some details about those files and why you need them.",
-                    )
-                ]
-            )
-        )
 
         # text row to show infos during the process
         self.info_field = Row()
@@ -154,12 +151,6 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                                 ),
                             ]
                         ),
-                        Markdown(
-                            f"""
-The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip` 
-and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`. Note that this tool only supports TWRP recoveries for now.
-"""
-                        ),
                         Divider(),
                     ]
                 )
@@ -167,13 +158,15 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
         # attach the controls for uploading image and recovery
         self.right_view.controls.extend(
             [
-                Text(
-                    "Now select the operating system image and recovery (note, that only TWRP recoveries are supported):"
+                Text("Select an OS image:", style="titleSmall"),
+                Markdown(
+                    f"""
+The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
                 ),
                 Row(
                     [
                         ElevatedButton(
-                            "Pick image file",
+                            "Pick OS image",
                             icon=icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_image_dialog.pick_files(
                                 allow_multiple=False,
@@ -185,6 +178,13 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
                     ]
                 ),
                 self.selected_image,
+                Divider(),
+                Text("Select a recovery image:", style="titleSmall"),
+                Markdown(
+                    f"""
+The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`.
+Note that this tool only supports TWRP recoveries for now."""
+                ),
                 Row(
                     [
                         ElevatedButton(
