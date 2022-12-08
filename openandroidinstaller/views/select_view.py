@@ -189,16 +189,18 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
                 ),
                 self.selected_image,
                 Divider(),
-                Text("Select a recovery image:", style="titleSmall"),
+                Text("Select a TWRP recovery image:", style="titleSmall"),
                 Markdown(
                     f"""
 The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`.
-Note that this tool only supports TWRP recoveries for now."""
+
+**Note:** This tool **only supports TWRP recoveries**.""",
+                    extension_set="gitHubFlavored"
                 ),
                 Row(
                     [
                         FilledButton(
-                            "Pick recovery file",
+                            "Pick TWRP recovery file",
                             icon=icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_recovery_dialog.pick_files(
                                 allow_multiple=False,
