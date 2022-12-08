@@ -21,10 +21,11 @@ from flet import (
     Column,
     Divider,
     ElevatedButton,
+    OutlinedButton,
+    FilledButton,
     Markdown,
     Row,
     Text,
-    IconButton,
     colors,
     icons,
     TextButton,
@@ -72,10 +73,10 @@ Often, the related OS images are called 'ROM'. 'ROM' stands for *R*ead-*o*nly *m
 which is a type of non-volatile memory used in computers for storing software that is
 rarely changed during the life of the system, also known as firmware.
 
-# Recovery Image
+## Recovery Image
 A custom recovery is used for installing custom software on your device.
 This custom software can include smaller modifications like rooting your device or even
-replacing the firmware of the device with a completely custom ROM. .
+replacing the firmware of the device with a completely custom ROM.
 
 OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about/).""",
                 on_tap_link=lambda e: self.page.launch_url(e.data),
@@ -108,13 +109,21 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.right_view.controls.append(self.pick_recovery_dialog)
 
         # create help/info button to show the help dialog
-        info_button = IconButton(
-            icon=icons.HELP_OUTLINE_OUTLINED,
-            icon_color="blue400",
-            icon_size=20,
+        info_button = OutlinedButton(
+            "What is this?",
             on_click=self.open_explain_images_dlg,
-            tooltip="What is an OS image and a recovery file?",
+            expand=True,
+            icon=icons.HELP_OUTLINE_OUTLINED,
+            icon_color=colors.DEEP_ORANGE_500,
+            tooltip="Get more details on custom operating system images and recoveries.",
         )
+        #info_button = IconButton(
+        #    icon=icons.HELP_OUTLINE_OUTLINED,
+        #    icon_color=colors.DEEP_ORANGE_500,
+        #    icon_size=30,
+        #    on_click=self.open_explain_images_dlg,
+        #    tooltip="What is an OS image and a recovery file?",
+        #)
         # add title and progressbar
         self.right_view.controls.append(
             get_title("Now pick an OS image and a recovery file:", info_button=info_button)
@@ -166,7 +175,7 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
                 ),
                 Row(
                     [
-                        ElevatedButton(
+                        FilledButton(
                             "Pick OS image",
                             icon=icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_image_dialog.pick_files(
@@ -188,7 +197,7 @@ Note that this tool only supports TWRP recoveries for now."""
                 ),
                 Row(
                     [
-                        ElevatedButton(
+                        FilledButton(
                             "Pick recovery file",
                             icon=icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_recovery_dialog.pick_files(
@@ -232,11 +241,12 @@ Note that this tool only supports TWRP recoveries for now."""
         else:
             logger.info("No image selected.")
         # check if the image works with the device and show the filename in different colors accordingly
-        device_code = self.state.config.metadata.get("devicecode")
-        if image_works_with_device(device_code=device_code, image_path=self.state.image_path):
-            self.selected_image.color = colors.GREEN
-        else:
-            self.selected_image.color = colors.RED
+        if e.files:
+            device_code = self.state.config.metadata.get("devicecode")
+            if image_works_with_device(device_code=device_code, image_path=self.state.image_path):
+                self.selected_image.color = colors.GREEN
+            else:
+                self.selected_image.color = colors.RED
         # update
         self.selected_image.update()
 
@@ -253,11 +263,12 @@ Note that this tool only supports TWRP recoveries for now."""
         else:
             logger.info("No image selected.")
         # check if the recovery works with the device and show the filename in different colors accordingly
-        device_code = self.state.config.metadata.get("devicecode")
-        if recovery_works_with_device(device_code=device_code, recovery_path=self.state.recovery_path):
-            self.selected_recovery.color = colors.GREEN
-        else:
-            self.selected_recovery.color = colors.RED
+        if e.files:
+            device_code = self.state.config.metadata.get("devicecode")
+            if recovery_works_with_device(device_code=device_code, recovery_path=self.state.recovery_path):
+                self.selected_recovery.color = colors.GREEN
+            else:
+                self.selected_recovery.color = colors.RED
         # update
         self.selected_recovery.update()
 
@@ -280,6 +291,7 @@ Note that this tool only supports TWRP recoveries for now."""
                         color=colors.RED, weight="bold",
                     )
                 ]
+                self.confirm_button.disabled = True
                 self.right_view.update()
                 return
             logger.info("Image and recovery work with the device. You can continue.")

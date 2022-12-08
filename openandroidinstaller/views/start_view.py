@@ -22,6 +22,7 @@ from flet import (
     Column,
     Divider,
     ElevatedButton,
+    OutlinedButton,
     FilledButton,
     Markdown,
     Row,
@@ -122,10 +123,12 @@ To get started you need to
                 ),
                 Row(
                     [
-                        ElevatedButton(
+                        OutlinedButton(
                             "How do I enable developer options?",
                             on_click=self.open_developer_options_dlg,
                             expand=True,
+                            icon=icons.HELP_OUTLINE_OUTLINED,
+                            icon_color=colors.DEEP_ORANGE_500,
                             tooltip="Get help to enable developer options and OEM unlocking.",
                         )
                     ]

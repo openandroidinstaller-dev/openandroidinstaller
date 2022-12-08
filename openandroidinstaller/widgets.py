@@ -30,7 +30,7 @@ def get_title(title: str, info_button: IconButton=None) -> Container:
         margin=0,
         padding=0,
         alignment=alignment.center,
-        width=400,
+        width=600,
         height=50,
         border_radius=1,
     )
