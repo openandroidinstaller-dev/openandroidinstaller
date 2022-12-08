@@ -29,6 +29,7 @@ from flet import (
 )
 
 from views import BaseView
+from components import ConfirmButton
 from app_state import AppState
 from widgets import get_title
 
