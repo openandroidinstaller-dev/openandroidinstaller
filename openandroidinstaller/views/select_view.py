@@ -78,7 +78,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 on_tap_link=lambda e: self.page.launch_url(e.data),
             ),
             actions=[
-                TextButton("Close", on_click=self.close_developer_options_dlg),
+                TextButton("Close", on_click=self.close_close_explain_images_dlg),
             ],
             actions_alignment="end",
             shape=CountinuosRectangleBorder(radius=0),
@@ -225,7 +225,7 @@ The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config
         self.dlg_explain_images.open = True
         self.page.update()
 
-    def close_developer_options_dlg(self, e):
+    def close_close_explain_images_dlg(self, e):
         """Close the dialog to explain OS and recovery image."""
         self.dlg_explain_images.open = False
         self.page.update()

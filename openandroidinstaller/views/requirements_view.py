@@ -24,9 +24,14 @@ from flet import (
     ElevatedButton,
     Markdown,
     Row,
+    colors,
+    OutlinedButton,
     Text,
     icons,
+    TextButton,
+    AlertDialog,
 )
+from flet.buttons import CountinuosRectangleBorder
 
 from views import BaseView
 from app_state import AppState
@@ -44,13 +49,59 @@ class RequirementsView(BaseView):
         super().__init__(state=state, image="requirements-default.png")
         self.on_confirm = on_confirm
 
+    def open_find_version_dlg(self, e):
+        """Open the dialog to explain how to find the android and firmware version."""
+        self.page.dialog = self.dlg_howto_find_versions
+        self.dlg_howto_find_versions.open = True
+        self.page.update()
+
+    def close_find_version_dlg(self, e):
+        """Close the dialog to explain how to find the android and firmware version."""
+        self.dlg_howto_find_versions.open = False
+        self.page.update()
+
     def build(self):
+        # continue button
         self.continue_button = ElevatedButton(
             "Continue",
             on_click=self.on_confirm,
             icon=icons.NEXT_PLAN_OUTLINED,
             disabled=True,
             expand=True,
+        )
+
+        # dialog to explain howto find the android and firmware version
+        self.dlg_howto_find_versions = AlertDialog(
+            modal=True,
+            title=Text("Where to find the current Android and/or firmware version?"),
+            content=Markdown(
+                """
+## Find your current Android Version
+Scroll down on the Settings screen and look for an "About phone", "About tablet", or "System" option.
+You'll usually find this at the very bottom of the main Settings screen, under System, but depending
+on your phone it could be different. If you do find a specific option for System, you can usually
+find the "About Phone" underneath that.
+
+On the resulting screen, look for "Android version" to find the version of Android installed on your device.
+
+## Find your current device firmware version
+On the same screen you find the "Android version" you can also find the Firmware Version.
+On some devices, the build version is basically the firmware version.""",
+            ),
+            actions=[
+                TextButton("Close", on_click=self.close_find_version_dlg),
+            ],
+            actions_alignment="end",
+            shape=CountinuosRectangleBorder(radius=0),
+        )
+        # create help/info button to show the help dialog
+        info_button = OutlinedButton(
+            "How to Find the version",
+            on_click=self.open_find_version_dlg,
+            expand=False,
+            icon=icons.HELP_OUTLINE_OUTLINED,
+            icon_color=colors.DEEP_ORANGE_500,
+            tooltip="How to find the firmware and android version of your device.",
         )
 
         # build up the main view
@@ -91,10 +142,18 @@ class RequirementsView(BaseView):
                     Container(
                         content=Column(
                             [
+                                Row(
+                                    [
+                                        Text(
+                                            f"Android Version {required_android_version}:",
+                                            style="titleSmall",
+                                        ),
+                                        info_button,
+                                    ],
+                                    alignment="spaceBetween",
+                                ),
                                 Markdown(
-                                    f"""
-#### Android Version {required_android_version}:
-Before following these instructions please ensure that the device is currently using Android {required_android_version} firmware.
+                                    f"""Before following these instructions please ensure that the device is currently using Android {required_android_version} firmware.
 If the vendor provided multiple updates for that version, e.g. security updates, make sure you are on the latest!
 If your current installation is newer or older than Android {required_android_version}, please upgrade or downgrade to the required
 version before proceeding (guides can be found on the internet!).
@@ -120,10 +179,18 @@ version before proceeding (guides can be found on the internet!).
                     Container(
                         content=Column(
                             [
+                                Row(
+                                    [
+                                        Text(
+                                            f"Firmware Version {required_firmware_version}:",
+                                            style="titleSmall",
+                                        ),
+                                        info_button,
+                                    ],
+                                    alignment="spaceBetween",
+                                ),
                                 Markdown(
-                                    f"""
-#### Firmware Version {required_firmware_version}:
-Before following these instructions please ensure that the device is on firmware version {required_firmware_version}.
+                                    f"""Before following these instructions please ensure that the device is on firmware version {required_firmware_version}.
 To discern this, you can run the command `adb shell getprop ro.build.display.id` on the stock ROM.
 If the device is not on the specified version, please follow the instructions below to install it.
                     """
