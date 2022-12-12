@@ -17,21 +17,26 @@ import webbrowser
 from functools import partial
 from typing import Callable
 
-from flet import Container, ElevatedButton, Row, Text, alignment, icons, IconButton
+from flet import Container, ElevatedButton, Row, Text, alignment, icons, IconButton, Image, Column
 
 
-def get_title(title: str, info_button: IconButton=None) -> Container:
+def get_title(title: str, info_button: IconButton=None, step_indicator_img: str=None) -> Container:
     if info_button:
-        content = [Text(f"{title}", style="titleMedium"), info_button]
+        content = Row([Text(f"{title}", style="titleLarge"), info_button])
     else:
-        content = [Text(f"{title}", style="titleMedium")]
+        content = Row([Text(f"{title}", style="titleLarge")])
+    if step_indicator_img:
+        content = Column(controls=[
+            Image(src=f"/assets/imgs/{step_indicator_img}", fit="fitWidth", tooltip=f"Current step: {title}", width=600),
+            content
+        ])
     return Container(
-        content=Row(content),
+        content=content,
         margin=0,
         padding=0,
         alignment=alignment.center,
         width=600,
-        height=50,
+        height=150,
         border_radius=1,
     )
 

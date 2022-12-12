@@ -126,7 +126,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         #)
         # add title and progressbar
         self.right_view.controls.append(
-            get_title("Now pick an OS image and a recovery file:", info_button=info_button)
+            get_title("Now pick an OS image and a recovery file:", info_button=info_button, step_indicator_img="steps-header-select.png")
         )
         self.right_view.controls.append(self.state.progressbar)
 

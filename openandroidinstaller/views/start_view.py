@@ -22,6 +22,7 @@ from flet import (
     Column,
     Divider,
     ElevatedButton,
+    Image,
     OutlinedButton,
     FilledButton,
     Markdown,
@@ -113,7 +114,7 @@ Now you are ready to continue.
         # build up the main view
         self.right_view.controls.extend(
             [
-                get_title("Get the phone ready"),
+                get_title("Get the phone ready", step_indicator_img="steps-header-get-ready.png"),
                 Markdown(
                     """
 To get started you need to 

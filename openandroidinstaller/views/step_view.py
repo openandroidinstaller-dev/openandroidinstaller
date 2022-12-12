@@ -101,8 +101,13 @@ class StepView(BaseView):
         self.terminal_box = TerminalBox(expand=True)
 
         # main controls
+        steps_indictor_img_lookup = {
+            "Unlock the bootloader": "steps-header-unlock.png",
+            "Flash custom recovery": "steps-header-recovery.png",
+            "Install OS": "steps-header-install.png",
+        }
         self.right_view.controls = [
-            get_title(f"{self.step.title}"),
+            get_title(f"{self.step.title}", step_indicator_img=steps_indictor_img_lookup.get(self.step.title)),
             self.state.progressbar,
             Text(f"{self.step.content}"),
         ]
