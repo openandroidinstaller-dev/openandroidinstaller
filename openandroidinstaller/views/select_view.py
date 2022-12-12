@@ -38,11 +38,7 @@ from flet.buttons import CountinuosRectangleBorder
 from views import BaseView
 from app_state import AppState
 from widgets import get_title, confirm_button
-from utils import (
-    get_download_link,
-    image_works_with_device,
-    recovery_works_with_device
-)
+from utils import get_download_link, image_works_with_device, recovery_works_with_device
 
 
 class SelectFilesView(BaseView):
@@ -60,7 +56,7 @@ class SelectFilesView(BaseView):
             modal=True,
             title=Text("What is an OS image and recovery and why do I need it?"),
             content=Markdown(
-"""## OS image or ROM
+                """## OS image or ROM
 An operating system (OS) is system software that manages computer hardware,
 software resources, and provides common services for computer programs. 
 Popular, custom operating systems for mobile devices based on Android are 
@@ -117,16 +113,20 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             icon_color=colors.DEEP_ORANGE_500,
             tooltip="Get more details on custom operating system images and recoveries.",
         )
-        #info_button = IconButton(
+        # info_button = IconButton(
         #    icon=icons.HELP_OUTLINE_OUTLINED,
         #    icon_color=colors.DEEP_ORANGE_500,
         #    icon_size=30,
         #    on_click=self.open_explain_images_dlg,
         #    tooltip="What is an OS image and a recovery file?",
-        #)
+        # )
         # add title and progressbar
         self.right_view.controls.append(
-            get_title("Now pick an OS image and a recovery file:", info_button=info_button, step_indicator_img="steps-header-select.png")
+            get_title(
+                "Now pick an OS image and a recovery file:",
+                info_button=info_button,
+                step_indicator_img="steps-header-select.png",
+            )
         )
         self.right_view.controls.append(self.state.progressbar)
 
@@ -195,7 +195,7 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
 The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`.
 
 **Note:** This tool **only supports TWRP recoveries**.""",
-                    extension_set="gitHubFlavored"
+                    extension_set="gitHubFlavored",
                 ),
                 Row(
                     [
@@ -245,7 +245,9 @@ The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config
         # check if the image works with the device and show the filename in different colors accordingly
         if e.files:
             device_code = self.state.config.metadata.get("devicecode")
-            if image_works_with_device(device_code=device_code, image_path=self.state.image_path):
+            if image_works_with_device(
+                device_code=device_code, image_path=self.state.image_path
+            ):
                 self.selected_image.color = colors.GREEN
             else:
                 self.selected_image.color = colors.RED
@@ -267,7 +269,9 @@ The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config
         # check if the recovery works with the device and show the filename in different colors accordingly
         if e.files:
             device_code = self.state.config.metadata.get("devicecode")
-            if recovery_works_with_device(device_code=device_code, recovery_path=self.state.recovery_path):
+            if recovery_works_with_device(
+                device_code=device_code, recovery_path=self.state.recovery_path
+            ):
                 self.selected_recovery.color = colors.GREEN
             else:
                 self.selected_recovery.color = colors.RED
@@ -280,8 +284,13 @@ The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config
             ".img" in self.selected_recovery.value
         ):
             device_code = self.state.config.metadata.get("devicecode")
-            if not (image_works_with_device(device_code=device_code, image_path=self.state.image_path)
-                and recovery_works_with_device(device_code=device_code, recovery_path=self.state.recovery_path)
+            if not (
+                image_works_with_device(
+                    device_code=device_code, image_path=self.state.image_path
+                )
+                and recovery_works_with_device(
+                    device_code=device_code, recovery_path=self.state.recovery_path
+                )
             ):
                 # if image and recovery work for device allow to move on, otherwise display message
                 logger.error(
@@ -290,7 +299,8 @@ The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config
                 self.info_field.controls = [
                     Text(
                         "Image and/or recovery don't work with the device. Make sure you use a TWRP-based recovery.",
-                        color=colors.RED, weight="bold",
+                        color=colors.RED,
+                        weight="bold",
                     )
                 ]
                 self.confirm_button.disabled = True

@@ -22,7 +22,6 @@ from flet import (
     Column,
     Divider,
     ElevatedButton,
-    Image,
     OutlinedButton,
     FilledButton,
     Markdown,
@@ -35,7 +34,6 @@ from flet import (
 from flet.buttons import CountinuosRectangleBorder
 
 from views import BaseView
-from components import ConfirmButton
 from app_state import AppState
 from widgets import get_title
 from tooling import search_device
@@ -114,7 +112,10 @@ Now you are ready to continue.
         # build up the main view
         self.right_view.controls.extend(
             [
-                get_title("Get the phone ready", step_indicator_img="steps-header-get-ready.png"),
+                get_title(
+                    "Get the phone ready",
+                    step_indicator_img="steps-header-get-ready.png",
+                ),
                 Markdown(
                     """
 To get started you need to 

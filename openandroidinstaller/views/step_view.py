@@ -107,7 +107,10 @@ class StepView(BaseView):
             "Install OS": "steps-header-install.png",
         }
         self.right_view.controls = [
-            get_title(f"{self.step.title}", step_indicator_img=steps_indictor_img_lookup.get(self.step.title)),
+            get_title(
+                f"{self.step.title}",
+                step_indicator_img=steps_indictor_img_lookup.get(self.step.title),
+            ),
             self.state.progressbar,
             Text(f"{self.step.content}"),
         ]

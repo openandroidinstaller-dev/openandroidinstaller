@@ -13,7 +13,6 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-from loguru import logger
 from typing import Callable
 
 from flet import (

@@ -39,9 +39,7 @@ def get_download_link(devicecode: str) -> Optional[str]:
         return
 
 
-def image_works_with_device(
-    device_code: str, image_path: str
-) -> bool:
+def image_works_with_device(device_code: str, image_path: str) -> bool:
     """Determine if an image works for the given device."""
     with zipfile.ZipFile(image_path) as image_zip:
         with image_zip.open(
@@ -51,17 +49,17 @@ def image_works_with_device(
             supported_devices = str(metadata[-1]).split("=")[-1][:-3].split(",")
             logger.info(f"Image works with device: {supported_devices}")
 
-            if (device_code in supported_devices):
+            if device_code in supported_devices:
                 logger.success("Device supported by the selected image.")
                 return True
             else:
-                logger.error(f"Image file {image_path.split('/')[-1]} is not supported.")
+                logger.error(
+                    f"Image file {image_path.split('/')[-1]} is not supported."
+                )
                 return False
 
 
-def recovery_works_with_device(
-    device_code: str, recovery_path: str
-) -> bool:
+def recovery_works_with_device(device_code: str, recovery_path: str) -> bool:
     """Determine if a recovery works for the given device.
 
     BEWARE: THE RECOVERY PART IS STILL VERY BASIC!

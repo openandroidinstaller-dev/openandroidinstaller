@@ -29,7 +29,6 @@ from flet import (
 )
 
 from views import BaseView
-from components import ConfirmButton
 from app_state import AppState
 from widgets import get_title
 
@@ -57,7 +56,10 @@ class RequirementsView(BaseView):
         # build up the main view
         self.right_view.controls.extend(
             [
-                get_title("Check the Requirements", step_indicator_img="steps-header-requirements.png"),
+                get_title(
+                    "Check the Requirements",
+                    step_indicator_img="steps-header-requirements.png",
+                ),
                 Text(
                     "Before continuing you need to check some requirements to progress. Please read the instructions and check the boxes if everything is fine."
                 ),

@@ -38,7 +38,14 @@ from flet import (
 from loguru import logger
 
 from app_state import AppState
-from views import SelectFilesView, StepView, SuccessView, StartView, RequirementsView, WelcomeView
+from views import (
+    SelectFilesView,
+    StepView,
+    SuccessView,
+    StartView,
+    RequirementsView,
+    WelcomeView,
+)
 from tooling import run_command
 
 # where to write the logs
@@ -92,7 +99,12 @@ class MainView(UserControl):
             state=self.state,
         )
         # ordered to allow for pop
-        self.default_views = [select_files_view, requirements_view, start_view, welcome_view]
+        self.default_views = [
+            select_files_view,
+            requirements_view,
+            start_view,
+            welcome_view,
+        ]
         # create the final success view
         self.final_view = SuccessView(state=self.state)
 
