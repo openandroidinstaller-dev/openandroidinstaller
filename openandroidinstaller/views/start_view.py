@@ -110,12 +110,16 @@ Now you are ready to continue.
         )
 
         # build up the main view
-        self.right_view.controls.extend(
+        self.right_view_header.controls.extend(
             [
                 get_title(
                     "Get the phone ready",
                     step_indicator_img="steps-header-get-ready.png",
-                ),
+                )
+            ]
+        )
+        self.right_view.controls.extend(
+            [
                 Markdown(
                     """
 To get started you need to 

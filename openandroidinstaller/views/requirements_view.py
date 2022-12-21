@@ -105,12 +105,14 @@ On some devices, the build version is basically the firmware version.""",
         )
 
         # build up the main view
+        self.right_view_header.controls = [
+            get_title(
+                "Check the Requirements",
+                step_indicator_img="steps-header-requirements.png",
+            ),
+        ]
         self.right_view.controls.extend(
             [
-                get_title(
-                    "Check the Requirements",
-                    step_indicator_img="steps-header-requirements.png",
-                ),
                 Text(
                     "Before continuing you need to check some requirements to progress. Please read the instructions and check the boxes if everything is fine."
                 ),

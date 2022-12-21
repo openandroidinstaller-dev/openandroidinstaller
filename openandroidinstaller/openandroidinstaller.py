@@ -71,10 +71,6 @@ class MainView(UserControl):
             platform=PLATFORM,
             config_path=CONFIG_PATH,
             bin_path=BIN_PATH,
-            progressbar=ProgressBar(
-                width=600, color="#00d886", bgcolor="#eeeeee", bar_height=16
-            ),
-            num_steps=2,
             test=DEVELOPMENT,
             test_config=DEVELOPMENT_CONFIG,
         )
@@ -119,9 +115,6 @@ class MainView(UserControl):
         """Confirmation event handler to use in views."""
         # remove all elements from column view
         self.view.controls = []
-        # if a config is loaded, display a progress bar
-        if self.state.config:
-            self.state.increment_progressbar()
         # if there are default views left, display them first
         if self.default_views:
             self.view.controls.append(self.default_views.pop())
@@ -160,8 +153,8 @@ def main(page: Page):
     logger.info(100 * "-")
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
-    page.window_height = 820
-    page.window_width = int(1.77 * page.window_height)
+    page.window_height = 900
+    page.window_width = int(1.5 * page.window_height)
     page.window_top = 100
     page.window_left = 120
     page.scroll = "adaptive"

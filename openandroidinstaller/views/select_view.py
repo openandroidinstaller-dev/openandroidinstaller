@@ -113,22 +113,15 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             icon_color=colors.DEEP_ORANGE_500,
             tooltip="Get more details on custom operating system images and recoveries.",
         )
-        # info_button = IconButton(
-        #    icon=icons.HELP_OUTLINE_OUTLINED,
-        #    icon_color=colors.DEEP_ORANGE_500,
-        #    icon_size=30,
-        #    on_click=self.open_explain_images_dlg,
-        #    tooltip="What is an OS image and a recovery file?",
-        # )
-        # add title and progressbar
-        self.right_view.controls.append(
+
+        # add title
+        self.right_view_header.controls.append(
             get_title(
                 "Now pick an OS image and a recovery file:",
                 info_button=info_button,
                 step_indicator_img="steps-header-select.png",
             )
         )
-        self.right_view.controls.append(self.state.progressbar)
 
         # text row to show infos during the process
         self.info_field = Row()

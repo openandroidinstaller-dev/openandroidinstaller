@@ -36,9 +36,10 @@ class SuccessView(BaseView):
             logger.success("Success! Close the window.")
             self.page.window_close()
 
-        self.right_view.controls = [
+        self.right_view_header.controls = [
             get_title("Installation completed successfully!"),
-            self.state.progressbar,
+        ]
+        self.right_view.controls = [
             Text("Now your devices boots into the new OS. Have fun with it!"),
             Row(
                 [

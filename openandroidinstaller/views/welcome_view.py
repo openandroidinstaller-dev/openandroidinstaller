@@ -48,9 +48,9 @@ class WelcomeView(BaseView):
         )
 
         # build up the main view
+        self.right_view_header.controls.extend([get_title("Welcome to the OpenAndroidInstaller!")])
         self.right_view.controls.extend(
             [
-                get_title("Welcome to the OpenAndroidInstaller!"),
                 Text(
                     "We will walk you through the installation process nice and easy."
                 ),
