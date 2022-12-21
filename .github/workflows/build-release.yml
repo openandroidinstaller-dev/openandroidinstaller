@@ -43,4 +43,9 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}
-        path: releases/download/${{  github.ref_name }}/
+        path: dist/
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: dist/*.zip
