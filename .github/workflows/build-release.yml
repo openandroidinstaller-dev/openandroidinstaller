@@ -1,0 +1,45 @@
+name: Build release
+
+on:
+  # run once a new tag is pushed
+  push:
+    tags:
+      - '*'
+
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - run: pip install -r requirements.txt
+    - run: python scripts/download-tools.py
+    - run: black .
+    - run: ruff openandroidinstaller/ --ignore E501
+    - run: PYTHONPATH=openandroidinstaller:$(PYTHONPATH) pytest --cov=openandroidinstaller tests/
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - run: pip install -r requirements.txt
+    - run: python scripts/download-tools.py
+    - run: python scripts/build.py
+    - uses: actions/upload-artifact@v3
+      with:
+        name: openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}
+        path: dist/
