@@ -18,6 +18,7 @@ from flet import (
     ElevatedButton,
     Row,
     Text,
+    Markdown,
 )
 
 from views import BaseView
@@ -36,10 +37,24 @@ class SuccessView(BaseView):
             logger.success("Success! Close the window.")
             self.page.window_close()
 
-        self.right_view.controls = [
+        # right view header
+        self.right_view_header.controls = [
             get_title("Installation completed successfully!"),
-            self.state.progressbar,
-            Text("Now your devices boots into the new OS. Have fun with it!"),
+        ]
+        # right view main part
+        contribute_link = "https://github.com/openandroidinstaller-dev/openandroidinstaller#contributing"
+        self.right_view.controls = [
+            Text("Now your devices boots into the new OS. Have fun with it!", style="titleSmall"),
+            Markdown(
+f"""
+If you liked the tool, help spread the word and **share it with people** who might want to use it.
+
+Also, you can consider contributing to make it better. There are a lot of different ways how you can help!
+
+[How to contribute]({contribute_link})
+""",
+                on_tap_link=lambda e: self.page.launch_url(e.data),
+            ),
             Row(
                 [
                     ElevatedButton(

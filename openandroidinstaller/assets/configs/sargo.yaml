@@ -32,8 +32,9 @@ steps:
         Make sure your device is turned on. You need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
-      content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
+      content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once your phone screen looks like the picture on the left, continue.
       command: fastboot_flash_recovery
+      img: twrp-start.jpeg
   install_os:
     - type: call_button 
       content: >

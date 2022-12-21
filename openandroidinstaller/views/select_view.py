@@ -21,6 +21,8 @@ from flet import (
     Column,
     Divider,
     ElevatedButton,
+    OutlinedButton,
+    FilledButton,
     Markdown,
     Row,
     Text,
@@ -36,10 +38,7 @@ from flet.buttons import CountinuosRectangleBorder
 from views import BaseView
 from app_state import AppState
 from widgets import get_title, confirm_button
-from utils import (
-    get_download_link,
-    image_recovery_works_with_device,
-)
+from utils import get_download_link, image_works_with_device, recovery_works_with_device
 
 
 class SelectFilesView(BaseView):
@@ -57,29 +56,29 @@ class SelectFilesView(BaseView):
             modal=True,
             title=Text("What is an OS image and recovery and why do I need it?"),
             content=Markdown(
-                """
-## OS image or ROM
-An operating system (OS) is system software that manages computer hardware, software resources, and provides common services for computer programs. 
+                """## OS image or ROM
+An operating system (OS) is system software that manages computer hardware,
+software resources, and provides common services for computer programs. 
 Popular, custom operating systems for mobile devices based on Android are 
 - [LineageOS](https://lineageos.org/)
 - [/e/OS](https://e.foundation/e-os/) or
 - [LineageOS for microG](https://lineage.microg.org/)
 - and many others.
 
-Often, the related OS images are called 'ROM'. 'ROM' stands for *R*ead-*o*nly *m*emory, which is a type of non-volatile memory used in computers
-for storing software that is rarely changed during the life of the system, also known as firmware.
+Often, the related OS images are called 'ROM'. 'ROM' stands for *R*ead-*o*nly *m*emory,
+which is a type of non-volatile memory used in computers for storing software that is
+rarely changed during the life of the system, also known as firmware.
 
-# Recovery Image
+## Recovery Image
 A custom recovery is used for installing custom software on your device.
 This custom software can include smaller modifications like rooting your device or even
-replacing the firmware of the device with a completely custom ROM. .
+replacing the firmware of the device with a completely custom ROM.
 
-OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about/).
-""",
+OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about/).""",
                 on_tap_link=lambda e: self.page.launch_url(e.data),
             ),
             actions=[
-                TextButton("Close", on_click=self.close_developer_options_dlg),
+                TextButton("Close", on_click=self.close_close_explain_images_dlg),
             ],
             actions_alignment="end",
             shape=CountinuosRectangleBorder(radius=0),
@@ -104,22 +103,23 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         # attach hidden dialogues
         self.right_view.controls.append(self.pick_image_dialog)
         self.right_view.controls.append(self.pick_recovery_dialog)
-        # add title and progressbar
-        self.right_view.controls.append(
-            get_title("Now pick an OS image and a recovery file:")
+
+        # create help/info button to show the help dialog
+        info_button = OutlinedButton(
+            "What is this?",
+            on_click=self.open_explain_images_dlg,
+            expand=True,
+            icon=icons.HELP_OUTLINE_OUTLINED,
+            icon_color=colors.DEEP_ORANGE_500,
+            tooltip="Get more details on custom operating system images and recoveries.",
         )
-        self.right_view.controls.append(self.state.progressbar)
-        # button to show the explainaition dialoge
-        self.right_view.controls.append(
-            Row(
-                [
-                    ElevatedButton(
-                        "What is an OS image and a recovery file?",
-                        on_click=self.open_explain_images_dlg,
-                        expand=True,
-                        tooltip="Get some details about those files and why you need them.",
-                    )
-                ]
+
+        # add title
+        self.right_view_header.controls.append(
+            get_title(
+                "Now pick an OS image and a recovery file:",
+                info_button=info_button,
+                step_indicator_img="steps-header-select.png",
             )
         )
 
@@ -154,12 +154,6 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                                 ),
                             ]
                         ),
-                        Markdown(
-                            f"""
-The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip` 
-and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`. Note that this tool only supports TWRP recoveries for now.
-"""
-                        ),
                         Divider(),
                     ]
                 )
@@ -167,13 +161,15 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
         # attach the controls for uploading image and recovery
         self.right_view.controls.extend(
             [
-                Text(
-                    "Now select the operating system image and recovery (note, that only TWRP recoveries are supported):"
+                Text("Select an OS image:", style="titleSmall"),
+                Markdown(
+                    f"""
+The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
                 ),
                 Row(
                     [
-                        ElevatedButton(
-                            "Pick image file",
+                        FilledButton(
+                            "Pick OS image",
                             icon=icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_image_dialog.pick_files(
                                 allow_multiple=False,
@@ -185,10 +181,19 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
                     ]
                 ),
                 self.selected_image,
+                Divider(),
+                Text("Select a TWRP recovery image:", style="titleSmall"),
+                Markdown(
+                    f"""
+The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`.
+
+**Note:** This tool **only supports TWRP recoveries**.""",
+                    extension_set="gitHubFlavored",
+                ),
                 Row(
                     [
-                        ElevatedButton(
-                            "Pick recovery file",
+                        FilledButton(
+                            "Pick TWRP recovery file",
                             icon=icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_recovery_dialog.pick_files(
                                 allow_multiple=False,
@@ -201,9 +206,6 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
                 ),
                 self.selected_recovery,
                 Divider(),
-                Text(
-                    "If you selected both files and they work for your device you can continue."
-                ),
                 self.info_field,
                 Row([self.confirm_button]),
             ]
@@ -216,13 +218,14 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
         self.dlg_explain_images.open = True
         self.page.update()
 
-    def close_developer_options_dlg(self, e):
+    def close_close_explain_images_dlg(self, e):
         """Close the dialog to explain OS and recovery image."""
         self.dlg_explain_images.open = False
         self.page.update()
 
     def pick_image_result(self, e: FilePickerResultEvent):
         path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        # update the textfield with the name of the file
         self.selected_image.value = (
             self.selected_image.value.split(":")[0] + f": {path}"
         )
@@ -232,10 +235,21 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
             logger.info(f"Selected image from {self.image_path}")
         else:
             logger.info("No image selected.")
+        # check if the image works with the device and show the filename in different colors accordingly
+        if e.files:
+            device_code = self.state.config.metadata.get("devicecode")
+            if image_works_with_device(
+                device_code=device_code, image_path=self.state.image_path
+            ):
+                self.selected_image.color = colors.GREEN
+            else:
+                self.selected_image.color = colors.RED
+        # update
         self.selected_image.update()
 
     def pick_recovery_result(self, e: FilePickerResultEvent):
         path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        # update the textfield with the name of the file
         self.selected_recovery.value = (
             self.selected_recovery.value.split(":")[0] + f": {path}"
         )
@@ -245,6 +259,16 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
             logger.info(f"Selected recovery from {self.recovery_path}")
         else:
             logger.info("No image selected.")
+        # check if the recovery works with the device and show the filename in different colors accordingly
+        if e.files:
+            device_code = self.state.config.metadata.get("devicecode")
+            if recovery_works_with_device(
+                device_code=device_code, recovery_path=self.state.recovery_path
+            ):
+                self.selected_recovery.color = colors.GREEN
+            else:
+                self.selected_recovery.color = colors.RED
+        # update
         self.selected_recovery.update()
 
     def enable_button_if_ready(self, e):
@@ -252,10 +276,14 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
         if (".zip" in self.selected_image.value) and (
             ".img" in self.selected_recovery.value
         ):
-            if not image_recovery_works_with_device(
-                device_code=self.state.config.metadata.get("devicecode"),
-                image_path=self.state.image_path,
-                recovery_path=self.state.recovery_path,
+            device_code = self.state.config.metadata.get("devicecode")
+            if not (
+                image_works_with_device(
+                    device_code=device_code, image_path=self.state.image_path
+                )
+                and recovery_works_with_device(
+                    device_code=device_code, recovery_path=self.state.recovery_path
+                )
             ):
                 # if image and recovery work for device allow to move on, otherwise display message
                 logger.error(
@@ -265,8 +293,10 @@ and the recovery like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecod
                     Text(
                         "Image and/or recovery don't work with the device. Make sure you use a TWRP-based recovery.",
                         color=colors.RED,
+                        weight="bold",
                     )
                 ]
+                self.confirm_button.disabled = True
                 self.right_view.update()
                 return
             logger.info("Image and recovery work with the device. You can continue.")

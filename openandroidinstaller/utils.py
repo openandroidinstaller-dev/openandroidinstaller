@@ -39,13 +39,8 @@ def get_download_link(devicecode: str) -> Optional[str]:
         return
 
 
-def image_recovery_works_with_device(
-    device_code: str, image_path: str, recovery_path: str
-) -> bool:
-    """Determine if an image and recovery works for the given device.
-
-    BEWARE: THE RECOVERY PART IS STILL VERY BASIC!
-    """
+def image_works_with_device(device_code: str, image_path: str) -> bool:
+    """Determine if an image works for the given device."""
     with zipfile.ZipFile(image_path) as image_zip:
         with image_zip.open(
             "META-INF/com/android/metadata", mode="r"
@@ -54,17 +49,25 @@ def image_recovery_works_with_device(
             supported_devices = str(metadata[-1]).split("=")[-1][:-3].split(",")
             logger.info(f"Image works with device: {supported_devices}")
 
-            recovery_file_name = recovery_path.split("/")[-1]
-            if (
-                (device_code in supported_devices)
-                and (device_code in recovery_file_name)
-                and ("twrp" in recovery_file_name)
-            ):
-                logger.success("Device supported by the image and recovery.")
+            if device_code in supported_devices:
+                logger.success("Device supported by the selected image.")
                 return True
             else:
                 logger.error(
-                    f"Recovery {recovery_file_name} and/or image {image_path.split('/')[-1]} are not supported or don't match."
+                    f"Image file {image_path.split('/')[-1]} is not supported."
                 )
+                return False
 
-    return False
+
+def recovery_works_with_device(device_code: str, recovery_path: str) -> bool:
+    """Determine if a recovery works for the given device.
+
+    BEWARE: THE RECOVERY PART IS STILL VERY BASIC!
+    """
+    recovery_file_name = recovery_path.split("/")[-1]
+    if (device_code in recovery_file_name) and ("twrp" in recovery_file_name):
+        logger.success("Device supported by the selected recovery.")
+        return True
+    else:
+        logger.error(f"Recovery file {recovery_file_name} is not supported.")
+        return False
