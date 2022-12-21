@@ -48,6 +48,4 @@ jobs:
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: |
-          openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}
-          openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}.zip
+        files: openandroidinstaller
