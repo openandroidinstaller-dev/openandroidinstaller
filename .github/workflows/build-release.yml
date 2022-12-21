@@ -44,7 +44,6 @@ jobs:
       with:
         name: openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}
         path: dist/
-    - run: mv dist/openandroidinstaller openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
