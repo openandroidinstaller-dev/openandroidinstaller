@@ -28,7 +28,6 @@ from flet import (
     Icon,
     Image,
     Page,
-    ProgressBar,
     Text,
     TextButton,
     UserControl,

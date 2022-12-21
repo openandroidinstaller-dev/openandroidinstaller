@@ -44,9 +44,12 @@ class SuccessView(BaseView):
         # right view main part
         contribute_link = "https://github.com/openandroidinstaller-dev/openandroidinstaller#contributing"
         self.right_view.controls = [
-            Text("Now your devices boots into the new OS. Have fun with it!", style="titleSmall"),
+            Text(
+                "Now your devices boots into the new OS. Have fun with it!",
+                style="titleSmall",
+            ),
             Markdown(
-f"""
+                f"""
 If you liked the tool, help spread the word and **share it with people** who might want to use it.
 
 Also, you can consider contributing to make it better. There are a lot of different ways how you can help!

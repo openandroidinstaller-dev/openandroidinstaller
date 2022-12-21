@@ -30,7 +30,6 @@ from flet import (
     Switch,
     alignment,
     colors,
-    ProgressBar,
 )
 
 from views import BaseView

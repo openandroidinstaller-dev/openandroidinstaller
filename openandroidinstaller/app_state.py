@@ -15,7 +15,6 @@
 
 from pathlib import Path
 
-from flet import ProgressBar
 from installer_config import _load_config
 
 

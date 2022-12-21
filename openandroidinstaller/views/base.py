@@ -43,6 +43,10 @@ class BaseView(UserControl):
         )
         # main view row
         self.view = Row(
-            [self.left_view, VerticalDivider(), Column(expand=True, controls=[self.right_view_header, self.right_view])],
+            [
+                self.left_view,
+                VerticalDivider(),
+                Column(expand=True, controls=[self.right_view_header, self.right_view]),
+            ],
             alignment="spaceEvenly",
         )
