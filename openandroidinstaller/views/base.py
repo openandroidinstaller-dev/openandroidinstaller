@@ -28,17 +28,25 @@ class BaseView(UserControl):
     def __init__(self, state: AppState, image: str = "placeholder.png"):
         super().__init__()
         self.state = state
+
+        # configs
+        column_width = 600
         # right part of the display, add content here.
-        self.right_view = Column(expand=True)
+        self.right_view_header = Column(width=column_width, height=100, spacing=30)
+        self.right_view = Column(alignment="center", width=column_width, height=650)
         # left part of the display: used for displaying the images
         self.left_view = Column(
-            width=600,
-            controls=[Image(src=f"/assets/imgs/{image}")],
+            width=column_width,
+            controls=[Image(src=f"/assets/imgs/{image}", height=600)],
             expand=True,
             horizontal_alignment="center",
         )
         # main view row
         self.view = Row(
-            [self.left_view, VerticalDivider(), self.right_view],
+            [
+                self.left_view,
+                VerticalDivider(),
+                Column(expand=True, controls=[self.right_view_header, self.right_view]),
+            ],
             alignment="spaceEvenly",
         )

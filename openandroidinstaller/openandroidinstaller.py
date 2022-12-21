@@ -25,11 +25,9 @@ from flet import (
     Column,
     Container,
     ElevatedButton,
-    FloatingActionButton,
     Icon,
     Image,
     Page,
-    ProgressBar,
     Text,
     TextButton,
     UserControl,
@@ -39,7 +37,14 @@ from flet import (
 from loguru import logger
 
 from app_state import AppState
-from views import SelectFilesView, StepView, SuccessView, StartView, RequirementsView
+from views import (
+    SelectFilesView,
+    StepView,
+    SuccessView,
+    StartView,
+    RequirementsView,
+    WelcomeView,
+)
 from tooling import run_command
 
 # where to write the logs
@@ -65,10 +70,6 @@ class MainView(UserControl):
             platform=PLATFORM,
             config_path=CONFIG_PATH,
             bin_path=BIN_PATH,
-            progressbar=ProgressBar(
-                width=600, color="#00d886", bgcolor="#eeeeee", bar_height=16
-            ),
-            num_steps=2,
             test=DEVELOPMENT,
             test_config=DEVELOPMENT_CONFIG,
         )
@@ -76,7 +77,11 @@ class MainView(UserControl):
         self.view = Column(expand=True, width=1200)
 
         # create default starter views
-        welcome_view = StartView(
+        welcome_view = WelcomeView(
+            on_confirm=self.confirm,
+            state=self.state,
+        )
+        start_view = StartView(
             on_confirm=self.confirm,
             state=self.state,
         )
@@ -89,7 +94,12 @@ class MainView(UserControl):
             state=self.state,
         )
         # ordered to allow for pop
-        self.default_views = [select_files_view, requirements_view, welcome_view]
+        self.default_views = [
+            select_files_view,
+            requirements_view,
+            start_view,
+            welcome_view,
+        ]
         # create the final success view
         self.final_view = SuccessView(state=self.state)
 
@@ -104,9 +114,6 @@ class MainView(UserControl):
         """Confirmation event handler to use in views."""
         # remove all elements from column view
         self.view.controls = []
-        # if a config is loaded, display a progress bar
-        if self.state.config:
-            self.state.increment_progressbar()
         # if there are default views left, display them first
         if self.default_views:
             self.view.controls.append(self.default_views.pop())
@@ -145,8 +152,8 @@ def main(page: Page):
     logger.info(100 * "-")
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
-    page.window_height = 820
-    page.window_width = int(1.77 * page.window_height)
+    page.window_height = 900
+    page.window_width = int(1.5 * page.window_height)
     page.window_top = 100
     page.window_left = 120
     page.scroll = "adaptive"
@@ -200,19 +207,19 @@ def main(page: Page):
     app = MainView()
 
     # add a button that restarts the process
-    def restart_process(e):
-        logger.info("Restarted the process. Reset everything.")
-        page.controls.pop()
-        app = MainView()
-        page.add(app)
-        page.update()
+    # def restart_process(e):
+    #    logger.info("Restarted the process. Reset everything.")
+    #    page.controls.pop()
+    #    app = MainView()
+    #    page.add(app)
+    #    page.update()
 
-    page.floating_action_button = FloatingActionButton(
-        text="Restart the process",
-        icon=icons.RESTART_ALT_OUTLINED,
-        tooltip="You can safely restart if you missed a step or didn't make it.",
-        on_click=restart_process,
-    )
+    # page.floating_action_button = FloatingActionButton(
+    #    text="Restart the process",
+    #    icon=icons.RESTART_ALT_OUTLINED,
+    #    tooltip="You can safely restart if you missed a step or didn't make it.",
+    #    on_click=restart_process,
+    # )
 
     # add application's root control to the page
     page.add(app)

@@ -30,7 +30,6 @@ from flet import (
     Switch,
     alignment,
     colors,
-    ProgressBar,
 )
 
 from views import BaseView
@@ -101,9 +100,18 @@ class StepView(BaseView):
         self.terminal_box = TerminalBox(expand=True)
 
         # main controls
+        steps_indictor_img_lookup = {
+            "Unlock the bootloader": "steps-header-unlock.png",
+            "Flash custom recovery": "steps-header-recovery.png",
+            "Install OS": "steps-header-install.png",
+        }
+        self.right_view_header.controls = [
+            get_title(
+                f"{self.step.title}",
+                step_indicator_img=steps_indictor_img_lookup.get(self.step.title),
+            )
+        ]
         self.right_view.controls = [
-            get_title(f"{self.step.title}"),
-            self.state.progressbar,
             Text(f"{self.step.content}"),
         ]
         # basic view depending on step.type
@@ -183,12 +191,6 @@ class StepView(BaseView):
         # reset terminal output
         if self.state.advanced:
             self.terminal_box.clear()
-        # display a progress bar to show something is happening
-        progress_bar = Row(
-            [ProgressBar(width=600, color="#00d886", bgcolor="#eeeeee", bar_height=16)],
-            alignment="center",
-        )
-        self.right_view.controls.append(progress_bar)
         self.right_view.update()
 
         # get the appropriate function to run for every possible command.
@@ -235,15 +237,11 @@ class StepView(BaseView):
         if not success:
             # enable call button to retry
             self.call_button.disabled = False
-            # pop the progress bar
-            self.right_view.controls.remove(progress_bar)
             # also remove the last error text if it happened
             self.error_text.value = f"Command {command} failed! Try again or make sure everything is setup correctly."
         else:
             sleep(5)  # wait to make sure everything is fine
             logger.success(f"Command {command} run successfully. Allow to continue.")
-            # pop the progress bar
-            self.right_view.controls.remove(progress_bar)
             # emable the confirm buton and disable the call button
             self.confirm_button.disabled = False
             self.call_button.disabled = True

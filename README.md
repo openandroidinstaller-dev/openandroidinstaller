@@ -33,6 +33,22 @@ This also includes your DRM keys, which are stored in the Trim Area partition (a
 Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
 If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
 
+
+## Usage
+
+Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
+
+1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
+    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
+2. Download the custom ROM image and the TWRP recovery image for your device. A source for files can be found on
+    - [LineageOS](https://wiki.lineageos.org/devices/)
+    - [TWRP recovery](https://twrp.me/Devices/)
+    - [/e/OS](https://doc.e.foundation/devices)
+    - [LineageOS for microg](https://download.lineage.microg.org/)
+    - or you can just search the web for an appropriate version for your device.
+3. Start the desktop app and follow the instructions.
+
+
 ## Officially supported devices
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
@@ -52,6 +68,11 @@ Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin/) | redfin
 Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet/) | barbet | tested
 Sony | Xperia Z | [yuga](https://wiki.lineageos.org/devices/yuga/) | C6603 | tested
 Sony | Xperia Z3 | [z3](https://wiki.lineageos.org/devices/z3/) | | tested
+Sony | Xperia 10 | [kirin](https://wiki.lineageos.org/devices/kirin/) | | tested
+Sony | Xperia 10 Plus | [mermaid](https://wiki.lineageos.org/devices/mermaid/) | | tested
+Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer/) | | tested
+Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari/) | | tested
+Sony | Xperia XZ3 | [akatsuki](https://wiki.lineageos.org/devices/akatsuki/) | | tested
 Sony | Xperia ZX | kagura | | planned
 Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2/) | | tested
 Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3/) | | tested
@@ -65,16 +86,6 @@ OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb/) | | tested
 OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog/) | | tested
 OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre/) | | tested
 OnePlus | 9 | lemonade | | under development
-
-
-## Usage
-
-Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
-
-1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
-    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
-2. Download the lineageOS image and the custom recovery image. A source for files can be found on https://wiki.lineageos.org/devices/ or you can just search the web for an appropriate version for your device.
-3. Start the desktop app and follow the instructions.
 
 
 ## Run OpenAndroidInstaller for development

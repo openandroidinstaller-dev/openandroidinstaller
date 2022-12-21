@@ -22,6 +22,7 @@ from flet import (
     Column,
     Divider,
     ElevatedButton,
+    OutlinedButton,
     FilledButton,
     Markdown,
     Row,
@@ -30,6 +31,7 @@ from flet import (
     colors,
     icons,
 )
+from flet.buttons import CountinuosRectangleBorder
 
 from views import BaseView
 from app_state import AppState
@@ -61,9 +63,12 @@ class StartView(BaseView):
             title=Text("How to enable developer options and OEM unlocking"),
             content=Markdown(
                 """
-To do this, tap seven times on the build number in the 'System'- or 'About the phone'-Menu in Settings. You can also use the phones own search to look for `build number`. 
-Then go back to the main menu and look for 'developer options'. You can also search for it in your phone.
-When you are in developer options, toggle OEM unlocking and USB-Debugging. If your phone is already connected to your PC, a pop-up might appear. Allow USB debugging in the pop-up on your phone.
+To do this, 
+- **tap seven times on the build number** in the 'System'- or 'About the phone'-Menu in Settings. You can also use the phones own search to look for `build number`. 
+- Then go back to the main menu and look for **'developer options'**. You can also search for it in your phone.
+- When you are in developer options, **toggle OEM unlocking and USB-Debugging**.
+- If your phone is already connected to your PC, a pop-up might appear. **Allow USB debugging in the pop-up on your phone.**
+
 Now you are ready to continue.
 """
             ),
@@ -71,7 +76,9 @@ Now you are ready to continue.
                 TextButton("Close", on_click=self.close_developer_options_dlg),
             ],
             actions_alignment="end",
+            shape=CountinuosRectangleBorder(radius=0),
         )
+
         # toggleswitch to allow skipping unlocking the bootloader
         def check_bootloader_unlocked(e):
             """Enable skipping unlocking the bootloader if selected."""
@@ -103,24 +110,16 @@ Now you are ready to continue.
         )
 
         # build up the main view
+        self.right_view_header.controls.extend(
+            [
+                get_title(
+                    "Get the phone ready",
+                    step_indicator_img="steps-header-get-ready.png",
+                )
+            ]
+        )
         self.right_view.controls.extend(
             [
-                get_title("Welcome to the OpenAndroidInstaller!"),
-                Text(
-                    "We will walk you through the installation process nice and easy."
-                ),
-                Divider(),
-                Markdown(
-                    """
-Before you continue, make sure
-- your devices is on the latest system update.
-- you have a backup of all your important data, since this procedure will **erase all data from the phone**.
-- to not store the backup not the phone! 
-
-Please note, that vendor specific back-ups will most likely not work on LineageOS!
-                """
-                ),
-                Divider(),
                 Markdown(
                     """
 To get started you need to 
@@ -130,10 +129,12 @@ To get started you need to
                 ),
                 Row(
                     [
-                        ElevatedButton(
+                        OutlinedButton(
                             "How do I enable developer options?",
                             on_click=self.open_developer_options_dlg,
                             expand=True,
+                            icon=icons.HELP_OUTLINE_OUTLINED,
+                            icon_color=colors.DEEP_ORANGE_500,
                             tooltip="Get help to enable developer options and OEM unlocking.",
                         )
                     ]
@@ -158,7 +159,7 @@ When everything works correctly you should see your device name here and you can
                 Row(
                     [
                         FilledButton(
-                            "Search device",
+                            "Search for device",
                             on_click=self.search_devices,
                             icon=icons.PHONE_ANDROID,
                             expand=True,

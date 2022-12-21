@@ -15,7 +15,6 @@
 
 from pathlib import Path
 
-from flet import ProgressBar
 from installer_config import _load_config
 
 
@@ -27,21 +26,14 @@ class AppState:
         platform: str,
         config_path: Path,
         bin_path: Path,
-        progressbar: ProgressBar,
-        num_steps: int,
         test: bool = False,
         test_config: str = None,
     ):
         self.platform = platform
         self.config_path = config_path
         self.bin_path = bin_path
-        self.progressbar = progressbar
-        self.num_steps = num_steps  # keep track of the steps already taken
         self.test = test
         self.test_config = test_config
-
-        # initialize the progress bar at 0
-        self.progressbar.value = 0
 
         # placeholders
         self.advanced = False
@@ -61,11 +53,3 @@ class AppState:
                 + self.config.flash_recovery
                 + self.config.install_os
             )
-            self.num_total_steps = len(self.steps)
-
-    def increment_progressbar(self):
-        """Increment the progressbar and step counter."""
-        self.progressbar.value = (self.num_steps - 1) / (
-            self.num_total_steps + 3
-        )  # don't show on the first step
-        self.num_steps += 1  # increase the step counter

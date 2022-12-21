@@ -1,4 +1,5 @@
 from .base import BaseView  # noqa
+from .welcome_view import WelcomeView  # noqa
 from .start_view import StartView  # noqa
 from .requirements_view import RequirementsView  # noqa
 from .select_view import SelectFilesView  # noqa
