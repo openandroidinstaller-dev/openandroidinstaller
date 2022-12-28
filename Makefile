@@ -8,16 +8,20 @@ install:
 export:
 	poetry export -f requirements.txt --output requirements.txt
 
+format:
+	poetry run black .
+
 lint:
 	poetry run ruff openandroidinstaller/ --ignore E501
 
-test:
-	poetry run black .
-	poetry run ruff openandroidinstaller/ --ignore E501
+test: format lint
 	PYTHONPATH=openandroidinstaller:$(PYTHONPATH) poetry run pytest --cov=openandroidinstaller tests/
 
 app:
 	poetry run python openandroidinstaller/openandroidinstaller.py
+
+test-app:
+	poetry run python openandroidinstaller/openandroidinstaller.py --test --test_config sargo
 
 build-app:
 	poetry run python scripts/build.py
