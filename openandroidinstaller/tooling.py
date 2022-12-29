@@ -305,7 +305,10 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
     logger.info(f"Search devices on {platform} with {bin_path}...")
     # map some detected device codes to their real code.
     device_code_mapping = {
+        # Sony issues
         "C6603": "yuga",
+        # OnePlus issues
+        "OnePlus7": "guacamoleb",
     }
     try:
         # read device properties
