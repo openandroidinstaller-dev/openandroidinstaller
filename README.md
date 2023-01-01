@@ -51,7 +51,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). W
 
 ## Officially supported devices
 
-Currently, the **we support 40 devices** by various vendors and working on adding more soon!
+Currently, the **we support 41 devices** by various vendors and working on adding more soon!
 
 
 <details><summary><b>Samsung</b></summary>
@@ -128,6 +128,7 @@ OnePlus | 7 | [guacamoleb](https://wiki.lineageos.org/devices/guacamoleb/) | | t
 OnePlus | 7 Pro | [guacamole](https://wiki.lineageos.org/devices/guacamole/) | | tested
 OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb/) | | tested
 OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog/) | | tested
+OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii/) | | tested
 OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre/) | | tested
 OnePlus | 9 | lemonade | | under development
 </details>

@@ -3,7 +3,7 @@ metadata:
   devicename: Google Pixel 4 XL
   devicecode: coral
 requirements:
-  android: 13.0
+  android: 13
 steps:
   unlock_bootloader:
     - type: confirm_button
