@@ -51,7 +51,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). W
 
 ## Officially supported devices
 
-Currently, the **we support 32 devices** by various vendors and working on adding more soon!
+Currently, the **we support 34 devices** by various vendors and working on adding more soon!
 
 
 <details><summary><b>Samsung</b></summary>
@@ -67,6 +67,7 @@ Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte/) | |
 Samsung | Galaxy Note 9 | [crownlte](https://wiki.lineageos.org/devices/crownlte/) | | tested
 Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte/) | | tested
 Samsung | Galaxy Note 10 | [d1](https://wiki.lineageos.org/devices/d1/) | | tested
+Samsung | Galaxy Note 3 LTE | [hltetmo](https://wiki.lineageos.org/devices/hltetmo/) | N900T/V/W8 | tested
 </details>
 
 <details><summary><b>Google</b></summary>
