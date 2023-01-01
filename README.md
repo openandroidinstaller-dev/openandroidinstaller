@@ -51,7 +51,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). W
 
 ## Officially supported devices
 
-Currently, the **we support 34 devices** by various vendors and working on adding more soon!
+Currently, the **we support 40 devices** by various vendors and working on adding more soon!
 
 
 <details><summary><b>Samsung</b></summary>
@@ -74,8 +74,14 @@ Samsung | Galaxy Note 3 LTE | [hltetmo](https://wiki.lineageos.org/devices/hltet
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
+Google | Pixel 2 | [walleye](https://wiki.lineageos.org/devices/walleye/) | walleye | tested
+Google | Pixel 2 XL | [taimen](https://wiki.lineageos.org/devices/taimen/) | taimen | tested
+Google | Pixel 3 | [blueline](https://wiki.lineageos.org/devices/blueline/) | blueline | tested
+Google | Pixel 3 XL | [crosshatch](https://wiki.lineageos.org/devices/crosshatch/) | crosshatch | tested
 Google | Pixel 3a | [sargo](https://wiki.lineageos.org/devices/sargo/) | sargo | tested
+Google | Pixel 3a XL | [bonito](https://wiki.lineageos.org/devices/bonito/) | bonito | tested
 Google | Pixel 4 | [flame](https://wiki.lineageos.org/devices/flame/) | flame | tested 
+Google | Pixel 4 XL | [coral](https://wiki.lineageos.org/devices/coral/) | coral | tested 
 Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish/) | sunfish | tested 
 Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin/) | redfin | tested
 Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet/) | barbet | tested

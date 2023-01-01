@@ -1,7 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Pixel 4
-  devicecode: flame 
+  devicename: Google Pixel 4 XL
+  devicecode: coral
 requirements:
   android: 13.0
 steps:
