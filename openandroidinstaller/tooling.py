@@ -308,7 +308,14 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
         # Sony issues
         "C6603": "yuga",
         # OnePlus issues
+        "OnePlus6": "enchilada",
+        "OnePlus6T": "fajita",
         "OnePlus7": "guacamoleb",
+        "OnePlus7Pro": "guacamole",
+        "OnePlus7T": "hotdogb",
+        "OnePlus7TPro": "hotdog",
+        "Nord": "avicii",
+        "NordN200": "dre",
     }
     try:
         # read device properties
