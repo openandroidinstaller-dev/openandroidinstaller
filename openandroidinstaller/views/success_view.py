@@ -13,6 +13,7 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import webbrowser
 from loguru import logger
 from flet import (
     ElevatedButton,
@@ -35,6 +36,10 @@ class SuccessView(BaseView):
     ):
         def close_window(e):
             logger.success("Success! Close the window.")
+            # open the feedback page
+            feedback_url = "https://openandroidinstaller.org/feedback.html"
+            webbrowser.open(feedback_url)
+            # close the window
             self.page.window_close()
 
         # right view header
