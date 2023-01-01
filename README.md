@@ -100,6 +100,7 @@ Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2/) | | tested
 Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3/) | | tested
+Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4/) | | tested
 </details>
 
 <details><summary><b>Motorola</b></summary>
