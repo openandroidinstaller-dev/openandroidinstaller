@@ -40,12 +40,16 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). W
 
 1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
     - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
-2. Download the custom ROM image and the TWRP recovery image for your device. A source for files can be found on
+2. Download the custom ROM image and the TWRP recovery image for your device. A source for files can be found on the following websites:
+  - some custom ROMs:
     - [LineageOS](https://wiki.lineageos.org/devices/)
-    - [TWRP recovery](https://twrp.me/Devices/)
     - [/e/OS](https://doc.e.foundation/devices)
     - [LineageOS for microg](https://download.lineage.microg.org/)
-    - or you can just search the web for an appropriate version for your device.
+    - [BlissRoms](https://blissroms.org/)
+    - [PixelExperience](https://download.pixelexperience.org/)
+  - TWRP Recovery:
+    - [TWRP recovery](https://twrp.me/Devices/)
+  - or you can just search the web or the [xda-developers forum](https://forum.xda-developers.com) for an appropriate version for your device.
 3. Start the desktop app and follow the instructions.
 
 
@@ -53,6 +57,9 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). W
 
 Currently, the **we support 41 devices** by various vendors and working on adding more soon!
 
+
+Support for these devices is provided as best effort, but things might still go wrong.
+Help to improve the tool by reporting any issues you might face.
 
 <details><summary><b>Samsung</b></summary>
 
