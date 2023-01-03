@@ -1,15 +1,16 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Pixel 4
-  devicecode: flame 
-requirements:
-  android: 13
+  devicename: Fairphone 4
+  devicecode: FP4
 steps:
   unlock_bootloader:
-    - type: confirm_button
+    - type: link_button_with_confirm
       content: >
         As a first step, you need to unlock the bootloader. A bootloader is the piece of software, that tells your phone
         how to start and run an operating system (like Android). Your device should be turned on.
+        Click on the button to open the instructions on the Fairphone Support official unlocking website to generate an unlock code for your device.
+        Once you've done that, continue.
+      link: https://support.fairphone.com/hc/en-us/articles/4405858258961-FP4-Manage-the-bootloader
     - type: call_button
       content: Press 'Confirm and run' to reboot into the bootloader.
       command: adb_reboot_bootloader
@@ -22,8 +23,7 @@ steps:
       command: fastboot_unlock
     - type: confirm_button
       content: >
-        At this point the device may display on-screen prompts which will require interaction to continue the process of unlocking the bootloader.
-        Please take whatever actions the device asks you to to proceed.
+        Follow the instructions on the Fairphone screen. This command will wipe all the personal data on your phone.
     - type: call_button
       content: To finish the unlocking, the phone needs to reboot. Just press 'Confirm and run' here to reboot. Then continue.
       command: fastboot_reboot
@@ -32,21 +32,23 @@ steps:
   flash_recovery:
     - type: confirm_button 
       content: >
-        Now you need to flash a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
+        Now you need to flash a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating, 
         adapting and repairing of the operating system.
     - type: call_button
-      content: Once the device is fully booted, you need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
+      content: Turn on your device. Once the device is fully booted, you need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
-    - type: confirm_button
-      content: Select 'Restart bootloader' on your smartphone screen. Then confirm to continue.
     - type: call_button
-      content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
+      content: Once the device is in fastboot mode, flash the custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_flash_recovery
+    - type: confirm_button 
+      content: >
+        Now reboot into recovery to verify the installation. Do not reboot into the existing OS, since it will overwrite the recovery you just installed!
+        With the device powered off, hold 'Volume Up + Power'. Release when boot logo appears.
   install_os:
     - type: call_button 
       content: >
         In the next steps, you finally flash the selected OS image.
         Wait until the TWRP screen appears. Then run the command.
         This step will format your phone and wipe all the data. It will also remove encryption and delete all files stored 
-        in the internal storage. Then the OS image will be installed. Confirm to run. This might take a while. At the end your phone will boot into the new OS.
+        in the internal storage. Then the OS image will be installed. This might take a while. At the end your phone will boot into the new OS.
       command: adb_twrp_wipe_and_install

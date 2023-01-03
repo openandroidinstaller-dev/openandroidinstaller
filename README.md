@@ -40,16 +40,29 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). W
 
 1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
     - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
-2. Download the custom ROM image and the TWRP recovery image for your device. A source for files can be found on
+2. Download the custom ROM image and the TWRP recovery image for your device. A source for files can be found on the following websites:
+  - some custom ROMs:
     - [LineageOS](https://wiki.lineageos.org/devices/)
-    - [TWRP recovery](https://twrp.me/Devices/)
     - [/e/OS](https://doc.e.foundation/devices)
     - [LineageOS for microg](https://download.lineage.microg.org/)
-    - or you can just search the web for an appropriate version for your device.
+    - [BlissRoms](https://blissroms.org/)
+    - [PixelExperience](https://download.pixelexperience.org/)
+  - TWRP Recovery:
+    - [TWRP recovery](https://twrp.me/Devices/)
+  - or you can just search the web or the [xda-developers forum](https://forum.xda-developers.com) for an appropriate version for your device.
 3. Start the desktop app and follow the instructions.
 
 
 ## Officially supported devices
+
+Currently, the **we support 41 devices** by various vendors and working on adding more soon!
+
+
+Support for these devices is provided as best effort, but things might still go wrong.
+Help to improve the tool by reporting any issues you might face.
+
+<details><summary><b>Samsung</b></summary>
+
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Samsung | Galaxy J7 2015 | j7elte | | tested
@@ -61,11 +74,30 @@ Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte/) | |
 Samsung | Galaxy Note 9 | [crownlte](https://wiki.lineageos.org/devices/crownlte/) | | tested
 Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte/) | | tested
 Samsung | Galaxy Note 10 | [d1](https://wiki.lineageos.org/devices/d1/) | | tested
+Samsung | Galaxy Note 3 LTE | [hltetmo](https://wiki.lineageos.org/devices/hltetmo/) | N900T/V/W8 | tested
+</details>
+
+<details><summary><b>Google</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Google | Pixel 2 | [walleye](https://wiki.lineageos.org/devices/walleye/) | walleye | tested
+Google | Pixel 2 XL | [taimen](https://wiki.lineageos.org/devices/taimen/) | taimen | tested
+Google | Pixel 3 | [blueline](https://wiki.lineageos.org/devices/blueline/) | blueline | tested
+Google | Pixel 3 XL | [crosshatch](https://wiki.lineageos.org/devices/crosshatch/) | crosshatch | tested
 Google | Pixel 3a | [sargo](https://wiki.lineageos.org/devices/sargo/) | sargo | tested
+Google | Pixel 3a XL | [bonito](https://wiki.lineageos.org/devices/bonito/) | bonito | tested
 Google | Pixel 4 | [flame](https://wiki.lineageos.org/devices/flame/) | flame | tested 
+Google | Pixel 4 XL | [coral](https://wiki.lineageos.org/devices/coral/) | coral | tested 
 Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish/) | sunfish | tested 
 Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin/) | redfin | tested
 Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet/) | barbet | tested
+</details>
+
+<details><summary><b>Sony</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
 Sony | Xperia Z | [yuga](https://wiki.lineageos.org/devices/yuga/) | C6603 | tested
 Sony | Xperia Z3 | [z3](https://wiki.lineageos.org/devices/z3/) | | tested
 Sony | Xperia 10 | [kirin](https://wiki.lineageos.org/devices/kirin/) | | tested
@@ -74,18 +106,41 @@ Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer/) | | t
 Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari/) | | tested
 Sony | Xperia XZ3 | [akatsuki](https://wiki.lineageos.org/devices/akatsuki/) | | tested
 Sony | Xperia ZX | kagura | | planned
+</details>
+
+<details><summary><b>Fairphone</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
 Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2/) | | tested
 Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3/) | | tested
+Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4/) | | tested
+</details>
+
+<details><summary><b>Motorola</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
 Motorola | moto G5 | [cedric](https://wiki.lineageos.org/devices/cedric/) | | tested
-Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean/) | | tested
+Motorola | moto G7 power | [ocean](https://wiki.lineageos.org/devices/ocean/) | | tested
+</details>
+
+<details><summary><b>OnePlus</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
 OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada/) | | tested
 OnePlus | 6T | [fajita](https://wiki.lineageos.org/devices/fajita/) | | tested
 OnePlus | 7 | [guacamoleb](https://wiki.lineageos.org/devices/guacamoleb/) | | tested
 OnePlus | 7 Pro | [guacamole](https://wiki.lineageos.org/devices/guacamole/) | | tested
 OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb/) | | tested
 OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog/) | | tested
+OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii/) | | tested
 OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre/) | | tested
 OnePlus | 9 | lemonade | | under development
+</details>
+
+And more to come!
 
 
 ## Run OpenAndroidInstaller for development
