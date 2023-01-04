@@ -16,6 +16,8 @@
 import os
 import sys
 import webbrowser
+import click
+import functools
 from pathlib import Path
 
 import flet as ft
@@ -50,11 +52,8 @@ from tooling import run_command
 # where to write the logs
 logger.add("openandroidinstaller.log")
 
-# Toggle to True for development purposes
-DEVELOPMENT = False
-DEVELOPMENT_CONFIG = "sargo"  # "a3y17lte"  # "sargo"
 
-
+# detect platform
 PLATFORM = sys.platform
 # Define asset paths
 CONFIG_PATH = (
@@ -64,15 +63,9 @@ BIN_PATH = Path(__file__).parent.joinpath(Path("bin")).resolve()
 
 
 class MainView(UserControl):
-    def __init__(self):
+    def __init__(self, state: AppState):
         super().__init__()
-        self.state = AppState(
-            platform=PLATFORM,
-            config_path=CONFIG_PATH,
-            bin_path=BIN_PATH,
-            test=DEVELOPMENT,
-            test_config=DEVELOPMENT_CONFIG,
-        )
+        self.state = state
         # create the main columns
         self.view = Column(expand=True, width=1200)
 
@@ -132,6 +125,18 @@ class MainView(UserControl):
         self.view.update()
 
 
+def configure(page: Page):
+    """Configure the application."""
+    # Configure the application base page
+    page.title = "OpenAndroidInstaller"
+    page.window_height = 900
+    page.window_width = int(1.5 * page.window_height)
+    page.window_top = 100
+    page.window_left = 120
+    page.scroll = "adaptive"
+    page.horizontal_alignment = "center"
+
+
 def log_version_infos(bin_path):
     """Log the version infos of adb, fastboot and heimdall."""
     # adb
@@ -146,18 +151,13 @@ def log_version_infos(bin_path):
     logger.info(f"Heimdall version: {hdversion[0]}")
 
 
-def main(page: Page):
+def main(page: Page, test: bool = False, test_config: str = "sargo"):
     logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
     log_version_infos(bin_path=BIN_PATH)
     logger.info(100 * "-")
-    # Configure the application base page
-    page.title = "OpenAndroidInstaller"
-    page.window_height = 900
-    page.window_width = int(1.5 * page.window_height)
-    page.window_top = 100
-    page.window_left = 120
-    page.scroll = "adaptive"
-    page.horizontal_alignment = "center"
+
+    # configure the page
+    configure(page)
 
     # header
     page.appbar = AppBar(
@@ -203,26 +203,35 @@ def main(page: Page):
     page.banner.open = True
     page.update()
 
+    # create the State object
+    state = AppState(
+        platform=PLATFORM,
+        config_path=CONFIG_PATH,
+        bin_path=BIN_PATH,
+        test=test,
+        test_config=test_config,
+    )
     # create application instance
-    app = MainView()
-
-    # add a button that restarts the process
-    # def restart_process(e):
-    #    logger.info("Restarted the process. Reset everything.")
-    #    page.controls.pop()
-    #    app = MainView()
-    #    page.add(app)
-    #    page.update()
-
-    # page.floating_action_button = FloatingActionButton(
-    #    text="Restart the process",
-    #    icon=icons.RESTART_ALT_OUTLINED,
-    #    tooltip="You can safely restart if you missed a step or didn't make it.",
-    #    on_click=restart_process,
-    # )
+    app = MainView(state=state)
 
     # add application's root control to the page
     page.add(app)
 
 
-ft.app(target=main, assets_dir="assets")
+@click.command()
+@click.option(
+    "--test", is_flag=True, default=False, help="Start the application in testing mode."
+)
+@click.option(
+    "--test_config", default="sargo", type=str, help="Config to use for testing"
+)
+def startup(test: bool, test_config: str):
+    "Main entrypoint to the app."
+    ft.app(
+        target=functools.partial(main, test=test, test_config=test_config),
+        assets_dir="assets",
+    )
+
+
+if __name__ == "__main__":
+    startup()
