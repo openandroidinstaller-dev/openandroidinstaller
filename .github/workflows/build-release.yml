@@ -13,7 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-20.04', 'ubuntu-latest']
-
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
@@ -24,6 +23,7 @@ jobs:
     - run: black .
     - run: ruff openandroidinstaller/ --ignore E501
     - run: PYTHONPATH=openandroidinstaller:$(PYTHONPATH) pytest --cov=openandroidinstaller tests/
+    
   build:
     needs: ci
     runs-on: ${{ matrix.os }}
@@ -31,7 +31,6 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-20.04', 'ubuntu-latest', 'macos-latest']
-
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
@@ -44,17 +43,10 @@ jobs:
       with:
         name: openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}
         path: dist/
-    - name: Release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: |
-          dist/openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}
-      
+  
   build-windows:
     needs: ci
     runs-on: 'windows-latest'
-
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
@@ -65,11 +57,43 @@ jobs:
     - run: python scripts/build.py
     - uses: actions/upload-artifact@v3
       with:
-        name: openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}.exe
+        name: openandroidinstaller-${{  github.ref_name }}-windows-latest
         path: dist/
-    - name: Release
-      uses: softprops/action-gh-release@v1
+  
+  create-release:
+    needs:
+      - build
+      - build-windows
+    runs-on: 'ubuntu-latest'
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+    - name: Display structure of downloaded files
+      run: ls -R
+    - uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-macos-latest.zip openandroidinstaller-${{ github.ref_name }}-macos-latest
+    - uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-ubuntu-20.04.zip openandroidinstaller-${{ github.ref_name }}-ubuntu-20.04
+    - uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-ubuntu-latest.zip openandroidinstaller-${{ github.ref_name }}-ubuntu-latest
+    - uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-windows-latest.zip openandroidinstaller-${{ github.ref_name }}-windows-latest
+    - name: Display structure of downloaded files
+      run: ls -R
+    - name: Create release
+      uses: marvinpinto/action-automatic-releases@latest
       if: startsWith(github.ref, 'refs/tags/')
       with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        prerelease: false
+        title: Release ${{ github.ref_name }}
         files: |
-          dist/openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}.exe
+          openandroidinstaller-${{ github.ref_name }}-macos-latest.zip
+          openandroidinstaller-${{ github.ref_name }}-ubuntu-20.04.zip
+          openandroidinstaller-${{ github.ref_name }}-ubuntu-latest.zip
+          openandroidinstaller-${{ github.ref_name }}-windows-latest.zip
