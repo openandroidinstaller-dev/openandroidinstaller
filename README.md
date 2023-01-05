@@ -121,8 +121,12 @@ Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4/) | | tes
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
-Motorola | moto G5 | [cedric](https://wiki.lineageos.org/devices/cedric/) | | tested
-Motorola | moto G7 power | [ocean](https://wiki.lineageos.org/devices/ocean/) | | tested
+Motorola | moto g5 | [cedric](https://wiki.lineageos.org/devices/cedric/) | | tested
+Motorola | moto g6 plus | [evert](https://wiki.lineageos.org/devices/evert/) | | tested
+Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean/) | | tested
+Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo/) | | tested
+Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev/) | | tested
+Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer/) | | tested
 </details>
 
 <details><summary><b>OnePlus</b></summary>
