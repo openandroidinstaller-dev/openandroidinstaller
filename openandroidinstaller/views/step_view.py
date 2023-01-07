@@ -17,6 +17,7 @@ from loguru import logger
 from time import sleep
 from typing import Callable
 from functools import partial
+import regex as re
 
 from flet import (
     UserControl,
@@ -29,6 +30,7 @@ from flet import (
     Container,
     Switch,
     alignment,
+    ProgressBar,
     colors,
 )
 
@@ -73,6 +75,9 @@ class StepView(BaseView):
         self.inputtext = TextField(
             hint_text="your unlock code", expand=False
         )  # textfield for the unlock code
+        
+        # placeholder for the flashing progressbar
+        self.progressbar = None
 
     def build(self):
         """Create the content of a view from step."""
@@ -226,6 +231,26 @@ class StepView(BaseView):
         if command in cmd_mapping.keys():
             for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):
                 self.terminal_box.write_line(line)
+                # in case the install command is run, we want to update the progress bar
+                if command == "adb_twrp_wipe_and_install":
+                    # TODO: add and/or update the progressbar here
+                    percentage_done = -1
+                    # get the progress numbers from the output lines
+                    result = re.search(r"\(~(\d{1,3})\%\)|(Total xfer: 1.00x)", line)
+                    if result.group(1):
+                        percentage_done = int(result.group(1))
+                    elif result.group(2):
+                        percentage_done = 100
+                    
+                    # create the progress bar on first occurrence
+                    if percentage_done == 0:
+                        self.progressbar = ProgressBar(width=400, bar_height=8, color="#00d886")
+                        self.right_view.controls.append(self.progressbar)
+                    # update the progress bar
+                    if self.progressbar:
+                        self.progressbar.value = percentage_done / 100
+                        self.right_view.update()
+
         else:
             msg = f"Unknown command type: {command}. Stopping."
             logger.error(msg)
@@ -242,7 +267,7 @@ class StepView(BaseView):
         else:
             sleep(5)  # wait to make sure everything is fine
             logger.success(f"Command {command} run successfully. Allow to continue.")
-            # emable the confirm buton and disable the call button
+            # enable the confirm button and disable the call button
             self.confirm_button.disabled = False
             self.call_button.disabled = True
         self.view.update()
