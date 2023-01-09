@@ -129,6 +129,7 @@ def configure(page: Page):
     """Configure the application."""
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
+    page.theme_mode = "light"
     page.window_height = 900
     page.window_width = int(1.5 * page.window_height)
     page.window_top = 100
