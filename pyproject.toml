@@ -23,6 +23,7 @@ schema = "^0.7.5"
 py7zr = "^0.20.0"
 pytest-cov = "^4.0.0"
 pytest-mock = "^3.10.0"
+bandit = "^1.7.4"
 
 [tool.poetry.dev-dependencies]
 
