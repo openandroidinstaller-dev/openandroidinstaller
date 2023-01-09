@@ -30,13 +30,15 @@ class BaseView(UserControl):
         self.state = state
 
         # configs
-        column_width = 600
+        self.column_width = 600
         # right part of the display, add content here.
-        self.right_view_header = Column(width=column_width, height=100, spacing=30)
-        self.right_view = Column(alignment="center", width=column_width, height=650)
+        self.right_view_header = Column(width=self.column_width, height=100, spacing=30)
+        self.right_view = Column(
+            alignment="center", width=self.column_width, height=650
+        )
         # left part of the display: used for displaying the images
         self.left_view = Column(
-            width=column_width,
+            width=self.column_width,
             controls=[Image(src=f"/assets/imgs/{image}", height=600)],
             expand=True,
             horizontal_alignment="center",
