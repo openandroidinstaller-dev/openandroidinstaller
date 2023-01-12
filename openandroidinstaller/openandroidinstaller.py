@@ -40,6 +40,7 @@ from loguru import logger
 
 from app_state import AppState
 from views import (
+    AddonsView,
     SelectFilesView,
     StepView,
     SuccessView,
@@ -86,8 +87,13 @@ class MainView(UserControl):
             on_confirm=self.confirm,
             state=self.state,
         )
+        addons_view = AddonsView(
+            on_confirm=self.confirm,
+            state=self.state,
+        )
         # ordered to allow for pop
         self.default_views = [
+            addons_view,
             select_files_view,
             requirements_view,
             start_view,

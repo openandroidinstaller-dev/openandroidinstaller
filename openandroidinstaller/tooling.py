@@ -139,7 +139,7 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
     return True
 
 
-def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) -> bool:
+def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path, addons: Optional[List[str]] = None) -> bool:
     """Wipe and format data with twrp, then flash os image with adb.
 
     Only works for twrp recovery.
@@ -154,6 +154,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
         yield False
         return
     sleep(1)
+    
     # wipe some partitions
     for partition in ["cache", "system"]:
         for line in run_command("adb", ["shell", "twrp", "wipe", partition], bin_path):
@@ -163,6 +164,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
             logger.error(f"Wiping {partition} failed.")
             yield False
             return
+    
     # activate sideload
     logger.info("Wiping is done, now activate sideload.")
     for line in run_command("adb", ["shell", "twrp", "sideload"], bin_path):
@@ -171,6 +173,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
         logger.error("Activating sideload failed.")
         yield False
         return
+
     # now flash os image
     sleep(5)
     logger.info("Sideload and install os image.")
@@ -181,6 +184,38 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
         # TODO: this might sometimes think it failed, but actually it's fine. So skip for now.
         # yield False
         # return
+
+    # now install any addons if given
+    if addons:
+        logger.info("Sideload and install addons.")
+        for addon in addons:
+            sleep(5)
+            # activate sideload
+            logger.info("Activate sideload.")
+            for line in run_command("adb", ["shell", "twrp", "sideload"], bin_path):
+                yield line
+            sleep(1)
+            if (type(line) == bool) and not line:
+                logger.error("Activating sideload failed.")
+                # TODO: if this fails, a fix can be to just sideload something and then adb reboot
+                for line in run_command(
+                    "adb",
+                    ["sideload", f"{config_path.parent.joinpath(Path('helper.txt'))}"],
+                    bin_path,
+                ):
+                    yield line
+                sleep(1)
+                if (type(line) == bool) and not line:
+                    yield False
+                    return
+                break
+            sleep(4)
+            logger.info(f"Sideloading addon {addon}...")
+            for line in run_command("adb", ["sideload", f"{addon}"], bin_path):
+                yield line
+            if (type(line) == bool) and not line:
+                logger.error(f"Sideloading {addon} failed.")
+
     # wipe some cache partitions
     sleep(7)
     for partition in ["dalvik", "cache"]:
@@ -201,6 +236,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
                 yield False
                 return
             break
+
     # finally reboot into os
     sleep(7)
     logger.info("Reboot into OS.")

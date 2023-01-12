@@ -213,6 +213,7 @@ class StepView(BaseView):
                 adb_twrp_wipe_and_install,
                 target=self.state.image_path,
                 config_path=self.state.config_path,
+                addons=self.state.addon_paths,
             ),
             "adb_twrp_copy_partitions": partial(
                 adb_twrp_copy_partitions, config_path=self.state.config_path

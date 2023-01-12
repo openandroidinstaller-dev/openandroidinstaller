@@ -40,6 +40,7 @@ class AppState:
         self.config = None
         self.image_path = None
         self.recovery_path = None
+        self.addon_paths = None
 
         # is this still needed?
         self.steps = None
