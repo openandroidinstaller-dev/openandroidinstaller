@@ -89,8 +89,8 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
 
         # initialize and manage button state.
         self.confirm_button = confirm_button(self.on_confirm)
-        #self.confirm_button.disabled = True
-        #self.pick_addons_dialog.on_result = self.enable_button_if_ready
+        # self.confirm_button.disabled = True
+        # self.pick_addons_dialog.on_result = self.enable_button_if_ready
 
         # attach hidden dialogues
         self.right_view.controls.append(self.pick_addons_dialog)
@@ -121,9 +121,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.right_view.controls.append(
             Column(
                 [
-                    Text(
-                        "Here you can download the right GApps for your device."
-                    ),
+                    Text("Here you can download the right GApps for your device."),
                     Row(
                         [
                             ElevatedButton(
@@ -163,7 +161,6 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
                     ]
                 ),
                 self.selected_addons,
-                Divider(),
                 Divider(),
                 self.info_field,
                 Row([self.confirm_button]),

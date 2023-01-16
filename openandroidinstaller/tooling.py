@@ -139,7 +139,9 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
     return True
 
 
-def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path, addons: Optional[List[str]] = None) -> bool:
+def adb_twrp_wipe_and_install(
+    bin_path: Path, target: str, config_path: Path, addons: Optional[List[str]] = None
+) -> bool:
     """Wipe and format data with twrp, then flash os image with adb.
 
     Only works for twrp recovery.
@@ -154,7 +156,7 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path, ad
         yield False
         return
     sleep(1)
-    
+
     # wipe some partitions
     for partition in ["cache", "system"]:
         for line in run_command("adb", ["shell", "twrp", "wipe", partition], bin_path):
@@ -164,7 +166,17 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path, ad
             logger.error(f"Wiping {partition} failed.")
             yield False
             return
-    
+
+    if addons:
+        for line in run_command(
+            "adb", ["shell", "twrp", "set", "tw_auto_reflashtwrp", "1"], bin_path
+        ):
+            yield line
+        if (type(line) == bool) and not line:
+            logger.error("setting tw_auto_reflashtwrp failed.")
+            yield False
+            return
+
     # activate sideload
     logger.info("Wiping is done, now activate sideload.")
     for line in run_command("adb", ["shell", "twrp", "sideload"], bin_path):
@@ -188,6 +200,18 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path, ad
     # now install any addons if given
     if addons:
         logger.info("Sideload and install addons.")
+        sleep(7)
+        logger.info("Reboot into recovery.")
+        for line in run_command(
+            "adb", ["shell", "twrp", "reboot", "recovery"], bin_path
+        ):  # "shell", "twrp",
+            yield line
+        if (type(line) == bool) and not line:
+            logger.error("Rebooting failed.")
+            yield False
+            return
+        else:
+            yield True
         for addon in addons:
             sleep(5)
             # activate sideload
