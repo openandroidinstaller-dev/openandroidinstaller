@@ -49,6 +49,22 @@ class Step:
 
 
 class InstallerConfig:
+
+    # map some detected device codes to their real code.
+    device_code_mapping = {
+        # Sony issues
+        "C6603": "yuga",
+        # OnePlus issues
+        "OnePlus6": "enchilada",
+        "OnePlus6T": "fajita",
+        "OnePlus7": "guacamoleb",
+        "OnePlus7Pro": "guacamole",
+        "OnePlus7T": "hotdogb",
+        "OnePlus7TPro": "hotdog",
+        "Nord": "avicii",
+        "NordN200": "dre",
+    }
+
     def __init__(
         self,
         unlock_bootloader: List[Step],
@@ -62,6 +78,10 @@ class InstallerConfig:
         self.install_os = install_os
         self.metadata = metadata
         self.requirements = requirements
+        self.device_code = metadata.get("devicecode")
+        self.alternative_device_code = self.device_code_mapping.get(
+            self.device_code, self.device_code
+        )
 
     @classmethod
     def from_file(cls, path):
@@ -107,7 +127,10 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
     Try to load local file in the same directory as the executable first, then load from assets.
     """
     # try loading a custom local file first
-    custom_path = Path.cwd().joinpath(Path(f"{device_code}.yaml"))
+    mapped_device_code = InstallerConfig.device_code_mapping.get(
+        device_code, device_code
+    )
+    custom_path = Path.cwd().joinpath(Path(f"{mapped_device_code}.yaml"))
     try:
         config = InstallerConfig.from_file(custom_path)
         logger.info(f"Loaded custom device config from {custom_path}.")
@@ -115,7 +138,7 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
         return config
     except FileNotFoundError:
         # if no localfile, then try to load a config file from assets
-        path = config_path.joinpath(Path(f"{device_code}.yaml"))
+        path = config_path.joinpath(Path(f"{mapped_device_code}.yaml"))
         try:
             config = InstallerConfig.from_file(path)
             logger.info(f"Loaded device config from {path}.")

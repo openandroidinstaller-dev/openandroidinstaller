@@ -237,9 +237,11 @@ The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config
             logger.info("No image selected.")
         # check if the image works with the device and show the filename in different colors accordingly
         if e.files:
-            device_code = self.state.config.metadata.get("devicecode")
+            device_code = self.state.config.device_code
             if image_works_with_device(
-                device_code=device_code, image_path=self.state.image_path
+                device_code=device_code,
+                alternative_device_code=self.state.config.alternative_device_code,
+                image_path=self.state.image_path,
             ):
                 self.selected_image.color = colors.GREEN
             else:
@@ -261,7 +263,7 @@ The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config
             logger.info("No image selected.")
         # check if the recovery works with the device and show the filename in different colors accordingly
         if e.files:
-            device_code = self.state.config.metadata.get("devicecode")
+            device_code = self.state.config.device_code
             if recovery_works_with_device(
                 device_code=device_code, recovery_path=self.state.recovery_path
             ):
@@ -276,10 +278,12 @@ The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config
         if (".zip" in self.selected_image.value) and (
             ".img" in self.selected_recovery.value
         ):
-            device_code = self.state.config.metadata.get("devicecode")
+            device_code = self.state.config.device_code
             if not (
                 image_works_with_device(
-                    device_code=device_code, image_path=self.state.image_path
+                    device_code=device_code,
+                    alternative_device_code=self.state.config.alternative_device_code,
+                    image_path=self.state.image_path,
                 )
                 and recovery_works_with_device(
                     device_code=device_code, recovery_path=self.state.recovery_path
