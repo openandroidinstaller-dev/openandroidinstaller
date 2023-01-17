@@ -37,6 +37,7 @@ from views import BaseView
 from app_state import AppState
 from widgets import get_title
 from tooling import search_device
+from installer_config import InstallerConfig
 
 
 class StartView(BaseView):
@@ -224,7 +225,7 @@ When everything works correctly you should see your device name here and you can
                 self.continue_button.disabled = False
                 self.bootloader_switch.disabled = False
                 # overwrite the text field with the real name from the config
-                self.device_name.value = f"{device_name} (code: {device_code})"
+                self.device_name.value = f"{device_name} (code: {InstallerConfig.device_code_mapping.get(device_code, device_code)})"
                 self.device_name.color = colors.GREEN
             else:
                 # failed to load config
