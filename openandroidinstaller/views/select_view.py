@@ -148,7 +148,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                                     "Download TWRP recovery",
                                     icon=icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
-                                        f"https://dl.twrp.me/{self.state.config.metadata.get('devicecode')}"
+                                        f"https://dl.twrp.me/{self.state.config.device_code}"
                                     ),
                                     expand=True,
                                 ),
@@ -164,7 +164,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 Text("Select an OS image:", style="titleSmall"),
                 Markdown(
                     f"""
-The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
+The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.device_code}-signed.zip`."""
                 ),
                 Row(
                     [
@@ -185,7 +185,7 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
                 Text("Select a TWRP recovery image:", style="titleSmall"),
                 Markdown(
                     f"""
-The recovery image should look something like `twrp-3.6.2_9-0-{self.state.config.metadata.get('devicecode')}.img`.
+The recovery image should look something like `twrp-3.7.0_12-0-{self.state.config.device_code}.img`.
 
 **Note:** This tool **only supports TWRP recoveries**.""",
                     extension_set="gitHubFlavored",

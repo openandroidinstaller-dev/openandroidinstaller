@@ -79,7 +79,8 @@ class InstallerConfig:
         self.metadata = metadata
         self.requirements = requirements
         self.device_code = metadata.get("devicecode")
-        self.alternative_device_code = self.device_code_mapping.get(
+        inverted_mapping = dict(map(reversed, self.device_code_mapping.items()))
+        self.alternative_device_code = inverted_mapping.get(
             self.device_code, self.device_code
         )
 
