@@ -274,7 +274,7 @@ class TerminalBox(UserControl):
 
     def build(self):
         self._box = Container(
-            content=Column(scroll="auto", expand=True),
+            content=Column(scroll="auto", expand=True, auto_scroll=True),
             margin=10,
             padding=10,
             alignment=alignment.top_left,
