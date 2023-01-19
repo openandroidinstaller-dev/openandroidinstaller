@@ -17,6 +17,7 @@ from loguru import logger
 from time import sleep
 from typing import Callable
 from functools import partial
+import regex as re
 
 from flet import (
     UserControl,
@@ -29,6 +30,8 @@ from flet import (
     Container,
     Switch,
     alignment,
+    ProgressBar,
+    ProgressRing,
     colors,
 )
 
@@ -99,6 +102,9 @@ class StepView(BaseView):
         # text box for terminal output
         self.terminal_box = TerminalBox(expand=True)
 
+        # container for progress indicators
+        self.progress_indicator = ProgressIndicator(expand=True)
+
         # main controls
         steps_indictor_img_lookup = {
             "Unlock the bootloader": "steps-header-unlock.png",
@@ -127,6 +133,7 @@ class StepView(BaseView):
             self.right_view.controls.extend(
                 [
                     Row([self.error_text]),
+                    Row([self.progress_indicator]),
                     Column(
                         [
                             self.advanced_switch,
@@ -145,6 +152,7 @@ class StepView(BaseView):
                 [
                     self.inputtext,
                     Row([self.error_text]),
+                    Row([self.progress_indicator]),
                     Column(
                         [
                             self.advanced_switch,
@@ -188,6 +196,8 @@ class StepView(BaseView):
         """
         # disable the call button while the command is running
         self.call_button.disabled = True
+        # reset the progress indicators
+        self.progress_indicator.clear()
         # reset terminal output
         if self.state.advanced:
             self.terminal_box.clear()
@@ -225,7 +235,14 @@ class StepView(BaseView):
         # run the right command
         if command in cmd_mapping.keys():
             for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):
+                # write the line to advanced output terminal
                 self.terminal_box.write_line(line)
+                # in case the install command is run, we want to update the progress bar
+                if command == "adb_twrp_wipe_and_install":
+                    self.progress_indicator.display_progress_bar(line)
+                    self.progress_indicator.update()
+                else:
+                    self.progress_indicator.display_progress_ring()
         else:
             msg = f"Unknown command type: {command}. Stopping."
             logger.error(msg)
@@ -242,9 +259,12 @@ class StepView(BaseView):
         else:
             sleep(5)  # wait to make sure everything is fine
             logger.success(f"Command {command} run successfully. Allow to continue.")
-            # emable the confirm buton and disable the call button
+            # enable the confirm button and disable the call button
             self.confirm_button.disabled = False
             self.call_button.disabled = True
+        # reset the progress indicator (let the progressbar stay for the install command)
+        if command != "adb_twrp_wipe_and_install":
+            self.progress_indicator.clear()
         self.view.update()
 
 
@@ -277,7 +297,7 @@ class TerminalBox(UserControl):
             self.update()
 
     def toggle_visibility(self):
-        """Toogle the visibility of the terminal box."""
+        """Toggle the visibility of the terminal box."""
         self._box.visible = not self._box.visible
         self.update()
 
@@ -289,3 +309,70 @@ class TerminalBox(UserControl):
     def update(self):
         """Update the view."""
         self._box.update()
+
+
+class ProgressIndicator(UserControl):
+    def __init__(self, expand: bool = True):
+        super().__init__(expand=expand)
+        # placeholder for the flashing progressbar
+        self.progress_bar = None
+        # progress ring to display
+        self.progress_ring = None
+
+    def build(self):
+        self._container = Container(
+            content=Column(scroll="auto", expand=True),
+            margin=10,
+            alignment=alignment.center,
+            height=50,
+            expand=True,
+            visible=True,
+        )
+        return self._container
+
+    def display_progress_bar(self, line: str):
+        """Display and update the progress bar for the given line."""
+        percentage_done = None
+        result = None
+        # get the progress numbers from the output lines
+        if (type(line) == str) and line.strip():
+            result = re.search(r"\(\~(\d{1,3})\%\)|(Total xfer: 1\.00x)", line.strip())
+        if result:
+            if result.group(1):
+                percentage_done = int(result.group(1))
+            elif result.group(2):
+                percentage_done = 100
+
+            # create the progress bar on first occurrence
+            if percentage_done == 0:
+                self.progress_bar = ProgressBar(
+                    width=500, bar_height=32, color="#00d886", bgcolor="#eeeeee"
+                )
+                self.percentage_text = Text(f"{percentage_done}%")
+                self._container.content.controls.append(
+                    Row([self.percentage_text, self.progress_bar])
+                )
+            # update the progress bar
+            if self.progress_bar:
+                self.progress_bar.value = percentage_done / 100
+                self.percentage_text.value = f"{percentage_done}%"
+
+    def display_progress_ring(
+        self,
+    ):
+        """Display a progress ring to signal progress."""
+        if not self.progress_ring:
+            self.progress_ring = ProgressRing(color="#00d886")
+            self._container.content.controls.append(self.progress_ring)
+            self._container.update()
+
+    def clear(self):
+        """Clear output."""
+        self._container.content.controls = []
+        self.progress_ring = None
+        self.progress_bar = None
+        self.update()
+
+    def update(self):
+        """Update the view."""
+        self._container.update()
