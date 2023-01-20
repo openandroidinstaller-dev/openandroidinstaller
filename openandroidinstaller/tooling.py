@@ -48,7 +48,12 @@ def run_command(tool: str, command: List[str], bin_path: Path) -> CompletedProce
     logger.info(f"Run command: {full_command}")
     # run the command
     with Popen(
-        full_command, stdout=PIPE, stderr=STDOUT, bufsize=1, universal_newlines=True, startupinfo=si
+        full_command,
+        stdout=PIPE,
+        stderr=STDOUT,
+        bufsize=1,
+        universal_newlines=True,
+        startupinfo=si,
     ) as p:
         for line in p.stdout:
             logger.info(line.strip())
