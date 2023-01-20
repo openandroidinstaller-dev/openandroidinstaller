@@ -15,6 +15,7 @@
 
 import sys
 from pathlib import Path
+import subprocess
 from subprocess import (
     Popen,
     PIPE,
@@ -38,11 +39,16 @@ def run_command(tool: str, command: List[str], bin_path: Path) -> CompletedProce
         raise Exception(f"Unknown tool {tool}. Use adb, fastboot or heimdall.")
     if PLATFORM == "win32":
         full_command = [str(bin_path.joinpath(Path(f"{tool}"))) + ".exe"] + command
+        # prevent Windows from opening terminal windows
+        si = subprocess.STARTUPINFO()
+        si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     else:
         full_command = [str(bin_path.joinpath(Path(f"{tool}")))] + command
+        si = None
     logger.info(f"Run command: {full_command}")
+    # run the command
     with Popen(
-        full_command, stdout=PIPE, stderr=STDOUT, bufsize=1, universal_newlines=True
+        full_command, stdout=PIPE, stderr=STDOUT, bufsize=1, universal_newlines=True, startupinfo=si
     ) as p:
         for line in p.stdout:
             logger.info(line.strip())
