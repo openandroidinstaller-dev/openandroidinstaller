@@ -15,6 +15,7 @@
 
 import sys
 from pathlib import Path
+import subprocess
 from subprocess import (
     Popen,
     PIPE,
@@ -38,11 +39,21 @@ def run_command(tool: str, command: List[str], bin_path: Path) -> CompletedProce
         raise Exception(f"Unknown tool {tool}. Use adb, fastboot or heimdall.")
     if PLATFORM == "win32":
         full_command = [str(bin_path.joinpath(Path(f"{tool}"))) + ".exe"] + command
+        # prevent Windows from opening terminal windows
+        si = subprocess.STARTUPINFO()
+        si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     else:
         full_command = [str(bin_path.joinpath(Path(f"{tool}")))] + command
+        si = None
     logger.info(f"Run command: {full_command}")
+    # run the command
     with Popen(
-        full_command, stdout=PIPE, stderr=STDOUT, bufsize=1, universal_newlines=True
+        full_command,
+        stdout=PIPE,
+        stderr=STDOUT,
+        bufsize=1,
+        universal_newlines=True,
+        startupinfo=si,
     ) as p:
         for line in p.stdout:
             logger.info(line.strip())
@@ -363,20 +374,6 @@ def heimdall_flash_recovery(bin_path: Path, recovery: str) -> bool:
 def search_device(platform: str, bin_path: Path) -> Optional[str]:
     """Search for a connected device."""
     logger.info(f"Search devices on {platform} with {bin_path}...")
-    # map some detected device codes to their real code.
-    device_code_mapping = {
-        # Sony issues
-        "C6603": "yuga",
-        # OnePlus issues
-        "OnePlus6": "enchilada",
-        "OnePlus6T": "fajita",
-        "OnePlus7": "guacamoleb",
-        "OnePlus7Pro": "guacamole",
-        "OnePlus7T": "hotdogb",
-        "OnePlus7TPro": "hotdog",
-        "Nord": "avicii",
-        "NordN200": "dre",
-    }
     try:
         # read device properties
         if platform in ("linux", "darwin"):
@@ -408,7 +405,7 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
             raise Exception(f"Unknown platform {platform}.")
         device_code = output.split("[")[-1].strip()[:-1].strip()
         logger.info(device_code)
-        return device_code_mapping.get(device_code, device_code)
+        return device_code
     except CalledProcessError:
         logger.error("Failed to detect a device.")
         return None

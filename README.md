@@ -55,7 +55,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). W
 
 ## Officially supported devices
 
-Currently, the **we support 41 devices** by various vendors and working on adding more soon!
+Currently, the **we support 45 devices** by various vendors and working on adding more soon!
 
 
 Support for these devices is provided as best effort, but things might still go wrong.
@@ -121,8 +121,12 @@ Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4/) | | tes
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
-Motorola | moto G5 | [cedric](https://wiki.lineageos.org/devices/cedric/) | | tested
-Motorola | moto G7 power | [ocean](https://wiki.lineageos.org/devices/ocean/) | | tested
+Motorola | moto g5 | [cedric](https://wiki.lineageos.org/devices/cedric/) | | tested
+Motorola | moto g6 plus | [evert](https://wiki.lineageos.org/devices/evert/) | | tested
+Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean/) | | tested
+Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo/) | | tested
+Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev/) | | tested
+Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer/) | | tested
 </details>
 
 <details><summary><b>OnePlus</b></summary>
