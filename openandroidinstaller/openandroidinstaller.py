@@ -47,6 +47,7 @@ from views import (
     RequirementsView,
     InstallView,
     WelcomeView,
+    AddonsView,
 )
 from tooling import run_command
 
@@ -110,6 +111,11 @@ class MainView(UserControl):
         self.state.default_views = self.default_views
         self.state.final_default_views = self.final_default_views
         self.state.final_view = self.final_view
+
+        # initialize the addon view
+        self.addon_view = AddonsView(on_confirm=self.confirm, state=self.state)
+        self.state.addon_view = self.addon_view
+
 
     def build(self):
         self.view.controls.append(self.default_views.pop())

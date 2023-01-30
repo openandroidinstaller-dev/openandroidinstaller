@@ -74,11 +74,12 @@ class InstallView(BaseView):
             """Check the switch to enable the addons installation process."""
             if self.install_addons_switch.value:
                 logger.info("Enable flashing addons.")
-                # TODO: add the addons step here.
+                # add the addons step here.
+                self.state.default_views.append(self.state.addon_view)
                 self.state.install_addons = True
             else:
                 logger.info("Disable flashing addons.")
-                # TODO: empty the steps again
+                self.state.default_views = []
                 self.state.install_addons = False
 
         self.install_addons_switch = Switch(
