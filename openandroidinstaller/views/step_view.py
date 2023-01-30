@@ -43,7 +43,6 @@ from tooling import (
     adb_reboot_bootloader,
     adb_reboot_download,
     adb_sideload,
-    adb_twrp_wipe_and_install,
     adb_twrp_copy_partitions,
     fastboot_flash_recovery,
     fastboot_oem_unlock,
@@ -109,7 +108,6 @@ class StepView(BaseView):
         steps_indictor_img_lookup = {
             "Unlock the bootloader": "steps-header-unlock.png",
             "Flash custom recovery": "steps-header-recovery.png",
-            "Install OS": "steps-header-install.png",
         }
         self.right_view_header.controls = [
             get_title(
@@ -209,11 +207,6 @@ class StepView(BaseView):
             "adb_reboot_bootloader": adb_reboot_bootloader,
             "adb_reboot_download": adb_reboot_download,
             "adb_sideload": partial(adb_sideload, target=self.state.image_path),
-            "adb_twrp_wipe_and_install": partial(
-                adb_twrp_wipe_and_install,
-                target=self.state.image_path,
-                config_path=self.state.config_path,
-            ),
             "adb_twrp_copy_partitions": partial(
                 adb_twrp_copy_partitions, config_path=self.state.config_path
             ),
@@ -237,12 +230,7 @@ class StepView(BaseView):
             for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):
                 # write the line to advanced output terminal
                 self.terminal_box.write_line(line)
-                # in case the install command is run, we want to update the progress bar
-                if command == "adb_twrp_wipe_and_install":
-                    self.progress_indicator.display_progress_bar(line)
-                    self.progress_indicator.update()
-                else:
-                    self.progress_indicator.display_progress_ring()
+                self.progress_indicator.display_progress_ring()
         else:
             msg = f"Unknown command type: {command}. Stopping."
             logger.error(msg)
@@ -263,8 +251,7 @@ class StepView(BaseView):
             self.confirm_button.disabled = False
             self.call_button.disabled = True
         # reset the progress indicator (let the progressbar stay for the install command)
-        if command != "adb_twrp_wipe_and_install":
-            self.progress_indicator.clear()
+        self.progress_indicator.clear()
         self.view.update()
 
 

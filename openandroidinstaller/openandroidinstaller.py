@@ -45,6 +45,7 @@ from views import (
     SuccessView,
     StartView,
     RequirementsView,
+    InstallView,
     WelcomeView,
 )
 from tooling import run_command
@@ -93,10 +94,21 @@ class MainView(UserControl):
             start_view,
             welcome_view,
         ]
+
+        # create the install view
+        self.install_view = InstallView(on_confirm=self.confirm, state=self.state)
+
         # create the final success view
         self.final_view = SuccessView(state=self.state)
 
+        # final default views, ordered to allow to pop
+        self.final_default_views = [
+            self.final_view,
+            self.install_view,
+        ]
+
         self.state.default_views = self.default_views
+        self.state.final_default_views = self.final_default_views
         self.state.final_view = self.final_view
 
     def build(self):
@@ -118,9 +130,13 @@ class MainView(UserControl):
                     on_confirm=self.confirm,
                 )
             )
-        else:
-            # display the final view
-            self.view.controls.append(self.final_view)
+        elif self.final_default_views:
+            # here we expect the install view to populate the step views again if necessary
+            self.view.controls.append(self.final_default_views.pop())
+
+        # else:
+        #    # display the final view
+        #    self.view.controls.append(self.final_view)
         logger.info("Confirmed.")
         self.view.update()
 

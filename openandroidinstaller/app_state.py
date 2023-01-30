@@ -13,6 +13,7 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import copy
 from pathlib import Path
 
 from installer_config import _load_config
@@ -37,6 +38,7 @@ class AppState:
 
         # placeholders
         self.advanced = False
+        self.install_addons = False
         self.config = None
         self.image_path = None
         self.recovery_path = None
@@ -48,8 +50,6 @@ class AppState:
         """Load the config from file to state by device code."""
         self.config = _load_config(device_code, self.config_path)
         if self.config:
-            self.steps = (
-                self.config.unlock_bootloader
-                + self.config.flash_recovery
-                + self.config.install_os
+            self.steps = copy.deepcopy(self.config.unlock_bootloader) + copy.deepcopy(
+                self.config.flash_recovery
             )

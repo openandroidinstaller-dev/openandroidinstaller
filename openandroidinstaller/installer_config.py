@@ -69,13 +69,11 @@ class InstallerConfig:
         self,
         unlock_bootloader: List[Step],
         flash_recovery: List[Step],
-        install_os: List[Step],
         metadata: dict,
         requirements: dict,
     ):
         self.unlock_bootloader = unlock_bootloader
         self.flash_recovery = flash_recovery
-        self.install_os = install_os
         self.metadata = metadata
         self.requirements = requirements
         self.device_code = metadata.get("devicecode")
@@ -112,13 +110,7 @@ class InstallerConfig:
             Step(**raw_step, title="Flash custom recovery")
             for raw_step in raw_steps.get("flash_recovery", [])
         ]
-        install_os = [
-            Step(**raw_step, title="Install OS")
-            for raw_step in raw_steps.get("install_os", [])
-        ]
-        return cls(
-            unlock_bootloader, flash_recovery, install_os, metadata, requirements
-        )
+        return cls(unlock_bootloader, flash_recovery, metadata, requirements)
 
 
 def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfig]:
@@ -181,7 +173,6 @@ def validate_config(config: str) -> bool:
             "steps": {
                 "unlock_bootloader": schema.Or(None, [step_schema]),
                 "flash_recovery": [step_schema],
-                "install_os": [step_schema],
             },
         }
     )

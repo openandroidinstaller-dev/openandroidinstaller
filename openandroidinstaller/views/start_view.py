@@ -13,6 +13,7 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import copy
 from loguru import logger
 from typing import Callable
 
@@ -85,17 +86,13 @@ Now you are ready to continue.
             """Enable skipping unlocking the bootloader if selected."""
             if self.bootloader_switch.value:
                 logger.info("Skipping bootloader unlocking.")
-                self.state.steps = (
-                    self.state.config.flash_recovery + self.state.config.install_os
-                )
+                self.state.steps = copy.deepcopy(self.state.config.flash_recovery)
                 self.state.num_total_steps = len(self.state.steps)
             else:
                 logger.info("Enabled unlocking the bootloader again.")
-                self.state.steps = (
+                self.state.steps = copy.deepcopy(
                     self.state.config.unlock_bootloader
-                    + self.state.config.flash_recovery
-                    + self.state.config.install_os
-                )
+                ) + copy.deepcopy(self.state.config.flash_recovery)
                 self.state.num_total_steps = len(self.state.steps)
 
         self.bootloader_switch = Switch(
