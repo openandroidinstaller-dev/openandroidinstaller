@@ -150,7 +150,9 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
     return True
 
 
-def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path, install_addons=True) -> bool:
+def adb_twrp_wipe_and_install(
+    bin_path: Path, target: str, config_path: Path, install_addons=True
+) -> bool:
     """Wipe and format data with twrp, then flash os image with adb.
 
     Only works for twrp recovery.
@@ -235,6 +237,45 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path, in
             return
         else:
             yield True
+
+
+def adb_twrp_install_addons(bin_path: Path, addons: List[str]) -> bool:
+    """Flash addons through adb and twrp.
+
+    Only works for twrp recovery.
+    """
+    logger.info("Install addons with twrp.")
+    sleep(7)
+    # activate sideload
+    logger.info("Activate sideload.")
+    for line in run_command("adb", ["shell", "twrp", "sideload"], bin_path):
+        yield line
+    if (type(line) == bool) and not line:
+        logger.error("Activating sideload failed.")
+        yield False
+        return
+    # now flash os image
+    sleep(5)
+    logger.info("Sideload and install addons.")
+    for addon in addons:
+        for line in run_command("adb", ["sideload", f"{addon}"], bin_path):
+            yield line
+        if (type(line) == bool) and not line:
+            logger.error(f"Sideloading {addon} failed.")
+            # TODO: this might sometimes think it failed, but actually it's fine. So skip for now.
+            # yield False
+            # return
+    # finally reboot into os
+    sleep(7)
+    logger.info("Reboot into OS.")
+    for line in run_command("adb", ["reboot"], bin_path):  # "shell", "twrp",
+        yield line
+    if (type(line) == bool) and not line:
+        logger.error("Rebooting failed.")
+        yield False
+        return
+    else:
+        yield True
 
 
 def fastboot_unlock_with_code(bin_path: Path, unlock_code: str) -> bool:

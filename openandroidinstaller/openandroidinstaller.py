@@ -48,8 +48,10 @@ from views import (
     InstallView,
     WelcomeView,
     AddonsView,
+    InstallAddonsView,
 )
 from tooling import run_command
+from installer_config import Step
 
 # where to write the logs
 logger.add("openandroidinstaller.log")
@@ -113,9 +115,26 @@ class MainView(UserControl):
         self.state.final_view = self.final_view
 
         # initialize the addon view
-        self.addon_view = AddonsView(on_confirm=self.confirm, state=self.state)
-        self.state.addon_view = self.addon_view
-
+        self.select_addon_view = AddonsView(on_confirm=self.confirm, state=self.state)
+        self.flash_recovery_view = StepView(
+            step=Step(
+                title="Flash custom recovery",
+                type="call_button",
+                content="Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once your phone screen looks like the picture on the left, continue.",
+                command="fastboot_flash_recovery",
+                img="twrp-start.jpeg",
+            ),
+            state=self.state,
+            on_confirm=self.confirm,
+        )
+        self.install_addons_view = InstallAddonsView(
+            on_confirm=self.confirm, state=self.state
+        )
+        self.state.addon_views = [
+            self.install_addons_view,
+            self.flash_recovery_view,
+            self.select_addon_view,
+        ]
 
     def build(self):
         self.view.controls.append(self.default_views.pop())

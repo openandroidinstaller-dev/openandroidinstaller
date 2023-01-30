@@ -6,4 +6,5 @@ from .select_view import SelectFilesView  # noqa
 from .step_view import StepView  # noqa
 from .install_view import InstallView  # noqa
 from .addon_view import AddonsView  # noqa
+from .install_addons_view import InstallAddonsView  # noqa
 from .success_view import SuccessView  # noqa

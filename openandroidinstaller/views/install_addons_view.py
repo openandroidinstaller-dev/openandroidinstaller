@@ -1,4 +1,4 @@
-"""Contains the install view."""
+"""Contains the install addons view."""
 
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
@@ -30,7 +30,7 @@ from flet import (
 
 from views import BaseView
 from app_state import AppState
-from tooling import adb_twrp_wipe_and_install
+from tooling import adb_twrp_install_addons
 from widgets import (
     confirm_button,
     get_title,
@@ -38,7 +38,7 @@ from widgets import (
 from views.step_view import TerminalBox, ProgressIndicator
 
 
-class InstallView(BaseView):
+class InstallAddonsView(BaseView):
     def __init__(
         self,
         state: AppState,
@@ -69,24 +69,7 @@ class InstallView(BaseView):
             on_change=check_advanced_switch,
             disabled=False,
         )
-        # switch for installing addons
-        def check_addons_switch(e):
-            """Check the switch to enable the addons installation process."""
-            if self.install_addons_switch.value:
-                logger.info("Enable flashing addons.")
-                # add the addons step here.
-                self.state.default_views.extend(self.state.addon_views)
-                self.state.install_addons = True
-            else:
-                logger.info("Disable flashing addons.")
-                self.state.default_views = []
-                self.state.install_addons = False
 
-        self.install_addons_switch = Switch(
-            label="Install addons",
-            on_change=check_addons_switch,
-            disabled=False,
-        )
         # text box for terminal output
         self.terminal_box = TerminalBox(expand=True)
 
@@ -96,33 +79,28 @@ class InstallView(BaseView):
         # main controls
         self.right_view_header.controls = [
             get_title(
-                "Install OS",
+                "Install Addons",
                 step_indicator_img="steps-header-install.png",
             )
         ]
         self.right_view.controls = [
             Markdown(
-                """In the next steps, you finally flash the selected OS image.
-            
-Connect your device with your computer with the USB-Cable. This step will format your phone and wipe all the data.
-It will also remove encryption and delete all files stored in the internal storage.
-Then the OS image will be installed. Confirm to install.
-    
-#### If you want to install any addons like Google Apps, microg or F-droid, use the toggle below **before** starting the install process!
-After the installation you'll be taken trough the process.
+                """In the next steps, you finally flash the selected Addons.
+
+Confirm to install.
 
 This might take a while. At the end your phone will boot into the new OS.
 """
             )
         ]
         # basic view
-        logger.info("Starting installation.")
+        logger.info("Starting addon installation.")
         self.confirm_button = confirm_button(self.on_confirm)
         self.confirm_button.disabled = True
         # button to run the installation process
         self.install_button = ElevatedButton(
-            "Confirm and install",
-            on_click=self.run_install,
+            "Confirm and install addons",
+            on_click=self.run_install_addons,
             expand=True,
             icon=icons.DIRECTIONS_RUN_OUTLINED,
         )
@@ -133,7 +111,6 @@ This might take a while. At the end your phone will boot into the new OS.
                 Row([self.progress_indicator]),
                 Column(
                     [
-                        self.install_addons_switch,
                         self.advanced_switch,
                         Row([self.install_button, self.confirm_button]),
                     ]
@@ -159,9 +136,9 @@ This might take a while. At the end your phone will boot into the new OS.
             )
         return self.view
 
-    def run_install(self, e):
+    def run_install_addons(self, e):
         """
-        Run the installation process trough twrp.
+        Run the addon installation process trough twrp.
 
         Some parts of the command are changed by placeholders.
         """
@@ -176,17 +153,14 @@ This might take a while. At the end your phone will boot into the new OS.
         self.right_view.update()
 
         # run the install script
-        for line in adb_twrp_wipe_and_install(
-            target=self.state.image_path,
-            config_path=self.state.config_path,
+        for line in adb_twrp_install_addons(
+            addons=self.state.addon_paths,
             bin_path=self.state.bin_path,
-            install_addons=self.state.install_addons,
         ):
             # write the line to advanced output terminal
             self.terminal_box.write_line(line)
-            # in case the install command is run, we want to update the progress bar
-            self.progress_indicator.display_progress_bar(line)
-            self.progress_indicator.update()
+            # in case the install command is run, we want to update progress ring for now
+            self.progress_indicator.display_progress_ring()
         success = line  # the last element of the iterable is a boolean encoding success/failure
 
         # update the view accordingly
@@ -201,4 +175,6 @@ This might take a while. At the end your phone will boot into the new OS.
             # enable the confirm button and disable the call button
             self.confirm_button.disabled = False
             self.install_button.disabled = True
+        # reset the progress indicator
+        self.progress_indicator.clear()
         self.view.update()
