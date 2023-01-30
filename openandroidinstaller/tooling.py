@@ -150,7 +150,7 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
     return True
 
 
-def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) -> bool:
+def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path, install_addons=True) -> bool:
     """Wipe and format data with twrp, then flash os image with adb.
 
     Only works for twrp recovery.
@@ -214,15 +214,27 @@ def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) ->
             break
     # finally reboot into os
     sleep(7)
-    logger.info("Reboot into OS.")
-    for line in run_command("adb", ["reboot"], bin_path):  # "shell", "twrp",
-        yield line
-    if (type(line) == bool) and not line:
-        logger.error("Rebooting failed.")
-        yield False
-        return
+    if install_addons:
+        # TODO: Fix the process for samsung devices
+        # reboot into the bootloader again
+        logger.info("Rebooting device into bootloader with adb.")
+        for line in run_command("adb", ["reboot", "bootloader"], bin_path):
+            yield line
+        if (type(line) == bool) and not line:
+            logger.error("Reboot into bootloader failed.")
+            yield False
+            return
+        sleep(7)
     else:
-        yield True
+        logger.info("Reboot into OS.")
+        for line in run_command("adb", ["reboot"], bin_path):  # "shell", "twrp",
+            yield line
+        if (type(line) == bool) and not line:
+            logger.error("Rebooting failed.")
+            yield False
+            return
+        else:
+            yield True
 
 
 def fastboot_unlock_with_code(bin_path: Path, unlock_code: str) -> bool:

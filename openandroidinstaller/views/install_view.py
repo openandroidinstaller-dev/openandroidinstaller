@@ -74,10 +74,11 @@ class InstallView(BaseView):
             """Check the switch to enable the addons installation process."""
             if self.install_addons_switch.value:
                 logger.info("Enable flashing addons.")
+                # TODO: add the addons step here.
                 self.state.install_addons = True
-                self.state.steps.extend(self.state.config.flash_recovery)
             else:
                 logger.info("Disable flashing addons.")
+                # TODO: empty the steps again
                 self.state.install_addons = False
 
         self.install_addons_switch = Switch(
@@ -159,7 +160,7 @@ This might take a while. At the end your phone will boot into the new OS.
 
     def run_install(self, e):
         """
-        Run the installation process trought twrp.
+        Run the installation process trough twrp.
 
         Some parts of the command are changed by placeholders.
         """
@@ -178,6 +179,7 @@ This might take a while. At the end your phone will boot into the new OS.
             target=self.state.image_path,
             config_path=self.state.config_path,
             bin_path=self.state.bin_path,
+            install_addons=self.state.install_addons,
         ):
             # write the line to advanced output terminal
             self.terminal_box.write_line(line)
