@@ -52,6 +52,8 @@ from tooling import run_command
 # where to write the logs
 logger.add("openandroidinstaller.log")
 
+# VERSION number
+VERSION = "0.3.4-alpha"
 
 # detect platform
 PLATFORM = sys.platform
@@ -141,19 +143,18 @@ def configure(page: Page):
 def log_version_infos(bin_path):
     """Log the version infos of adb, fastboot and heimdall."""
     # adb
-    adbversion = [line for line in run_command("adb", ["version"], bin_path)]
-    adbversion = "\n".join(adbversion[:1])
-    logger.info(f"{adbversion}")
+    adbversion = [line for line in run_command("adb", ["version"], bin_path, enable_logging=False)]
+    logger.info(f"{adbversion[1].strip()}")
     # fastboot
-    fbversion = [line for line in run_command("fastboot", ["--version"], bin_path)]
-    logger.info(f"{fbversion[0]}")
+    fbversion = [line for line in run_command("fastboot", ["--version"], bin_path, enable_logging=False)]
+    logger.info(f"{fbversion[1].strip()}")
     # heimdall
-    hdversion = [line for line in run_command("heimdall", ["info"], bin_path)]
-    logger.info(f"Heimdall version: {hdversion[0]}")
+    hdversion = [line for line in run_command("heimdall", ["info"], bin_path, enable_logging=False)]
+    logger.info(f"Heimdall version: {hdversion[1].strip()}")
 
 
 def main(page: Page, test: bool = False, test_config: str = "sargo"):
-    logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
+    logger.info(f"Running OpenAndroidInstaller version '{VERSION}' on '{PLATFORM}'.")
     log_version_infos(bin_path=BIN_PATH)
     logger.info(100 * "-")
 
@@ -168,7 +169,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         leading_width=56,
         toolbar_height=72,
         elevation=0,
-        title=Text("OpenAndroidInstaller alpha version", style="displaySmall"),
+        title=Text(f"OpenAndroidInstaller version {VERSION}", style="displaySmall"),
         center_title=False,
         bgcolor="#00d886",
         actions=[

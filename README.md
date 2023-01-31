@@ -36,7 +36,7 @@ If you wish to backup the TA partition first, you can find tutorials related to 
 
 ## Usage
 
-Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
+Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
 
 1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
     - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
