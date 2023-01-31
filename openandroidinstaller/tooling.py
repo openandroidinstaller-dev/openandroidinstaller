@@ -239,7 +239,7 @@ def adb_twrp_wipe_and_install(
             yield True
 
 
-def adb_twrp_install_addons(bin_path: Path, addons: List[str]) -> bool:
+def adb_twrp_install_addons(bin_path: Path, config_path: Path, addons: List[str]) -> bool:
     """Flash addons through adb and twrp.
 
     Only works for twrp recovery.
@@ -265,10 +265,28 @@ def adb_twrp_install_addons(bin_path: Path, addons: List[str]) -> bool:
             # TODO: this might sometimes think it failed, but actually it's fine. So skip for now.
             # yield False
             # return
+    # reboot into fastboot
+    sleep(5)
+    logger.info("Boot into fastboot")
+    for line in run_command("adb", ["reboot", "bootloader"], bin_path):
+        yield line
+    if (type(line) == bool) and not line:
+        logger.error("Booting to fastboot failed.")
+        yield False
+        return
+    # switch active boot partition
+    sleep(7)
+    logger.info("Switch active boot partition")
+    for line in run_command("fastboot", ["set_active", "other"], bin_path):
+        yield line
+    if (type(line) == bool) and not line:
+        logger.error("Switching boot partition failed.")
+        yield False
+        return
     # finally reboot into os
     sleep(7)
     logger.info("Reboot into OS.")
-    for line in run_command("adb", ["reboot"], bin_path):  # "shell", "twrp",
+    for line in run_command("fastboot", ["reboot"], bin_path):
         yield line
     if (type(line) == bool) and not line:
         logger.error("Rebooting failed.")

@@ -144,7 +144,7 @@ This might take a while. At the end your phone will boot into the new OS.
         """
         # disable the call button while the command is running
         self.install_button.disabled = True
-        self.install_addons_switch.disabled = True
+        self.error_text.value = ""
         # reset the progress indicators
         self.progress_indicator.clear()
         # reset terminal output
@@ -156,11 +156,13 @@ This might take a while. At the end your phone will boot into the new OS.
         for line in adb_twrp_install_addons(
             addons=self.state.addon_paths,
             bin_path=self.state.bin_path,
+            config_path=self.state.config_path,
         ):
             # write the line to advanced output terminal
             self.terminal_box.write_line(line)
-            # in case the install command is run, we want to update progress ring for now
-            self.progress_indicator.display_progress_ring()
+            # in case the install command is run, we want to update the progress bar
+            self.progress_indicator.display_progress_bar(line)
+            self.progress_indicator.update()
         success = line  # the last element of the iterable is a boolean encoding success/failure
 
         # update the view accordingly
@@ -175,6 +177,4 @@ This might take a while. At the end your phone will boot into the new OS.
             # enable the confirm button and disable the call button
             self.confirm_button.disabled = False
             self.install_button.disabled = True
-        # reset the progress indicator
-        self.progress_indicator.clear()
         self.view.update()

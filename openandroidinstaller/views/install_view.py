@@ -168,6 +168,7 @@ This might take a while. At the end your phone will boot into the new OS.
         # disable the call button while the command is running
         self.install_button.disabled = True
         self.install_addons_switch.disabled = True
+        self.error_text.value = ""
         # reset the progress indicators
         self.progress_indicator.clear()
         # reset terminal output

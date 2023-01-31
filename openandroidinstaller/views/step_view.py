@@ -323,7 +323,7 @@ class ProgressIndicator(UserControl):
         result = None
         # get the progress numbers from the output lines
         if (type(line) == str) and line.strip():
-            result = re.search(r"\(\~(\d{1,3})\%\)|(Total xfer: 1\.00x)", line.strip())
+            result = re.search(r"\(\~(\d{1,3})\%\)|(Total xfer: 1\.)", line.strip())
         if result:
             if result.group(1):
                 percentage_done = int(result.group(1))
