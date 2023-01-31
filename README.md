@@ -26,7 +26,7 @@
   </p>
 </div>
 
-> **Warning**: This application is currently in early alpha state, so use at your own risk! I take no responsibility for bricked devices or dead SD cards.
+> **Warning**: This application is currently in alpha state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, thinks might still go wrong.
 
 > **Note**: Unlocking the bootloader will erase all data on your device!
 This also includes your DRM keys, which are stored in the Trim Area partition (also called TA).
