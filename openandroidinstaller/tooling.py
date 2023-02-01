@@ -214,7 +214,7 @@ def adb_twrp_wipe_and_install(
                 yield False
                 return
             break
-    # finally reboot into os
+    # finally reboot into os or to fastboot for flashing addons
     sleep(7)
     if install_addons:
         # TODO: Fix the process for samsung devices
@@ -226,7 +226,7 @@ def adb_twrp_wipe_and_install(
             logger.error("Reboot into bootloader failed.")
             yield False
             return
-        sleep(7)
+        sleep(3)
     else:
         logger.info("Reboot into OS.")
         for line in run_command("adb", ["reboot"], bin_path):  # "shell", "twrp",
@@ -265,17 +265,18 @@ def adb_twrp_install_addons(bin_path: Path, config_path: Path, addons: List[str]
             # TODO: this might sometimes think it failed, but actually it's fine. So skip for now.
             # yield False
             # return
-    # reboot into fastboot
-    sleep(5)
-    logger.info("Boot into fastboot")
+    # finally reboot into os
+    sleep(7)
+    # reboot into the bootloader again
+    logger.info("Rebooting device into bootloader with adb.")
     for line in run_command("adb", ["reboot", "bootloader"], bin_path):
         yield line
     if (type(line) == bool) and not line:
-        logger.error("Booting to fastboot failed.")
+        logger.error("Reboot into bootloader failed.")
         yield False
         return
+    sleep(3)
     # switch active boot partition
-    sleep(7)
     logger.info("Switch active boot partition")
     for line in run_command("fastboot", ["set_active", "other"], bin_path):
         yield line
@@ -283,8 +284,8 @@ def adb_twrp_install_addons(bin_path: Path, config_path: Path, addons: List[str]
         logger.error("Switching boot partition failed.")
         yield False
         return
-    # finally reboot into os
-    sleep(7)
+    sleep(1)
+    # reboot with fastboot
     logger.info("Reboot into OS.")
     for line in run_command("fastboot", ["reboot"], bin_path):
         yield line
