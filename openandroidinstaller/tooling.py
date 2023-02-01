@@ -285,6 +285,13 @@ def adb_twrp_install_addons(bin_path: Path, config_path: Path, addons: List[str]
         yield False
         return
     sleep(1)
+    for line in run_command("fastboot", ["set_active", "other"], bin_path):
+        yield line
+    if (type(line) == bool) and not line:
+        logger.error("Switching boot partition failed.")
+        yield False
+        return
+    sleep(1)
     # reboot with fastboot
     logger.info("Reboot into OS.")
     for line in run_command("fastboot", ["reboot"], bin_path):
