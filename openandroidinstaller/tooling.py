@@ -32,7 +32,9 @@ from loguru import logger
 PLATFORM = sys.platform
 
 
-def run_command(tool: str, command: List[str], bin_path: Path, enable_logging: bool = True) -> CompletedProcess:
+def run_command(
+    tool: str, command: List[str], bin_path: Path, enable_logging: bool = True
+) -> CompletedProcess:
     """Run a command with a tool (adb, fastboot, heimdall)."""
     yield f"${' '.join([tool] + command )}"
     if tool not in ["adb", "fastboot", "heimdall"]:

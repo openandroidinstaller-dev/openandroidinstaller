@@ -46,11 +46,18 @@ class SelectFilesView(BaseView):
         self,
         state: AppState,
         on_confirm: Callable,
+        on_back: Callable,
     ):
         super().__init__(state=state)
         self.on_confirm = on_confirm
+        self.on_back = on_back
 
-    def build(self):
+        self.init_visuals()
+
+    def init_visuals(
+        self,
+    ):
+        """Initialize the stateful visual elements of the view."""
         # dialog box to explain OS images and recovery
         self.dlg_explain_images = AlertDialog(
             modal=True,
@@ -84,10 +91,6 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             shape=CountinuosRectangleBorder(radius=0),
         )
 
-        # download link
-        self.download_link = get_download_link(
-            self.state.config.metadata.get("devicecode", "ERROR")
-        )
         # initialize file pickers
         self.pick_image_dialog = FilePicker(on_result=self.pick_image_result)
         self.pick_recovery_dialog = FilePicker(on_result=self.pick_recovery_result)
@@ -99,6 +102,21 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.confirm_button.disabled = True
         self.pick_recovery_dialog.on_result = self.enable_button_if_ready
         self.pick_image_dialog.on_result = self.enable_button_if_ready
+        # back button
+        self.back_button = ElevatedButton(
+            "Back",
+            on_click=self.on_back,
+            icon=icons.ARROW_BACK,
+            expand=True,
+        )
+
+    def build(self):
+        self.clear()
+
+        # download link
+        self.download_link = get_download_link(
+            self.state.config.metadata.get("devicecode", "ERROR")
+        )
 
         # attach hidden dialogues
         self.right_view.controls.append(self.pick_image_dialog)
@@ -207,7 +225,7 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
                 self.selected_recovery,
                 Divider(),
                 self.info_field,
-                Row([self.confirm_button]),
+                Row([self.back_button, self.confirm_button]),
             ]
         )
         return self.view

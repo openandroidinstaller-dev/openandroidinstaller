@@ -45,28 +45,34 @@ class RequirementsView(BaseView):
         self,
         state: AppState,
         on_confirm: Callable,
+        on_back: Callable,
     ):
         super().__init__(state=state, image="requirements-default.png")
         self.on_confirm = on_confirm
+        self.on_back = on_back
 
-    def open_find_version_dlg(self, e):
-        """Open the dialog to explain how to find the android and firmware version."""
-        self.page.dialog = self.dlg_howto_find_versions
-        self.dlg_howto_find_versions.open = True
-        self.page.update()
+        self.init_visuals()
 
-    def close_find_version_dlg(self, e):
-        """Close the dialog to explain how to find the android and firmware version."""
-        self.dlg_howto_find_versions.open = False
-        self.page.update()
-
-    def build(self):
+    def init_visuals(
+        self,
+    ):
+        """Initialize the stateful visual elements of the view."""
+        # checkboxes list
+        self.checkboxes = []
+        self.checkbox_cards = []
         # continue button
         self.continue_button = ElevatedButton(
             "Continue",
             on_click=self.on_confirm,
             icon=icons.NEXT_PLAN_OUTLINED,
             disabled=True,
+            expand=True,
+        )
+        # back button
+        self.back_button = ElevatedButton(
+            "Back",
+            on_click=self.on_back,
+            icon=icons.ARROW_BACK,
             expand=True,
         )
 
@@ -94,6 +100,10 @@ On some devices, the build version is basically the firmware version.""",
             actions_alignment="end",
             shape=CountinuosRectangleBorder(radius=0),
         )
+
+    def build(self):
+        self.clear()
+
         # create help/info button to show the help dialog
         info_button = OutlinedButton(
             "How to Find the version",
@@ -119,99 +129,109 @@ On some devices, the build version is basically the firmware version.""",
                 Divider(),
             ]
         )
-        self.checkboxes = []
 
-        def enable_continue_button(e):
-            """Enable the continue button if all checkboxes are ticked."""
-            for checkbox in self.checkboxes:
-                if not checkbox.value:
-                    self.continue_button.disabled = True
-                    return
-            logger.info("All requirements ticked. Allow to continue")
-            self.continue_button.disabled = False
-            self.right_view.update()
-
-        # check if there are additional requirements given in the config
-        if self.state.config.requirements:
-            # android version
-            required_android_version = self.state.config.requirements.get("android")
-            if required_android_version:
-                android_checkbox = Checkbox(
-                    label="The required android version is installed. (Or I know the risk of continuing)",
-                    on_change=enable_continue_button,
-                )
-                android_version_check = Card(
-                    Container(
-                        content=Column(
-                            [
-                                Row(
-                                    [
-                                        Text(
-                                            f"Android Version {required_android_version}:",
-                                            style="titleSmall",
-                                        ),
-                                        info_button,
-                                    ],
-                                    alignment="spaceBetween",
-                                ),
-                                Markdown(
-                                    f"""Before following these instructions please ensure that the device is currently using Android {required_android_version} firmware.
+        if not self.checkboxes:
+            # check if there are additional requirements given in the config
+            if self.state.config.requirements:
+                # android version
+                required_android_version = self.state.config.requirements.get("android")
+                if required_android_version:
+                    android_checkbox = Checkbox(
+                        label="The required android version is installed. (Or I know the risk of continuing)",
+                        on_change=self.enable_continue_button,
+                    )
+                    android_version_check = Card(
+                        Container(
+                            content=Column(
+                                [
+                                    Row(
+                                        [
+                                            Text(
+                                                f"Android Version {required_android_version}:",
+                                                style="titleSmall",
+                                            ),
+                                            info_button,
+                                        ],
+                                        alignment="spaceBetween",
+                                    ),
+                                    Markdown(
+                                        f"""Before following these instructions please ensure that the device is currently using Android {required_android_version} firmware.
 If the vendor provided multiple updates for that version, e.g. security updates, make sure you are on the latest!
 If your current installation is newer or older than Android {required_android_version}, please upgrade or downgrade to the required
 version before proceeding (guides can be found on the internet!).
-                    """
-                                ),
-                                android_checkbox,
-                            ]
-                        ),
-                        padding=10,
+                        """
+                                    ),
+                                    android_checkbox,
+                                ]
+                            ),
+                            padding=10,
+                        )
                     )
-                )
-                self.checkboxes.append(android_checkbox)
-                self.right_view.controls.append(android_version_check)
+                    self.checkboxes.append(android_checkbox)
+                    self.checkbox_cards.append(android_version_check)
 
-            # firmware version
-            required_firmware_version = self.state.config.requirements.get("firmware")
-            if required_firmware_version:
-                firmware_checkbox = Checkbox(
-                    label="The required firmware version is installed. (Or I know the risk of continuing)",
-                    on_change=enable_continue_button,
+                # firmware version
+                required_firmware_version = self.state.config.requirements.get(
+                    "firmware"
                 )
-                firmware_version_check = Card(
-                    Container(
-                        content=Column(
-                            [
-                                Row(
-                                    [
-                                        Text(
-                                            f"Firmware Version {required_firmware_version}:",
-                                            style="titleSmall",
-                                        ),
-                                        info_button,
-                                    ],
-                                    alignment="spaceBetween",
-                                ),
-                                Markdown(
-                                    f"""Before following these instructions please ensure that the device is on firmware version {required_firmware_version}.
+                if required_firmware_version:
+                    firmware_checkbox = Checkbox(
+                        label="The required firmware version is installed. (Or I know the risk of continuing)",
+                        on_change=self.enable_continue_button,
+                    )
+                    firmware_version_check = Card(
+                        Container(
+                            content=Column(
+                                [
+                                    Row(
+                                        [
+                                            Text(
+                                                f"Firmware Version {required_firmware_version}:",
+                                                style="titleSmall",
+                                            ),
+                                            info_button,
+                                        ],
+                                        alignment="spaceBetween",
+                                    ),
+                                    Markdown(
+                                        f"""Before following these instructions please ensure that the device is on firmware version {required_firmware_version}.
 To discern this, you can run the command `adb shell getprop ro.build.display.id` on the stock ROM.
 If the device is not on the specified version, please follow the instructions below to install it.
-                    """
-                                ),
-                                firmware_checkbox,
-                            ]
-                        ),
-                        padding=10,
+                        """
+                                    ),
+                                    firmware_checkbox,
+                                ]
+                            ),
+                            padding=10,
+                        )
                     )
-                )
-                self.checkboxes.append(firmware_checkbox)
-                self.right_view.controls.append(firmware_version_check)
+                    self.checkboxes.append(firmware_checkbox)
+                    self.checkbox_cards.append(firmware_version_check)
 
-        # default requirements: battery level
+            battery_checkbox, battery_check_card = self.get_battery_check()
+            self.checkboxes.append(battery_checkbox)
+            self.checkbox_cards.append(battery_check_card)
+
+            lock_checkbox, lock_check_card = self.get_lock_check()
+            self.checkboxes.append(lock_checkbox)
+            self.checkbox_cards.append(lock_check_card)
+
+        # add the checkbox cards
+        self.right_view.controls.extend(self.checkbox_cards)
+
+        # add the final confirm and continue button
+        self.right_view.controls.append(
+            Row([self.back_button, self.continue_button], alignment="center")
+        )
+        return self.view
+
+    def get_battery_check(self):
+        """Get checkbox and card for default requirements: battery level."""
         battery_checkbox = Checkbox(
             label="The battery level is over 80%.",
-            on_change=enable_continue_button,
+            on_change=self.enable_continue_button,
         )
-        battery_version_check = Card(
+        battery_check_card = Card(
             Container(
                 content=Column(
                     [
@@ -227,15 +247,15 @@ Before continuing make sure your device battery level is above 80%.
                 padding=10,
             ),
         )
-        self.checkboxes.append(battery_checkbox)
-        self.right_view.controls.append(battery_version_check)
+        return battery_checkbox, battery_check_card
 
-        # default requirement: disable lock code and fingerprint
+    def get_lock_check(self):
+        """Get the checkbox and card for the default requirement: disable lock code and fingerprint."""
         lock_checkbox = Checkbox(
             label="No lock code or fingerprint lock enabled.",
-            on_change=enable_continue_button,
+            on_change=self.enable_continue_button,
         )
-        lock_check = Card(
+        lock_check_card = Card(
             Container(
                 content=Column(
                     [
@@ -250,9 +270,25 @@ Before continuing make sure your device battery level is above 80%.
                 padding=10,
             ),
         )
-        self.checkboxes.append(lock_checkbox)
-        self.right_view.controls.append(lock_check)
+        return lock_checkbox, lock_check_card
 
-        # add the final confirm and continue button
-        self.right_view.controls.append(Row([self.continue_button], alignment="center"))
-        return self.view
+    def enable_continue_button(self, e):
+        """Enable the continue button if all checkboxes are ticked."""
+        for checkbox in self.checkboxes:
+            if not checkbox.value:
+                self.continue_button.disabled = True
+                return
+        logger.info("All requirements ticked. Allow to continue")
+        self.continue_button.disabled = False
+        self.right_view.update()
+
+    def open_find_version_dlg(self, e):
+        """Open the dialog to explain how to find the android and firmware version."""
+        self.page.dialog = self.dlg_howto_find_versions
+        self.dlg_howto_find_versions.open = True
+        self.page.update()
+
+    def close_find_version_dlg(self, e):
+        """Close the dialog to explain how to find the android and firmware version."""
+        self.dlg_howto_find_versions.open = False
+        self.page.update()

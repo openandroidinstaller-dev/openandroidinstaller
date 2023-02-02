@@ -73,19 +73,22 @@ class MainView(UserControl):
 
         # create default starter views
         welcome_view = WelcomeView(
-            on_confirm=self.confirm,
+            on_confirm=self.to_next_view,
             state=self.state,
         )
         start_view = StartView(
-            on_confirm=self.confirm,
+            on_confirm=self.to_next_view,
+            on_back=self.to_previous_view,
             state=self.state,
         )
         requirements_view = RequirementsView(
-            on_confirm=self.confirm,
+            on_confirm=self.to_next_view,
+            on_back=self.to_previous_view,
             state=self.state,
         )
         select_files_view = SelectFilesView(
-            on_confirm=self.confirm,
+            on_confirm=self.to_next_view,
+            on_back=self.to_previous_view,
             state=self.state,
         )
         # ordered to allow for pop
@@ -98,15 +101,28 @@ class MainView(UserControl):
         # create the final success view
         self.final_view = SuccessView(state=self.state)
 
-        self.state.default_views = self.default_views
-        self.state.final_view = self.final_view
+        # stack of previous default views for the back-button
+        self.previous_views = []
 
     def build(self):
         self.view.controls.append(self.default_views.pop())
         return self.view
 
-    def confirm(self, e):
+    def to_previous_view(self, e):
+        """Method to display the previous view."""
+        # store the current view
+        self.default_views.append(self.view.controls[-1])
+        # clear the current view
+        self.view.controls = []
+        # retrieve the new view and update
+        self.view.controls.append(self.previous_views.pop())
+        logger.info("One step back.")
+        self.view.update()
+
+    def to_next_view(self, e):
         """Confirmation event handler to use in views."""
+        # store the current view
+        self.previous_views.append(self.view.controls[-1])
         # remove all elements from column view
         self.view.controls = []
         # if there are default views left, display them first
@@ -117,13 +133,13 @@ class MainView(UserControl):
                 StepView(
                     step=self.state.steps.pop(0),
                     state=self.state,
-                    on_confirm=self.confirm,
+                    on_confirm=self.to_next_view,
                 )
             )
         else:
             # display the final view
             self.view.controls.append(self.final_view)
-        logger.info("Confirmed.")
+        logger.info("Confirmed and moved to next step.")
         self.view.update()
 
 
@@ -143,13 +159,23 @@ def configure(page: Page):
 def log_version_infos(bin_path):
     """Log the version infos of adb, fastboot and heimdall."""
     # adb
-    adbversion = [line for line in run_command("adb", ["version"], bin_path, enable_logging=False)]
+    adbversion = [
+        line for line in run_command("adb", ["version"], bin_path, enable_logging=False)
+    ]
     logger.info(f"{adbversion[1].strip()}")
     # fastboot
-    fbversion = [line for line in run_command("fastboot", ["--version"], bin_path, enable_logging=False)]
+    fbversion = [
+        line
+        for line in run_command(
+            "fastboot", ["--version"], bin_path, enable_logging=False
+        )
+    ]
     logger.info(f"{fbversion[1].strip()}")
     # heimdall
-    hdversion = [line for line in run_command("heimdall", ["info"], bin_path, enable_logging=False)]
+    hdversion = [
+        line
+        for line in run_command("heimdall", ["info"], bin_path, enable_logging=False)
+    ]
     logger.info(f"Heimdall version: {hdversion[1].strip()}")
 
 
