@@ -137,6 +137,8 @@ Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin/) | | t
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
+OnePlus | 5 | [cheeseburger](https://wiki.lineageos.org/devices/cheeseburger/) | | tested
+OnePlus | 5T | [dumpling](https://wiki.lineageos.org/devices/dumpling/) | | tested
 OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada/) | | tested
 OnePlus | 6T | [fajita](https://wiki.lineageos.org/devices/fajita/) | | tested
 OnePlus | 7 | [guacamoleb](https://wiki.lineageos.org/devices/guacamoleb/) | | tested
