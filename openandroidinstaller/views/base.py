@@ -52,3 +52,10 @@ class BaseView(UserControl):
             ],
             alignment="spaceEvenly",
         )
+
+    def clear(
+        self,
+    ):
+        """Clear the right view."""
+        self.right_view.controls = []
+        self.right_view_header.controls = []

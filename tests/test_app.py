@@ -42,5 +42,5 @@ def test_app():
     state = page.controls[0].state
     state.load_config(device_code="sargo")
     for _ in range(len(state.steps) + 5):
-        page.controls[0].confirm(None)
+        page.controls[0].to_next_view(None)
     assert "SuccessView" in str(page.controls[0].view.controls[0])

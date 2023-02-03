@@ -84,6 +84,7 @@ class StepView(BaseView):
 
         # switch to enable advanced output - here it means show terminal input/output in tool
         def check_advanced_switch(e):
+            logger.info(self.advanced_switch.value)
             """Check the box to enable advanced output."""
             if self.advanced_switch.value:
                 logger.info("Enable advanced output.")
@@ -93,14 +94,16 @@ class StepView(BaseView):
                 logger.info("Disable advanced output.")
                 self.state.advanced = False
                 self.terminal_box.toggle_visibility()
+            self.right_view.update()
 
         self.advanced_switch = Switch(
             label="Advanced output",
             on_change=check_advanced_switch,
             disabled=False,
+            value=self.state.advanced,
         )
         # text box for terminal output
-        self.terminal_box = TerminalBox(expand=True)
+        self.terminal_box = TerminalBox(expand=True, visible=self.state.advanced)
 
         # container for progress indicators
         self.progress_indicator = ProgressIndicator(expand=True)
@@ -269,12 +272,13 @@ class StepView(BaseView):
 
 
 class TerminalBox(UserControl):
-    def __init__(self, expand: bool = True):
+    def __init__(self, expand: bool = True, visible: bool = False):
         super().__init__(expand=expand)
+        self.visible = visible
 
     def build(self):
         self._box = Container(
-            content=Column(scroll="auto", expand=True),
+            content=Column(scroll="auto", expand=True, auto_scroll=True),
             margin=10,
             padding=10,
             alignment=alignment.top_left,
@@ -282,7 +286,7 @@ class TerminalBox(UserControl):
             height=300,
             border_radius=2,
             expand=True,
-            visible=False,
+            visible=self.visible,
         )
         return self._box
 
@@ -299,6 +303,7 @@ class TerminalBox(UserControl):
     def toggle_visibility(self):
         """Toggle the visibility of the terminal box."""
         self._box.visible = not self._box.visible
+        self.visible = not self.visible
         self.update()
 
     def clear(self):

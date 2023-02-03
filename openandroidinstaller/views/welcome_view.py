@@ -38,7 +38,12 @@ class WelcomeView(BaseView):
         super().__init__(state=state, image="connect-to-usb.png")
         self.on_confirm = on_confirm
 
-    def build(self):
+        self.init_visuals()
+
+    def init_visuals(
+        self,
+    ):
+        """Initialize the stateful visual elements of the view."""
         self.continue_button = ElevatedButton(
             "Let's start!",
             on_click=self.on_confirm,
@@ -47,12 +52,18 @@ class WelcomeView(BaseView):
             expand=True,
         )
 
+    def build(self):
+        self.clear()
+
         # build up the main view
         self.right_view_header.controls.extend(
             [get_title("Welcome to the OpenAndroidInstaller!")]
         )
         self.right_view.controls.extend(
             [
+                Text(
+                    "Great that you want to install alternative, open source Android operating systems!"
+                ),
                 Text(
                     "We will walk you through the installation process nice and easy."
                 ),
