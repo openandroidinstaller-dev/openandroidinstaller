@@ -32,7 +32,9 @@ from loguru import logger
 PLATFORM = sys.platform
 
 
-def run_command(tool: str, command: List[str], bin_path: Path) -> CompletedProcess:
+def run_command(
+    tool: str, command: List[str], bin_path: Path, enable_logging: bool = True
+) -> CompletedProcess:
     """Run a command with a tool (adb, fastboot, heimdall)."""
     yield f"${' '.join([tool] + command )}"
     if tool not in ["adb", "fastboot", "heimdall"]:
@@ -45,7 +47,8 @@ def run_command(tool: str, command: List[str], bin_path: Path) -> CompletedProce
     else:
         full_command = [str(bin_path.joinpath(Path(f"{tool}")))] + command
         si = None
-    logger.info(f"Run command: {full_command}")
+    if enable_logging:
+        logger.info(f"Run command: {full_command}")
     # run the command
     with Popen(
         full_command,
@@ -56,7 +59,8 @@ def run_command(tool: str, command: List[str], bin_path: Path) -> CompletedProce
         startupinfo=si,
     ) as p:
         for line in p.stdout:
-            logger.info(line.strip())
+            if enable_logging:
+                logger.info(line.strip())
             yield line
 
     yield p.returncode == 0

@@ -26,7 +26,7 @@
   </p>
 </div>
 
-> **Warning**: This application is currently in early alpha state, so use at your own risk! I take no responsibility for bricked devices or dead SD cards.
+> **Warning**: This application is currently in alpha state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, thinks might still go wrong.
 
 > **Note**: Unlocking the bootloader will erase all data on your device!
 This also includes your DRM keys, which are stored in the Trim Area partition (also called TA).
@@ -36,7 +36,7 @@ If you wish to backup the TA partition first, you can find tutorials related to 
 
 ## Usage
 
-Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
+Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
 
 1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
     - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
@@ -55,7 +55,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04 LTS). W
 
 ## Officially supported devices
 
-Currently, the **we support 45 devices** by various vendors and working on adding more soon!
+Currently, the **we support 48 devices** by various vendors and working on adding more soon!
 
 
 Support for these devices is provided as best effort, but things might still go wrong.
@@ -69,7 +69,10 @@ Samsung | Galaxy J7 2015 | j7elte | | tested
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte/) | SM-A510F | tested
 Samsung | Galaxy A7 2016 | a7xelte | | tested
+Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx/) | | tested
+Samsung | Galaxy S6 Edge | [zeroltexx](https://wiki.lineageos.org/devices/zeroltexx/) | | tested
 Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte/) | SM-G930F | tested
+Samsung | Galaxy S7 Edge | [hero2lte](https://wiki.lineageos.org/devices/hero2lte/) | | tested
 Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte/) | | tested
 Samsung | Galaxy Note 9 | [crownlte](https://wiki.lineageos.org/devices/crownlte/) | | tested
 Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte/) | | tested

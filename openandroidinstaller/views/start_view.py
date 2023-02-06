@@ -46,16 +46,29 @@ class StartView(BaseView):
         self,
         state: AppState,
         on_confirm: Callable,
+        on_back: Callable,
     ):
         super().__init__(state=state, image="connect-to-usb.png")
         self.on_confirm = on_confirm
+        self.on_back = on_back
 
-    def build(self):
+        self.init_visuals()
+
+    def init_visuals(
+        self,
+    ):
+        """Initialize the stateful visual elements of the view."""
         self.continue_button = ElevatedButton(
             "Continue",
             on_click=self.on_confirm,
             icon=icons.NEXT_PLAN_OUTLINED,
             disabled=True,
+            expand=True,
+        )
+        self.back_button = ElevatedButton(
+            "Back",
+            on_click=self.on_back,
+            icon=icons.ARROW_BACK,
             expand=True,
         )
 
@@ -107,6 +120,9 @@ Now you are ready to continue.
             [Text("Detected device:"), self.device_name]
         )
 
+    def build(self):
+        self.clear()
+
         # build up the main view
         self.right_view_header.controls.extend(
             [
@@ -156,6 +172,7 @@ When everything works correctly you should see your device name here and you can
                 ),
                 Row(
                     [
+                        self.back_button,
                         FilledButton(
                             "Search for device",
                             on_click=self.search_devices,

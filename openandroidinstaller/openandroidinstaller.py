@@ -56,6 +56,8 @@ from installer_config import Step
 # where to write the logs
 logger.add("openandroidinstaller.log")
 
+# VERSION number
+VERSION = "0.3.4-alpha"
 
 # detect platform
 PLATFORM = sys.platform
@@ -75,19 +77,22 @@ class MainView(UserControl):
 
         # create default starter views
         welcome_view = WelcomeView(
-            on_confirm=self.confirm,
+            on_confirm=self.to_next_view,
             state=self.state,
         )
         start_view = StartView(
-            on_confirm=self.confirm,
+            on_confirm=self.to_next_view,
+            on_back=self.to_previous_view,
             state=self.state,
         )
         requirements_view = RequirementsView(
-            on_confirm=self.confirm,
+            on_confirm=self.to_next_view,
+            on_back=self.to_previous_view,
             state=self.state,
         )
         select_files_view = SelectFilesView(
-            on_confirm=self.confirm,
+            on_confirm=self.to_next_view,
+            on_back=self.to_previous_view,
             state=self.state,
         )
         # ordered to allow for pop
@@ -99,7 +104,7 @@ class MainView(UserControl):
         ]
 
         # create the install view
-        self.install_view = InstallView(on_confirm=self.confirm, state=self.state)
+        self.install_view = InstallView(on_confirm=self.to_next_view, state=self.state)
 
         # create the final success view
         self.final_view = SuccessView(state=self.state)
@@ -114,8 +119,11 @@ class MainView(UserControl):
         self.state.final_default_views = self.final_default_views
         self.state.final_view = self.final_view
 
+        # stack of previous default views for the back-button
+        self.previous_views = []
+
         # initialize the addon view
-        self.select_addon_view = AddonsView(on_confirm=self.confirm, state=self.state)
+        self.select_addon_view = AddonsView(on_confirm=self.to_next_view, state=self.state)
         self.flash_recovery_view = StepView(
             step=Step(
                 title="Flash custom recovery",
@@ -125,10 +133,10 @@ class MainView(UserControl):
                 img="twrp-start.jpeg",
             ),
             state=self.state,
-            on_confirm=self.confirm,
+            on_confirm=self.to_next_view,
         )
         self.install_addons_view = InstallAddonsView(
-            on_confirm=self.confirm, state=self.state
+            on_confirm=self.to_next_view, state=self.state
         )
         self.state.addon_views = [
             self.install_addons_view,
@@ -140,8 +148,21 @@ class MainView(UserControl):
         self.view.controls.append(self.default_views.pop())
         return self.view
 
-    def confirm(self, e):
+    def to_previous_view(self, e):
+        """Method to display the previous view."""
+        # store the current view
+        self.default_views.append(self.view.controls[-1])
+        # clear the current view
+        self.view.controls = []
+        # retrieve the new view and update
+        self.view.controls.append(self.previous_views.pop())
+        logger.info("One step back.")
+        self.view.update()
+
+    def to_next_view(self, e):
         """Confirmation event handler to use in views."""
+        # store the current view
+        self.previous_views.append(self.view.controls[-1])
         # remove all elements from column view
         self.view.controls = []
         # if there are default views left, display them first
@@ -152,7 +173,7 @@ class MainView(UserControl):
                 StepView(
                     step=self.state.steps.pop(0),
                     state=self.state,
-                    on_confirm=self.confirm,
+                    on_confirm=self.to_next_view,
                 )
             )
         elif self.final_default_views:
@@ -162,7 +183,7 @@ class MainView(UserControl):
         # else:
         #    # display the final view
         #    self.view.controls.append(self.final_view)
-        logger.info("Confirmed.")
+        logger.info("Confirmed and moved to next step.")
         self.view.update()
 
 
@@ -182,19 +203,28 @@ def configure(page: Page):
 def log_version_infos(bin_path):
     """Log the version infos of adb, fastboot and heimdall."""
     # adb
-    adbversion = [line for line in run_command("adb", ["version"], bin_path)]
-    adbversion = "\n".join(adbversion[:1])
-    logger.info(f"{adbversion}")
+    adbversion = [
+        line for line in run_command("adb", ["version"], bin_path, enable_logging=False)
+    ]
+    logger.info(f"{adbversion[1].strip()}")
     # fastboot
-    fbversion = [line for line in run_command("fastboot", ["--version"], bin_path)]
-    logger.info(f"{fbversion[0]}")
+    fbversion = [
+        line
+        for line in run_command(
+            "fastboot", ["--version"], bin_path, enable_logging=False
+        )
+    ]
+    logger.info(f"{fbversion[1].strip()}")
     # heimdall
-    hdversion = [line for line in run_command("heimdall", ["info"], bin_path)]
-    logger.info(f"Heimdall version: {hdversion[0]}")
+    hdversion = [
+        line
+        for line in run_command("heimdall", ["info"], bin_path, enable_logging=False)
+    ]
+    logger.info(f"Heimdall version: {hdversion[1].strip()}")
 
 
 def main(page: Page, test: bool = False, test_config: str = "sargo"):
-    logger.info(f"Running OpenAndroidInstaller on {PLATFORM}")
+    logger.info(f"Running OpenAndroidInstaller version '{VERSION}' on '{PLATFORM}'.")
     log_version_infos(bin_path=BIN_PATH)
     logger.info(100 * "-")
 
@@ -209,7 +239,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         leading_width=56,
         toolbar_height=72,
         elevation=0,
-        title=Text("OpenAndroidInstaller alpha version", style="displaySmall"),
+        title=Text(f"OpenAndroidInstaller version {VERSION}", style="displaySmall"),
         center_title=False,
         bgcolor="#00d886",
         actions=[
