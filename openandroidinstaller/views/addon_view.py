@@ -53,27 +53,19 @@ class AddonsView(BaseView):
         # dialog box to explain OS images and recovery
         self.dlg_explain_addons = AlertDialog(
             modal=True,
-            title=Text("What is an OS image and recovery and why do I need it?"),
+            title=Text("What kind of addons are supported?"),
             content=Markdown(
-                """## OS image or ROM
-An operating system (OS) is system software that manages computer hardware,
-software resources, and provides common services for computer programs. 
-Popular, custom operating systems for mobile devices based on Android are 
-- [LineageOS](https://lineageos.org/)
-- [/e/OS](https://e.foundation/e-os/) or
-- [LineageOS for microG](https://lineage.microg.org/)
-- and many others.
+                """## Google Apps:
+There are different packages of Google Apps available. Most notable
+- [MindTheGapps](https://wiki.lineageos.org/gapps#downloads) and 
+- [NikGApps](https://nikgapps.com/).
 
-Often, the related OS images are called 'ROM'. 'ROM' stands for *R*ead-*o*nly *m*emory,
-which is a type of non-volatile memory used in computers for storing software that is
-rarely changed during the life of the system, also known as firmware.
+These packages are only dependent on your OS version and processor architecture, which can be found on each device specific info page.
+Filenames on MindTheGApps are of the format `MindTheGapps-<AndroidVersion>-<architecture>-<date>_<time>.zip` (with Android 12L being 12.1)
+and NikGApps are of the format `NikGapps-<flavour>-<architecture>-<AndroidVersion>-<date>-signed.zip`.
 
-## Recovery Image
-A custom recovery is used for installing custom software on your device.
-This custom software can include smaller modifications like rooting your device or even
-replacing the firmware of the device with a completely custom ROM.
-
-OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about/).""",
+NikGApps come in different flavours ranging from minimal Google support (core) to the full experience (full).
+""",
                 on_tap_link=lambda e: self.page.launch_url(e.data),
             ),
             actions=[
@@ -99,18 +91,18 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
 
         # create help/info button to show the help dialog
         info_button = OutlinedButton(
-            "What is this?",
+            "What kind of addons?",
             on_click=self.open_explain_addons_dlg,
             expand=True,
             icon=icons.HELP_OUTLINE_OUTLINED,
             icon_color=colors.DEEP_ORANGE_500,
-            tooltip="Get more details on custom operating system images and recoveries.",
+            tooltip="Get more details on what addons are supported.",
         )
 
         # add title
         self.right_view_header.controls.append(
             get_title(
-                "You can select additional addons to install. Otherwise you can safely continue",
+                "You can select additional addons to install.",
                 info_button=info_button,
                 step_indicator_img="steps-header-select.png",
             )
@@ -123,14 +115,14 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.right_view.controls.append(
             Column(
                 [
-                    Text("Here you can download the right GApps for your device."),
+                    Text("Here you can find instructions on how to download the right GApps for your device."),
                     Row(
                         [
                             ElevatedButton(
-                                "Download LineageOS image",
+                                "Download Google Apps",
                                 icon=icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
-                                    "https://wiki.lineageos.org/gapps"
+                                    "https://wiki.lineageos.org/gapps#downloads"
                                 ),
                                 expand=True,
                             ),
@@ -144,10 +136,10 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.right_view.controls.extend(
             [
                 Text("Select addons:", style="titleSmall"),
-                Markdown(
-                    f"""
-The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
-                ),
+                #Markdown(
+                    #f"""
+#The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
+#                ),
                 Row(
                     [
                         FilledButton(

@@ -85,7 +85,7 @@ class InstallAddonsView(BaseView):
         ]
         self.right_view.controls = [
             Markdown(
-                """In the next steps, you finally flash the selected Addons.
+                """In the next steps, you flash the selected Addons.
 
 Confirm to install.
 
