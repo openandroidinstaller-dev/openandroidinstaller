@@ -51,7 +51,6 @@ from views import (
     InstallAddonsView,
 )
 from tooling import run_command
-from installer_config import Step
 
 # where to write the logs
 logger.add("openandroidinstaller.log")
@@ -123,7 +122,9 @@ class MainView(UserControl):
         self.previous_views = []
 
         # initialize the addon view
-        self.select_addon_view = AddonsView(on_confirm=self.to_next_view, state=self.state)
+        self.select_addon_view = AddonsView(
+            on_confirm=self.to_next_view, state=self.state
+        )
         self.install_addons_view = InstallAddonsView(
             on_confirm=self.to_next_view, state=self.state
         )

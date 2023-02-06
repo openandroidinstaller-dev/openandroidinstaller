@@ -155,7 +155,12 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
 
 
 def adb_twrp_wipe_and_install(
-    bin_path: Path, target: str, config_path: Path, is_ab: bool, install_addons=True, recovery: str=None,
+    bin_path: Path,
+    target: str,
+    config_path: Path,
+    is_ab: bool,
+    install_addons=True,
+    recovery: str = None,
 ) -> bool:
     """Wipe and format data with twrp, then flash os image with adb.
 
@@ -322,7 +327,7 @@ def adb_twrp_install_addons(bin_path: Path, addons: List[str], is_ab: bool) -> b
         else:
             yield True
     else:
-        # reboot with adb 
+        # reboot with adb
         logger.info("Reboot into OS.")
         for line in run_command("adb", ["reboot"], bin_path):
             yield line
@@ -394,7 +399,7 @@ def fastboot_reboot(bin_path: Path) -> bool:
         yield True
 
 
-def fastboot_flash_recovery(bin_path: Path, recovery: str, is_ab: bool=True) -> bool:
+def fastboot_flash_recovery(bin_path: Path, recovery: str, is_ab: bool = True) -> bool:
     """Temporarily, flash custom recovery with fastboot."""
     if is_ab:
         logger.info("Boot custom recovery with fastboot.")
@@ -402,7 +407,9 @@ def fastboot_flash_recovery(bin_path: Path, recovery: str, is_ab: bool=True) -> 
             yield line
     else:
         logger.info("Flash custom recovery with fastboot.")
-        for line in run_command("fastboot", ["flash", "recovery", f"{recovery}"], bin_path):
+        for line in run_command(
+            "fastboot", ["flash", "recovery", f"{recovery}"], bin_path
+        ):
             yield line
         if (type(line) == bool) and not line:
             logger.error("Flashing recovery failed.")
@@ -419,6 +426,7 @@ def fastboot_flash_recovery(bin_path: Path, recovery: str, is_ab: bool=True) -> 
         yield False
     else:
         yield True
+
 
 def fastboot_flash_boot(bin_path: Path, recovery: str) -> bool:
     """Temporarily, flash custom recovery with fastboot to boot partition."""
@@ -440,6 +448,7 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> bool:
     else:
         yield True
 
+
 def heimdall_flash_recovery(bin_path: Path, recovery: str) -> bool:
     """Temporarily, flash custom recovery with heimdall."""
     logger.info("Flash custom recovery with heimdall.")
@@ -458,7 +467,7 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
     """Search for a connected device."""
     logger.info(f"Search devices on {platform} with {bin_path}...")
     try:
-        # read device code 
+        # read device code
         if platform in ("linux", "darwin"):
             output = check_output(
                 [
@@ -491,7 +500,8 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
         return device_code
     except CalledProcessError:
         logger.error("Failed to detect a device.")
-        return None 
+        return None
+
 
 def check_ab_partition(platform: str, bin_path: Path) -> Optional[str]:
     """Figure out, if its an a/b-partitioned device."""
@@ -527,7 +537,7 @@ def check_ab_partition(platform: str, bin_path: Path) -> Optional[str]:
             raise Exception(f"Unknown platform {platform}.")
         logger.info(output)
         logger.info("This is an a/b-partitioned device.")
-        return True 
+        return True
     except CalledProcessError:
         logger.info("This is not an a/b-partitioned device.")
-        return False 
+        return False

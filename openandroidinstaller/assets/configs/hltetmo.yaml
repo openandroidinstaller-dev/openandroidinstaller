@@ -22,11 +22,3 @@ steps:
         Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for 
         8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
         hold *Volume Up* + *Home* + *Power*. Confirm when the recovery screen appears.
-  install_os:
-    - type: call_button 
-      content: >
-        In the next steps, you finally flash the selected OS image.
-        Connect your device with your computer with the USB-Cable.
-        This step will format your phone and wipe all the data. It will also remove encryption and delete all files stored 
-        in the internal storage. Then the OS image will be installed. Confirm to run. This might take a while. At the end your phone will boot into the new OS.
-      command: adb_twrp_wipe_and_install

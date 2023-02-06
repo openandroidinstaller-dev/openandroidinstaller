@@ -221,10 +221,13 @@ class StepView(BaseView):
             "fastboot_oem_unlock": fastboot_oem_unlock,
             "fastboot_get_unlock_data": fastboot_get_unlock_data,
             "fastboot_flash_recovery": partial(
-                fastboot_flash_recovery, recovery=self.state.recovery_path, is_ab=self.state.is_ab,
+                fastboot_flash_recovery,
+                recovery=self.state.recovery_path,
+                is_ab=self.state.is_ab,
             ),
             "fastboot_flash_boot": partial(
-                fastboot_flash_boot, recovery=self.state.recovery_path,
+                fastboot_flash_boot,
+                recovery=self.state.recovery_path,
             ),
             "fastboot_reboot": fastboot_reboot,
             "heimdall_flash_recovery": partial(
