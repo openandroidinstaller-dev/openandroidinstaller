@@ -45,6 +45,7 @@ from tooling import (
     adb_sideload,
     adb_twrp_copy_partitions,
     fastboot_flash_recovery,
+    fastboot_flash_boot,
     fastboot_oem_unlock,
     fastboot_reboot,
     fastboot_unlock,
@@ -220,7 +221,10 @@ class StepView(BaseView):
             "fastboot_oem_unlock": fastboot_oem_unlock,
             "fastboot_get_unlock_data": fastboot_get_unlock_data,
             "fastboot_flash_recovery": partial(
-                fastboot_flash_recovery, recovery=self.state.recovery_path
+                fastboot_flash_recovery, recovery=self.state.recovery_path, is_ab=self.state.is_ab,
+            ),
+            "fastboot_flash_boot": partial(
+                fastboot_flash_boot, recovery=self.state.recovery_path,
             ),
             "fastboot_reboot": fastboot_reboot,
             "heimdall_flash_recovery": partial(
@@ -328,7 +332,7 @@ class ProgressIndicator(UserControl):
         result = None
         # get the progress numbers from the output lines
         if (type(line) == str) and line.strip():
-            result = re.search(r"\(\~(\d{1,3})\%\)|(Total xfer: 1\.)", line.strip())
+            result = re.search(r"\(\~(\d{1,3})\%\)|(Total xfer:)", line.strip())
         if result:
             if result.group(1):
                 percentage_done = int(result.group(1))

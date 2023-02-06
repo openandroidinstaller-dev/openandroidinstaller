@@ -88,6 +88,8 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.selected_addons = Text("Selected addons: ")
 
         # initialize and manage button state.
+        # wrap the call to the next step in a call to boot fastboot
+
         self.confirm_button = confirm_button(self.on_confirm)
         # self.confirm_button.disabled = True
         # self.pick_addons_dialog.on_result = self.enable_button_if_ready

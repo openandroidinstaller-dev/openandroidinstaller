@@ -42,6 +42,7 @@ class AppState:
         self.config = None
         self.image_path = None
         self.recovery_path = None
+        self.is_ab = None
 
         # is this still needed?
         self.steps = None

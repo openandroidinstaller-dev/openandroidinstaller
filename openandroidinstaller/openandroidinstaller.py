@@ -124,23 +124,11 @@ class MainView(UserControl):
 
         # initialize the addon view
         self.select_addon_view = AddonsView(on_confirm=self.to_next_view, state=self.state)
-        self.flash_recovery_view = StepView(
-            step=Step(
-                title="Flash custom recovery",
-                type="call_button",
-                content="Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once your phone screen looks like the picture on the left, continue.",
-                command="fastboot_flash_recovery",
-                img="twrp-start.jpeg",
-            ),
-            state=self.state,
-            on_confirm=self.to_next_view,
-        )
         self.install_addons_view = InstallAddonsView(
             on_confirm=self.to_next_view, state=self.state
         )
         self.state.addon_views = [
             self.install_addons_view,
-            self.flash_recovery_view,
             self.select_addon_view,
         ]
 

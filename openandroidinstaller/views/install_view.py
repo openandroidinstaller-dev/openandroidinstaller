@@ -182,6 +182,8 @@ This might take a while. At the end your phone will boot into the new OS.
             config_path=self.state.config_path,
             bin_path=self.state.bin_path,
             install_addons=self.state.install_addons,
+            is_ab=self.state.is_ab,
+            recovery=self.state.recovery_path,
         ):
             # write the line to advanced output terminal
             self.terminal_box.write_line(line)
