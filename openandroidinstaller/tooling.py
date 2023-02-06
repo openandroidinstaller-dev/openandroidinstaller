@@ -277,7 +277,7 @@ def adb_twrp_install_addons(bin_path: Path, addons: List[str], is_ab: bool) -> b
             logger.error("Activating sideload failed.")
             yield False
             return
-        sleep(2)
+        sleep(5)
         # now flash os image
         for line in run_command("adb", ["sideload", f"{addon}"], bin_path):
             yield line
