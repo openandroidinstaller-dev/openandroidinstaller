@@ -266,8 +266,9 @@ def adb_twrp_install_addons(bin_path: Path, addons: List[str], is_ab: bool) -> b
     Only works for twrp recovery.
     """
     logger.info("Install addons with twrp.")
-    if is_ab:
-        sleep(7)
+    sleep(5)
+    logger.info("Sideload and install addons.")
+    for addon in addons:
         # activate sideload
         logger.info("Activate sideload.")
         for line in run_command("adb", ["shell", "twrp", "sideload"], bin_path):
@@ -276,11 +277,8 @@ def adb_twrp_install_addons(bin_path: Path, addons: List[str], is_ab: bool) -> b
             logger.error("Activating sideload failed.")
             yield False
             return
-
-    # now flash os image
-    sleep(5)
-    logger.info("Sideload and install addons.")
-    for addon in addons:
+        sleep(2)
+        # now flash os image
         for line in run_command("adb", ["sideload", f"{addon}"], bin_path):
             yield line
         if (type(line) == bool) and not line:
@@ -288,8 +286,8 @@ def adb_twrp_install_addons(bin_path: Path, addons: List[str], is_ab: bool) -> b
             # TODO: this might sometimes think it failed, but actually it's fine. So skip for now.
             # yield False
             # return
+        sleep(7)
     # finally reboot into os
-    sleep(7)
     if is_ab:
         # reboot into the bootloader again
         logger.info("Rebooting device into bootloader with adb.")
