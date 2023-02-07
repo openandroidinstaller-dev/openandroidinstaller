@@ -67,6 +67,16 @@ class WelcomeView(BaseView):
                 Text(
                     "We will walk you through the installation process nice and easy."
                 ),
+                Markdown(
+                    """
+The following steps are performed in this tool:
+- First, we help you to **get your device ready** for the installation process.
+- Next, you can **select the operating system** you want to install (with guidance).
+- Then, we guide you though the process of **unlocking the bootloader** (if necessary). If you don't know what that means, it will be explained later.
+- As a next step, the **operation system is installed**. At this point you can also **select to install additional software** ("addons") like Google Apps.
+- Finally your device starts your new operating system.
+                """
+                ),
                 Divider(),
                 Markdown(
                     """

@@ -107,13 +107,16 @@ class InstallView(BaseView):
 Connect your device with your computer with the USB-Cable. This step will format your phone and wipe all the data.
 It will also remove encryption and delete all files stored in the internal storage.
 Then the OS image will be installed. Confirm to install.
+
+This might take a while. At the end your phone will boot into the new OS.
     
 #### **Install addons:**
 If you want to install any addons like Google Apps, microg or F-droid, use the toggle below **before** starting the install process!
 After the installation you'll be taken through the process. Note, that this process is still somewhat experimental and using ROMs with
 included Google Apps (like PixelExperience) or MicroG (lineageOS for microg) is recommended.
 
-This might take a while. At the end your phone will boot into the new OS.
+#### **Warning:**
+Don't try to add addons like Google Apps if your OS ROM already has Google Apps or microG included! Otherwise your system will break!
 """
             )
         ]
