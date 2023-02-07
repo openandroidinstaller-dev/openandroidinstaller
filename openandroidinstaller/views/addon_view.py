@@ -65,6 +65,13 @@ Filenames on MindTheGApps are of the format `MindTheGapps-<AndroidVersion>-<arch
 and NikGApps are of the format `NikGapps-<flavour>-<architecture>-<AndroidVersion>-<date>-signed.zip`.
 
 NikGApps come in different flavours ranging from minimal Google support (core) to the full experience (full).
+
+## MicroG
+
+The [MicroG](https://microg.org/) project offers a free-as-in-freedom re-implementation of Google's proprietary Android user space apps and libraries.
+
+The recommended way to install MicroG is to use the zip file provided here:
+- [https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases).
 """,
                 on_tap_link=lambda e: self.page.launch_url(e.data),
             ),
