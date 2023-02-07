@@ -23,6 +23,9 @@ wheels/
 *.egg 
 *.manifest 
 *.spec 
+heimdall/
+libusb-windows/
+openandroidinstaller/bin/
 
 # Log files
 pip-log.txt
