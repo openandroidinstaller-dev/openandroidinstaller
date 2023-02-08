@@ -218,7 +218,6 @@ def adb_twrp_wipe_and_install(
             sleep(1)
             if (type(line) == bool) and not line:
                 yield False
-                return
             break
     # finally reboot into os or to fastboot for flashing addons
     sleep(7)
