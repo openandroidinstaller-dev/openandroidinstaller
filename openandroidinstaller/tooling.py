@@ -61,7 +61,7 @@ def run_command(
         for line in p.stdout:
             if enable_logging:
                 logger.info(line.strip())
-            yield line
+            yield line.strip()
 
     yield p.returncode == 0
 
@@ -82,13 +82,10 @@ def adb_reboot_bootloader(bin_path: Path) -> bool:
     """Reboot the device into bootloader and return success."""
     logger.info("Rebooting device into bootloader with adb.")
     for line in run_command("adb", ["reboot", "bootloader"], bin_path):
+        if (type(line) == bool) and not line:
+            logger.error("Reboot into bootloader failed.")
         yield line
-    if (type(line) == bool) and not line:
-        logger.error("Reboot into bootloader failed.")
-        yield False
-        return
     sleep(1)
-    yield True
 
 
 def adb_reboot_download(bin_path: Path) -> bool:
