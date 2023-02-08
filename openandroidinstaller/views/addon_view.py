@@ -72,6 +72,11 @@ The [MicroG](https://microg.org/) project offers a free-as-in-freedom re-impleme
 
 The recommended way to install MicroG is to use the zip file provided here:
 - [https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases).
+
+## F-Droid Appstore
+
+F-Droid is an installable catalogue of libre software apps for Android. The F-Droid client app makes it easy to browse, install, and keep track of updates on your device.
+You can get the zip file to install this addon here: [https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/).
 """,
                 on_tap_link=lambda e: self.page.launch_url(e.data),
             ),
@@ -122,7 +127,20 @@ The recommended way to install MicroG is to use the zip file provided here:
         self.right_view.controls.append(
             Column(
                 [
-                    Text("Here you can find instructions on how to download the right GApps for your device."),
+                    Text("Here you can download the F-Droid App-Store:"),
+                    Row(
+                        [
+                            ElevatedButton(
+                                "Download F-Droid App-Store",
+                                icon=icons.DOWNLOAD_OUTLINED,
+                                on_click=lambda _: webbrowser.open(
+                                    "https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/"
+                                ),
+                                expand=True,
+                            ),
+                        ]
+                    ),
+                    Text("Here you can find instructions on how to download the right Google apps for your device."),
                     Row(
                         [
                             ElevatedButton(
@@ -130,6 +148,19 @@ The recommended way to install MicroG is to use the zip file provided here:
                                 icon=icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
                                     "https://wiki.lineageos.org/gapps#downloads"
+                                ),
+                                expand=True,
+                            ),
+                        ]
+                    ),
+                    Text("Here you can download MicroG:"),
+                    Row(
+                        [
+                            ElevatedButton(
+                                "Download MicroG",
+                                icon=icons.DOWNLOAD_OUTLINED,
+                                on_click=lambda _: webbrowser.open(
+                                    "https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases"
                                 ),
                                 expand=True,
                             ),

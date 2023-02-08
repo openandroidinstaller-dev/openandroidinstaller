@@ -337,10 +337,10 @@ class ProgressIndicator(UserControl):
         if (type(line) == str) and line.strip():
             result = re.search(r"\(\~(\d{1,3})\%\)|(Total xfer:|adb: failed to read command: Success)", line.strip())
         if result:
-            if result.group(1):
-                percentage_done = int(result.group(1))
-            elif result.group(2):
+            if result.group(2):
                 percentage_done = 100
+            elif result.group(1):
+                percentage_done = int(result.group(1))
 
             # create the progress bar on first occurrence
             if percentage_done == 0:
