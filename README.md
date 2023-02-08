@@ -55,7 +55,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 ## Officially supported devices
 
-Currently, the **we support 48 devices** by various vendors and working on adding more soon!
+Currently, the **we support 51 devices** by various vendors and working on adding more soon!
 
 
 Support for these devices is provided as best effort, but things might still go wrong.
@@ -130,12 +130,15 @@ Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean/) | 
 Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo/) | | tested
 Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev/) | | tested
 Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer/) | | tested
+Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin/) | | tested
 </details>
 
 <details><summary><b>OnePlus</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
+OnePlus | 5 | [cheeseburger](https://wiki.lineageos.org/devices/cheeseburger/) | | tested
+OnePlus | 5T | [dumpling](https://wiki.lineageos.org/devices/dumpling/) | | tested
 OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada/) | | tested
 OnePlus | 6T | [fajita](https://wiki.lineageos.org/devices/fajita/) | | tested
 OnePlus | 7 | [guacamoleb](https://wiki.lineageos.org/devices/guacamoleb/) | | tested

@@ -55,6 +55,8 @@ class InstallerConfig:
         # Sony issues
         "C6603": "yuga",
         # OnePlus issues
+        "OnePlus5": "cheeseburger",
+        "OnePlus5T": "dumpling",
         "OnePlus6": "enchilada",
         "OnePlus6T": "fajita",
         "OnePlus7": "guacamoleb",
