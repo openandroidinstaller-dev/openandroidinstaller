@@ -84,7 +84,6 @@ class StepView(BaseView):
 
         # switch to enable advanced output - here it means show terminal input/output in tool
         def check_advanced_switch(e):
-            logger.info(self.advanced_switch.value)
             """Check the box to enable advanced output."""
             if self.advanced_switch.value:
                 logger.info("Enable advanced output.")
