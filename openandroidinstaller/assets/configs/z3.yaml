@@ -39,12 +39,4 @@ steps:
       command: adb_reboot_bootloader
     - type: call_button
       content: Next, you need to flash a custom recovery image. Press the button to flash the selected image. Then continue.
-      command: fastboot_flash_recovery
-  install_os:
-    - type: call_button 
-      content: >
-        In the next steps, you finally flash the selected OS image.
-        Connect your device with your computer with the USB-Cable.
-        This step will format your phone and wipe all the data. It will also remove encryption and delete all files stored 
-        in the internal storage. Then the OS image will be installed. Confirm to run. This might take a while. At the end your phone will boot into the new OS.
-      command: adb_twrp_wipe_and_install
+      command: fastboot_flash_boot

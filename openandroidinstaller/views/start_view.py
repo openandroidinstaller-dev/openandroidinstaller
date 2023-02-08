@@ -13,6 +13,7 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import copy
 from loguru import logger
 from typing import Callable
 
@@ -36,7 +37,7 @@ from flet.buttons import CountinuosRectangleBorder
 from views import BaseView
 from app_state import AppState
 from widgets import get_title
-from tooling import search_device
+from tooling import search_device, check_ab_partition
 from installer_config import InstallerConfig
 
 
@@ -98,17 +99,13 @@ Now you are ready to continue.
             """Enable skipping unlocking the bootloader if selected."""
             if self.bootloader_switch.value:
                 logger.info("Skipping bootloader unlocking.")
-                self.state.steps = (
-                    self.state.config.flash_recovery + self.state.config.install_os
-                )
+                self.state.steps = copy.deepcopy(self.state.config.flash_recovery)
                 self.state.num_total_steps = len(self.state.steps)
             else:
                 logger.info("Enabled unlocking the bootloader again.")
-                self.state.steps = (
+                self.state.steps = copy.deepcopy(
                     self.state.config.unlock_bootloader
-                    + self.state.config.flash_recovery
-                    + self.state.config.install_os
-                )
+                ) + copy.deepcopy(self.state.config.flash_recovery)
                 self.state.num_total_steps = len(self.state.steps)
 
         self.bootloader_switch = Switch(
@@ -163,6 +160,9 @@ Now
 - **connect your device to this computer via USB** and
 - **allow USB debugging in the pop-up on your phone**.
 - Then **press the button 'Search device'**.
+- If you **already unlocked the bootloader** of your device, please toggle the switch below, to skip the procedure.
+If you don't know what this means, you most likely don't need to do anything and you can just continue.
+
 When everything works correctly you should see your device name here and you can continue.
                 """
                 ),
@@ -207,12 +207,15 @@ When everything works correctly you should see your device name here and you can
         # search the device
         if self.state.test:
             # this only happens for testing
-            device_code = self.state.test_config
+            device_code, is_ab = self.state.test_config, True
             logger.info(
                 f"Running search in development mode and loading config {device_code}.yaml."
             )
         else:
             device_code = search_device(
+                platform=self.state.platform, bin_path=self.state.bin_path
+            )
+            is_ab = check_ab_partition(
                 platform=self.state.platform, bin_path=self.state.bin_path
             )
             if device_code:
@@ -230,6 +233,8 @@ When everything works correctly you should see your device name here and you can
             self.device_name.value = device_code
             # load config from file
             self.state.load_config(device_code)
+            # write ab-info to state
+            self.state.is_ab = is_ab
             if self.state.config:
                 device_name = self.state.config.metadata.get(
                     "devicename", "No device name in config."

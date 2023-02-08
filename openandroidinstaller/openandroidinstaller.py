@@ -45,7 +45,10 @@ from views import (
     SuccessView,
     StartView,
     RequirementsView,
+    InstallView,
     WelcomeView,
+    AddonsView,
+    InstallAddonsView,
 )
 from tooling import run_command
 
@@ -53,7 +56,7 @@ from tooling import run_command
 logger.add("openandroidinstaller.log")
 
 # VERSION number
-VERSION = "0.3.4-alpha"
+VERSION = "0.4.0-beta"
 
 # detect platform
 PLATFORM = sys.platform
@@ -98,11 +101,37 @@ class MainView(UserControl):
             start_view,
             welcome_view,
         ]
+
+        # create the install view
+        self.install_view = InstallView(on_confirm=self.to_next_view, state=self.state)
+
         # create the final success view
         self.final_view = SuccessView(state=self.state)
 
+        # final default views, ordered to allow to pop
+        self.final_default_views = [
+            self.final_view,
+            self.install_view,
+        ]
+
+        self.state.default_views = self.default_views
+        self.state.final_default_views = self.final_default_views
+        self.state.final_view = self.final_view
+
         # stack of previous default views for the back-button
         self.previous_views = []
+
+        # initialize the addon view
+        self.select_addon_view = AddonsView(
+            on_confirm=self.to_next_view, state=self.state
+        )
+        self.install_addons_view = InstallAddonsView(
+            on_confirm=self.to_next_view, state=self.state
+        )
+        self.state.addon_views = [
+            self.install_addons_view,
+            self.select_addon_view,
+        ]
 
     def build(self):
         self.view.controls.append(self.default_views.pop())
@@ -136,9 +165,13 @@ class MainView(UserControl):
                     on_confirm=self.to_next_view,
                 )
             )
-        else:
-            # display the final view
-            self.view.controls.append(self.final_view)
+        elif self.final_default_views:
+            # here we expect the install view to populate the step views again if necessary
+            self.view.controls.append(self.final_default_views.pop())
+
+        # else:
+        #    # display the final view
+        #    self.view.controls.append(self.final_view)
         logger.info("Confirmed and moved to next step.")
         self.view.update()
 
