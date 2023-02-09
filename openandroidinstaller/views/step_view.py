@@ -334,7 +334,10 @@ class ProgressIndicator(UserControl):
         result = None
         # get the progress numbers from the output lines
         if (type(line) == str) and line.strip():
-            result = re.search(r"\(\~(\d{1,3})\%\)|(Total xfer:|adb: failed to read command: Success)", line.strip())
+            result = re.search(
+                r"\(\~(\d{1,3})\%\)|(Total xfer:|adb: failed to read command: Success)",
+                line.strip(),
+            )
         if result:
             if result.group(2):
                 percentage_done = 100

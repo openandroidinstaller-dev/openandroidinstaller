@@ -21,7 +21,6 @@ from subprocess import (
     PIPE,
     STDOUT,
     CalledProcessError,
-    CompletedProcess,
     check_output,
 )
 import shlex
@@ -70,7 +69,7 @@ def run_command(
     yield p.returncode == 0
 
 
-def add_logging(step_desc: str, return_if_fail: bool=False):
+def add_logging(step_desc: str, return_if_fail: bool = False):
     def logging_decorator(func):
         def logging(*args, **kwargs):
             logger.info(step_desc)
@@ -80,8 +79,9 @@ def add_logging(step_desc: str, return_if_fail: bool=False):
                     if return_if_fail:
                         return
                 yield line
-            
+
         return logging
+
     return logging_decorator
 
 
@@ -129,7 +129,10 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
     # now sideload the script
     sleep(5)
     logger.info("Sideload the copy_partitions script")
-    for line in adb_sideload(bin_path=bin_path, target=f"{config_path.parent.joinpath(Path('copy-partitions-20220613-signed.zip'))}"):
+    for line in adb_sideload(
+        bin_path=bin_path,
+        target=f"{config_path.parent.joinpath(Path('copy-partitions-20220613-signed.zip'))}",
+    ):
         yield line
     sleep(10)
     # reboot into the bootloader again

@@ -140,7 +140,9 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                             ),
                         ]
                     ),
-                    Text("Here you can find instructions on how to download the right Google apps for your device."),
+                    Text(
+                        "Here you can find instructions on how to download the right Google apps for your device."
+                    ),
                     Row(
                         [
                             ElevatedButton(
@@ -174,10 +176,10 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
         self.right_view.controls.extend(
             [
                 Text("Select addons:", style="titleSmall"),
-                #Markdown(
-                    #f"""
-#The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
-#                ),
+                # Markdown(
+                # f"""
+                # The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
+                #                ),
                 Row(
                     [
                         FilledButton(
