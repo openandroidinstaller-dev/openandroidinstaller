@@ -81,6 +81,7 @@ class InstallerConfig:
         self.metadata = metadata
         self.requirements = requirements
         self.device_code = metadata.get("devicecode")
+        self.twrp_link = metadata.get("twrp-link")
         inverted_mapping = dict(map(reversed, self.device_code_mapping.items()))
         self.alternative_device_code = inverted_mapping.get(
             self.device_code, self.device_code
@@ -175,6 +176,7 @@ def validate_config(config: str) -> bool:
                 "maintainer": str,
                 "devicename": str,
                 "devicecode": str,
+                schema.Optional("twrp-link"): str,
             },
             schema.Optional("requirements"): {
                 schema.Optional("android"): schema.Or(str, int),
