@@ -252,8 +252,7 @@ def adb_twrp_install_addons(bin_path: Path, addons: List[str], is_ab: bool) -> b
         sleep(5)
         # now flash os image
         for line in adb_sideload(bin_path=bin_path, target=addon):
-            if line:
-                yield line
+            yield line
         sleep(7)
     # finally reboot into os
     if is_ab:
