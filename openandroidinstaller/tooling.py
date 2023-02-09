@@ -70,9 +70,14 @@ def run_command(
 
 
 def add_logging(step_desc: str, return_if_fail: bool = False):
+    """Logging decorator to wrap functions that yield lines.
+
+    Logs the `step_desc`.
+    """
+
     def logging_decorator(func):
         def logging(*args, **kwargs):
-            logger.info(step_desc)
+            logger.info(f"{step_desc} - Paramters: {kwargs}")
             for line in func(*args, **kwargs):
                 if (type(line) == bool) and not line:
                     logger.error(f"{step_desc} Failed!")
@@ -143,6 +148,20 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
     return True
 
 
+@add_logging("Perform a factory reset with adb and twrp.", return_if_fail=True)
+def adb_twrp_format_data(bin_path: Path):
+    """Perform a factory reset with twrp and adb."""
+    for line in run_command("adb shell twrp format data", bin_path):
+        yield line
+
+
+@add_logging("Wipe the selected partition with adb and twrp.", return_if_fail=True)
+def adb_twrp_wipe_partition(bin_path: Path, partition: str):
+    """Perform a factory reset with twrp and adb."""
+    for line in run_command("adb shell twrp wipe {partition}", bin_path):
+        yield line
+
+
 def adb_twrp_wipe_and_install(
     bin_path: Path,
     target: str,
@@ -158,94 +177,60 @@ def adb_twrp_wipe_and_install(
     logger.info("Wipe and format data with twrp, then install os image.")
     sleep(7)
     # now perform a factory reset
-    for line in run_command("adb", ["shell", "twrp", "format", "data"], bin_path):
+    for line in adb_twrp_format_data(bin_path):
         yield line
-    if (type(line) == bool) and not line:
-        logger.error("Formatting data failed.")
-        yield False
-        return
+
     sleep(1)
     # wipe some partitions
     for partition in ["cache", "system"]:
-        for line in run_command("adb", ["shell", "twrp", "wipe", partition], bin_path):
-            yield not line
+        for line in adb_twrp_wipe_partition(bin_path=bin_path, partition=partition):
+            yield line
         sleep(1)
-        if (type(line) == bool) and not line:
-            logger.error(f"Wiping {partition} failed.")
-            yield False
-            return
+
     # activate sideload
     logger.info("Wiping is done, now activate sideload.")
-    for line in run_command("adb", ["shell", "twrp", "sideload"], bin_path):
+    for line in activate_sideload(bin_path=bin_path):
         yield line
-    if (type(line) == bool) and not line:
-        logger.error("Activating sideload failed.")
-        yield False
-        return
     # now flash os image
     sleep(5)
     logger.info("Sideload and install os image.")
-    for line in run_command("adb", ["sideload", f"{target}"], bin_path):
-        yield line
-    if (type(line) == bool) and not line:
-        logger.error(f"Sideloading {target} failed.")
-        # TODO: this might sometimes think it failed, but actually it's fine. So skip for now.
-        # yield False
-        # return
+    for line in adb_sideload(bin_path=bin_path, target=target):
+        if line:
+            yield line
     # wipe some cache partitions
     sleep(7)
     for partition in ["dalvik", "cache"]:
-        for line in run_command("adb", ["shell", "twrp", "wipe", partition], bin_path):
+        for line in adb_twrp_wipe_partition(bin_path=bin_path, partition=partition):
             yield line
-        sleep(1)
         if (type(line) == bool) and not line:
             logger.error(f"Wiping {partition} failed.")
             # TODO: if this fails, a fix can be to just sideload something and then adb reboot
-            for line in run_command(
-                "adb",
-                ["sideload", f"{config_path.parent.joinpath(Path('helper.txt'))}"],
-                bin_path,
+            sleep(1)
+            for line in adb_sideload(
+                bin_path=bin_path,
+                target=f"{config_path.parent.joinpath(Path('helper.txt'))}",
             ):
                 yield line
             sleep(1)
-            if (type(line) == bool) and not line:
-                yield False
             break
     # finally reboot into os or to fastboot for flashing addons
     sleep(7)
     if install_addons:
         if is_ab:
             # reboot into the bootloader again
-            logger.info("Rebooting device into bootloader with adb.")
-            for line in run_command("adb", ["reboot", "bootloader"], bin_path):
+            for line in adb_reboot_bootloader(bin_path):
                 yield line
-            if (type(line) == bool) and not line:
-                logger.error("Reboot into bootloader failed.")
-                yield False
-                return
             sleep(3)
             # boot to TWRP again
-            logger.info("Boot custom recovery with fastboot.")
-            for line in run_command("fastboot", ["boot", f"{recovery}"], bin_path):
+            for line in fastboot_flash_boot(bin_path=bin_path, recovery=recovery):
                 yield line
-            if (type(line) == bool) and not line:
-                logger.error("Reboot into bootloader failed.")
-                yield False
-                return
             sleep(7)
         else:
             # if not an a/b-device just stay in twrp
             pass
     else:
-        logger.info("Reboot into OS.")
-        for line in run_command("adb", ["reboot"], bin_path):
+        for line in adb_reboot(bin_path=bin_path):
             yield line
-        if (type(line) == bool) and not line:
-            logger.error("Rebooting failed.")
-            yield False
-            return
-        else:
-            yield True
 
 
 def adb_twrp_install_addons(bin_path: Path, addons: List[str], is_ab: bool) -> bool:
@@ -259,70 +244,42 @@ def adb_twrp_install_addons(bin_path: Path, addons: List[str], is_ab: bool) -> b
     for addon in addons:
         # activate sideload
         logger.info("Activate sideload.")
-        for line in run_command("adb", ["shell", "twrp", "sideload"], bin_path):
+        for line in activate_sideload(bin_path=bin_path):
             yield line
-        if (type(line) == bool) and not line:
-            logger.error("Activating sideload failed.")
-            yield False
-            return
         sleep(5)
         # now flash os image
-        for line in run_command("adb", ["sideload", f"{addon}"], bin_path):
-            yield line
-        if (type(line) == bool) and not line:
-            logger.error(f"Sideloading {addon} failed.")
-            # TODO: this might sometimes think it failed, but actually it's fine. So skip for now.
-            # yield False
-            # return
+        for line in adb_sideload(bin_path=bin_path, target=addon):
+            if line:
+                yield line
         sleep(7)
     # finally reboot into os
     if is_ab:
         # reboot into the bootloader again
-        logger.info("Rebooting device into bootloader with adb.")
-        for line in run_command("adb", ["reboot", "bootloader"], bin_path):
+        for line in adb_reboot_bootloader(bin_path=bin_path):
             yield line
-        if (type(line) == bool) and not line:
-            logger.error("Reboot into bootloader failed.")
-            yield False
-            return
         sleep(3)
         # switch active boot partition
-        logger.info("Switch active boot partition")
-        for line in run_command("fastboot", ["set_active", "other"], bin_path):
+        for line in fastboot_switch_partition(bin_path=bin_path):
             yield line
-        if (type(line) == bool) and not line:
-            logger.error("Switching boot partition failed.")
-            yield False
-            return
         sleep(1)
-        for line in run_command("fastboot", ["set_active", "other"], bin_path):
+        for line in fastboot_switch_partition(bin_path=bin_path):
             yield line
-        if (type(line) == bool) and not line:
-            logger.error("Switching boot partition failed.")
-            yield False
-            return
         sleep(1)
         # reboot with fastboot
         logger.info("Reboot into OS.")
-        for line in run_command("fastboot", ["reboot"], bin_path):
+        for line in fastboot_reboot(bin_path=bin_path):
             yield line
-        if (type(line) == bool) and not line:
-            logger.error("Rebooting failed.")
-            yield False
-            return
-        else:
-            yield True
     else:
         # reboot with adb
-        logger.info("Reboot into OS.")
-        for line in run_command("adb", ["reboot"], bin_path):
+        for line in adb_reboot(bin_path=bin_path):
             yield line
-        if (type(line) == bool) and not line:
-            logger.error("Rebooting failed.")
-            yield False
-            return
-        else:
-            yield True
+
+
+@add_logging("Switch active boot partitions.", return_if_fail=True)
+def fastboot_switch_partition(bin_path: Path) -> Union[str, bool]:
+    """Switch the active boot partition with fastboot."""
+    for line in run_command("fastboot set_active other", bin_path):
+        yield line
 
 
 @add_logging("Unlock the device with fastboot and code.")
@@ -364,13 +321,11 @@ def fastboot_flash_recovery(bin_path: Path, recovery: str, is_ab: bool = True) -
     """Temporarily, flash custom recovery with fastboot."""
     if is_ab:
         logger.info("Boot custom recovery with fastboot.")
-        for line in run_command("fastboot", ["boot", f"{recovery}"], bin_path):
+        for line in run_command(f"fastboot boot {recovery}", bin_path):
             yield line
     else:
         logger.info("Flash custom recovery with fastboot.")
-        for line in run_command(
-            "fastboot", ["flash", "recovery", f"{recovery}"], bin_path
-        ):
+        for line in run_command(f"fastboot flash recovery {recovery}", bin_path):
             yield line
         if (type(line) == bool) and not line:
             logger.error("Flashing recovery failed.")
@@ -379,7 +334,7 @@ def fastboot_flash_recovery(bin_path: Path, recovery: str, is_ab: bool = True) -
             yield True
         # reboot
         logger.info("Boot into TWRP with fastboot.")
-        for line in run_command("fastboot", ["reboot", "recovery"], bin_path):
+        for line in run_command("fastboot reboot recovery", bin_path):
             yield line
 
     if (type(line) == bool) and not line:
@@ -392,7 +347,7 @@ def fastboot_flash_recovery(bin_path: Path, recovery: str, is_ab: bool = True) -
 def fastboot_flash_boot(bin_path: Path, recovery: str) -> bool:
     """Temporarily, flash custom recovery with fastboot to boot partition."""
     logger.info("Flash custom recovery with fastboot.")
-    for line in run_command("fastboot", ["flash", "boot", f"{recovery}"], bin_path):
+    for line in run_command(f"fastboot flash boot {recovery}", bin_path):
         yield line
     if (type(line) == bool) and not line:
         logger.error("Flashing recovery failed.")
@@ -401,7 +356,7 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> bool:
         yield True
     # reboot
     logger.info("Boot into TWRP with fastboot.")
-    for line in run_command("fastboot", ["reboot"], bin_path):
+    for line in run_command("fastboot reboot", bin_path):
         yield line
     if (type(line) == bool) and not line:
         logger.error("Booting recovery failed.")
