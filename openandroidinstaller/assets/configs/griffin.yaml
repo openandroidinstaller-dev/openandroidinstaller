@@ -44,11 +44,3 @@ steps:
     - type: call_button
       content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_flash_recovery
-  install_os:
-    - type: call_button
-      content: >
-        In this last step, you finally flash the selected OS image.
-        Wait until the TWRP screen appears. Then run the command.
-        This step will format your phone and wipe all the data. It will also remove encryption and delete all files stored
-        in the internal storage. Then the OS image will be installed. Confirm to run. This might take a while. At the end your phone will boot into the new OS.
-      command: adb_twrp_wipe_and_install
