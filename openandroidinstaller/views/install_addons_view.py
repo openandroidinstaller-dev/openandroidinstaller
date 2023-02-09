@@ -34,8 +34,9 @@ from tooling import adb_twrp_install_addons
 from widgets import (
     confirm_button,
     get_title,
+    TerminalBox,
+    ProgressIndicator,
 )
-from views.step_view import TerminalBox, ProgressIndicator
 
 
 class InstallAddonsView(BaseView):

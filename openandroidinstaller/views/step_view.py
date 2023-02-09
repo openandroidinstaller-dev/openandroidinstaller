@@ -17,21 +17,15 @@ from loguru import logger
 from time import sleep
 from typing import Callable
 from functools import partial
-import regex as re
 
 from flet import (
-    UserControl,
     Column,
     ElevatedButton,
     Row,
     Text,
     icons,
     TextField,
-    Container,
     Switch,
-    alignment,
-    ProgressBar,
-    ProgressRing,
     colors,
 )
 
@@ -58,6 +52,8 @@ from widgets import (
     confirm_button,
     get_title,
     link_button,
+    TerminalBox,
+    ProgressIndicator,
 )
 
 
@@ -264,118 +260,3 @@ class StepView(BaseView):
         # reset the progress indicator (let the progressbar stay for the install command)
         self.progress_indicator.clear()
         self.view.update()
-
-
-class TerminalBox(UserControl):
-    def __init__(self, expand: bool = True, visible: bool = False):
-        super().__init__(expand=expand)
-        self.visible = visible
-
-    def build(self):
-        self._box = Container(
-            content=Column(scroll="auto", expand=True, auto_scroll=True),
-            margin=10,
-            padding=10,
-            alignment=alignment.top_left,
-            bgcolor=colors.BLACK38,
-            height=300,
-            border_radius=2,
-            expand=True,
-            visible=self.visible,
-        )
-        return self._box
-
-    def write_line(self, line: str):
-        """
-        Write the line to the window box and update.
-
-        Ignores empty lines.
-        """
-        if (type(line) == str) and line.strip():
-            self._box.content.controls.append(Text(f">{line.strip()}", selectable=True))
-            self.update()
-
-    def toggle_visibility(self):
-        """Toggle the visibility of the terminal box."""
-        self._box.visible = not self._box.visible
-        self.visible = not self.visible
-        self.update()
-
-    def clear(self):
-        """Clear terminal output."""
-        self._box.content.controls = []
-        self.update()
-
-    def update(self):
-        """Update the view."""
-        self._box.update()
-
-
-class ProgressIndicator(UserControl):
-    def __init__(self, expand: bool = True):
-        super().__init__(expand=expand)
-        # placeholder for the flashing progressbar
-        self.progress_bar = None
-        # progress ring to display
-        self.progress_ring = None
-
-    def build(self):
-        self._container = Container(
-            content=Column(scroll="auto", expand=True),
-            margin=10,
-            alignment=alignment.center,
-            height=50,
-            expand=True,
-            visible=True,
-        )
-        return self._container
-
-    def display_progress_bar(self, line: str):
-        """Display and update the progress bar for the given line."""
-        percentage_done = None
-        result = None
-        # get the progress numbers from the output lines
-        if (type(line) == str) and line.strip():
-            result = re.search(
-                r"\(\~(\d{1,3})\%\)|(Total xfer:|adb: failed to read command: Success)",
-                line.strip(),
-            )
-        if result:
-            if result.group(2):
-                percentage_done = 100
-            elif result.group(1):
-                percentage_done = int(result.group(1))
-
-            # create the progress bar on first occurrence
-            if percentage_done == 0:
-                self.progress_bar = ProgressBar(
-                    width=500, bar_height=32, color="#00d886", bgcolor="#eeeeee"
-                )
-                self.percentage_text = Text(f"{percentage_done}%")
-                self._container.content.controls.append(
-                    Row([self.percentage_text, self.progress_bar])
-                )
-            # update the progress bar
-            if self.progress_bar:
-                self.progress_bar.value = percentage_done / 100
-                self.percentage_text.value = f"{percentage_done}%"
-
-    def display_progress_ring(
-        self,
-    ):
-        """Display a progress ring to signal progress."""
-        if not self.progress_ring:
-            self.progress_ring = ProgressRing(color="#00d886")
-            self._container.content.controls.append(self.progress_ring)
-            self._container.update()
-
-    def clear(self):
-        """Clear output."""
-        self._container.content.controls = []
-        self.progress_ring = None
-        self.progress_bar = None
-        self.update()
-
-    def update(self):
-        """Update the view."""
-        self._container.update()
