@@ -195,24 +195,25 @@ def adb_twrp_wipe_and_install(
     sleep(5)
     logger.info("Sideload and install os image.")
     for line in adb_sideload(bin_path=bin_path, target=target):
-        if line:
-            yield line
+        yield line
     # wipe some cache partitions
     sleep(7)
     for partition in ["dalvik", "cache"]:
-        for line in adb_twrp_wipe_partition(bin_path=bin_path, partition=partition):
+        for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
             yield line
+        sleep(1)
         if (type(line) == bool) and not line:
             logger.error(f"Wiping {partition} failed.")
             # TODO: if this fails, a fix can be to just sideload something and then adb reboot
-            sleep(1)
-            for line in adb_sideload(
-                bin_path=bin_path,
-                target=f"{config_path.parent.joinpath(Path('helper.txt'))}",
+            for line in run_command(
+                f"adb sideload {config_path.parent.joinpath(Path('helper.txt'))}",
+                bin_path,
             ):
                 yield line
-            sleep(1)
+            if (type(line) == bool) and not line:
+                yield False
             break
+        sleep(2)
     # finally reboot into os or to fastboot for flashing addons
     sleep(7)
     if install_addons:
@@ -222,7 +223,9 @@ def adb_twrp_wipe_and_install(
                 yield line
             sleep(3)
             # boot to TWRP again
-            for line in fastboot_flash_boot(bin_path=bin_path, recovery=recovery):
+            for line in fastboot_flash_recovery(
+                bin_path=bin_path, recovery=recovery, is_ab=is_ab
+            ):
                 yield line
             sleep(7)
         else:
@@ -317,7 +320,10 @@ def fastboot_reboot(bin_path: Path) -> Union[str, bool]:
         yield line
 
 
-def fastboot_flash_recovery(bin_path: Path, recovery: str, is_ab: bool = True) -> bool:
+@add_logging("Flash or boot custom recovery with fastboot.")
+def fastboot_flash_recovery(
+    bin_path: Path, recovery: str, is_ab: bool = True
+) -> Union[str, bool]:
     """Temporarily, flash custom recovery with fastboot."""
     if is_ab:
         logger.info("Boot custom recovery with fastboot.")
@@ -336,12 +342,6 @@ def fastboot_flash_recovery(bin_path: Path, recovery: str, is_ab: bool = True) -
         logger.info("Boot into TWRP with fastboot.")
         for line in run_command("fastboot reboot recovery", bin_path):
             yield line
-
-    if (type(line) == bool) and not line:
-        logger.error("Booting recovery failed.")
-        yield False
-    else:
-        yield True
 
 
 def fastboot_flash_boot(bin_path: Path, recovery: str) -> bool:

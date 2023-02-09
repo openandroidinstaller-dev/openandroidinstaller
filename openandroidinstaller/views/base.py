@@ -34,7 +34,7 @@ class BaseView(UserControl):
         # right part of the display, add content here.
         self.right_view_header = Column(width=self.column_width, height=100, spacing=30)
         self.right_view = Column(
-            alignment="center", width=self.column_width, height=650
+            alignment="center", width=self.column_width, height=650, scroll="auto"
         )
         # left part of the display: used for displaying the images
         self.left_view = Column(
