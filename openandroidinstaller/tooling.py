@@ -17,7 +17,6 @@ import sys
 from pathlib import Path
 import subprocess
 from subprocess import (
-    Popen,
     PIPE,
     STDOUT,
     CalledProcessError,
@@ -52,7 +51,7 @@ def run_command(
     if enable_logging:
         logger.info(f"Run command: {full_command}")
     # run the command
-    with Popen(
+    with subprocess.Popen(
         full_command,
         stdout=PIPE,
         stderr=STDOUT,
@@ -82,6 +81,7 @@ def add_logging(step_desc: str, return_if_fail: bool = False):
                 if (type(line) == bool) and not line:
                     logger.error(f"{step_desc} Failed!")
                     if return_if_fail:
+                        yield False
                         return
                 yield line
 
