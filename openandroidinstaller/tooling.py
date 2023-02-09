@@ -102,6 +102,7 @@ def adb_reboot_bootloader(bin_path: Path) -> Union[str, bool]:
     """Reboot the device into bootloader and return success."""
     for line in run_command("adb reboot bootloader", bin_path):
         yield line
+    sleep(1)
 
 
 @add_logging("Rebooting device into download mode with adb.")

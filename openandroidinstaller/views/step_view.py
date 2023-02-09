@@ -195,6 +195,8 @@ class StepView(BaseView):
 
         Some parts of the command are changed by placeholders.
         """
+        # clean the previous error display
+        self.error_text.value = ""
         # disable the call button while the command is running
         self.call_button.disabled = True
         # reset the progress indicators
