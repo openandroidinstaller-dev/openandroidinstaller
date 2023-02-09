@@ -2,6 +2,7 @@ metadata:
   maintainer: SirRGB
   devicename: OnePlus 5
   devicecode: cheeseburger
+  twrp-link: cheeseburger_dumpling
 steps:
   unlock_bootloader:
     - type: call_button

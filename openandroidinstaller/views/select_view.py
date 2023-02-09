@@ -145,6 +145,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.info_field = Row()
         # if there is an available download, show the button to the page
         if self.download_link:
+            twrp_download_link = f"https://dl.twrp.me/{self.state.config.twrp_link if self.state.config.twrp_link else self.state.config.device_code}"
             self.right_view.controls.append(Divider())
             self.right_view.controls.append(
                 Column(
@@ -166,7 +167,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                                     "Download TWRP recovery",
                                     icon=icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
-                                        f"https://dl.twrp.me/{self.state.config.device_code}"
+                                        twrp_download_link
                                     ),
                                     expand=True,
                                 ),

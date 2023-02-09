@@ -55,7 +55,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 ## Officially supported devices
 
-Currently, the **we support 51 devices** by various vendors and working on adding more soon!
+Currently, the **we support 52 devices** by various vendors and working on adding more soon!
 
 
 Support for these devices is provided as best effort, but things might still go wrong.
@@ -67,6 +67,7 @@ Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Samsung | Galaxy J7 2015 | j7elte | | tested
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
+Samsung | Galaxy S III Neo | s3ve3g | GT-I9301I | tested
 Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte/) | SM-A510F | tested
 Samsung | Galaxy A7 2016 | a7xelte | | tested
 Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx/) | | tested
@@ -179,6 +180,20 @@ If you want to use the tool for a non-supported smartphone, the fastest way is t
 
 #### Content of a config file
 
+A config file consists of two parts. The first part are some metadata about the device and the second parts are the steps to unlock the bootloader, flash a recovery and install the ROMs.
+
+##### How to write Metadata
+Every config file should have metadata with the following fields:
+- `maintainer`: str; Maintainer and author of the config file.
+- `devicename`: str; Name of the device.
+- `devicecode`: str; The official device code.
+- `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
+  
+In addition to these metadata, every config can have optional requirements. If these are set, the user is asked to check if they are meet.  
+- `android`: [OPTIONAL] int|str; Android version to install prior to installing a custom ROM.
+- `firmware`: [OPTIONAL] str; specific firmware version to install before installing a custom ROM.
+
+##### How to write steps:
 Every step in the config file corresponds to one view in the application. These steps should contain the following fields:
 - `type`: str; Corresponds to the type of view to generate. There are the following options:
   - `text`: Just display the text given in content.
@@ -221,7 +236,7 @@ Other phone vendors stops allowing to unlock the bootloader all together. There 
 
 
 ## License
-Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022.
+Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022-2023.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
