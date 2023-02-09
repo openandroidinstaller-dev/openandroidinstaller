@@ -193,21 +193,18 @@ def log_version_infos(bin_path):
     """Log the version infos of adb, fastboot and heimdall."""
     # adb
     adbversion = [
-        line for line in run_command("adb", ["version"], bin_path, enable_logging=False)
+        line for line in run_command("adb version", bin_path, enable_logging=False)
     ]
     logger.info(f"{adbversion[1].strip()}")
     # fastboot
     fbversion = [
         line
-        for line in run_command(
-            "fastboot", ["--version"], bin_path, enable_logging=False
-        )
+        for line in run_command("fastboot --version", bin_path, enable_logging=False)
     ]
     logger.info(f"{fbversion[1].strip()}")
     # heimdall
     hdversion = [
-        line
-        for line in run_command("heimdall", ["info"], bin_path, enable_logging=False)
+        line for line in run_command("heimdall info", bin_path, enable_logging=False)
     ]
     logger.info(f"Heimdall version: {hdversion[1].strip()}")
 

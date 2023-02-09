@@ -63,6 +63,7 @@ class InstallAddonsView(BaseView):
                 logger.info("Disable advanced output.")
                 self.state.advanced = False
                 self.terminal_box.toggle_visibility()
+            self.right_view.update()
 
         self.advanced_switch = Switch(
             label="Advanced output",
