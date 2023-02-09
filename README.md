@@ -55,7 +55,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 ## Officially supported devices
 
-Currently, the **we support 51 devices** by various vendors and working on adding more soon!
+Currently, the **we support 52 devices** by various vendors and working on adding more soon!
 
 
 Support for these devices is provided as best effort, but things might still go wrong.
@@ -67,6 +67,7 @@ Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Samsung | Galaxy J7 2015 | j7elte | | tested
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
+Samsung | Galaxy S III Neo | s3ve3g | GT-I9301I | tested
 Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte/) | SM-A510F | tested
 Samsung | Galaxy A7 2016 | a7xelte | | tested
 Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx/) | | tested
@@ -235,7 +236,7 @@ Other phone vendors stops allowing to unlock the bootloader all together. There 
 
 
 ## License
-Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022.
+Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022-2023.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
