@@ -158,7 +158,7 @@ def adb_twrp_format_data(bin_path: Path):
 @add_logging("Wipe the selected partition with adb and twrp.", return_if_fail=True)
 def adb_twrp_wipe_partition(bin_path: Path, partition: str):
     """Perform a factory reset with twrp and adb."""
-    for line in run_command("adb shell twrp wipe {partition}", bin_path):
+    for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
         yield line
 
 
