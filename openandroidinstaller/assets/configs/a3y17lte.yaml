@@ -22,6 +22,11 @@ steps:
         Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for 
         8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
         hold *Volume Up* + *Home* + *Power*. Confirm when the recovery screen appears.
+    - type: call_button
+      command: adb_twrp_resize_7870_partitions
+      content: >
+        With more recent Android ROMs based on Version 10 or higher, the system memory is too small. So the partitions of this device need to be resized.
+        Confirm to run the repartition process. Once it is finished you can continue.
   install_os:
     - type: call_button 
       content: >

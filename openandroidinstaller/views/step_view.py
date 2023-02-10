@@ -45,6 +45,7 @@ from tooling import (
     adb_sideload,
     adb_twrp_wipe_and_install,
     adb_twrp_copy_partitions,
+    adb_twrp_resize_7870_partitions,
     fastboot_flash_recovery,
     fastboot_oem_unlock,
     fastboot_reboot,
@@ -219,6 +220,9 @@ class StepView(BaseView):
             ),
             "adb_twrp_copy_partitions": partial(
                 adb_twrp_copy_partitions, config_path=self.state.config_path
+            ),
+            "adb_twrp_resize_7870_partitions": partial(
+                adb_twrp_resize_7870_partitions, config_path=self.state.config_path
             ),
             "fastboot_unlock": fastboot_unlock,
             "fastboot_unlock_with_code": partial(
