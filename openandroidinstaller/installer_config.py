@@ -163,7 +163,7 @@ def validate_config(config: str) -> bool:
         ),
         "content": str,
         schema.Optional("command"): Regex(
-            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|fastboot_flash_recovery|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
+            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|adb_twrp_resize_7870_partitions|fastboot_flash_recovery|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
         ),
         schema.Optional("allow_skip"): bool,
         schema.Optional("img"): str,

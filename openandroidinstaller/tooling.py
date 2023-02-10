@@ -154,6 +154,36 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
     return True
 
 
+def adb_twrp_resize_7870_partitions(bin_path: Path, config_path: Path):
+    """Resize partitions on Samsung Exynos 7870 devices to make Android 10+ ROMs work."""
+    logger.info("Sideload the resize partition script with adb.")
+    # activate sideload
+    for line in run_command("adb", ["shell", "twrp", "sideload"], bin_path):
+        yield line
+    if (type(line) == bool) and not line:
+        logger.error("Activating sideload failed.")
+        yield False
+        return
+    # now sideload the script
+    sleep(5)
+    for line in run_command(
+        "adb",
+        [
+            "sideload",
+            f"{config_path.parent.joinpath(Path('universal_repartition_script7870.zip'))}",
+        ],
+        bin_path,
+    ):
+        if line:
+            yield line
+    if (type(line) == bool) and not line:
+        logger.error("Sideloading universal_repartition_script7870.zip failed.")
+        yield True
+    sleep(7)
+    # Resizing partitions end #
+    yield True
+
+
 def adb_twrp_wipe_and_install(bin_path: Path, target: str, config_path: Path) -> bool:
     """Wipe and format data with twrp, then flash os image with adb.
 

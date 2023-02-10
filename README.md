@@ -228,6 +228,7 @@ Other phone vendors stops allowing to unlock the bootloader all together. There 
 - [Heimdall](https://gitlab.com/BenjaminDobell/Heimdall/) is an [MIT](https://gitlab.com/BenjaminDobell/Heimdall/-/blob/master/LICENSE)-licensed replacement for the leaked ODIN tool to flash Samsung devices.
 - [libusb-1.0](https://github.com/libusb/libusb) is a [LGPL-2.1](https://github.com/libusb/libusb/blob/master/COPYING)-licensed library for USB device access from Linux, macOS, Windows and others.
 - [copy-partitions-20220613-signed.zip](https://mirrorbits.lineageos.org/tools/copy-partitions-20220613-signed.zip) The copy-partitions script was created by LineageOS developer erfanoabdi and filipepferraz and released under LGPL. It is used when the partitions need to be copied before flashing.
+- [universal_repartition_script7870](https://github.com/Astrako/universal_repartition_script7870) The universal repartition script for phones with the Samsung Exynos 7870 by [Astrako](https://github.com/Astrako) under Apache License, Version 2.0.
 
 
 ## Acknowledgements
