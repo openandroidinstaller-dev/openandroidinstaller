@@ -1,0 +1,19 @@
+app-id: org.openandroidinstaller.OpenAndroidInstaller
+runtime: org.freedesktop.Platform
+runtime-version: '22.08'
+sdk: org.freedesktop.Sdk
+command: openandroidinstaller
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --filesystem=host
+  - --device=dri
+modules:
+  - name: OpenAndroidInstaller
+    buildsystem: simple
+    build-commands:
+      - install -D openandroidinstaller /app/bin/openandroidinstaller
+    sources:
+      - type: file
+        path: dist/openandroidinstaller
