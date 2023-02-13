@@ -16,7 +16,7 @@
 import webbrowser
 import regex as re
 from functools import partial
-from typing import Callable
+from typing import Callable, Optional
 
 from flet import (
     UserControl,
@@ -151,7 +151,7 @@ class ProgressIndicator(UserControl):
 
 
 def get_title(
-    title: str, info_button: IconButton = None, step_indicator_img: str = None
+    title: str, info_button: IconButton = None, step_indicator_img: Optional[str] = None
 ) -> Container:
     """Function to get the title header element for the right side view."""
     if info_button:

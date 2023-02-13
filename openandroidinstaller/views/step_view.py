@@ -234,7 +234,7 @@ class StepView(BaseView):
 
         # run the right command
         if command in cmd_mapping.keys():
-            for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):
+            for line in cmd_mapping.get(command)(bin_path=self.state.bin_path):  # type: ignore
                 # write the line to advanced output terminal
                 self.terminal_box.write_line(line)
                 self.progress_indicator.display_progress_ring()

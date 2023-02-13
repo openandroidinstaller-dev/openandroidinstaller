@@ -14,7 +14,7 @@
 # Author: Tobias Sterbak
 
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 import schema
 import yaml
@@ -34,10 +34,10 @@ class Step:
         title: str,
         type: str,
         content: str,
-        command: str = None,
-        img: str = None,
         allow_skip: bool = False,
-        link: str = None,
+        command: Optional[str] = None,
+        img: Optional[str] = None,
+        link: Optional[str] = None,
     ):
         self.title = title
         self.type = type
@@ -51,7 +51,7 @@ class Step:
 class InstallerConfig:
 
     # map some detected device codes to their real code.
-    device_code_mapping = {
+    device_code_mapping: Dict[str, str] = {
         # Sony issues
         "C6603": "yuga",
         # OnePlus issues
@@ -80,9 +80,11 @@ class InstallerConfig:
         self.requirements = requirements
         self.device_code = metadata.get("devicecode")
         self.twrp_link = metadata.get("twrp-link")
-        inverted_mapping = dict(map(reversed, self.device_code_mapping.items()))
+
+        # manage device codes and alternative device codes/names
+        inverted_mapping: Dict[str, str] = dict(map(reversed, self.device_code_mapping.items()))  # type: ignore
         self.alternative_device_code = inverted_mapping.get(
-            self.device_code, self.device_code
+            self.device_code, self.device_code  # type: ignore
         )
 
     @classmethod

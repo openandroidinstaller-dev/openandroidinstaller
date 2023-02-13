@@ -43,6 +43,7 @@ def test_app():
     state = page.controls[0].state
     state.load_config(device_code="sargo")
     state.default_views.extend(state.addon_views)
-    for _ in range(len(state.steps) + 7):
+    number_of_steps = 12
+    for _ in range(number_of_steps):
         page.controls[0].to_next_view(None)
     assert "SuccessView" in str(page.controls[0].view.controls[0])

@@ -24,42 +24,46 @@ from subprocess import (
 )
 import shlex
 from time import sleep
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Generator, Callable
 
 from loguru import logger
+
+
+TerminalResponse = Generator[Union[str, bool], None, None]
+
 
 PLATFORM = sys.platform
 
 
 def run_command(
-    command: str, bin_path: Path, enable_logging: bool = True
-) -> Union[str, bool]:
+    full_command: str, bin_path: Path, enable_logging: bool = True
+) -> TerminalResponse:
     """Run a command with a tool (adb, fastboot, heimdall)."""
-    yield f"${command}"
+    yield f"${full_command}"
     # split the command and extract the tool part
-    tool, *command = shlex.split(command)
+    tool, *command = shlex.split(full_command)
     if tool not in ["adb", "fastboot", "heimdall"]:
         raise Exception(f"Unknown tool {tool}. Use adb, fastboot or heimdall.")
     if PLATFORM == "win32":
-        full_command = [str(bin_path.joinpath(Path(f"{tool}"))) + ".exe"] + command
+        command_list = [str(bin_path.joinpath(Path(f"{tool}"))) + ".exe"] + command
         # prevent Windows from opening terminal windows
-        si = subprocess.STARTUPINFO()
-        si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        si = subprocess.STARTUPINFO()  # type: ignore
+        si.dwFlags |= subprocess.STARTF_USESHOWWINDOW  # type: ignore
     else:
-        full_command = [str(bin_path.joinpath(Path(f"{tool}")))] + command
+        command_list = [str(bin_path.joinpath(Path(f"{tool}")))] + command
         si = None
     if enable_logging:
-        logger.info(f"Run command: {full_command}")
+        logger.info(f"Run command: {command_list}")
     # run the command
     with subprocess.Popen(
-        full_command,
+        command_list,
         stdout=PIPE,
         stderr=STDOUT,
         bufsize=1,
         universal_newlines=True,
         startupinfo=si,
     ) as p:
-        for line in p.stdout:
+        for line in p.stdout:  # type: ignore
             if enable_logging:
                 logger.info(line.strip())
             yield line.strip()
@@ -68,14 +72,14 @@ def run_command(
     yield p.returncode == 0
 
 
-def add_logging(step_desc: str, return_if_fail: bool = False):
+def add_logging(step_desc: str, return_if_fail: bool = False) -> Callable:
     """Logging decorator to wrap functions that yield lines.
 
     Logs the `step_desc`.
     """
 
-    def logging_decorator(func):
-        def logging(*args, **kwargs):
+    def logging_decorator(func) -> Callable:
+        def logging(*args, **kwargs) -> TerminalResponse:
             logger.info(f"{step_desc} - Paramters: {kwargs}")
             for line in func(*args, **kwargs):
                 if (type(line) == bool) and not line:
@@ -91,14 +95,14 @@ def add_logging(step_desc: str, return_if_fail: bool = False):
 
 
 @add_logging("Rebooting device with adb.")
-def adb_reboot(bin_path: Path) -> bool:
+def adb_reboot(bin_path: Path) -> TerminalResponse:
     """Run adb reboot on the device and return success."""
     for line in run_command("adb reboot", bin_path):
         yield line
 
 
 @add_logging("Rebooting device into bootloader with adb.", return_if_fail=True)
-def adb_reboot_bootloader(bin_path: Path) -> Union[str, bool]:
+def adb_reboot_bootloader(bin_path: Path) -> TerminalResponse:
     """Reboot the device into bootloader and return success."""
     for line in run_command("adb reboot bootloader", bin_path):
         yield line
@@ -106,27 +110,27 @@ def adb_reboot_bootloader(bin_path: Path) -> Union[str, bool]:
 
 
 @add_logging("Rebooting device into download mode with adb.")
-def adb_reboot_download(bin_path: Path) -> Union[str, bool]:
+def adb_reboot_download(bin_path: Path) -> TerminalResponse:
     """Reboot the device into download mode of samsung devices and return success."""
     for line in run_command("adb reboot download", bin_path):
         yield line
 
 
 @add_logging("Sideload the target to device with adb.")
-def adb_sideload(bin_path: Path, target: str) -> Union[str, bool]:
+def adb_sideload(bin_path: Path, target: str) -> TerminalResponse:
     """Sideload the target to device and return success."""
     for line in run_command(f"adb sideload {target}", bin_path):
         yield line
 
 
 @add_logging("Activate sideloading in TWRP.", return_if_fail=True)
-def activate_sideload(bin_path: Path) -> Union[str, bool]:
+def activate_sideload(bin_path: Path) -> TerminalResponse:
     """Activate sideload with adb shell in twrp."""
     for line in run_command("adb shell twrp sideload", bin_path):
         yield line
 
 
-def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
+def adb_twrp_copy_partitions(bin_path: Path, config_path: Path) -> TerminalResponse:
     # some devices like one plus 6t or motorola moto g7 power need the partitions copied to prevent a hard brick
     logger.info("Sideload copy_partitions script with adb.")
     # activate sideload
@@ -146,18 +150,18 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path):
         yield line
     sleep(7)
     # Copy partitions end #
-    return True
+    yield True
 
 
 @add_logging("Perform a factory reset with adb and twrp.", return_if_fail=True)
-def adb_twrp_format_data(bin_path: Path):
+def adb_twrp_format_data(bin_path: Path) -> TerminalResponse:
     """Perform a factory reset with twrp and adb."""
     for line in run_command("adb shell twrp format data", bin_path):
         yield line
 
 
 @add_logging("Wipe the selected partition with adb and twrp.", return_if_fail=True)
-def adb_twrp_wipe_partition(bin_path: Path, partition: str):
+def adb_twrp_wipe_partition(bin_path: Path, partition: str) -> TerminalResponse:
     """Perform a factory reset with twrp and adb."""
     for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
         yield line
@@ -169,8 +173,8 @@ def adb_twrp_wipe_and_install(
     config_path: Path,
     is_ab: bool,
     install_addons=True,
-    recovery: str = None,
-) -> bool:
+    recovery: Optional[str] = None,
+) -> TerminalResponse:
     """Wipe and format data with twrp, then flash os image with adb.
 
     Only works for twrp recovery.
@@ -237,7 +241,9 @@ def adb_twrp_wipe_and_install(
             yield line
 
 
-def adb_twrp_install_addons(bin_path: Path, addons: List[str], is_ab: bool) -> bool:
+def adb_twrp_install_addons(
+    bin_path: Path, addons: List[str], is_ab: bool
+) -> TerminalResponse:
     """Flash addons through adb and twrp.
 
     Only works for twrp recovery.
@@ -279,42 +285,42 @@ def adb_twrp_install_addons(bin_path: Path, addons: List[str], is_ab: bool) -> b
 
 
 @add_logging("Switch active boot partitions.", return_if_fail=True)
-def fastboot_switch_partition(bin_path: Path) -> Union[str, bool]:
+def fastboot_switch_partition(bin_path: Path) -> TerminalResponse:
     """Switch the active boot partition with fastboot."""
     for line in run_command("fastboot set_active other", bin_path):
         yield line
 
 
 @add_logging("Unlock the device with fastboot and code.")
-def fastboot_unlock_with_code(bin_path: Path, unlock_code: str) -> Union[str, bool]:
+def fastboot_unlock_with_code(bin_path: Path, unlock_code: str) -> TerminalResponse:
     """Unlock the device with fastboot and code given."""
     for line in run_command(f"fastboot oem unlock {unlock_code}", bin_path):
         yield line
 
 
 @add_logging("Unlock the device with fastboot without code.")
-def fastboot_unlock(bin_path: Path) -> Union[str, bool]:
+def fastboot_unlock(bin_path: Path) -> TerminalResponse:
     """Unlock the device with fastboot and without code."""
     for line in run_command("fastboot flashing unlock", bin_path):
         yield line
 
 
 @add_logging("OEM unlocking the device with fastboot.")
-def fastboot_oem_unlock(bin_path: Path) -> Union[str, bool]:
+def fastboot_oem_unlock(bin_path: Path) -> TerminalResponse:
     """OEM unlock the device with fastboot and without code."""
     for line in run_command("fastboot oem unlock", bin_path):
         yield line
 
 
 @add_logging("Get unlock data with fastboot")
-def fastboot_get_unlock_data(bin_path: Path) -> Union[str, bool]:
+def fastboot_get_unlock_data(bin_path: Path) -> TerminalResponse:
     """Get the unlock data with fastboot"""
     for line in run_command("fastboot oem get_unlock_data", bin_path):
         yield line
 
 
 @add_logging("Rebooting device with fastboot.")
-def fastboot_reboot(bin_path: Path) -> Union[str, bool]:
+def fastboot_reboot(bin_path: Path) -> TerminalResponse:
     """Reboot with fastboot"""
     for line in run_command("fastboot reboot", bin_path):
         yield line
@@ -323,7 +329,7 @@ def fastboot_reboot(bin_path: Path) -> Union[str, bool]:
 @add_logging("Flash or boot custom recovery with fastboot.")
 def fastboot_flash_recovery(
     bin_path: Path, recovery: str, is_ab: bool = True
-) -> Union[str, bool]:
+) -> TerminalResponse:
     """Temporarily, flash custom recovery with fastboot."""
     if is_ab:
         logger.info("Boot custom recovery with fastboot.")
@@ -344,7 +350,7 @@ def fastboot_flash_recovery(
             yield line
 
 
-def fastboot_flash_boot(bin_path: Path, recovery: str) -> bool:
+def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
     """Temporarily, flash custom recovery with fastboot to boot partition."""
     logger.info("Flash custom recovery with fastboot.")
     for line in run_command(f"fastboot flash boot {recovery}", bin_path):
@@ -366,7 +372,7 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> bool:
 
 
 @add_logging("Flash custom recovery with heimdall.")
-def heimdall_flash_recovery(bin_path: Path, recovery: str) -> Union[str, bool]:
+def heimdall_flash_recovery(bin_path: Path, recovery: str) -> TerminalResponse:
     """Temporarily, flash custom recovery with heimdall."""
     for line in run_command(
         f"heimdall flash --no-reboot --RECOVERY {recovery}", bin_path
@@ -414,7 +420,7 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
         return None
 
 
-def check_ab_partition(platform: str, bin_path: Path) -> Optional[str]:
+def check_ab_partition(platform: str, bin_path: Path) -> Optional[bool]:
     """Figure out, if its an a/b-partitioned device."""
     logger.info(f"Run on {platform} with {bin_path}...")
     try:

@@ -19,6 +19,7 @@ import webbrowser
 import click
 import functools
 from pathlib import Path
+from typing import List
 
 import flet as ft
 from flet import (
@@ -114,13 +115,6 @@ class MainView(UserControl):
             self.install_view,
         ]
 
-        self.state.default_views = self.default_views
-        self.state.final_default_views = self.final_default_views
-        self.state.final_view = self.final_view
-
-        # stack of previous default views for the back-button
-        self.previous_views = []
-
         # initialize the addon view
         self.select_addon_view = AddonsView(
             on_confirm=self.to_next_view, state=self.state
@@ -128,10 +122,19 @@ class MainView(UserControl):
         self.install_addons_view = InstallAddonsView(
             on_confirm=self.to_next_view, state=self.state
         )
-        self.state.addon_views = [
-            self.install_addons_view,
-            self.select_addon_view,
-        ]
+
+        # attach some views to the state to modify and reuse later
+        self.state.add_default_views(views=self.default_views)
+        self.state.add_addon_views(
+            views=[
+                self.install_addons_view,
+                self.select_addon_view,
+            ]
+        )
+        self.state.add_final_default_views(views=self.final_default_views)
+
+        # stack of previous default views for the back-button
+        self.previous_views: List = []
 
     def build(self):
         self.view.controls.append(self.default_views.pop())
