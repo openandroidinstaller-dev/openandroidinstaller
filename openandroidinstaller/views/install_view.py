@@ -77,7 +77,7 @@ class InstallView(BaseView):
             if self.install_addons_switch.value:
                 logger.info("Enable flashing addons.")
                 # add the addons step here.
-                self.state.default_views.extend(self.state.addon_views)
+                self.state.add_default_views(self.state.addon_views)
                 self.state.install_addons = True
             else:
                 logger.info("Disable flashing addons.")

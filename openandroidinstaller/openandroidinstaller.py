@@ -95,25 +95,12 @@ class MainView(UserControl):
             on_back=self.to_previous_view,
             state=self.state,
         )
-        # ordered to allow for pop
-        self.default_views = [
-            select_files_view,
-            requirements_view,
-            start_view,
-            welcome_view,
-        ]
 
         # create the install view
         self.install_view = InstallView(on_confirm=self.to_next_view, state=self.state)
 
         # create the final success view
         self.final_view = SuccessView(state=self.state)
-
-        # final default views, ordered to allow to pop
-        self.final_default_views = [
-            self.final_view,
-            self.install_view,
-        ]
 
         # initialize the addon view
         self.select_addon_view = AddonsView(
@@ -124,26 +111,40 @@ class MainView(UserControl):
         )
 
         # attach some views to the state to modify and reuse later
-        self.state.add_default_views(views=self.default_views)
+        # ordered to allow for pop
+        self.state.add_default_views(
+            views=[
+                select_files_view,
+                requirements_view,
+                start_view,
+                welcome_view,
+            ]
+        )
         self.state.add_addon_views(
             views=[
                 self.install_addons_view,
                 self.select_addon_view,
             ]
         )
-        self.state.add_final_default_views(views=self.final_default_views)
+        # final default views, ordered to allow to pop
+        self.state.add_final_default_views(
+            views=[
+                self.final_view,
+                self.install_view,
+            ]
+        )
 
         # stack of previous default views for the back-button
         self.previous_views: List = []
 
     def build(self):
-        self.view.controls.append(self.default_views.pop())
+        self.view.controls.append(self.state.default_views.pop())
         return self.view
 
     def to_previous_view(self, e):
         """Method to display the previous view."""
         # store the current view
-        self.default_views.append(self.view.controls[-1])
+        self.state.default_views.append(self.view.controls[-1])
         # clear the current view
         self.view.controls = []
         # retrieve the new view and update
@@ -158,8 +159,8 @@ class MainView(UserControl):
         # remove all elements from column view
         self.view.controls = []
         # if there are default views left, display them first
-        if self.default_views:
-            self.view.controls.append(self.default_views.pop())
+        if self.state.default_views:
+            self.view.controls.append(self.state.default_views.pop())
         elif self.state.steps:
             self.view.controls.append(
                 StepView(
@@ -168,9 +169,9 @@ class MainView(UserControl):
                     on_confirm=self.to_next_view,
                 )
             )
-        elif self.final_default_views:
+        elif self.state.final_default_views:
             # here we expect the install view to populate the step views again if necessary
-            self.view.controls.append(self.final_default_views.pop())
+            self.view.controls.append(self.state.final_default_views.pop())
 
         # else:
         #    # display the final view
