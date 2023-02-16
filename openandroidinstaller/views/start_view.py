@@ -112,6 +112,8 @@ Now you are ready to continue.
             label="Bootloader is already unlocked.",
             on_change=check_bootloader_unlocked,
             disabled=True,
+            inactive_thumb_color=colors.YELLOW,
+            active_color=colors.GREEN,
         )
 
         # inform the user about the device detection
@@ -160,17 +162,22 @@ Now
 - **connect your device to this computer via USB** and
 - **allow USB debugging in the pop-up on your phone**.
 - Then **press the button 'Search device'**.
-- If you **already unlocked the bootloader** of your device, please toggle the switch below, to skip the procedure.
-If you don't know what this means, you most likely don't need to do anything and you can just continue.
 
 When everything works correctly you should see your device name here and you can continue.
                 """
                 ),
                 Divider(),
+                Markdown(
+            """
+If you **already unlocked the bootloader** of your device, please toggle the switch below, to skip the procedure.
+If you don't know what this means, you most likely don't need to do anything and you can just continue.
+            """
+                ),
+                Row([self.bootloader_switch]),
+                Divider(),
                 Column(
                     [
                         self.device_detection_infobox,
-                        Row([self.bootloader_switch]),
                     ]
                 ),
                 Row(
