@@ -261,7 +261,7 @@ def adb_twrp_install_addons(
         for line in adb_sideload(bin_path=bin_path, target=addon):
             yield line
         sleep(7)
-    sleep(3)    
+    sleep(3)
     # finally reboot into os
     if is_ab:
         # reboot into the bootloader again

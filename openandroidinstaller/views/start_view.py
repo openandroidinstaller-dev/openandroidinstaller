@@ -168,7 +168,7 @@ When everything works correctly you should see your device name here and you can
                 ),
                 Divider(),
                 Markdown(
-            """
+                    """
 If you **already unlocked the bootloader** of your device, please toggle the switch below, to skip the procedure.
 If you don't know what this means, you most likely don't need to do anything and you can just continue.
             """
