@@ -32,7 +32,7 @@ class BaseView(UserControl):
         # configs
         self.column_width = 600
         # right part of the display, add content here.
-        self.right_view_header = Column(width=self.column_width, height=100, spacing=30)
+        self.right_view_header = Column(width=self.column_width, height=120, spacing=30)
         self.right_view = Column(
             alignment="center", width=self.column_width, height=650, scroll="auto"
         )
