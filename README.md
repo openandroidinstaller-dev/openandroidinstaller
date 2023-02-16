@@ -26,7 +26,7 @@
   </p>
 </div>
 
-> **Warning**: This application is currently in alpha state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, thinks might still go wrong.
+> **Warning**: This application is currently in beta state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, thinks might still go wrong.
 
 > **Note**: Unlocking the bootloader will erase all data on your device!
 This also includes your DRM keys, which are stored in the Trim Area partition (also called TA).
@@ -40,16 +40,23 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
     - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
-2. Download the custom ROM image and the TWRP recovery image for your device. A source for files can be found on the following websites:
-  - some custom ROMs:
-    - [LineageOS](https://wiki.lineageos.org/devices/)
-    - [/e/OS](https://doc.e.foundation/devices)
-    - [LineageOS for microg](https://download.lineage.microg.org/)
-    - [BlissRoms](https://blissroms.org/)
-    - [PixelExperience](https://download.pixelexperience.org/)
-  - TWRP Recovery:
-    - [TWRP recovery](https://twrp.me/Devices/)
-  - or you can just search the web or the [xda-developers forum](https://forum.xda-developers.com) for an appropriate version for your device.
+2. Download the custom ROM image and the TWRP recovery image for your device and optionally some addons. A source for files can be found on the following websites:
+    - some custom ROMs:
+      - [LineageOS](https://wiki.lineageos.org/devices/)
+      - [/e/OS](https://doc.e.foundation/devices)
+      - [LineageOS for microg](https://download.lineage.microg.org/)
+      - [BlissRoms](https://blissroms.org/)
+      - [PixelExperience](https://download.pixelexperience.org/)
+    - TWRP Recovery:
+      - [TWRP recovery](https://twrp.me/Devices/)
+    - Optional Addons:
+      - There are different packages of *Google Apps* available.
+        - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)  
+        - [NikGApps](https://nikgapps.com/)
+      - [MicroG](https://microg.org/)
+        - The recommended way to install MicroG is to use the zip file provided here: [https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases).
+      - [F-Droid App-Store](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/).
+    - or you can just search the web or the [xda-developers forum](https://forum.xda-developers.com) for an appropriate version for your device.
 3. Start the desktop app and follow the instructions.
 
 
@@ -218,7 +225,7 @@ If you build the application for your platform and want to contribute the build,
 #### On unlocking the bootloader
 Devices by *Samsung*, *Google* and *Fairphone* make it fairly easy to unlock the bootloader and receive good support in the installer.
 
-Some devices with require manual steps to unlock the bootloader. In general you will need to create an account at a vendor website and receive some code from there. OpenAndroidInstaller will try to guide you as far as possible. These vendors include *Sony, Motorola, Xiaomi* among others.
+Some devices with require manual steps to unlock the bootloader. In general you will need to create an account at a vendor website and receive some code from there. OpenAndroidInstaller will try to guide you as far as possible. These vendors include *Sony, Motorola, Xiaomi* and *OnePlus* among others.
 
 Other phone vendors stops allowing to unlock the bootloader all together. There is nothing to be done if you didn't unlock your device in time. These vendors include *Huawei and LG* among others. Support for these vendors will always be very limited.
 
