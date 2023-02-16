@@ -13,7 +13,9 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+import copy
 from pathlib import Path
+from typing import List, Optional
 
 from installer_config import _load_config
 
@@ -27,7 +29,7 @@ class AppState:
         config_path: Path,
         bin_path: Path,
         test: bool = False,
-        test_config: str = None,
+        test_config: Optional[str] = None,
     ):
         self.platform = platform
         self.config_path = config_path
@@ -37,19 +39,33 @@ class AppState:
 
         # placeholders
         self.advanced = False
+        self.install_addons = False
         self.config = None
         self.image_path = None
         self.recovery_path = None
+        self.is_ab = None
 
-        # is this still needed?
-        self.steps = None
+        # store views
+        self.default_views: List = []
+        self.addon_views: List = []
+        self.final_default_views: List = []
+
+    def add_default_views(self, views: List):
+        """Add default views to store"""
+        self.default_views.extend(views)
+
+    def add_addon_views(self, views: List):
+        """Add addon views to store"""
+        self.addon_views.extend(views)
+
+    def add_final_default_views(self, views: List):
+        """Add final default views to store"""
+        self.final_default_views.extend(views)
 
     def load_config(self, device_code: str):
         """Load the config from file to state by device code."""
         self.config = _load_config(device_code, self.config_path)
         if self.config:
-            self.steps = (
-                self.config.unlock_bootloader
-                + self.config.flash_recovery
-                + self.config.install_os
+            self.steps = copy.deepcopy(self.config.unlock_bootloader) + copy.deepcopy(
+                self.config.flash_recovery
             )

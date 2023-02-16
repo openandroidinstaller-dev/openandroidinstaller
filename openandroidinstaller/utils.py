@@ -33,10 +33,10 @@ def get_download_link(devicecode: str) -> Optional[str]:
             return url
         else:
             logger.info(f"{url} doesn't exist, status_code: {res.status_code}")
-            return
+            return None
     except requests.exceptions.RequestException as e:
         logger.error(f"{url} doesn't exist, error: {e}")
-        return
+        return None
 
 
 def image_works_with_device(

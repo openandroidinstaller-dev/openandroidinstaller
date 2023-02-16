@@ -16,7 +16,7 @@
 import pytest
 from flet import Container
 
-from openandroidinstaller.views.step_view import ProgressIndicator
+from openandroidinstaller.widgets import ProgressIndicator
 
 
 def test_init():

@@ -14,7 +14,7 @@
 # Author: Tobias Sterbak
 
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 import schema
 import yaml
@@ -34,10 +34,10 @@ class Step:
         title: str,
         type: str,
         content: str,
-        command: str = None,
-        img: str = None,
         allow_skip: bool = False,
-        link: str = None,
+        command: Optional[str] = None,
+        img: Optional[str] = None,
+        link: Optional[str] = None,
     ):
         self.title = title
         self.type = type
@@ -51,7 +51,7 @@ class Step:
 class InstallerConfig:
 
     # map some detected device codes to their real code.
-    device_code_mapping = {
+    device_code_mapping: Dict[str, str] = {
         # Sony issues
         "C6603": "yuga",
         # OnePlus issues
@@ -71,20 +71,20 @@ class InstallerConfig:
         self,
         unlock_bootloader: List[Step],
         flash_recovery: List[Step],
-        install_os: List[Step],
         metadata: dict,
         requirements: dict,
     ):
         self.unlock_bootloader = unlock_bootloader
         self.flash_recovery = flash_recovery
-        self.install_os = install_os
         self.metadata = metadata
         self.requirements = requirements
         self.device_code = metadata.get("devicecode")
         self.twrp_link = metadata.get("twrp-link")
-        inverted_mapping = dict(map(reversed, self.device_code_mapping.items()))
+
+        # manage device codes and alternative device codes/names
+        inverted_mapping: Dict[str, str] = dict(map(reversed, self.device_code_mapping.items()))  # type: ignore
         self.alternative_device_code = inverted_mapping.get(
-            self.device_code, self.device_code
+            self.device_code, self.device_code  # type: ignore
         )
 
     @classmethod
@@ -115,13 +115,7 @@ class InstallerConfig:
             Step(**raw_step, title="Flash custom recovery")
             for raw_step in raw_steps.get("flash_recovery", [])
         ]
-        install_os = [
-            Step(**raw_step, title="Install OS")
-            for raw_step in raw_steps.get("install_os", [])
-        ]
-        return cls(
-            unlock_bootloader, flash_recovery, install_os, metadata, requirements
-        )
+        return cls(unlock_bootloader, flash_recovery, metadata, requirements)
 
 
 def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfig]:
@@ -163,7 +157,7 @@ def validate_config(config: str) -> bool:
         ),
         "content": str,
         schema.Optional("command"): Regex(
-            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|fastboot_flash_recovery|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
+            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|fastboot_flash_recovery|fastboot_flash_boot|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
         ),
         schema.Optional("allow_skip"): bool,
         schema.Optional("img"): str,
@@ -185,7 +179,6 @@ def validate_config(config: str) -> bool:
             "steps": {
                 "unlock_bootloader": schema.Or(None, [step_schema]),
                 "flash_recovery": [step_schema],
-                "install_os": [step_schema],
             },
         }
     )

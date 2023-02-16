@@ -14,6 +14,7 @@
 # Author: Tobias Sterbak
 
 import flet as ft
+from openandroidinstaller.views import InstallView
 from openandroidinstaller.openandroidinstaller import main
 
 
@@ -41,6 +42,8 @@ def test_app():
     # test if you can go through all views
     state = page.controls[0].state
     state.load_config(device_code="sargo")
-    for _ in range(len(state.steps) + 5):
+    state.default_views.extend(state.addon_views)
+    number_of_steps = 14
+    for _ in range(number_of_steps):
         page.controls[0].to_next_view(None)
     assert "SuccessView" in str(page.controls[0].view.controls[0])

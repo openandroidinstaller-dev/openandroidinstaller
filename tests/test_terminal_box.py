@@ -16,7 +16,7 @@
 import pytest
 from flet import Container, Page
 
-from openandroidinstaller.views.step_view import TerminalBox
+from openandroidinstaller.widgets import TerminalBox
 
 
 def test_init_box():
@@ -30,7 +30,7 @@ def test_init_box():
 def test_write_lines(mocker):
     """Test if we can write lines to the terminal and bools are ignored."""
     mocker.patch(
-        "openandroidinstaller.views.step_view.TerminalBox.update",
+        "openandroidinstaller.widgets.TerminalBox.update",
         return_value=True,
         new_callable=mocker.Mock,
     )
@@ -49,7 +49,7 @@ def test_write_lines(mocker):
 def test_toggle_visibility(mocker):
     """Test if the visibility toggle method works."""
     mocker.patch(
-        "openandroidinstaller.views.step_view.TerminalBox.update",
+        "openandroidinstaller.widgets.TerminalBox.update",
         return_value=True,
         new_callable=mocker.Mock,
     )
@@ -72,7 +72,7 @@ def test_toggle_visibility(mocker):
 def test_clear_terminal(mocker):
     """Test if the terminal can be cleared properly."""
     mocker.patch(
-        "openandroidinstaller.views.step_view.TerminalBox.update",
+        "openandroidinstaller.widgets.TerminalBox.update",
         return_value=True,
         new_callable=mocker.Mock,
     )
