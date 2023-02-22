@@ -29,7 +29,7 @@
 > **Warning**: This application is currently in beta state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, things might still go wrong.
 
 > **Note**: Unlocking the bootloader will erase all data on your device!
-This also includes your DRM keys, which are stored in the Trim Area partition (also called TA).
+This also includes your DRM keys, which are stored in the Trim Area partition (also called TA) in case your device is fairly recent and supports DRM L1. Those devices will be downgraded to DRM L3. Devices on DRM L3 by default will not be affected.
 Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
 If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
 
