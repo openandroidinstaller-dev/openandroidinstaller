@@ -26,7 +26,7 @@
   </p>
 </div>
 
-> **Warning**: This application is currently in beta state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, thinks might still go wrong.
+> **Warning**: This application is currently in beta state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, things might still go wrong.
 
 > **Note**: Unlocking the bootloader will erase all data on your device!
 This also includes your DRM keys, which are stored in the Trim Area partition (also called TA).
@@ -51,7 +51,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
       - [TWRP recovery](https://twrp.me/Devices/)
     - Optional Addons:
       - There are different packages of *Google Apps* available.
-        - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)  
+        - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)
         - [NikGApps](https://nikgapps.com/)
       - [MicroG](https://microg.org/)
         - The recommended way to install MicroG is to use the zip file provided here: [https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases).
@@ -62,7 +62,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 ## Officially supported devices
 
-Currently, the **we support 52 devices** by various vendors and working on adding more soon!
+Currently, **we support 52 devices** by various vendors and working on adding more soon!
 
 
 Support for these devices is provided as best effort, but things might still go wrong.
@@ -195,8 +195,8 @@ Every config file should have metadata with the following fields:
 - `devicename`: str; Name of the device.
 - `devicecode`: str; The official device code.
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
-  
-In addition to these metadata, every config can have optional requirements. If these are set, the user is asked to check if they are meet.  
+
+In addition to these metadata, every config can have optional requirements. If these are set, the user is asked to check if they are meet.
 - `android`: [OPTIONAL] int|str; Android version to install prior to installing a custom ROM.
 - `firmware`: [OPTIONAL] str; specific firmware version to install before installing a custom ROM.
 
