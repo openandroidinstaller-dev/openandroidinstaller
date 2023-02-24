@@ -18,5 +18,4 @@ steps:
       img: samsung-buttons.png
       content: >
         Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for 8~10 seconds 
-        until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
-        hold *Volume Up* + *Home* + *Power button*.
+        until the screen turns black to reboot  & release the buttons immediately when it does, then immediately hold *Volume Up* + *Bixby* + *Power button* until you are in recovery mode.
