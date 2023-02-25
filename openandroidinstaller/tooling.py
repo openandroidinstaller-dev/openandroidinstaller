@@ -197,6 +197,9 @@ def adb_twrp_wipe_and_install(
     Only works for twrp recovery.
     """
     logger.info("Wipe and format data with twrp, then install os image.")
+    for line in adb_wait_for_recovery(bin_path):
+        yield line
+
     # now perform a factory reset
     for line in adb_twrp_format_data(bin_path):
         yield line
