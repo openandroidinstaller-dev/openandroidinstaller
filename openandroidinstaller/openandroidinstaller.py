@@ -235,6 +235,17 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         actions=[
             Container(
                 content=ElevatedButton(
+                    icon=icons.QUESTION_MARK_ROUNDED,
+                    text="FAQ",
+                    on_click=lambda _: webbrowser.open(
+                        "https://openandroidinstaller.org/faq.html"
+                    ),
+                ),
+                padding=15,
+                tooltip="Frequently asked questions and encountered issues.",
+            ),
+            Container(
+                content=ElevatedButton(
                     icon=icons.BUG_REPORT_OUTLINED,
                     text="Report a bug",
                     on_click=lambda _: webbrowser.open(
