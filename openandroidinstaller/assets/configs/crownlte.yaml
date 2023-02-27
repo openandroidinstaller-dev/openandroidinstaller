@@ -17,7 +17,7 @@ steps:
       content: In this step, you need to flash a custom recovery on your device. Press 'Confirm and run' to start the process. Confirm afterwards to continue.
       command: heimdall_flash_recovery
     - type: confirm_button
-      img: samsung-buttons.png
+      img: samsung-buttons-bixby.png
       content: >
         Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Bixby* for 8~10 seconds 
         until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
