@@ -55,6 +55,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
         - [NikGApps](https://nikgapps.com/)
       - [MicroG](https://microg.org/)
         - The recommended way to install MicroG is to use the zip file provided here: [https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases).
+        - If you are a Magisk user you should also consider this installer: [https://github.com/nift4/microg_installer_revived/releases](https://github.com/nift4/microg_installer_revived/releases).
       - [F-Droid App-Store](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/).
     - or you can just search the web or the [xda-developers forum](https://forum.xda-developers.com) for an appropriate version for your device.
 3. Start the desktop app and follow the instructions.
