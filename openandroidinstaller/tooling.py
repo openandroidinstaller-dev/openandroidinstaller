@@ -106,7 +106,9 @@ def adb_reboot_bootloader(bin_path: Path) -> TerminalResponse:
     """Reboot the device into bootloader and return success."""
     for line in run_command("adb reboot bootloader", bin_path):
         yield line
-    sleep(1)
+    # wait for the bootloader to become available
+    for line in fastboot_wait_for_bootloader(bin_path=bin_path):
+        yield line
 
 
 @add_logging("Rebooting device into download mode with adb.")
@@ -114,6 +116,7 @@ def adb_reboot_download(bin_path: Path) -> TerminalResponse:
     """Reboot the device into download mode of samsung devices and return success."""
     for line in run_command("adb reboot download", bin_path):
         yield line
+    yield heimdall_wait_for_download_available(bin_path=bin_path)
 
 
 @add_logging("Sideload the target to device with adb.")
@@ -128,6 +131,22 @@ def activate_sideload(bin_path: Path) -> TerminalResponse:
     """Activate sideload with adb shell in twrp."""
     for line in run_command("adb shell twrp sideload", bin_path):
         yield line
+    for line in adb_wait_for_sideload(bin_path=bin_path):
+        yield line
+
+
+@add_logging("Wait for recovery")
+def adb_wait_for_recovery(bin_path: Path) -> TerminalResponse:
+    """Use adb to wait for the recovery to become available."""
+    for line in run_command("adb wait-for-recovery", bin_path):
+        yield line
+
+
+@add_logging("Wait for sideload")
+def adb_wait_for_sideload(bin_path: Path) -> TerminalResponse:
+    """Use adb to wait for the sideload to become available."""
+    for line in run_command("adb wait-for-sideload", bin_path):
+        yield line
 
 
 def adb_twrp_copy_partitions(bin_path: Path, config_path: Path) -> TerminalResponse:
@@ -137,7 +156,6 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path) -> TerminalRespo
     for line in activate_sideload(bin_path):
         yield line
     # now sideload the script
-    sleep(5)
     logger.info("Sideload the copy_partitions script")
     for line in adb_sideload(
         bin_path=bin_path,
@@ -148,7 +166,6 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path) -> TerminalRespo
     # reboot into the bootloader again
     for line in adb_reboot_bootloader(bin_path):
         yield line
-    sleep(7)
     # Copy partitions end #
     yield True
 
@@ -180,7 +197,9 @@ def adb_twrp_wipe_and_install(
     Only works for twrp recovery.
     """
     logger.info("Wipe and format data with twrp, then install os image.")
-    sleep(7)
+    for line in adb_wait_for_recovery(bin_path):
+        yield line
+
     # now perform a factory reset
     for line in adb_twrp_format_data(bin_path):
         yield line
@@ -197,7 +216,6 @@ def adb_twrp_wipe_and_install(
     for line in activate_sideload(bin_path=bin_path):
         yield line
     # now flash os image
-    sleep(5)
     logger.info("Sideload and install os image.")
     for line in adb_sideload(bin_path=bin_path, target=target):
         yield line
@@ -226,13 +244,11 @@ def adb_twrp_wipe_and_install(
             # reboot into the bootloader again
             for line in adb_reboot_bootloader(bin_path):
                 yield line
-            sleep(3)
             # boot to TWRP again
             for line in fastboot_flash_recovery(
                 bin_path=bin_path, recovery=recovery, is_ab=is_ab
             ):
                 yield line
-            sleep(7)
         else:
             # if not an a/b-device just stay in twrp
             pass
@@ -249,14 +265,13 @@ def adb_twrp_install_addons(
     Only works for twrp recovery.
     """
     logger.info("Install addons with twrp.")
-    sleep(5)
+    sleep(0.5)
     logger.info("Sideload and install addons.")
     for addon in addons:
         # activate sideload
         logger.info("Activate sideload.")
         for line in activate_sideload(bin_path=bin_path):
             yield line
-        sleep(5)
         # now flash os image
         for line in adb_sideload(bin_path=bin_path, target=addon):
             yield line
@@ -267,7 +282,6 @@ def adb_twrp_install_addons(
         # reboot into the bootloader again
         for line in adb_reboot_bootloader(bin_path=bin_path):
             yield line
-        sleep(3)
         # switch active boot partition
         for line in fastboot_switch_partition(bin_path=bin_path):
             yield line
@@ -283,6 +297,13 @@ def adb_twrp_install_addons(
         # reboot with adb
         for line in adb_reboot(bin_path=bin_path):
             yield line
+
+
+@add_logging("Wait for bootloader")
+def fastboot_wait_for_bootloader(bin_path: Path) -> TerminalResponse:
+    """Use adb to wait for the bootloader to become available."""
+    for line in run_command("fastboot devices", bin_path):
+        yield line
 
 
 @add_logging("Switch active boot partitions.", return_if_fail=True)
@@ -336,9 +357,13 @@ def fastboot_flash_recovery(
         logger.info("Boot custom recovery with fastboot.")
         for line in run_command(f"fastboot boot {recovery}", bin_path):
             yield line
+        for line in adb_wait_for_recovery(bin_path=bin_path):
+            yield line
     else:
         logger.info("Flash custom recovery with fastboot.")
         for line in run_command(f"fastboot flash recovery {recovery}", bin_path):
+            yield line
+        for line in adb_wait_for_recovery(bin_path=bin_path):
             yield line
         if (type(line) == bool) and not line:
             logger.error("Flashing recovery failed.")
@@ -348,6 +373,8 @@ def fastboot_flash_recovery(
         # reboot
         logger.info("Boot into TWRP with fastboot.")
         for line in run_command("fastboot reboot recovery", bin_path):
+            yield line
+        for line in adb_wait_for_recovery(bin_path=bin_path):
             yield line
 
 
@@ -365,11 +392,23 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
     logger.info("Boot into TWRP with fastboot.")
     for line in run_command("fastboot reboot", bin_path):
         yield line
+    for line in adb_wait_for_recovery(bin_path=bin_path):
+        yield line
     if (type(line) == bool) and not line:
         logger.error("Booting recovery failed.")
         yield False
     else:
         yield True
+
+
+def heimdall_wait_for_download_available(bin_path: Path) -> bool:
+    """Use heimdall detect to wait for download mode to become available on the device."""
+    logger.info("Wait for download mode to become available.")
+    while True:
+        sleep(1)
+        for line in run_command("heimdall detect", bin_path=bin_path):
+            if (type(line) == bool) and line:
+                return True
 
 
 @add_logging("Flash custom recovery with heimdall.")
