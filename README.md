@@ -26,10 +26,10 @@
   </p>
 </div>
 
-> **Warning**: This application is currently in beta state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, thinks might still go wrong.
+> **Warning**: This application is currently in beta state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, things might still go wrong.
 
 > **Note**: Unlocking the bootloader will erase all data on your device!
-This also includes your DRM keys, which are stored in the Trim Area partition (also called TA).
+This also includes your DRM keys, which are stored in the Trim Area partition (also called TA) in case your device is fairly recent and supports DRM L1. Those devices will be downgraded to DRM L3. Devices on DRM L3 by default will not be affected.
 Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
 If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
 
@@ -51,7 +51,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
       - [TWRP recovery](https://twrp.me/Devices/)
     - Optional Addons:
       - There are different packages of *Google Apps* available.
-        - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)  
+        - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)
         - [NikGApps](https://nikgapps.com/)
       - [MicroG](https://microg.org/)
         - The recommended way to install MicroG is to use the zip file provided here: [https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases).
@@ -199,8 +199,8 @@ Every config file should have metadata with the following fields:
 - `devicename`: str; Name of the device.
 - `devicecode`: str; The official device code.
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
-  
-In addition to these metadata, every config can have optional requirements. If these are set, the user is asked to check if they are meet.  
+
+In addition to these metadata, every config can have optional requirements. If these are set, the user is asked to check if they are meet.
 - `android`: [OPTIONAL] int|str; Android version to install prior to installing a custom ROM.
 - `firmware`: [OPTIONAL] str; specific firmware version to install before installing a custom ROM.
 
