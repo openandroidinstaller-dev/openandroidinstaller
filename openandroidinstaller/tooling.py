@@ -36,7 +36,10 @@ PLATFORM = sys.platform
 
 
 def run_command(
-    full_command: str, bin_path: Path, enable_logging: bool = True
+    full_command: str,
+    bin_path: Path,
+    target: Optional[Union[str, Path]] = None,
+    enable_logging: bool = True,
 ) -> TerminalResponse:
     """Run a command with a tool (adb, fastboot, heimdall)."""
     yield f"${full_command}"
@@ -54,6 +57,8 @@ def run_command(
         si = None
     if enable_logging:
         logger.info(f"Run command: {command_list}")
+    if target:
+        command_list.append(f"{target}")
     # run the command
     with subprocess.Popen(
         command_list,
@@ -122,7 +127,7 @@ def adb_reboot_download(bin_path: Path) -> TerminalResponse:
 @add_logging("Sideload the target to device with adb.")
 def adb_sideload(bin_path: Path, target: str) -> TerminalResponse:
     """Sideload the target to device and return success."""
-    for line in run_command(f"adb sideload {target}", bin_path):
+    for line in run_command("adb sideload", target=target, bin_path=bin_path):
         yield line
 
 
@@ -228,9 +233,9 @@ def adb_twrp_wipe_and_install(
         if (type(line) == bool) and not line:
             logger.error(f"Wiping {partition} failed.")
             # TODO: if this fails, a fix can be to just sideload something and then adb reboot
-            for line in run_command(
-                f"adb sideload {config_path.parent.joinpath(Path('helper.txt'))}",
-                bin_path,
+            for line in adb_sideload(
+                target=f"{config_path.parent.joinpath(Path('helper.txt'))}",
+                bin_path=bin_path,
             ):
                 yield line
             if (type(line) == bool) and not line:
@@ -355,13 +360,17 @@ def fastboot_flash_recovery(
     """Temporarily, flash custom recovery with fastboot."""
     if is_ab:
         logger.info("Boot custom recovery with fastboot.")
-        for line in run_command(f"fastboot boot {recovery}", bin_path):
+        for line in run_command(
+            "fastboot boot", target=f"{recovery}", bin_path=bin_path
+        ):
             yield line
         for line in adb_wait_for_recovery(bin_path=bin_path):
             yield line
     else:
         logger.info("Flash custom recovery with fastboot.")
-        for line in run_command(f"fastboot flash recovery {recovery}", bin_path):
+        for line in run_command(
+            "fastboot flash recovery", target=f"{recovery}", bin_path=bin_path
+        ):
             yield line
         for line in adb_wait_for_recovery(bin_path=bin_path):
             yield line
@@ -381,7 +390,9 @@ def fastboot_flash_recovery(
 def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
     """Temporarily, flash custom recovery with fastboot to boot partition."""
     logger.info("Flash custom recovery with fastboot.")
-    for line in run_command(f"fastboot flash boot {recovery}", bin_path):
+    for line in run_command(
+        "fastboot flash boot", target="f{recovery}", bin_path=bin_path
+    ):
         yield line
     if (type(line) == bool) and not line:
         logger.error("Flashing recovery failed.")
@@ -415,7 +426,7 @@ def heimdall_wait_for_download_available(bin_path: Path) -> bool:
 def heimdall_flash_recovery(bin_path: Path, recovery: str) -> TerminalResponse:
     """Temporarily, flash custom recovery with heimdall."""
     for line in run_command(
-        f"heimdall flash --no-reboot --RECOVERY {recovery}", bin_path
+        "heimdall flash --no-reboot --RECOVERY", target=f"{recovery}", bin_path=bin_path
     ):
         yield line
 
