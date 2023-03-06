@@ -57,7 +57,7 @@ from tooling import run_command
 logger.add("openandroidinstaller.log")
 
 # VERSION number
-VERSION = "0.4.0-beta"
+VERSION = "0.4.1-beta"
 
 # detect platform
 PLATFORM = sys.platform
