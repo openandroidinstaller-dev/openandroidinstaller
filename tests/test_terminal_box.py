@@ -42,8 +42,8 @@ def test_write_lines(mocker):
     for line in ["test", "test_line2", True]:
         terminal_box.write_line(line)
 
-    # two text elements should appear
-    assert len(terminal_box._box.content.controls) == 2
+    # two lines of text should appear
+    assert len(terminal_box._box.content.controls[0].value.split("\n")) == 2
 
 
 def test_toggle_visibility(mocker):
@@ -87,5 +87,5 @@ def test_clear_terminal(mocker):
     # now clear
     terminal_box.clear()
 
-    # two text elements should appear
-    assert len(terminal_box._box.content.controls) == 0
+    # text element should be empty
+    assert terminal_box._box.content.controls[0].value == ""

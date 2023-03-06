@@ -3,7 +3,7 @@ metadata:
   devicename: Google Pixel 2
   devicecode: walleye 
 requirements:
-  android: 12
+  android: 11
 steps:
   unlock_bootloader:
     - type: call_button

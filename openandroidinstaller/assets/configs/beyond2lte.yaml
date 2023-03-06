@@ -1,7 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy Note 10
-  devicecode: d1 
+  devicename: Samsung Galaxy S10+
+  devicecode: beyond2lte 
 requirements:
   android: 12
 steps:
