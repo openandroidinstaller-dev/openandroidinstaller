@@ -57,7 +57,7 @@ from tooling import run_command
 logger.add("openandroidinstaller.log")
 
 # VERSION number
-VERSION = "0.4.0-beta"
+VERSION = "0.4.1-beta"
 
 # detect platform
 PLATFORM = sys.platform
@@ -210,7 +210,10 @@ def log_version_infos(bin_path):
     hdversion = [
         line for line in run_command("heimdall info", bin_path, enable_logging=False)
     ]
-    logger.info(f"Heimdall version: {hdversion[1].strip()}")
+    try:
+        logger.info(f"Heimdall version: {hdversion[1].strip()}")
+    except:
+        logger.info(f"Issue with heimdall: {hdversion}")
 
 
 def main(page: Page, test: bool = False, test_config: str = "sargo"):
@@ -235,6 +238,17 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         actions=[
             Container(
                 content=ElevatedButton(
+                    icon=icons.QUESTION_MARK_ROUNDED,
+                    text="FAQ",
+                    on_click=lambda _: webbrowser.open(
+                        "https://openandroidinstaller.org/faq.html"
+                    ),
+                ),
+                padding=15,
+                tooltip="Frequently asked questions and encountered issues.",
+            ),
+            Container(
+                content=ElevatedButton(
                     icon=icons.BUG_REPORT_OUTLINED,
                     text="Report a bug",
                     on_click=lambda _: webbrowser.open(
@@ -243,7 +257,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
                 ),
                 padding=15,
                 tooltip="Report an issue on github",
-            )
+            ),
         ],
     )
 

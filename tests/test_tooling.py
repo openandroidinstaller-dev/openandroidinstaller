@@ -16,7 +16,11 @@
 from pathlib import Path
 from subprocess import CalledProcessError
 
-from openandroidinstaller.tooling import adb_reboot, search_device, check_ab_partition
+from openandroidinstaller.tooling import (
+    adb_reboot,
+    search_device,
+    check_ab_partition,
+)
 
 
 def test_adb_reboot_success(fp):

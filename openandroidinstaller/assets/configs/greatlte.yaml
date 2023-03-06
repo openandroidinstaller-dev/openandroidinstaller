@@ -1,9 +1,7 @@
 metadata:
-  maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy Note 9 
-  devicecode: crownlte 
-requirements:
-  android: 10
+  maintainer: Michel Memeteau (freechelmi)
+  devicename: Samsung Galaxy note 8
+  devicecode: greatlte 
 steps:
   unlock_bootloader:
   flash_recovery:
@@ -19,6 +17,5 @@ steps:
     - type: confirm_button
       img: samsung-buttons-bixby.png
       content: >
-        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Bixby* for 8~10 seconds 
-        until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
-        hold *Volume Up* + *Bixby* + *Power button*.
+        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for 8~10 seconds 
+        until the screen turns black to reboot  & release the buttons immediately when it does, then immediately hold *Volume Up* + *Bixby* + *Power button* until you are in recovery mode.
