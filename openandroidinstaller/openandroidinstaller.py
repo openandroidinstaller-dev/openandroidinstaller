@@ -210,7 +210,10 @@ def log_version_infos(bin_path):
     hdversion = [
         line for line in run_command("heimdall info", bin_path, enable_logging=False)
     ]
-    logger.info(f"Heimdall version: {hdversion[1].strip()}")
+    try:
+        logger.info(f"Heimdall version: {hdversion[1].strip()}")
+    except:
+        logger.info(f"Issue with heimdall: {hdversion}")
 
 
 def main(page: Page, test: bool = False, test_config: str = "sargo"):
@@ -254,7 +257,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
                 ),
                 padding=15,
                 tooltip="Report an issue on github",
-            )
+            ),
         ],
     )
 
