@@ -14,10 +14,14 @@ steps:
         Press 'Confirm and run' to reboot into the bootloader.
       command: adb_reboot_bootloader
     - type: call_button
-      content: In this step you actually unlock the bootloader. Just press 'Confirm and run' here. The phone will automatically reboot and reformat. Once it's done, press continue here.
+      content: >
+        In this step you actually unlock the bootloader. Just press 'Confirm and run' here. The phone will automatically reboot and reformat.
+        Once it's done, press continue here.
       command: fastboot_oem_unlock
     - type: confirm_button
-      content: The bootloader is now unlocked. Since the device resets completely, you will need to re-enable Developer Options and USB debugging to continue. When you are done, press continue.
+      content: > 
+        The bootloader is now unlocked. Since the device resets completely, you will need to re-enable Developer Options and USB debugging to continue.
+        When you are done, press continue.
   flash_recovery:
     - type: call_button
       content: >
