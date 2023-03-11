@@ -1,0 +1,34 @@
+metadata:
+  maintainer: MagicLike
+  devicename: OnePlus One
+  devicecode: bacon
+  twrp-link: bacon
+requirements:
+  android: 6.0.1
+steps:
+  unlock_bootloader:
+    - type: call_button
+      content: >
+        As a first step, you need to unlock the bootloader. A bootloader is the piece of software, that tells your phone
+        how to start and run an operating system (like Android). Your device should be turned on.
+        Press 'Confirm and run' to reboot into the bootloader.
+      command: adb_reboot_bootloader
+    - type: call_button
+      content: >
+        In this step you actually unlock the bootloader. Just press 'Confirm and run' here. The phone will automatically reboot and reformat.
+        Once it's done, press continue here.
+      command: fastboot_oem_unlock
+    - type: confirm_button
+      content: > 
+        The bootloader is now unlocked. Since the device resets completely, you will need to re-enable Developer Options and USB debugging to continue.
+        When you are done, press continue.
+  flash_recovery:
+    - type: call_button
+      content: >
+        Now you need to flash a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
+        adapting and repairing of the operating system.
+        Make sure your device is turned on. You need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
+      command: adb_reboot_bootloader
+    - type: call_button
+      content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
+      command: fastboot_flash_recovery
