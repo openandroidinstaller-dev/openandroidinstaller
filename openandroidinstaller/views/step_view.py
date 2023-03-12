@@ -38,7 +38,7 @@ from tooling import (
     adb_reboot_download,
     adb_sideload,
     adb_twrp_copy_partitions,
-    fastboot_flash_recovery,
+    fastboot_boot_recovery,
     fastboot_flash_boot,
     fastboot_oem_unlock,
     fastboot_reboot,
@@ -217,8 +217,8 @@ class StepView(BaseView):
             ),
             "fastboot_oem_unlock": fastboot_oem_unlock,
             "fastboot_get_unlock_data": fastboot_get_unlock_data,
-            "fastboot_flash_recovery": partial(
-                fastboot_flash_recovery,
+            "fastboot_boot_recovery": partial(
+                fastboot_boot_recovery,
                 recovery=self.state.recovery_path,
                 is_ab=self.state.is_ab,
             ),

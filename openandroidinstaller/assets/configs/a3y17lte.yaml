@@ -4,7 +4,7 @@ metadata:
   devicecode: a3y17lte
 steps:
   unlock_bootloader:
-  flash_recovery:
+  boot_recovery:
     - type: call_button
       content: >
         As a first step, you need to boot into the bootloader. A bootloader is the piece of software,
@@ -13,7 +13,7 @@ steps:
       command: adb_reboot_download
     - type: call_button
       content: >
-        In this step, you need to flash a custom recovery on your device.
+        In this step, you need to boot a custom recovery on your device.
         Press 'Confirm and run' to start the process. Confirm afterwards to continue.
       command: heimdall_flash_recovery
     - type: confirm_button

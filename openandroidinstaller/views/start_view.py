@@ -99,13 +99,13 @@ Now you are ready to continue.
             """Enable skipping unlocking the bootloader if selected."""
             if self.bootloader_switch.value:
                 logger.info("Skipping bootloader unlocking.")
-                self.state.steps = copy.deepcopy(self.state.config.flash_recovery)
+                self.state.steps = copy.deepcopy(self.state.config.boot_recovery)
                 self.state.num_total_steps = len(self.state.steps)
             else:
                 logger.info("Enabled unlocking the bootloader again.")
                 self.state.steps = copy.deepcopy(
                     self.state.config.unlock_bootloader
-                ) + copy.deepcopy(self.state.config.flash_recovery)
+                ) + copy.deepcopy(self.state.config.boot_recovery)
                 self.state.num_total_steps = len(self.state.steps)
 
         self.bootloader_switch = Switch(

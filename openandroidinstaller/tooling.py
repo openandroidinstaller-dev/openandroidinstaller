@@ -250,7 +250,7 @@ def adb_twrp_wipe_and_install(
             for line in adb_reboot_bootloader(bin_path):
                 yield line
             # boot to TWRP again
-            for line in fastboot_flash_recovery(
+            for line in fastboot_boot_recovery(
                 bin_path=bin_path, recovery=recovery, is_ab=is_ab
             ):
                 yield line
@@ -354,7 +354,7 @@ def fastboot_reboot(bin_path: Path) -> TerminalResponse:
 
 
 @add_logging("Boot custom recovery with fastboot.")
-def fastboot_flash_recovery(
+def fastboot_boot_recovery(
     bin_path: Path, recovery: str, is_ab: bool = True
 ) -> TerminalResponse:
     """Temporarily, boot custom recovery with fastboot."""
@@ -423,8 +423,8 @@ def heimdall_flash_recovery(bin_path: Path, recovery: str) -> TerminalResponse:
     """Temporarily, flash custom recovery with heimdall."""
     for line in run_command(
         "heimdall flash --no-reboot --RECOVERY", target=f"{recovery}", bin_path=bin_path
-    ):
-        yield line
+    ):boot_recovery
+    yield line
 
 
 def search_device(platform: str, bin_path: Path) -> Optional[str]:
