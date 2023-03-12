@@ -353,36 +353,32 @@ def fastboot_reboot(bin_path: Path) -> TerminalResponse:
         yield line
 
 
-@add_logging("Flash or boot custom recovery with fastboot.")
+@add_logging("Boot custom recovery with fastboot.")
 def fastboot_flash_recovery(
     bin_path: Path, recovery: str, is_ab: bool = True
 ) -> TerminalResponse:
-    """Temporarily, flash custom recovery with fastboot."""
+    """Temporarily, boot custom recovery with fastboot."""
     if is_ab:
         logger.info("Boot custom recovery with fastboot.")
         for line in run_command(
             "fastboot boot", target=f"{recovery}", bin_path=bin_path
         ):
             yield line
+        logger.info("Boot into TWRP with fastboot.")
         for line in adb_wait_for_recovery(bin_path=bin_path):
             yield line
     else:
-        logger.info("Flash custom recovery with fastboot.")
+        logger.info("Boot custom recovery with fastboot.")
         for line in run_command(
-            "fastboot flash recovery", target=f"{recovery}", bin_path=bin_path
+            "fastboot boot", target=f"{recovery}", bin_path=bin_path
         ):
             yield line
-        for line in adb_wait_for_recovery(bin_path=bin_path):
-            yield line
         if (type(line) == bool) and not line:
-            logger.error("Flashing recovery failed.")
+            logger.error("Booting recovery failed.")
             yield False
         else:
             yield True
-        # reboot
         logger.info("Boot into TWRP with fastboot.")
-        for line in run_command("fastboot reboot recovery", bin_path):
-            yield line
         for line in adb_wait_for_recovery(bin_path=bin_path):
             yield line
 
