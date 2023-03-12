@@ -97,7 +97,10 @@ class MainView(UserControl):
         )
 
         # create the install view
-        self.install_view = InstallView(on_confirm=self.to_next_view, state=self.state)
+        self.install_view = InstallView(
+            on_confirm=self.to_next_view,
+            state=self.state,
+        )
 
         # create the final success view
         self.final_view = SuccessView(state=self.state)
