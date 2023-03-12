@@ -47,7 +47,7 @@ class SuccessView(BaseView):
             get_title("Installation completed successfully!"),
         ]
         # right view main part
-        contribute_link = "https://github.com/openandroidinstaller-dev/openandroidinstaller#contributing"
+        contribute_link = "https://openandroidinstaller.org/#contribute"
         self.right_view.controls = [
             Text(
                 "Now your devices boots into the new OS. Have fun with it!",
