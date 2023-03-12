@@ -250,6 +250,17 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
             Container(
                 content=ElevatedButton(
                     icon=icons.BUG_REPORT_OUTLINED,
+                    text="Give feedback",
+                    on_click=lambda _: webbrowser.open(
+                        "https://openandroidinstaller.org/feedback.html"
+                    ),
+                ),
+                padding=15,
+                tooltip="Give feedback about your experience with Open Android Installer",
+            ),
+            Container(
+                content=ElevatedButton(
+                    icon=icons.BUG_REPORT_OUTLINED,
                     text="Report a bug",
                     on_click=lambda _: webbrowser.open(
                         "https://github.com/openandroidinstaller-dev/openandroidinstaller/issues"
