@@ -17,10 +17,14 @@ steps:
       content: >
         In this step you actually unlock the bootloader. Just press 'Confirm and run' here. The phone will automatically reboot and reformat.
         Once it's done, press continue here.
+
+        Notice: If you don't have the stock OnePlus One recovery, your device might boot into your custom recovery, but don't do anything / throw an error.
+        If this appears, reboot you device through your bootloader and just continue normally. (Your bootloader will be unlocked.)
       command: fastboot_oem_unlock
     - type: confirm_button
       content: > 
         The bootloader is now unlocked. Since the device resets completely, you will need to re-enable Developer Options and USB debugging to continue.
+        You don't need to re-enable those options, if you have a custom recovery. (See last step.)
         When you are done, press continue.
   flash_recovery:
     - type: call_button
