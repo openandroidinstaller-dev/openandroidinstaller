@@ -186,7 +186,7 @@ If you don't know what this means, you most likely don't need to do anything and
                         FilledButton(
                             "Search for device",
                             on_click=self.search_devices,
-                            icon=icons.PHONE_ANDROID,
+                            icon=icons.DEVICES_OTHER_OUTLINED,
                             expand=True,
                             tooltip="Search for a connected device.",
                         ),
