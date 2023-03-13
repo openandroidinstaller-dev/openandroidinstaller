@@ -71,22 +71,19 @@ Also, you can consider contributing to make it better. There are a lot of differ
             Row(
                 [
                     ElevatedButton(
-                        "Finish and close",
-                        expand=True,
-                        on_click=close_window,
-                    )
-                ]
-            ),
-            Row(
-                [
-                    ElevatedButton(
                         "Flash new device",
                         on_click=self.on_confirm,
                         icon=icons.RESTART_ALT,
                         disabled=False,
                         expand=True,
+                    ),
+                    ElevatedButton(
+                        "Finish and close",
+                        on_click=close_window,
+                        icon=icons.EXIT_TO_APP_OUTLINED,
+                        expand=True,
                     )
                 ]
-            ),
+            )
         ]
         return self.view
