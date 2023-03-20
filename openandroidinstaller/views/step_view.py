@@ -106,7 +106,7 @@ class StepView(BaseView):
         # main controls
         steps_indictor_img_lookup = {
             "Unlock the bootloader": "steps-header-unlock.png",
-            "Flash custom recovery": "steps-header-recovery.png",
+            "Boot custom recovery": "steps-header-recovery.png",
         }
         self.right_view_header.controls = [
             get_title(
