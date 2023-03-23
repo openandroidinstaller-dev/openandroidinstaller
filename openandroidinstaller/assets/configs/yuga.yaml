@@ -1,7 +1,10 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Sony Xperia Z
-  devicecode: yuga
+  device_name: Sony Xperia Z
+  device_code: yuga
+  supported_device_codes:
+    - yuga
+    - C6603
 steps:
   unlock_bootloader:
     - type: confirm_button

@@ -50,23 +50,6 @@ class Step:
 
 class InstallerConfig:
 
-    # map some detected device codes to their real code.
-    device_code_mapping: Dict[str, str] = {
-        # Sony issues
-        "C6603": "yuga",
-        # OnePlus issues
-        "OnePlus5": "cheeseburger",
-        "OnePlus5T": "dumpling",
-        "OnePlus6": "enchilada",
-        "OnePlus6T": "fajita",
-        "OnePlus7": "guacamoleb",
-        "OnePlus7Pro": "guacamole",
-        "OnePlus7T": "hotdogb",
-        "OnePlus7TPro": "hotdog",
-        "Nord": "avicii",
-        "NordN200": "dre",
-    }
-
     def __init__(
         self,
         unlock_bootloader: List[Step],
@@ -78,14 +61,9 @@ class InstallerConfig:
         self.flash_recovery = flash_recovery
         self.metadata = metadata
         self.requirements = requirements
-        self.device_code = metadata.get("devicecode")
+        self.device_code = metadata.get("device_code")
+        self.supported_device_codes = metadata.get("supported_device_codes")
         self.twrp_link = metadata.get("twrp-link")
-
-        # manage device codes and alternative device codes/names
-        inverted_mapping: Dict[str, str] = dict(map(reversed, self.device_code_mapping.items()))  # type: ignore
-        self.alternative_device_code = inverted_mapping.get(
-            self.device_code, self.device_code  # type: ignore
-        )
 
     @classmethod
     def from_file(cls, path):
@@ -118,17 +96,27 @@ class InstallerConfig:
         return cls(unlock_bootloader, flash_recovery, metadata, requirements)
 
 
+def _find_config_file(device_code: str, config_path: Path) -> Optional[Path]:
+    """Find the config file which is supported by the given device code."""
+    for path in config_path.rglob("*.yaml"):
+        with open(path, "r", encoding="utf-8") as stream:
+            try:
+                raw_config = dict(yaml.safe_load(stream))
+                if device_code in raw_config.get("metadata", dict()).get("supported_device_codes", []):
+                    logger.info(f"Device code '{device_code}' is supported by config '{path}'.")
+                    return path
+            except:
+                pass
+    return None
+
+
 def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfig]:
     """
     Function to load a function from given path and directory path.
 
     Try to load local file in the same directory as the executable first, then load from assets.
     """
-    # try loading a custom local file first
-    mapped_device_code = InstallerConfig.device_code_mapping.get(
-        device_code, device_code
-    )
-    custom_path = Path.cwd().joinpath(Path(f"{mapped_device_code}.yaml"))
+    custom_path = _find_config_file(device_code, config_path=Path.cwd())
     try:
         config = InstallerConfig.from_file(custom_path)
         logger.info(f"Loaded custom device config from {custom_path}.")
@@ -136,7 +124,9 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
         return config
     except FileNotFoundError:
         # if no localfile, then try to load a config file from assets
-        path = config_path.joinpath(Path(f"{mapped_device_code}.yaml"))
+        path = _find_config_file(device_code, config_path)
+
+        # path = config_path.joinpath(Path(f"{mapped_device_code}.yaml"))
         try:
             config = InstallerConfig.from_file(path)
             logger.info(f"Loaded device config from {path}.")
@@ -168,8 +158,9 @@ def validate_config(config: str) -> bool:
         {
             "metadata": {
                 "maintainer": str,
-                "devicename": str,
-                "devicecode": str,
+                "device_name": str,
+                "device_code": str,
+                "supported_device_codes": [str],
                 schema.Optional("twrp-link"): str,
             },
             schema.Optional("requirements"): {

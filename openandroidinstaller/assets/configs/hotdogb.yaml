@@ -1,7 +1,10 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: OnePlus 7T
-  devicecode: hotdogb 
+  device_name: OnePlus 7T
+  device_code: hotdogb 
+  supported_device_codes:
+    - hotdogb
+    - OnePlus7T
 requirements:
   android: 12
 steps:

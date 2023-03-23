@@ -1,7 +1,10 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: OnePlus Nord N200
-  devicecode: dre
+  device_name: OnePlus Nord N200
+  device_code: dre
+  supported_device_codes:
+    - dre
+    - NordN200
 requirements:
   android: 11
 steps:

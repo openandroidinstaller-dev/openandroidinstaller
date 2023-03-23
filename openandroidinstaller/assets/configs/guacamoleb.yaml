@@ -1,7 +1,10 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: OnePlus 7
-  devicecode: guacamoleb 
+  device_name: OnePlus 7
+  device_code: guacamoleb 
+  supported_device_codes:
+    - guacamoleb
+    - OnePlus7  
 requirements:
   android: 12
 steps:

@@ -1,7 +1,10 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: OnePlus Nord
-  devicecode: avicii
+  device_name: OnePlus Nord
+  device_code: avicii
+  supported_device_codes:
+    - avicii
+    - Nord
 requirements:
   android: 10
 steps:

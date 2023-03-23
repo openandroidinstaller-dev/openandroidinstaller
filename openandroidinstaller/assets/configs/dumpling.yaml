@@ -1,7 +1,10 @@
 metadata:
   maintainer: SirRGB
-  devicename: OnePlus 5T
-  devicecode: dumpling
+  device_name: OnePlus 5T
+  device_code: dumpling
+  supported_device_codes:
+    - dumpling
+    - OnePlus5T
   twrp-link: cheeseburger_dumpling
 steps:
   unlock_bootloader:

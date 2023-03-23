@@ -1,7 +1,10 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: OnePlus 6T
-  devicecode: fajita 
+  device_name: OnePlus 6T
+  device_code: fajita 
+  supported_device_codes:
+    - fajita
+    - OnePlus6T
 requirements:
   android: 11
 steps:

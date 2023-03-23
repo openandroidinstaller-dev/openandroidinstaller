@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Pixel 3a
-  devicecode: sargo 
+  device_name: Pixel 3a
+  device_code: sargo 
+  supported_device_codes:
+    - sargo
 requirements:
   android: 12.1.0
 steps:

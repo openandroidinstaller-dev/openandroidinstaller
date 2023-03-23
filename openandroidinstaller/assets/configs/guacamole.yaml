@@ -1,7 +1,10 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: OnePlus 7 Pro
-  devicecode: guacamole 
+  device_name: OnePlus 7 Pro
+  device_code: guacamole 
+  supported_device_codes:
+    - guacamole
+    - OnePlus7Pro
 requirements:
   android: 12
 steps:
