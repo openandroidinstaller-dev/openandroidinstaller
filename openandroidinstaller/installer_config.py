@@ -14,7 +14,7 @@
 # Author: Tobias Sterbak
 
 from pathlib import Path
-from typing import List, Optional, Dict
+from typing import List, Optional
 
 import schema
 import yaml
@@ -49,7 +49,6 @@ class Step:
 
 
 class InstallerConfig:
-
     def __init__(
         self,
         unlock_bootloader: List[Step],
@@ -102,8 +101,12 @@ def _find_config_file(device_code: str, config_path: Path) -> Optional[Path]:
         with open(path, "r", encoding="utf-8") as stream:
             try:
                 raw_config = dict(yaml.safe_load(stream))
-                if device_code in raw_config.get("metadata", dict()).get("supported_device_codes", []):
-                    logger.info(f"Device code '{device_code}' is supported by config '{path}'.")
+                if device_code in raw_config.get("metadata", dict()).get(
+                    "supported_device_codes", []
+                ):
+                    logger.info(
+                        f"Device code '{device_code}' is supported by config '{path}'."
+                    )
                     return path
             except:
                 pass
@@ -117,23 +120,22 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
     Try to load local file in the same directory as the executable first, then load from assets.
     """
     custom_path = _find_config_file(device_code, config_path=Path.cwd())
-    try:
+    if custom_path:
         config = InstallerConfig.from_file(custom_path)
         logger.info(f"Loaded custom device config from {custom_path}.")
         logger.info(f"Config metadata: {config.metadata}.")
         return config
-    except FileNotFoundError:
+    else:
         # if no localfile, then try to load a config file from assets
         path = _find_config_file(device_code, config_path)
 
-        # path = config_path.joinpath(Path(f"{mapped_device_code}.yaml"))
-        try:
+        if path:
             config = InstallerConfig.from_file(path)
             logger.info(f"Loaded device config from {path}.")
             if config:
                 logger.info(f"Config metadata: {config.metadata}.")
             return config
-        except FileNotFoundError:
+        else:
             logger.info(f"No device config found for {path}.")
             return None
 

@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Google Pixel 3
-  devicecode: blueline
+  device_name: Google Pixel 3
+  device_code: blueline
+  supported_device_codes:
+    - blueline
 requirements:
   android: 12
 steps:

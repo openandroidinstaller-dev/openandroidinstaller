@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy Note 3 LTE (N900T/V/W8)
-  devicecode: hltetmo 
+  device_name: Samsung Galaxy Note 3 LTE (N900T/V/W8)
+  device_code: hltetmo 
+  supported_device_codes:
+    - hltetmo 
 steps:
   unlock_bootloader:
   flash_recovery:

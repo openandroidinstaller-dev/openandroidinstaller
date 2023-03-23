@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy S7 Edge
-  devicecode: hero2lte 
+  device_name: Samsung Galaxy S7 Edge
+  device_code: hero2lte 
+  supported_device_codes:
+    - hero2lte 
 steps:
   unlock_bootloader:
   flash_recovery:

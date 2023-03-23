@@ -39,9 +39,7 @@ def get_download_link(devicecode: str) -> Optional[str]:
         return None
 
 
-def image_works_with_device(
-    supported_device_codes: List[str], image_path: str
-) -> bool:
+def image_works_with_device(supported_device_codes: List[str], image_path: str) -> bool:
     """Determine if an image works for the given device."""
     with zipfile.ZipFile(image_path) as image_zip:
         with image_zip.open(

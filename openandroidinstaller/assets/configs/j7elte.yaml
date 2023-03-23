@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy J7 (2015)
-  devicecode: j7elte 
+  device_name: Samsung Galaxy J7 (2015)
+  device_code: j7elte 
+  supported_device_codes:
+    - j7elte 
 steps:
   unlock_bootloader:
   flash_recovery:

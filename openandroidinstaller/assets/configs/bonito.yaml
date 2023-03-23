@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Google Pixel 3a XL
-  devicecode: bonito
+  device_name: Google Pixel 3a XL
+  device_code: bonito
+  supported_device_codes:
+    - bonito
 requirements:
   android: 12.1.0
 steps:

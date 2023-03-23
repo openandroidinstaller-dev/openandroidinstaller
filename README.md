@@ -185,7 +185,7 @@ All kinds of contributions are welcome. These include:
 
 ### How to contribute your own installation configurations
 
-If you want to use the tool for a non-supported smartphone, the fastest way is to adapt an [existing config file](https://github.com/openandroidinstaller-dev/openandroidinstaller/tree/main/openandroidinstaller/assets/configs). The file should be named after the `device code` of your device. This is in general the output by `adb shell getprop | grep ro.product.device` when the devices is connected to the computer. You can also get the device code by connecting the device to the computer and run OpenAndroidInstaller to detect the device.
+If you want to use the tool for a non-supported smartphone, the fastest way is to adapt an [existing config file](https://github.com/openandroidinstaller-dev/openandroidinstaller/tree/main/openandroidinstaller/assets/configs). The file should be named after the official `device code` of the device. Add the code output by `adb shell getprop | grep ro.product.device` (when the devices is connected to the computer) as well as the official device code to the `supported_device_codes` list in the config. You can also get the device code by connecting the device to the computer and run OpenAndroidInstaller to detect the device.
 
 **To test your config file with the executable** without using the developer setup, place it in the same directory as the executable. There it will be detected by name. After you created a config file and it works fine, you can open a pull request to make the file available to other users. Please also add the device to the supported devices table above.
 
@@ -196,8 +196,9 @@ A config file consists of two parts. The first part are some metadata about the 
 ##### How to write Metadata
 Every config file should have metadata with the following fields:
 - `maintainer`: str; Maintainer and author of the config file.
-- `devicename`: str; Name of the device.
-- `devicecode`: str; The official device code.
+- `device_name`: str; Name of the device.
+- `device_code`: str; The official device code.
+- `supported_device_codes`: List[str]; A list of supported device codes for the config. The config will be loaded based on this field.
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
 
 In addition to these metadata, every config can have optional requirements. If these are set, the user is asked to check if they are meet.

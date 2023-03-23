@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy S10+
-  devicecode: beyond2lte 
+  device_name: Samsung Galaxy S10+
+  device_code: beyond2lte 
+  supported_device_codes:
+    - beyond2lte 
 requirements:
   android: 12
 steps:

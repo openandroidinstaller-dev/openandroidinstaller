@@ -38,7 +38,7 @@ def test_load_config_valid(config_path):
 
     # assert some properties of the config
     assert config
-    assert config.metadata.get("devicecode") == "sargo"
+    assert config.metadata.get("device_code") == "sargo"
 
 
 def test_load_config_notfound(config_path):

@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Motorola edge
-  devicecode: racer
+  device_name: Motorola edge
+  device_code: racer
+  supported_device_codes:
+    - racer
 steps:
   unlock_bootloader:
     - type: call_button 

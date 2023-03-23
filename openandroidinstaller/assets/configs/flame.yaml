@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Pixel 4
-  devicecode: flame 
+  device_name: Pixel 4
+  device_code: flame 
+  supported_device_codes:
+    - flame 
 requirements:
   android: 13
 steps:

@@ -1,7 +1,10 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy S7
-  devicecode: herolte 
+  device_name: Samsung Galaxy S7
+  device_code: herolte 
+  supported_device_codes:
+    - herolte 
+    - heroltexx
 steps:
   unlock_bootloader:
   flash_recovery:

@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Fairphone 3
-  devicecode: FP3
+  device_name: Fairphone 3
+  device_code: FP3
+  supported_device_codes:
+    - FP3
 steps:
   unlock_bootloader:
     - type: link_button_with_confirm

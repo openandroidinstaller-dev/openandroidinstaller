@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Motorola Moto G7 power
-  devicecode: ocean 
+  device_name: Motorola Moto G7 power
+  device_code: ocean 
+  supported_device_codes:
+    - ocean 
 steps:
   unlock_bootloader:
     - type: call_button 
