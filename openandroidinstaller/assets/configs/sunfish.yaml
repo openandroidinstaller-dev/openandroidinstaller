@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Pixel 4a
-  devicecode: sunfish 
+  device_name: Pixel 4a
+  device_code: sunfish 
+  supported_device_codes:
+    - sunfish 
 requirements:
   android: 12.1.0
 steps:

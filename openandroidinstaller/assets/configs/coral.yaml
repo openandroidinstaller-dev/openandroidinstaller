@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Google Pixel 4 XL
-  devicecode: coral
+  device_name: Google Pixel 4 XL
+  device_code: coral
+  supported_device_codes:
+    - coral
 requirements:
   android: 13
 steps:

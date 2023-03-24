@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Sony Xperia XZ3
-  devicecode: akatsuki 
+  device_name: Sony Xperia XZ3
+  device_code: akatsuki 
+  supported_device_codes:
+    - akatsuki 
 requirements:
   android: 10
 steps:

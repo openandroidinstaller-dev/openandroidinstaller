@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Motorola moto g 5G / one 5G ace
-  devicecode: kiev 
+  device_name: Motorola moto g 5G / one 5G ace
+  device_code: kiev 
+  supported_device_codes:
+    - kiev 
 steps:
   unlock_bootloader:
     - type: call_button 

@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Sony Xperia 10 Plus
-  devicecode: mermaid 
+  device_name: Sony Xperia 10 Plus
+  device_code: mermaid 
+  supported_device_codes:
+    - mermaid 
 steps:
   unlock_bootloader:
     - type: confirm_button

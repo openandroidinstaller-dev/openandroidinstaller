@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy A3 (2017)
-  devicecode: a3y17lte
+  device_name: Samsung Galaxy A3 (2017)
+  device_code: a3y17lte
+  supported_device_codes:
+    - a3y17lte
 steps:
   unlock_bootloader:
   boot_recovery:

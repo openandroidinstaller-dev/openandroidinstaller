@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Sony Xperia XZ2
-  devicecode: akari 
+  device_name: Sony Xperia XZ2
+  device_code: akari 
+  supported_device_codes:
+    - akari 
 requirements:
   android: 10
 steps:

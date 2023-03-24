@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy S6
-  devicecode: zerofltexx 
+  device_name: Samsung Galaxy S6
+  device_code: zerofltexx 
+  supported_device_codes:
+    - zerofltexx 
 steps:
   unlock_bootloader:
   boot_recovery:

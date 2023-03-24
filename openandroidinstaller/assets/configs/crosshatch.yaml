@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Google Pixel 3 XL
-  devicecode: crosshatch
+  device_name: Google Pixel 3 XL
+  device_code: crosshatch
+  supported_device_codes:
+    - crosshatch
 requirements:
   android: 12
 steps:

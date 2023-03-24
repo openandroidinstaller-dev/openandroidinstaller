@@ -1,7 +1,9 @@
 metadata:
   maintainer: SirRGB
-  devicename: Motorola Moto Z
-  devicecode: griffin
+  device_name: Motorola Moto Z
+  device_code: griffin
+  supported_device_codes:
+    - griffin
 steps:
   unlock_bootloader:
     - type: call_button

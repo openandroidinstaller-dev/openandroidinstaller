@@ -38,7 +38,6 @@ from views import BaseView
 from app_state import AppState
 from widgets import get_title
 from tooling import search_device, check_ab_partition
-from installer_config import InstallerConfig
 
 
 class StartView(BaseView):
@@ -244,7 +243,7 @@ If you don't know what this means, you most likely don't need to do anything and
             self.state.is_ab = is_ab
             if self.state.config:
                 device_name = self.state.config.metadata.get(
-                    "devicename", "No device name in config."
+                    "device_name", "No device name in config."
                 )
             else:
                 device_name = None
@@ -254,7 +253,9 @@ If you don't know what this means, you most likely don't need to do anything and
                 self.continue_button.disabled = False
                 self.bootloader_switch.disabled = False
                 # overwrite the text field with the real name from the config
-                self.device_name.value = f"{device_name} (code: {InstallerConfig.device_code_mapping.get(device_code, device_code)})"
+                self.device_name.value = (
+                    f"{device_name} (code: {self.state.config.device_code})"
+                )
                 self.device_name.color = colors.GREEN
             else:
                 # failed to load config

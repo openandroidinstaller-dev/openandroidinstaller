@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy S9
-  devicecode: starlte
+  device_name: Samsung Galaxy S9
+  device_code: starlte
+  supported_device_codes:
+    - starlte
 requirements:
   android: 10
 steps:

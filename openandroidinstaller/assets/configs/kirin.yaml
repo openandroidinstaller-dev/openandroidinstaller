@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Sony Xperia 10
-  devicecode: kirin
+  device_name: Sony Xperia 10
+  device_code: kirin
+  supported_device_codes:
+    - kirin
 steps:
   unlock_bootloader:
     - type: confirm_button

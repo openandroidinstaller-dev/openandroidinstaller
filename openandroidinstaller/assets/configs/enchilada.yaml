@@ -1,7 +1,10 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: OnePlus 6
-  devicecode: enchilada 
+  device_name: OnePlus 6
+  device_code: enchilada 
+  supported_device_codes:
+    - enchilada
+    - OnePlus6
 requirements:
   android: 11
 steps:

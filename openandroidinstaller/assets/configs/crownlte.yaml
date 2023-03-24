@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy Note 9 
-  devicecode: crownlte 
+  device_name: Samsung Galaxy Note 9 
+  device_code: crownlte 
+  supported_device_codes:
+    - crownlte 
 requirements:
   android: 10
 steps:

@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Pixel 5a
-  devicecode: barbet 
+  device_name: Pixel 5a
+  device_code: barbet 
+  supported_device_codes:
+    - barbet 
 requirements:
   android: 12.1.0
 steps:

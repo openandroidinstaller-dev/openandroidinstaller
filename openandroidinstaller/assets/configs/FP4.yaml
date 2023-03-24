@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Fairphone 4
-  devicecode: FP4
+  device_name: Fairphone 4
+  device_code: FP4
+  supported_device_codes:
+    - FP4
 steps:
   unlock_bootloader:
     - type: link_button_with_confirm

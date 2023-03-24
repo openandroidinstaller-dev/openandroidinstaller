@@ -115,7 +115,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
 
         # download link
         self.download_link = get_download_link(
-            self.state.config.metadata.get("devicecode", "ERROR")
+            self.state.config.metadata.get("device_code", "NOTFOUND")
         )
 
         # attach hidden dialogues
@@ -256,10 +256,8 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
             logger.info("No image selected.")
         # check if the image works with the device and show the filename in different colors accordingly
         if e.files:
-            device_code = self.state.config.device_code
             if image_works_with_device(
-                device_code=device_code,
-                alternative_device_code=self.state.config.alternative_device_code,
+                supported_device_codes=self.state.config.supported_device_codes,
                 image_path=self.state.image_path,
             ):
                 self.selected_image.color = colors.GREEN
@@ -300,8 +298,7 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
             device_code = self.state.config.device_code
             if not (
                 image_works_with_device(
-                    device_code=device_code,
-                    alternative_device_code=self.state.config.alternative_device_code,
+                    supported_device_codes=self.state.config.supported_device_codes,
                     image_path=self.state.image_path,
                 )
                 and recovery_works_with_device(

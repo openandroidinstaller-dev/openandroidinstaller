@@ -1,7 +1,10 @@
 metadata:
   maintainer: SirRGB
-  devicename: OnePlus 5
-  devicecode: cheeseburger
+  device_name: OnePlus 5
+  device_code: cheeseburger
+  supported_device_codes:
+    - cheeseburger
+    - OnePlus5
   twrp-link: cheeseburger_dumpling
 steps:
   unlock_bootloader:

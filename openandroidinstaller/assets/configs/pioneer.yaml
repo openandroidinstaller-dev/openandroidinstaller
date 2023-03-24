@@ -1,7 +1,9 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Sony Xperia XA2
-  devicecode: pioneer 
+  device_name: Sony Xperia XA2
+  device_code: pioneer 
+  supported_device_codes:
+    - pioneer 
 requirements:
   android: 9
 steps:
