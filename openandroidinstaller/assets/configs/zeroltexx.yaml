@@ -4,6 +4,7 @@ metadata:
   device_code: zeroltexx 
   supported_device_codes:
     - zeroltexx
+    - zerolte
 steps:
   unlock_bootloader:
   boot_recovery:
