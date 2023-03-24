@@ -67,5 +67,5 @@ class AppState:
         self.config = _load_config(device_code, self.config_path)
         if self.config:
             self.steps = copy.deepcopy(self.config.unlock_bootloader) + copy.deepcopy(
-                self.config.flash_recovery
+                self.config.boot_recovery
             )
