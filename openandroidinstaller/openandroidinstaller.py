@@ -97,7 +97,10 @@ class MainView(UserControl):
         )
 
         # create the install view
-        self.install_view = InstallView(on_confirm=self.to_next_view, state=self.state)
+        self.install_view = InstallView(
+            on_confirm=self.to_next_view,
+            state=self.state,
+        )
 
         # create the final success view
         self.final_view = SuccessView(state=self.state)
@@ -246,6 +249,17 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
                 ),
                 padding=15,
                 tooltip="Frequently asked questions and encountered issues.",
+            ),
+            Container(
+                content=ElevatedButton(
+                    icon=icons.FEEDBACK_OUTLINED,
+                    text="Give feedback",
+                    on_click=lambda _: webbrowser.open(
+                        "https://openandroidinstaller.org/feedback.html"
+                    ),
+                ),
+                padding=15,
+                tooltip="Give feedback about your experience with OpenAndroidInstaller",
             ),
             Container(
                 content=ElevatedButton(
