@@ -48,7 +48,3 @@ steps:
       content: >
         Once the device is in fastboot mode, flash the custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_boot_recovery
-    - type: confirm_button 
-      content: >
-        Now reboot into recovery to verify the installation. Do not reboot into the existing OS, since it will overwrite the recovery you just installed!
-        With the device powered off, hold 'Volume Up + Power'. Release when boot logo appears.
