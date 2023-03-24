@@ -1,7 +1,10 @@
 metadata:
   maintainer: MagicLike
-  devicename: OnePlus One
-  devicecode: bacon
+  device_name: OnePlus One
+  device_code: bacon
+  supported_device_codes:
+    - bacon
+    - A0001
   twrp-link: bacon
 requirements:
   android: 6.0.1

@@ -423,7 +423,8 @@ def heimdall_flash_recovery(bin_path: Path, recovery: str) -> TerminalResponse:
     """Temporarily, flash custom recovery with heimdall."""
     for line in run_command(
         "heimdall flash --no-reboot --RECOVERY", target=f"{recovery}", bin_path=bin_path
-    ):boot_recovery
+    ):
+        boot_recovery
     yield line
 
 

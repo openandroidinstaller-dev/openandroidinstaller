@@ -13,7 +13,6 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-import webbrowser
 from loguru import logger
 from flet import (
     ElevatedButton,

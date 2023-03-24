@@ -3,7 +3,7 @@ metadata:
   device_name: Samsung Galaxy S6 Edge
   device_code: zeroltexx 
   supported_device_codes:
-    - zeroltexx 
+    - zeroltexx
 steps:
   unlock_bootloader:
   boot_recovery:
