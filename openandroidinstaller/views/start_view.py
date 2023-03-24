@@ -98,13 +98,13 @@ Now you are ready to continue.
             """Enable skipping unlocking the bootloader if selected."""
             if self.bootloader_switch.value:
                 logger.info("Skipping bootloader unlocking.")
-                self.state.steps = copy.deepcopy(self.state.config.flash_recovery)
+                self.state.steps = copy.deepcopy(self.state.config.boot_recovery)
                 self.state.num_total_steps = len(self.state.steps)
             else:
                 logger.info("Enabled unlocking the bootloader again.")
                 self.state.steps = copy.deepcopy(
                     self.state.config.unlock_bootloader
-                ) + copy.deepcopy(self.state.config.flash_recovery)
+                ) + copy.deepcopy(self.state.config.boot_recovery)
                 self.state.num_total_steps = len(self.state.steps)
 
         self.bootloader_switch = Switch(
@@ -185,7 +185,7 @@ If you don't know what this means, you most likely don't need to do anything and
                         FilledButton(
                             "Search for device",
                             on_click=self.search_devices,
-                            icon=icons.PHONE_ANDROID,
+                            icon=icons.DEVICES_OTHER_OUTLINED,
                             expand=True,
                             tooltip="Search for a connected device.",
                         ),

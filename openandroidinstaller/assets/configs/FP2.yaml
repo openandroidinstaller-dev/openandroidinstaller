@@ -6,17 +6,17 @@ metadata:
     - FP2
 steps:
   unlock_bootloader:
-  flash_recovery:
+  boot_recovery:
     - type: confirm_button 
       content: >
-        Now you need to flash a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating, 
+        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating, 
         adapting and repairing of the operating system.
     - type: call_button
       content: Once the device is fully booted, you need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
-      content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
-      command: fastboot_flash_recovery
+      content: Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
+      command: fastboot_boot_recovery
     - type: confirm_button 
       content: >
         Now reboot into recovery to verify the installation. Do not reboot into the existing OS, since it will overwrite the recovery you just installed!

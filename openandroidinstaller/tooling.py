@@ -250,7 +250,7 @@ def adb_twrp_wipe_and_install(
             for line in adb_reboot_bootloader(bin_path):
                 yield line
             # boot to TWRP again
-            for line in fastboot_flash_recovery(
+            for line in fastboot_boot_recovery(
                 bin_path=bin_path, recovery=recovery, is_ab=is_ab
             ):
                 yield line
@@ -353,36 +353,32 @@ def fastboot_reboot(bin_path: Path) -> TerminalResponse:
         yield line
 
 
-@add_logging("Flash or boot custom recovery with fastboot.")
-def fastboot_flash_recovery(
+@add_logging("Boot custom recovery with fastboot.")
+def fastboot_boot_recovery(
     bin_path: Path, recovery: str, is_ab: bool = True
 ) -> TerminalResponse:
-    """Temporarily, flash custom recovery with fastboot."""
+    """Temporarily, boot custom recovery with fastboot."""
     if is_ab:
         logger.info("Boot custom recovery with fastboot.")
         for line in run_command(
             "fastboot boot", target=f"{recovery}", bin_path=bin_path
         ):
             yield line
+        logger.info("Boot into TWRP with fastboot.")
         for line in adb_wait_for_recovery(bin_path=bin_path):
             yield line
     else:
-        logger.info("Flash custom recovery with fastboot.")
+        logger.info("Boot custom recovery with fastboot.")
         for line in run_command(
-            "fastboot flash recovery", target=f"{recovery}", bin_path=bin_path
+            "fastboot boot", target=f"{recovery}", bin_path=bin_path
         ):
             yield line
-        for line in adb_wait_for_recovery(bin_path=bin_path):
-            yield line
         if (type(line) == bool) and not line:
-            logger.error("Flashing recovery failed.")
+            logger.error("Booting recovery failed.")
             yield False
         else:
             yield True
-        # reboot
         logger.info("Boot into TWRP with fastboot.")
-        for line in run_command("fastboot reboot recovery", bin_path):
-            yield line
         for line in adb_wait_for_recovery(bin_path=bin_path):
             yield line
 
@@ -427,8 +423,8 @@ def heimdall_flash_recovery(bin_path: Path, recovery: str) -> TerminalResponse:
     """Temporarily, flash custom recovery with heimdall."""
     for line in run_command(
         "heimdall flash --no-reboot --RECOVERY", target=f"{recovery}", bin_path=bin_path
-    ):
-        yield line
+    ):boot_recovery
+    yield line
 
 
 def search_device(platform: str, bin_path: Path) -> Optional[str]:

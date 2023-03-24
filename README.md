@@ -149,6 +149,7 @@ Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin/) | | t
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
+OnePlus | One | [bacon](https://wiki.lineageos.org/devices/bacon/) | A0001 | tested
 OnePlus | 5 | [cheeseburger](https://wiki.lineageos.org/devices/cheeseburger/) | | tested
 OnePlus | 5T | [dumpling](https://wiki.lineageos.org/devices/dumpling/) | | tested
 OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada/) | | tested
@@ -191,7 +192,7 @@ If you want to use the tool for a non-supported smartphone, the fastest way is t
 
 #### Content of a config file
 
-A config file consists of two parts. The first part are some metadata about the device and the second parts are the steps to unlock the bootloader, flash a recovery and install the ROMs.
+A config file consists of two parts. The first part are some metadata about the device and the second parts are the steps to unlock the bootloader, boot a recovery and install the ROMs.
 
 ##### How to write Metadata
 Every config file should have metadata with the following fields:
@@ -214,7 +215,7 @@ Every step in the config file corresponds to one view in the application. These 
   - `call_button_with_input`: Display the content text, an input field and a button that runs a given command. The inputtext, can be used in the command by using the `<inputtext>` placeholder in the command field. After the command is run, a confirm button is displayed to allow the user to move to the next step.
   - `link_button_with_confirm`: Display a button that opens a browser with a given link, confirm afterwards. Link is given in `link`.
 - `content`: str; The content text displayed alongside the action of the step. Used to inform the user about whats going on.
-- `command`: [ONLY for call_button* steps] str; The command to run. One of `adb_reboot`, `adb_reboot_bootloader`, `adb_reboot_download`, `adb_sideload`, `adb_twrp_wipe_and_install`, `adb_twrp_copy_partitions`, `fastboot_flash_recovery`, `fastboot_unlock_with_code`, `fastboot_unlock`, `fastboot_oem_unlock`, `fastboot_get_unlock_data`, `fastboot_reboot`, `heimdall_flash_recovery`.
+- `command`: [ONLY for call_button* steps] str; The command to run. One of `adb_reboot`, `adb_reboot_bootloader`, `adb_reboot_download`, `adb_sideload`, `adb_twrp_wipe_and_install`, `adb_twrp_copy_partitions`, `fastboot_boot_recovery`, `fastboot_unlock_with_code`, `fastboot_unlock`, `fastboot_oem_unlock`, `fastboot_get_unlock_data`, `fastboot_reboot`, `heimdall_flash_recovery`.
 - `img`: [OPTIONAL] Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 - `link`: [OPTIONAL] Link to use for the link button if type is `link_button_with_confirm`.

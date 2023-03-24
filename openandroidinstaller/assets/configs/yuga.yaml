@@ -34,10 +34,10 @@ steps:
         Press the button to reboot. Since the device resets completely, you will need to re-enable USB debugging to continue. 
         Connect your device to your PC via USB. Then confirm here to continue.
       command: fastboot_reboot
-  flash_recovery:
+  boot_recovery:
     - type: call_button
       content: Now you have to reboot into bootloader again. With your phone turned on, press the button to do so and continue once it is done.
       command: adb_reboot_bootloader
     - type: call_button
-      content: Next, you need to flash a custom recovery image. Press the button to flash the selected image. Then continue.
+      content: Next, you need to boot a custom recovery image. Press the button to flash the selected image. Then continue.
       command: fastboot_flash_boot

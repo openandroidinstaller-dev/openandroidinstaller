@@ -27,22 +27,22 @@ steps:
       command: fastboot_reboot
     - type: confirm_button
       content: The bootloader is now unlocked. Since the device resets completely, you will need to re-enable Developer Options and USB debugging to continue.
-  flash_recovery:
+  boot_recovery:
     - type: call_button
       content: >
-        Now you need to flash a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
+        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
         adapting and repairing of the operating system.
         Make sure your device is turned on. You need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
-      content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
-      command: fastboot_flash_recovery
+      content: Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
+      command: fastboot_boot_recovery
     - type: call_button
       command: adb_twrp_copy_partitions
       content: >
         In some cases, the inactive slot can be unpopulated or contain much older firmware than the active slot, leading to various issues including a potential hard-brick.
         We can ensure none of that will happen by copying the contents of the active slot to the inactive slot. Press 'confirm and run' to to this. Once you are in the bootloader again, continue.
     - type: call_button
-      command: fastboot_flash_recovery
+      command: fastboot_boot_recovery
       content: >
         Now we need to boot into recovery again. Press run and when you see the TWRP screen you can continue.
