@@ -271,6 +271,8 @@ def adb_twrp_install_addons(
     """
     logger.info("Install addons with twrp.")
     sleep(0.5)
+    if is_ab:
+        adb_wait_for_recovery(bin_path=bin_path)
     logger.info("Sideload and install addons.")
     for addon in addons:
         # activate sideload
@@ -358,6 +360,7 @@ def fastboot_boot_recovery(
     bin_path: Path, recovery: str, is_ab: bool = True
 ) -> TerminalResponse:
     """Temporarily, boot custom recovery with fastboot."""
+    # TODO: this can be unified now
     if is_ab:
         logger.info("Boot custom recovery with fastboot.")
         for line in run_command(
@@ -387,7 +390,7 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
     """Temporarily, flash custom recovery with fastboot to boot partition."""
     logger.info("Flash custom recovery with fastboot.")
     for line in run_command(
-        "fastboot flash boot", target="f{recovery}", bin_path=bin_path
+        "fastboot flash boot", target=f"{recovery}", bin_path=bin_path
     ):
         yield line
     if (type(line) == bool) and not line:
@@ -424,8 +427,7 @@ def heimdall_flash_recovery(bin_path: Path, recovery: str) -> TerminalResponse:
     for line in run_command(
         "heimdall flash --no-reboot --RECOVERY", target=f"{recovery}", bin_path=bin_path
     ):
-        boot_recovery
-    yield line
+        yield line
 
 
 def search_device(platform: str, bin_path: Path) -> Optional[str]:
