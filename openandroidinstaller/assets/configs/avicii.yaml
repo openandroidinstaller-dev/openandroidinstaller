@@ -6,7 +6,7 @@ metadata:
     - avicii
     - Nord
 requirements:
-  android: 10
+  android: 12
 steps:
   unlock_bootloader:
     - type: call_button
