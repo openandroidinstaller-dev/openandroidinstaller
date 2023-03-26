@@ -76,7 +76,7 @@ The recommended way to install MicroG is to use the zip file provided here:
 ## F-Droid Appstore
 
 F-Droid is an installable catalogue of libre software apps for Android. The F-Droid client app makes it easy to browse, install, and keep track of updates on your device.
-You can get the zip file to install this addon here: [https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
+You can get the zip file to install this addon here: [https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
 """,
                 on_tap_link=lambda e: self.page.launch_url(e.data),
             ),
