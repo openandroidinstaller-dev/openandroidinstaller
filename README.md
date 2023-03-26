@@ -184,6 +184,8 @@ All kinds of contributions are welcome. These include:
 - Test the application on your computer.
 - Contribute an application build for a new platform.
 
+A detailed list can be found [here](https://openandroidinstaller.org/#contribute).
+
 ### How to contribute your own installation configurations
 
 If you want to use the tool for a non-supported smartphone, the fastest way is to adapt an [existing config file](https://github.com/openandroidinstaller-dev/openandroidinstaller/tree/main/openandroidinstaller/assets/configs). The file should be named after the official `device code` of the device. Add the code output by `adb shell getprop | grep ro.product.device` (when the devices is connected to the computer) as well as the official device code to the `supported_device_codes` list in the config. You can also get the device code by connecting the device to the computer and run OpenAndroidInstaller to detect the device.
