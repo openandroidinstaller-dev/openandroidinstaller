@@ -14,7 +14,7 @@
 
   <p align="center">
     <br />
-    The OpenAndroidInstaller project helps Android users to keep their smartphone's operating system up to date with free software and to continue using the device even though the manufacturer no longer offers updates. With a graphical installation software, users are easily guided through the installation process of free Android operating systems like LineageOS.
+    The OpenAndroidInstaller project helps Android users to keep their smartphone's operating system up to date with free software and to continue using the device even though the manufacturer no longer offers updates. With a graphical installation software, users are easily guided through the installation process of free Android operating systems like <a href="https://lineageos.org">LineageOS</a>.
     <br />
     <br />
     <a href="https://github.com/openandroidinstaller-dev/openandroidinstaller/issues">Report Bug</a>
