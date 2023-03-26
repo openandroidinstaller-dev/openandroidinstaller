@@ -58,7 +58,7 @@ class AddonsView(BaseView):
                 """## Google Apps:
 There are different packages of Google Apps available. Most notable
 - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads) and 
-- [NikGApps](https://nikgapps.com/).
+- [NikGApps](https://nikgapps.com).
 
 These packages are only dependent on your OS version and processor architecture, which can be found on each device specific info page.
 Filenames on MindTheGApps are of the format `MindTheGapps-<AndroidVersion>-<architecture>-<date>_<time>.zip` (with Android 12L being 12.1)
@@ -68,7 +68,7 @@ NikGApps come in different flavours ranging from minimal Google support (core) t
 
 ## MicroG
 
-The [MicroG](https://microg.org/) project offers a free-as-in-freedom re-implementation of Google's proprietary Android user space apps and libraries.
+The [MicroG](https://microg.org) project offers a free-as-in-freedom re-implementation of Google's proprietary Android user space apps and libraries.
 
 The recommended way to install MicroG is to use the zip file provided here:
 - [https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases).
@@ -76,7 +76,7 @@ The recommended way to install MicroG is to use the zip file provided here:
 ## F-Droid Appstore
 
 F-Droid is an installable catalogue of libre software apps for Android. The F-Droid client app makes it easy to browse, install, and keep track of updates on your device.
-You can get the zip file to install this addon here: [https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/).
+You can get the zip file to install this addon here: [https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
 """,
                 on_tap_link=lambda e: self.page.launch_url(e.data),
             ),

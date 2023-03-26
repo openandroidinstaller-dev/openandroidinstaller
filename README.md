@@ -39,25 +39,23 @@ If you wish to backup the TA partition first, you can find tutorials related to 
 Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
 
 1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
-    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
     - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
 2. Download the custom ROM image and the TWRP recovery image for your device and optionally some addons. A source for files can be found on the following websites:
     - some custom ROMs:
-      - [LineageOS](https://wiki.lineageos.org/devices/)
       - [LineageOS](https://wiki.lineageos.org/devices)
       - [/e/OS](https://doc.e.foundation/devices)
-      - [LineageOS for microg](https://download.lineage.microg.org/)
-      - [BlissRoms](https://blissroms.org/)
-      - [PixelExperience](https://download.pixelexperience.org/)
+      - [LineageOS for microg](https://download.lineage.microg.org)
+      - [BlissRoms](https://blissroms.org)
+      - [PixelExperience](https://download.pixelexperience.org)
     - TWRP Recovery:
-      - [TWRP recovery](https://twrp.me/Devices/)
+      - [TWRP recovery](https://twrp.me/Devices)
     - Optional Addons:
       - There are different packages of *Google Apps* available.
         - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)
-        - [NikGApps](https://nikgapps.com/)
-      - [MicroG](https://microg.org/)
+        - [NikGApps](https://nikgapps.com)
+      - [MicroG](https://microg.org)
         - The recommended way to install MicroG is to use the zip file provided here: [https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases).
-      - [F-Droid App-Store](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/).
+      - [F-Droid App-Store](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
     - or you can just search the web or the [xda-developers forum](https://forum.xda-developers.com) for an appropriate version for your device.
 3. Start the desktop app and follow the instructions.
 
@@ -98,30 +96,30 @@ Samsung | Galaxy Note 10+ | [d2s](https://wiki.lineageos.org/devices/d2s) | | te
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
-Google | Pixel 2 | [walleye](https://wiki.lineageos.org/devices/walleye/) | walleye | tested
-Google | Pixel 2 XL | [taimen](https://wiki.lineageos.org/devices/taimen/) | taimen | tested
-Google | Pixel 3 | [blueline](https://wiki.lineageos.org/devices/blueline/) | blueline | tested
-Google | Pixel 3 XL | [crosshatch](https://wiki.lineageos.org/devices/crosshatch/) | crosshatch | tested
-Google | Pixel 3a | [sargo](https://wiki.lineageos.org/devices/sargo/) | sargo | tested
-Google | Pixel 3a XL | [bonito](https://wiki.lineageos.org/devices/bonito/) | bonito | tested
-Google | Pixel 4 | [flame](https://wiki.lineageos.org/devices/flame/) | flame | tested 
-Google | Pixel 4 XL | [coral](https://wiki.lineageos.org/devices/coral/) | coral | tested 
-Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish/) | sunfish | tested 
-Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin/) | redfin | tested
-Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet/) | barbet | tested
+Google | Pixel 2 | [walleye](https://wiki.lineageos.org/devices/walleye) | walleye | tested
+Google | Pixel 2 XL | [taimen](https://wiki.lineageos.org/devices/taimen) | taimen | tested
+Google | Pixel 3 | [blueline](https://wiki.lineageos.org/devices/blueline) | blueline | tested
+Google | Pixel 3 XL | [crosshatch](https://wiki.lineageos.org/devices/crosshatch) | crosshatch | tested
+Google | Pixel 3a | [sargo](https://wiki.lineageos.org/devices/sargo) | sargo | tested
+Google | Pixel 3a XL | [bonito](https://wiki.lineageos.org/devices/bonito) | bonito | tested
+Google | Pixel 4 | [flame](https://wiki.lineageos.org/devices/flame) | flame | tested 
+Google | Pixel 4 XL | [coral](https://wiki.lineageos.org/devices/coral) | coral | tested 
+Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish) | sunfish | tested 
+Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin) | redfin | tested
+Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet) | barbet | tested
 </details>
 
 <details><summary><b>Sony</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
-Sony | Xperia Z | [yuga](https://wiki.lineageos.org/devices/yuga/) | C6603 | tested
-Sony | Xperia Z3 | [z3](https://wiki.lineageos.org/devices/z3/) | | tested
-Sony | Xperia 10 | [kirin](https://wiki.lineageos.org/devices/kirin/) | | tested
-Sony | Xperia 10 Plus | [mermaid](https://wiki.lineageos.org/devices/mermaid/) | | tested
-Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer/) | | tested
-Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari/) | | tested
-Sony | Xperia XZ3 | [akatsuki](https://wiki.lineageos.org/devices/akatsuki/) | | tested
+Sony | Xperia Z | [yuga](https://wiki.lineageos.org/devices/yuga) | C6603 | tested
+Sony | Xperia Z3 | [z3](https://wiki.lineageos.org/devices/z3) | | tested
+Sony | Xperia 10 | [kirin](https://wiki.lineageos.org/devices/kirin) | | tested
+Sony | Xperia 10 Plus | [mermaid](https://wiki.lineageos.org/devices/mermaid) | | tested
+Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer) | | tested
+Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari) | | tested
+Sony | Xperia XZ3 | [akatsuki](https://wiki.lineageos.org/devices/akatsuki) | | tested
 Sony | Xperia ZX | kagura | | planned
 </details>
 
@@ -129,39 +127,39 @@ Sony | Xperia ZX | kagura | | planned
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
-Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2/) | | tested
-Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3/) | | tested
-Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4/) | | tested
+Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2) | | tested
+Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3) | | tested
+Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4) | | tested
 </details>
 
 <details><summary><b>Motorola</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
-Motorola | moto g5 | [cedric](https://wiki.lineageos.org/devices/cedric/) | | tested
-Motorola | moto g6 plus | [evert](https://wiki.lineageos.org/devices/evert/) | | tested
-Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean/) | | tested
-Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo/) | | tested
-Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev/) | | tested
-Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer/) | | tested
-Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin/) | | tested
+Motorola | moto g5 | [cedric](https://wiki.lineageos.org/devices/cedric) | | tested
+Motorola | moto g6 plus | [evert](https://wiki.lineageos.org/devices/evert) | | tested
+Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean) | | tested
+Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo) | | tested
+Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | | tested
+Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | | tested
+Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | | tested
 </details>
 
 <details><summary><b>OnePlus</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
-OnePlus | One | [bacon](https://wiki.lineageos.org/devices/bacon/) | A0001 | tested
-OnePlus | 5 | [cheeseburger](https://wiki.lineageos.org/devices/cheeseburger/) | | tested
-OnePlus | 5T | [dumpling](https://wiki.lineageos.org/devices/dumpling/) | | tested
-OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada/) | | tested
-OnePlus | 6T | [fajita](https://wiki.lineageos.org/devices/fajita/) | | tested
-OnePlus | 7 | [guacamoleb](https://wiki.lineageos.org/devices/guacamoleb/) | | tested
-OnePlus | 7 Pro | [guacamole](https://wiki.lineageos.org/devices/guacamole/) | | tested
-OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb/) | | tested
-OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog/) | | tested
-OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii/) | | tested
-OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre/) | | tested
+OnePlus | One | [bacon](https://wiki.lineageos.org/devices/bacon) | A0001 | tested
+OnePlus | 5 | [cheeseburger](https://wiki.lineageos.org/devices/cheeseburger) | | tested
+OnePlus | 5T | [dumpling](https://wiki.lineageos.org/devices/dumpling) | | tested
+OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada) | | tested
+OnePlus | 6T | [fajita](https://wiki.lineageos.org/devices/fajita) | | tested
+OnePlus | 7 | [guacamoleb](https://wiki.lineageos.org/devices/guacamoleb) | | tested
+OnePlus | 7 Pro | [guacamole](https://wiki.lineageos.org/devices/guacamole) | | tested
+OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb) | | tested
+OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog) | | tested
+OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii) | | tested
+OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | | tested
 OnePlus | 9 | lemonade | | under development
 </details>
 
@@ -240,7 +238,7 @@ Other phone vendors stops allowing to unlock the bootloader all together. There 
 ## Tools
 
 - The [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools) (such as adb and fastboot) are [Apache](https://android.googlesource.com/platform/system/adb/+/refs/heads/master/NOTICE)-licensed universal Android utilities
-- [Heimdall](https://gitlab.com/BenjaminDobell/Heimdall/) is an [MIT](https://gitlab.com/BenjaminDobell/Heimdall/-/blob/master/LICENSE)-licensed replacement for the leaked ODIN tool to flash Samsung devices.
+- [Heimdall](https://gitlab.com/BenjaminDobell/Heimdall) is an [MIT](https://gitlab.com/BenjaminDobell/Heimdall/-/blob/master/LICENSE)-licensed replacement for the leaked ODIN tool to flash Samsung devices.
 - [libusb-1.0](https://github.com/libusb/libusb) is a [LGPL-2.1](https://github.com/libusb/libusb/blob/master/COPYING)-licensed library for USB device access from Linux, macOS, Windows and others.
 - [copy-partitions-20220613-signed.zip](https://mirrorbits.lineageos.org/tools/copy-partitions-20220613-signed.zip) The copy-partitions script was created by LineageOS developer erfanoabdi and filipepferraz and released under LGPL. It is used when the partitions need to be copied before flashing.
 
@@ -257,4 +255,4 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/).
+You should have received a copy of the GNU General Public License along with this program. If not, see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses).
