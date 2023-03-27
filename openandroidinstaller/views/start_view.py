@@ -259,6 +259,8 @@ If you don't know what this means, you most likely don't need to do anything and
                     f"{device_name} (code: {self.state.config.device_code})"
                 )
                 self.device_name.color = colors.GREEN
+                # if there are no steps for bootloader unlocking, assume there is nothing to do and toggle the switch
+                self.bootloader_switch.value = True
             else:
                 # failed to load config
                 logger.error(f"Failed to load config for {device_code}.")
