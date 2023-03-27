@@ -6,6 +6,7 @@ metadata:
   supported_device_codes:
     - fajita
     - OnePlus6T
+    - OnePlus6TSingle
 requirements:
   android: 11
 steps:
