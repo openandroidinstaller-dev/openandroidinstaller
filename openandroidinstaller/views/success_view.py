@@ -13,6 +13,8 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
+from typing import Callable
+
 import webbrowser
 from loguru import logger
 from flet import (
@@ -20,6 +22,7 @@ from flet import (
     Row,
     Text,
     Markdown,
+    icons,
 )
 
 from views import BaseView
@@ -28,8 +31,13 @@ from widgets import get_title
 
 
 class SuccessView(BaseView):
-    def __init__(self, state: AppState):
+        def __init__(
+        self,
+        state: AppState,
+        on_confirm: Callable,
+    ):
         super().__init__(state=state, image="success.png")
+        self.on_confirm = on_confirm
 
     def build(
         self,
@@ -69,6 +77,12 @@ Also, you can consider contributing to make it better. There are a lot of differ
                         "Finish and close",
                         expand=True,
                         on_click=close_window,
+                    ),
+                    ElevatedButton(
+                        "Finish and close",
+                        on_click=close_window,
+                        icon=icons.EXIT_TO_APP_OUTLINED,
+                        expand=True,
                     )
                 ]
             ),

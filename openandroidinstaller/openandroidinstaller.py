@@ -63,7 +63,8 @@ VERSION = "0.4.1-beta"
 PLATFORM = sys.platform
 # Define asset paths
 CONFIG_PATH = (
-    Path(__file__).parent.joinpath(Path(os.sep.join(["assets", "configs"]))).resolve()
+    Path(__file__).parent.joinpath(
+        Path(os.sep.join(["assets", "configs"]))).resolve()
 )
 BIN_PATH = Path(__file__).parent.joinpath(Path("bin")).resolve()
 
@@ -76,7 +77,7 @@ class MainView(UserControl):
         self.view = Column(expand=True, width=1200)
 
         # create default starter views
-        welcome_view = WelcomeView(
+        self.welcome_view = WelcomeView(
             on_confirm=self.to_next_view,
             state=self.state,
         )
@@ -97,17 +98,25 @@ class MainView(UserControl):
         )
 
         # create the install view
-        self.install_view = InstallView(on_confirm=self.to_next_view, state=self.state)
+        self.install_view = InstallView(
+            on_confirm=self.to_next_view,
+            state=self.state
+        )
 
         # create the final success view
-        self.final_view = SuccessView(state=self.state)
+        self.success_view = SuccessView(
+            on_confirm=self.restart,
+            state=self.state,
+        )
 
         # initialize the addon view
         self.select_addon_view = AddonsView(
-            on_confirm=self.to_next_view, state=self.state
+            on_confirm=self.to_next_view,
+            state=self.state
         )
         self.install_addons_view = InstallAddonsView(
-            on_confirm=self.to_next_view, state=self.state
+            on_confirm=self.to_next_view,
+            state=self.state
         )
 
         # attach some views to the state to modify and reuse later
@@ -117,7 +126,7 @@ class MainView(UserControl):
                 select_files_view,
                 requirements_view,
                 start_view,
-                welcome_view,
+                self.welcome_view,
             ]
         )
         self.state.add_addon_views(
@@ -129,7 +138,7 @@ class MainView(UserControl):
         # final default views, ordered to allow to pop
         self.state.add_final_default_views(
             views=[
-                self.final_view,
+                self.success_view,
                 self.install_view,
             ]
         )
@@ -175,9 +184,19 @@ class MainView(UserControl):
 
         # else:
         #    # display the final view
-        #    self.view.controls.append(self.final_view)
+        #    self.view.controls.append(self.success_view)
         logger.info("Confirmed and moved to next step.")
         self.view.update()
+
+        def restart(self, e):
+            """Method to display the first view."""
+            self.welcome_view.init_visuals()
+            # clear the current view
+            self.view.controls = []
+            # retrieve the new view and update
+            self.view.controls.append(self.welcome_view)
+            logger.info("Restart.")
+            self.view.update()
 
 
 def configure(page: Page):
@@ -217,7 +236,8 @@ def log_version_infos(bin_path):
 
 
 def main(page: Page, test: bool = False, test_config: str = "sargo"):
-    logger.info(f"Running OpenAndroidInstaller version '{VERSION}' on '{PLATFORM}'.")
+    logger.info(
+        f"Running OpenAndroidInstaller version '{VERSION}' on '{PLATFORM}'.")
     log_version_infos(bin_path=BIN_PATH)
     logger.info(100 * "-")
 
@@ -232,7 +252,8 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         leading_width=56,
         toolbar_height=72,
         elevation=0,
-        title=Text(f"OpenAndroidInstaller version {VERSION}", style="displaySmall"),
+        title=Text(
+            f"OpenAndroidInstaller version {VERSION}", style="displaySmall"),
         center_title=False,
         bgcolor="#00d886",
         actions=[
