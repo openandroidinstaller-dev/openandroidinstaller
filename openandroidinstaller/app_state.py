@@ -43,7 +43,6 @@ class AppState:
         self.config = None
         self.image_path = None
         self.recovery_path = None
-        self.is_ab = None
 
         # store views
         self.default_views: List = []
@@ -67,5 +66,5 @@ class AppState:
         self.config = _load_config(device_code, self.config_path)
         if self.config:
             self.steps = copy.deepcopy(self.config.unlock_bootloader) + copy.deepcopy(
-                self.config.flash_recovery
+                self.config.boot_recovery
             )

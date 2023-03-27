@@ -14,17 +14,17 @@
 # Author: Tobias Sterbak
 
 from typing import Callable
-
-import webbrowser
 from loguru import logger
 from flet import (
     ElevatedButton,
     Row,
+)
+
+from styles import (
     Text,
     Markdown,
     icons,
 )
-
 from views import BaseView
 from app_state import AppState
 from widgets import get_title
@@ -44,9 +44,6 @@ class SuccessView(BaseView):
     ):
         def close_window(e):
             logger.success("Success! Close the window.")
-            # open the feedback page
-            feedback_url = "https://openandroidinstaller.org/feedback.html"
-            webbrowser.open(feedback_url)
             # close the window
             self.page.window_close()
 
@@ -55,7 +52,7 @@ class SuccessView(BaseView):
             get_title("Installation completed successfully!"),
         ]
         # right view main part
-        contribute_link = "https://github.com/openandroidinstaller-dev/openandroidinstaller#contributing"
+        contribute_link = "https://openandroidinstaller.org/#contribute"
         self.right_view.controls = [
             Text(
                 "Now your devices boots into the new OS. Have fun with it!",

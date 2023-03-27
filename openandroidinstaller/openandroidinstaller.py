@@ -31,7 +31,6 @@ from flet import (
     Icon,
     Image,
     Page,
-    Text,
     TextButton,
     UserControl,
     colors,
@@ -39,6 +38,9 @@ from flet import (
 )
 from loguru import logger
 
+from styles import (
+    Text,
+)
 from app_state import AppState
 from views import (
     SelectFilesView,
@@ -57,7 +59,7 @@ from tooling import run_command
 logger.add("openandroidinstaller.log")
 
 # VERSION number
-VERSION = "0.4.1-beta"
+VERSION = "0.4.2-beta"
 
 # detect platform
 PLATFORM = sys.platform
@@ -100,7 +102,7 @@ class MainView(UserControl):
         # create the install view
         self.install_view = InstallView(
             on_confirm=self.to_next_view,
-            state=self.state
+            state=self.state,
         )
 
         # create the final success view
@@ -267,6 +269,17 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
                 ),
                 padding=15,
                 tooltip="Frequently asked questions and encountered issues.",
+            ),
+            Container(
+                content=ElevatedButton(
+                    icon=icons.FEEDBACK_OUTLINED,
+                    text="Give feedback",
+                    on_click=lambda _: webbrowser.open(
+                        "https://openandroidinstaller.org/feedback.html"
+                    ),
+                ),
+                padding=15,
+                tooltip="Give feedback about your experience with OpenAndroidInstaller",
             ),
             Container(
                 content=ElevatedButton(

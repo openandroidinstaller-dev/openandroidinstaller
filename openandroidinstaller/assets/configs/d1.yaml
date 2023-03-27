@@ -1,7 +1,10 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy Note 10
-  devicecode: d1 
+  device_name: Samsung Galaxy Note 10
+  is_ab_device: false
+  device_code: d1 
+  supported_device_codes:
+    - d1 
 requirements:
   android: 12
 steps:
@@ -21,14 +24,14 @@ steps:
       content: >
         The bootloader is now unlocked. Go through Android Setup skipping everything you can, then connect the device to a Wi-Fi network.
         Since the device resets completely, you will need to re-enable Developer Options and USB debugging to continue.
-  flash_recovery:
+  boot_recovery:
     - type: call_button
       content: >
         Now plug the USB-cable to your device. As a first step, you need to boot into download mode. Your device should be turned on. 
         Then press 'Confirm and run' to reboot into download mode. Continue once it's done.
       command: adb_reboot_download
     - type: call_button
-      content: In this step, you need to flash a custom recovery on your device. Press 'Confirm and run' to start the process. Confirm afterwards to continue.
+      content: In this step, you need to boot a custom recovery on your device. Press 'Confirm and run' to start the process. Confirm afterwards to continue.
       command: heimdall_flash_recovery
     - type: confirm_button
       img: samsung-buttons-bixby.png

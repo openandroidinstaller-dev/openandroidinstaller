@@ -22,17 +22,19 @@ from flet import (
     Container,
     Divider,
     ElevatedButton,
-    Markdown,
     Row,
     colors,
     OutlinedButton,
-    Text,
     icons,
     TextButton,
     AlertDialog,
 )
 from flet.buttons import CountinuosRectangleBorder
 
+from styles import (
+    Text,
+    Markdown,
+)
 from views import BaseView
 from app_state import AppState
 from widgets import get_title
