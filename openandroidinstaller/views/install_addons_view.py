@@ -21,10 +21,13 @@ from flet import (
     Column,
     ElevatedButton,
     Row,
-    Text,
     icons,
     Switch,
     colors,
+)
+
+from styles import (
+    Text,
     Markdown,
 )
 

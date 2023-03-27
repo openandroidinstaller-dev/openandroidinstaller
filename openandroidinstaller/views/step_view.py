@@ -22,11 +22,15 @@ from flet import (
     Column,
     ElevatedButton,
     Row,
-    Text,
     icons,
     TextField,
     Switch,
     colors,
+)
+
+
+from styles import (
+    Text,
 )
 
 from views import BaseView
