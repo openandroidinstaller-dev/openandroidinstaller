@@ -220,7 +220,7 @@ class StepView(BaseView):
             "fastboot_boot_recovery": partial(
                 fastboot_boot_recovery,
                 recovery=self.state.recovery_path,
-                is_ab=self.state.is_ab,
+                is_ab=self.state.config.is_ab,
             ),
             "fastboot_flash_boot": partial(
                 fastboot_flash_boot,
