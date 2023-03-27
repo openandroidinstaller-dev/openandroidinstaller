@@ -1,7 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Samsung Galaxy S9
-  is_ab_device: true
+  is_ab_device: false
   device_code: starlte
   supported_device_codes:
     - starlte

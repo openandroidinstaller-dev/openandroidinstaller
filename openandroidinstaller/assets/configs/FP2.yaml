@@ -1,7 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Fairphone 2
-  is_ab_device: true
+  is_ab_device: false
   device_code: FP2
   supported_device_codes:
     - FP2
