@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Samsung Galaxy Note 3 LTE (N900T/V/W8)
+  is_ab_device: false
   device_code: hltetmo 
   supported_device_codes:
     - hltetmo 

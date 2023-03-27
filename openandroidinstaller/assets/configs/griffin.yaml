@@ -1,6 +1,7 @@
 metadata:
   maintainer: SirRGB
   device_name: Motorola Moto Z
+  is_ab_device: false
   device_code: griffin
   supported_device_codes:
     - griffin

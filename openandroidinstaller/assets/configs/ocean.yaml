@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Motorola Moto G7 power
+  is_ab_device: true
   device_code: ocean 
   supported_device_codes:
     - ocean 

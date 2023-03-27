@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Fairphone 3
+  is_ab_device: true
   device_code: FP3
   supported_device_codes:
     - FP3

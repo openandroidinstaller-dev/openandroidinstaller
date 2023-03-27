@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Motorola moto g 5G plus / one 5G
+  is_ab_device: true
   device_code: nairo 
   supported_device_codes:
     - nairo 

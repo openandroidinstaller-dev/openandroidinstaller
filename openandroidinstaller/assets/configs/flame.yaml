@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Pixel 4
+  is_ab_device: true
   device_code: flame 
   supported_device_codes:
     - flame 

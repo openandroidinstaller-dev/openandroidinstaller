@@ -31,7 +31,6 @@ from flet import (
     Icon,
     Image,
     Page,
-    Text,
     TextButton,
     UserControl,
     colors,
@@ -39,6 +38,9 @@ from flet import (
 )
 from loguru import logger
 
+from styles import (
+    Text,
+)
 from app_state import AppState
 from views import (
     SelectFilesView,

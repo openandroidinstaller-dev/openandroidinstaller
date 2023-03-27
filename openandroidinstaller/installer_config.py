@@ -61,6 +61,7 @@ class InstallerConfig:
         self.metadata = metadata
         self.requirements = requirements
         self.device_code = metadata.get("device_code")
+        self.is_ab = metadata.get("is_ab_device", False)
         self.supported_device_codes = metadata.get("supported_device_codes")
         self.twrp_link = metadata.get("twrp-link")
 
@@ -161,6 +162,7 @@ def validate_config(config: str) -> bool:
             "metadata": {
                 "maintainer": str,
                 "device_name": str,
+                "is_ab_device": bool,
                 "device_code": str,
                 "supported_device_codes": [str],
                 schema.Optional("twrp-link"): str,

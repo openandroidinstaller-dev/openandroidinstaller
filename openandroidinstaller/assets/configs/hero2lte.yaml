@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Samsung Galaxy S7 Edge
+  is_ab_device: false
   device_code: hero2lte 
   supported_device_codes:
     - hero2lte 

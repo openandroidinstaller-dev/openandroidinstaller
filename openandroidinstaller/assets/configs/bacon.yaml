@@ -1,6 +1,7 @@
 metadata:
   maintainer: MagicLike
   device_name: OnePlus One
+  is_ab_device: false
   device_code: bacon
   supported_device_codes:
     - bacon

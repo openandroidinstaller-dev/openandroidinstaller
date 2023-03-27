@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Motorola moto g6 plus
+  is_ab_device: true
   device_code: evert 
   supported_device_codes:
     - evert 

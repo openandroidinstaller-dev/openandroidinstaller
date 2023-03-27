@@ -18,10 +18,13 @@ from typing import Callable
 from flet import (
     Divider,
     ElevatedButton,
-    Markdown,
     Row,
-    Text,
     icons,
+)
+
+from styles import (
+    Text,
+    Markdown,
 )
 
 from views import BaseView

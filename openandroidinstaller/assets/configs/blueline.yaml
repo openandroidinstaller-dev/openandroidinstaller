@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Google Pixel 3
+  is_ab_device: true
   device_code: blueline
   supported_device_codes:
     - blueline

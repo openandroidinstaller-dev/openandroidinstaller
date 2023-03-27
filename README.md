@@ -62,7 +62,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 ## Officially supported devices
 
-Currently, the **we support 56 devices** by various vendors and working on adding more soon!
+Currently, the **we support 57 devices** by various vendors and working on adding more soon!
 
 
 Support for these devices is provided as best effort, but things might still go wrong.
@@ -198,6 +198,7 @@ A config file consists of two parts. The first part are some metadata about the 
 Every config file should have `metadata` with the following fields:
 - `maintainer`: str; Maintainer and author of the config file.
 - `device_name`: str; Name of the device.
+- `is_ab_device`: bool; A boolean to determine if the device is a/b-partitioned or not.
 - `device_code`: str; The official device code.
 - `supported_device_codes`: List[str]; A list of supported device codes for the config. The config will be loaded based on this field.
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.

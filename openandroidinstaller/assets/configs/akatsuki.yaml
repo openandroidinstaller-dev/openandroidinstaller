@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Sony Xperia XZ3
+  is_ab_device: true
   device_code: akatsuki 
   supported_device_codes:
     - akatsuki 
