@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: OnePlus Nord N200
+  is_ab_device: true
   device_code: dre
   supported_device_codes:
     - dre

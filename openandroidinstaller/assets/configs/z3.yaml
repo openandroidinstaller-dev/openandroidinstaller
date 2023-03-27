@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Sony Xperia Z3
+  is_ab_device: true
   device_code: z3 
   supported_device_codes:
     - z3 

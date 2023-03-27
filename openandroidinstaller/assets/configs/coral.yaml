@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Google Pixel 4 XL
+  is_ab_device: true
   device_code: coral
   supported_device_codes:
     - coral

@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Samsung Galaxy S III Neo
+  is_ab_device: true
   device_code: s3ve3g 
   supported_device_codes:
     - s3ve3g 

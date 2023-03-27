@@ -1,6 +1,7 @@
 metadata:
   maintainer: SirRGB
   device_name: OnePlus 5
+  is_ab_device: true
   device_code: cheeseburger
   supported_device_codes:
     - cheeseburger

@@ -37,7 +37,7 @@ from flet.buttons import CountinuosRectangleBorder
 from views import BaseView
 from app_state import AppState
 from widgets import get_title
-from tooling import search_device, check_ab_partition
+from tooling import search_device
 
 
 class StartView(BaseView):
@@ -219,9 +219,6 @@ If you don't know what this means, you most likely don't need to do anything and
             )
         else:
             device_code = search_device(
-                platform=self.state.platform, bin_path=self.state.bin_path
-            )
-            is_ab = check_ab_partition(
                 platform=self.state.platform, bin_path=self.state.bin_path
             )
             if device_code:
