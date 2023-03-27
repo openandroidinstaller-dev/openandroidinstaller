@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: OnePlus 6
+  is_ab_device: true
   device_code: enchilada 
   supported_device_codes:
     - enchilada

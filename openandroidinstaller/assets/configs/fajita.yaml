@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: OnePlus 6T
+  is_ab_device: true
   device_code: fajita 
   supported_device_codes:
     - fajita

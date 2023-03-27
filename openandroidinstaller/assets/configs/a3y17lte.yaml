@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Samsung Galaxy A3 (2017)
+  is_ab_device: true
   device_code: a3y17lte
   supported_device_codes:
     - a3y17lte

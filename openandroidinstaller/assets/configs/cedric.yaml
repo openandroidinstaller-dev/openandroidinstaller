@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Motorola Moto G5
+  is_ab_device: true
   device_code: cedric
   supported_device_codes:
     - cedric

@@ -1,6 +1,7 @@
 metadata:
   maintainer: SirRGB
   device_name: OnePlus 5T
+  is_ab_device: true
   device_code: dumpling
   supported_device_codes:
     - dumpling

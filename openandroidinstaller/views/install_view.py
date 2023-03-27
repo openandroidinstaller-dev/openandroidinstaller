@@ -189,7 +189,7 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
             config_path=self.state.config_path,
             bin_path=self.state.bin_path,
             install_addons=self.state.install_addons,
-            is_ab=self.state.is_ab,
+            is_ab=self.state.config.is_ab,
             recovery=self.state.recovery_path,
         ):
             # write the line to advanced output terminal

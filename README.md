@@ -198,6 +198,7 @@ A config file consists of two parts. The first part are some metadata about the 
 Every config file should have metadata with the following fields:
 - `maintainer`: str; Maintainer and author of the config file.
 - `device_name`: str; Name of the device.
+- `is_ab_device`: bool; A boolean to determine if the device is a/b-partitioned or not.
 - `device_code`: str; The official device code.
 - `supported_device_codes`: List[str]; A list of supported device codes for the config. The config will be loaded based on this field.
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
