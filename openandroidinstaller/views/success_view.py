@@ -17,10 +17,12 @@ from loguru import logger
 from flet import (
     ElevatedButton,
     Row,
+)
+
+from styles import (
     Text,
     Markdown,
 )
-
 from views import BaseView
 from app_state import AppState
 from widgets import get_title
