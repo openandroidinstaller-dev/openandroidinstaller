@@ -1,7 +1,10 @@
 metadata:
   maintainer: SirRGB
-  devicename: Motorola Moto Z
-  devicecode: griffin
+  device_name: Motorola Moto Z
+  is_ab_device: false
+  device_code: griffin
+  supported_device_codes:
+    - griffin
 steps:
   unlock_bootloader:
     - type: call_button
@@ -34,13 +37,13 @@ steps:
         Press the button to reboot. Since the device resets completely, you will need to re-enable USB debugging to continue.
         Connect your device to your PC via USB. Then confirm here to continue.
       command: fastboot_reboot
-  flash_recovery:
+  boot_recovery:
     - type: call_button
       content: >
-        Now you need to flash a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
+        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
         adapting and repairing of the operating system.
         Make sure your device is turned on. You need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
-      content: Flash a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
-      command: fastboot_flash_recovery
+      content: Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
+      command: fastboot_boot_recovery

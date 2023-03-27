@@ -22,11 +22,15 @@ from flet import (
     Column,
     ElevatedButton,
     Row,
-    Text,
     icons,
     TextField,
     Switch,
     colors,
+)
+
+
+from styles import (
+    Text,
 )
 
 from views import BaseView
@@ -38,7 +42,7 @@ from tooling import (
     adb_reboot_download,
     adb_sideload,
     adb_twrp_copy_partitions,
-    fastboot_flash_recovery,
+    fastboot_boot_recovery,
     fastboot_flash_boot,
     fastboot_oem_unlock,
     fastboot_reboot,
@@ -106,7 +110,7 @@ class StepView(BaseView):
         # main controls
         steps_indictor_img_lookup = {
             "Unlock the bootloader": "steps-header-unlock.png",
-            "Flash custom recovery": "steps-header-recovery.png",
+            "Boot custom recovery": "steps-header-recovery.png",
         }
         self.right_view_header.controls = [
             get_title(
@@ -217,10 +221,10 @@ class StepView(BaseView):
             ),
             "fastboot_oem_unlock": fastboot_oem_unlock,
             "fastboot_get_unlock_data": fastboot_get_unlock_data,
-            "fastboot_flash_recovery": partial(
-                fastboot_flash_recovery,
+            "fastboot_boot_recovery": partial(
+                fastboot_boot_recovery,
                 recovery=self.state.recovery_path,
-                is_ab=self.state.is_ab,
+                is_ab=self.state.config.is_ab,
             ),
             "fastboot_flash_boot": partial(
                 fastboot_flash_boot,

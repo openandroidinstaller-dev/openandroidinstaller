@@ -1,10 +1,13 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Samsung Galaxy Note 3 LTE (N900T/V/W8)
-  devicecode: hltetmo 
+  device_name: Samsung Galaxy Note 3 LTE (N900T/V/W8)
+  is_ab_device: false
+  device_code: hltetmo 
+  supported_device_codes:
+    - hltetmo 
 steps:
   unlock_bootloader:
-  flash_recovery:
+  boot_recovery:
     - type: call_button
       content: >
         As a first step, you need to boot into the bootloader. A bootloader is the piece of software,
@@ -13,7 +16,7 @@ steps:
       command: adb_reboot_download
     - type: call_button
       content: >
-        In this step, you need to flash a custom recovery on your device.
+        In this step, you need to boot a custom recovery on your device.
         Press 'Confirm and run' to start the process. Confirm afterwards to continue.
       command: heimdall_flash_recovery
     - type: confirm_button

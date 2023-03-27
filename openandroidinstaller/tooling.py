@@ -250,7 +250,7 @@ def adb_twrp_wipe_and_install(
             for line in adb_reboot_bootloader(bin_path):
                 yield line
             # boot to TWRP again
-            for line in fastboot_flash_recovery(
+            for line in fastboot_boot_recovery(
                 bin_path=bin_path, recovery=recovery, is_ab=is_ab
             ):
                 yield line
@@ -271,6 +271,8 @@ def adb_twrp_install_addons(
     """
     logger.info("Install addons with twrp.")
     sleep(0.5)
+    if is_ab:
+        adb_wait_for_recovery(bin_path=bin_path)
     logger.info("Sideload and install addons.")
     for addon in addons:
         # activate sideload
@@ -353,36 +355,33 @@ def fastboot_reboot(bin_path: Path) -> TerminalResponse:
         yield line
 
 
-@add_logging("Flash or boot custom recovery with fastboot.")
-def fastboot_flash_recovery(
+@add_logging("Boot custom recovery with fastboot.")
+def fastboot_boot_recovery(
     bin_path: Path, recovery: str, is_ab: bool = True
 ) -> TerminalResponse:
-    """Temporarily, flash custom recovery with fastboot."""
+    """Temporarily, boot custom recovery with fastboot."""
+    # TODO: this can be unified now
     if is_ab:
         logger.info("Boot custom recovery with fastboot.")
         for line in run_command(
             "fastboot boot", target=f"{recovery}", bin_path=bin_path
         ):
             yield line
+        logger.info("Boot into TWRP with fastboot.")
         for line in adb_wait_for_recovery(bin_path=bin_path):
             yield line
     else:
-        logger.info("Flash custom recovery with fastboot.")
+        logger.info("Boot custom recovery with fastboot.")
         for line in run_command(
-            "fastboot flash recovery", target=f"{recovery}", bin_path=bin_path
+            "fastboot boot", target=f"{recovery}", bin_path=bin_path
         ):
             yield line
-        for line in adb_wait_for_recovery(bin_path=bin_path):
-            yield line
         if (type(line) == bool) and not line:
-            logger.error("Flashing recovery failed.")
+            logger.error("Booting recovery failed.")
             yield False
         else:
             yield True
-        # reboot
         logger.info("Boot into TWRP with fastboot.")
-        for line in run_command("fastboot reboot recovery", bin_path):
-            yield line
         for line in adb_wait_for_recovery(bin_path=bin_path):
             yield line
 
@@ -391,7 +390,7 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
     """Temporarily, flash custom recovery with fastboot to boot partition."""
     logger.info("Flash custom recovery with fastboot.")
     for line in run_command(
-        "fastboot flash boot", target="f{recovery}", bin_path=bin_path
+        "fastboot flash boot", target=f"{recovery}", bin_path=bin_path
     ):
         yield line
     if (type(line) == bool) and not line:
@@ -469,43 +468,3 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
     except CalledProcessError:
         logger.error("Failed to detect a device.")
         return None
-
-
-def check_ab_partition(platform: str, bin_path: Path) -> Optional[bool]:
-    """Figure out, if its an a/b-partitioned device."""
-    logger.info(f"Run on {platform} with {bin_path}...")
-    try:
-        # check if ab device
-        if platform in ("linux", "darwin"):
-            output = check_output(
-                [
-                    str(bin_path.joinpath(Path("adb"))),
-                    "shell",
-                    "getprop",
-                    "|",
-                    "grep",
-                    "ro.boot.slot_suffix",
-                ],
-                stderr=STDOUT,
-            ).decode()
-        elif platform in ("windows", "win32"):
-            output = check_output(
-                [
-                    str(bin_path.joinpath(Path("adb.exe"))),
-                    "shell",
-                    "getprop",
-                    "|",
-                    "findstr",
-                    "ro.boot.slot_suffix",
-                ],
-                stderr=STDOUT,
-                shell=True,
-            ).decode()
-        else:
-            raise Exception(f"Unknown platform {platform}.")
-        logger.info(output)
-        logger.info("This is an a/b-partitioned device.")
-        return True
-    except CalledProcessError:
-        logger.info("This is not an a/b-partitioned device.")
-        return False
