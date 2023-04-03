@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Google Pixel 3 XL
+  is_ab_device: true
   device_code: crosshatch
   supported_device_codes:
     - crosshatch

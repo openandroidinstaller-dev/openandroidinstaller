@@ -21,10 +21,13 @@ from flet import (
     Column,
     ElevatedButton,
     Row,
-    Text,
     icons,
     Switch,
     colors,
+)
+
+from styles import (
+    Text,
     Markdown,
 )
 
@@ -158,7 +161,7 @@ This might take a while. At the end your phone will boot into the new OS.
         for line in adb_twrp_install_addons(
             addons=self.state.addon_paths,
             bin_path=self.state.bin_path,
-            is_ab=self.state.is_ab,
+            is_ab=self.state.config.is_ab,
         ):
             # write the line to advanced output terminal
             self.terminal_box.write_line(line)

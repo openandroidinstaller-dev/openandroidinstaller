@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Samsung Galaxy S10e
+  is_ab_device: false
   device_code: beyond0lte 
   supported_device_codes:
     - beyond0lte 

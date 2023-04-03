@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Fairphone 4
+  is_ab_device: true
   device_code: FP4
   supported_device_codes:
     - FP4

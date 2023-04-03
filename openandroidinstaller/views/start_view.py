@@ -25,19 +25,21 @@ from flet import (
     ElevatedButton,
     OutlinedButton,
     FilledButton,
-    Markdown,
     Row,
-    Text,
     TextButton,
     colors,
     icons,
 )
 from flet.buttons import CountinuosRectangleBorder
 
+from styles import (
+    Text,
+    Markdown,
+)
 from views import BaseView
 from app_state import AppState
 from widgets import get_title
-from tooling import search_device, check_ab_partition
+from tooling import search_device
 
 
 class StartView(BaseView):
@@ -213,15 +215,12 @@ If you don't know what this means, you most likely don't need to do anything and
         # search the device
         if self.state.test:
             # this only happens for testing
-            device_code, is_ab = self.state.test_config, True
+            device_code = self.state.test_config
             logger.info(
                 f"Running search in development mode and loading config {device_code}.yaml."
             )
         else:
             device_code = search_device(
-                platform=self.state.platform, bin_path=self.state.bin_path
-            )
-            is_ab = check_ab_partition(
                 platform=self.state.platform, bin_path=self.state.bin_path
             )
             if device_code:
@@ -239,8 +238,6 @@ If you don't know what this means, you most likely don't need to do anything and
             self.device_name.value = device_code
             # load config from file
             self.state.load_config(device_code)
-            # write ab-info to state
-            self.state.is_ab = is_ab
             if self.state.config:
                 device_name = self.state.config.metadata.get(
                     "device_name", "No device name in config."
@@ -257,6 +254,9 @@ If you don't know what this means, you most likely don't need to do anything and
                     f"{device_name} (code: {self.state.config.device_code})"
                 )
                 self.device_name.color = colors.GREEN
+                # if there are no steps for bootloader unlocking, assume there is nothing to do and toggle the switch
+                if len(self.state.config.unlock_bootloader) == 0:
+                    self.bootloader_switch.value = True
             else:
                 # failed to load config
                 logger.error(f"Failed to load config for {device_code}.")

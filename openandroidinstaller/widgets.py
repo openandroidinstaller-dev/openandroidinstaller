@@ -26,12 +26,15 @@ from flet import (
     ProgressRing,
     ProgressBar,
     Row,
-    Text,
     alignment,
     icons,
     IconButton,
     Image,
     Column,
+)
+
+from styles import (
+    Text,
 )
 
 
@@ -43,7 +46,7 @@ class TerminalBox(UserControl):
     def build(self):
         self._box = Container(
             content=Column(
-                controls=[Text("", selectable=True)],
+                controls=[Text("")],
                 scroll="auto",
                 expand=True,
                 auto_scroll=True,

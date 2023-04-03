@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Sony Xperia Z
+  is_ab_device: false
   device_code: yuga
   supported_device_codes:
     - yuga

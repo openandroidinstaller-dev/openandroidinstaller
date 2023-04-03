@@ -22,11 +22,15 @@ from flet import (
     Column,
     ElevatedButton,
     Row,
-    Text,
     icons,
     TextField,
     Switch,
     colors,
+)
+
+
+from styles import (
+    Text,
 )
 
 from views import BaseView
@@ -220,7 +224,7 @@ class StepView(BaseView):
             "fastboot_boot_recovery": partial(
                 fastboot_boot_recovery,
                 recovery=self.state.recovery_path,
-                is_ab=self.state.is_ab,
+                is_ab=self.state.config.is_ab,
             ),
             "fastboot_flash_boot": partial(
                 fastboot_flash_boot,

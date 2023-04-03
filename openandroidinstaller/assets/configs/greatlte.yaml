@@ -1,6 +1,7 @@
 metadata:
   maintainer: Michel Memeteau (freechelmi)
   device_name: Samsung Galaxy note 8
+  is_ab_device: false
   device_code: greatlte 
   supported_device_codes:
     - greatlte 

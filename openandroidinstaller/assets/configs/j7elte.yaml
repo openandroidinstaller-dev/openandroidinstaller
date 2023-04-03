@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Samsung Galaxy J7 (2015)
+  is_ab_device: false
   device_code: j7elte 
   supported_device_codes:
     - j7elte 

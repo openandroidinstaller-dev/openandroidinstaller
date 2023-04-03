@@ -1,6 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Motorola edge
+  is_ab_device: true
   device_code: racer
   supported_device_codes:
     - racer
