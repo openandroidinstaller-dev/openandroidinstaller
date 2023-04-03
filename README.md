@@ -54,7 +54,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
         - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)
         - [NikGApps](https://nikgapps.com)
       - [MicroG](https://microg.org)
-        - The recommended way to install MicroG is to use the zip file provided here: https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases
+        - The recommended way to install MicroG is to use the zip file provided here: [https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases).
       - [F-Droid App-Store](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
     - or you can just search the web or the [xda-developers forum](https://forum.xda-developers.com) for an appropriate version for your device.
 3. Start the desktop app and follow the instructions.
