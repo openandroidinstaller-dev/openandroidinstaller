@@ -20,6 +20,10 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
+**Log file**
+Please attach the log file. You can find the file in the same directory like the installer executable.
+(You might want to clean up some personal information from the file)
+
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 

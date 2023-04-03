@@ -164,7 +164,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                                 "Download MicroG",
                                 icon=icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
-                                    "https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases"
+                                    "https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases"
                                 ),
                                 expand=True,
                             ),
