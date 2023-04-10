@@ -34,10 +34,10 @@ class Step:
         title: str,
         type: str,
         content: str,
-        command: str = None,
-        img: str = None,
         allow_skip: bool = False,
-        link: str = None,
+        command: Optional[str] = None,
+        img: Optional[str] = None,
+        link: Optional[str] = None,
     ):
         self.title = title
         self.type = type
@@ -49,41 +49,21 @@ class Step:
 
 
 class InstallerConfig:
-
-    # map some detected device codes to their real code.
-    device_code_mapping = {
-        # Sony issues
-        "C6603": "yuga",
-        # OnePlus issues
-        "OnePlus5": "cheeseburger",
-        "OnePlus5T": "dumpling",
-        "OnePlus6": "enchilada",
-        "OnePlus6T": "fajita",
-        "OnePlus7": "guacamoleb",
-        "OnePlus7Pro": "guacamole",
-        "OnePlus7T": "hotdogb",
-        "OnePlus7TPro": "hotdog",
-        "Nord": "avicii",
-        "NordN200": "dre",
-    }
-
     def __init__(
         self,
         unlock_bootloader: List[Step],
-        flash_recovery: List[Step],
+        boot_recovery: List[Step],
         metadata: dict,
         requirements: dict,
     ):
         self.unlock_bootloader = unlock_bootloader
-        self.flash_recovery = flash_recovery
+        self.boot_recovery = boot_recovery
         self.metadata = metadata
         self.requirements = requirements
-        self.device_code = metadata.get("devicecode")
+        self.device_code = metadata.get("device_code")
+        self.is_ab = metadata.get("is_ab_device", False)
+        self.supported_device_codes = metadata.get("supported_device_codes")
         self.twrp_link = metadata.get("twrp-link")
-        inverted_mapping = dict(map(reversed, self.device_code_mapping.items()))
-        self.alternative_device_code = inverted_mapping.get(
-            self.device_code, self.device_code
-        )
 
     @classmethod
     def from_file(cls, path):
@@ -109,11 +89,29 @@ class InstallerConfig:
             ]
         else:
             unlock_bootloader = []
-        flash_recovery = [
-            Step(**raw_step, title="Flash custom recovery")
-            for raw_step in raw_steps.get("flash_recovery", [])
+        boot_recovery = [
+            Step(**raw_step, title="Boot custom recovery")
+            for raw_step in raw_steps.get("boot_recovery", [])
         ]
-        return cls(unlock_bootloader, flash_recovery, metadata, requirements)
+        return cls(unlock_bootloader, boot_recovery, metadata, requirements)
+
+
+def _find_config_file(device_code: str, config_path: Path) -> Optional[Path]:
+    """Find the config file which is supported by the given device code."""
+    for path in config_path.rglob("*.yaml"):
+        with open(path, "r", encoding="utf-8") as stream:
+            try:
+                raw_config = dict(yaml.safe_load(stream))
+                if device_code in raw_config.get("metadata", dict()).get(
+                    "supported_device_codes", []
+                ):
+                    logger.info(
+                        f"Device code '{device_code}' is supported by config '{path}'."
+                    )
+                    return path
+            except:
+                pass
+    return None
 
 
 def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfig]:
@@ -122,26 +120,23 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
 
     Try to load local file in the same directory as the executable first, then load from assets.
     """
-    # try loading a custom local file first
-    mapped_device_code = InstallerConfig.device_code_mapping.get(
-        device_code, device_code
-    )
-    custom_path = Path.cwd().joinpath(Path(f"{mapped_device_code}.yaml"))
-    try:
+    custom_path = _find_config_file(device_code, config_path=Path.cwd())
+    if custom_path:
         config = InstallerConfig.from_file(custom_path)
         logger.info(f"Loaded custom device config from {custom_path}.")
         logger.info(f"Config metadata: {config.metadata}.")
         return config
-    except FileNotFoundError:
+    else:
         # if no localfile, then try to load a config file from assets
-        path = config_path.joinpath(Path(f"{mapped_device_code}.yaml"))
-        try:
+        path = _find_config_file(device_code, config_path)
+
+        if path:
             config = InstallerConfig.from_file(path)
             logger.info(f"Loaded device config from {path}.")
             if config:
                 logger.info(f"Config metadata: {config.metadata}.")
             return config
-        except FileNotFoundError:
+        else:
             logger.info(f"No device config found for {path}.")
             return None
 
@@ -155,7 +150,7 @@ def validate_config(config: str) -> bool:
         ),
         "content": str,
         schema.Optional("command"): Regex(
-            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|fastboot_flash_recovery|fastboot_flash_boot|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
+            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|fastboot_boot_recovery|fastboot_flash_boot|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
         ),
         schema.Optional("allow_skip"): bool,
         schema.Optional("img"): str,
@@ -166,8 +161,10 @@ def validate_config(config: str) -> bool:
         {
             "metadata": {
                 "maintainer": str,
-                "devicename": str,
-                "devicecode": str,
+                "device_name": str,
+                "is_ab_device": bool,
+                "device_code": str,
+                "supported_device_codes": [str],
                 schema.Optional("twrp-link"): str,
             },
             schema.Optional("requirements"): {
@@ -176,7 +173,7 @@ def validate_config(config: str) -> bool:
             },
             "steps": {
                 "unlock_bootloader": schema.Or(None, [step_schema]),
-                "flash_recovery": [step_schema],
+                "boot_recovery": [step_schema],
             },
         }
     )

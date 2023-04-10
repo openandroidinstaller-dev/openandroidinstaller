@@ -19,6 +19,7 @@ import webbrowser
 import click
 import functools
 from pathlib import Path
+from typing import List
 
 import flet as ft
 from flet import (
@@ -30,7 +31,6 @@ from flet import (
     Icon,
     Image,
     Page,
-    Text,
     TextButton,
     UserControl,
     colors,
@@ -38,6 +38,9 @@ from flet import (
 )
 from loguru import logger
 
+from styles import (
+    Text,
+)
 from app_state import AppState
 from views import (
     SelectFilesView,
@@ -56,7 +59,7 @@ from tooling import run_command
 logger.add("openandroidinstaller.log")
 
 # VERSION number
-VERSION = "0.4.0-beta"
+VERSION = "0.4.2-beta"
 
 # detect platform
 PLATFORM = sys.platform
@@ -94,32 +97,15 @@ class MainView(UserControl):
             on_back=self.to_previous_view,
             state=self.state,
         )
-        # ordered to allow for pop
-        self.default_views = [
-            select_files_view,
-            requirements_view,
-            start_view,
-            welcome_view,
-        ]
 
         # create the install view
-        self.install_view = InstallView(on_confirm=self.to_next_view, state=self.state)
+        self.install_view = InstallView(
+            on_confirm=self.to_next_view,
+            state=self.state,
+        )
 
         # create the final success view
         self.final_view = SuccessView(state=self.state)
-
-        # final default views, ordered to allow to pop
-        self.final_default_views = [
-            self.final_view,
-            self.install_view,
-        ]
-
-        self.state.default_views = self.default_views
-        self.state.final_default_views = self.final_default_views
-        self.state.final_view = self.final_view
-
-        # stack of previous default views for the back-button
-        self.previous_views = []
 
         # initialize the addon view
         self.select_addon_view = AddonsView(
@@ -128,19 +114,42 @@ class MainView(UserControl):
         self.install_addons_view = InstallAddonsView(
             on_confirm=self.to_next_view, state=self.state
         )
-        self.state.addon_views = [
-            self.install_addons_view,
-            self.select_addon_view,
-        ]
+
+        # attach some views to the state to modify and reuse later
+        # ordered to allow for pop
+        self.state.add_default_views(
+            views=[
+                select_files_view,
+                requirements_view,
+                start_view,
+                welcome_view,
+            ]
+        )
+        self.state.add_addon_views(
+            views=[
+                self.install_addons_view,
+                self.select_addon_view,
+            ]
+        )
+        # final default views, ordered to allow to pop
+        self.state.add_final_default_views(
+            views=[
+                self.final_view,
+                self.install_view,
+            ]
+        )
+
+        # stack of previous default views for the back-button
+        self.previous_views: List = []
 
     def build(self):
-        self.view.controls.append(self.default_views.pop())
+        self.view.controls.append(self.state.default_views.pop())
         return self.view
 
     def to_previous_view(self, e):
         """Method to display the previous view."""
         # store the current view
-        self.default_views.append(self.view.controls[-1])
+        self.state.default_views.append(self.view.controls[-1])
         # clear the current view
         self.view.controls = []
         # retrieve the new view and update
@@ -155,8 +164,8 @@ class MainView(UserControl):
         # remove all elements from column view
         self.view.controls = []
         # if there are default views left, display them first
-        if self.default_views:
-            self.view.controls.append(self.default_views.pop())
+        if self.state.default_views:
+            self.view.controls.append(self.state.default_views.pop())
         elif self.state.steps:
             self.view.controls.append(
                 StepView(
@@ -165,9 +174,9 @@ class MainView(UserControl):
                     on_confirm=self.to_next_view,
                 )
             )
-        elif self.final_default_views:
+        elif self.state.final_default_views:
             # here we expect the install view to populate the step views again if necessary
-            self.view.controls.append(self.final_default_views.pop())
+            self.view.controls.append(self.state.final_default_views.pop())
 
         # else:
         #    # display the final view
@@ -206,7 +215,10 @@ def log_version_infos(bin_path):
     hdversion = [
         line for line in run_command("heimdall info", bin_path, enable_logging=False)
     ]
-    logger.info(f"Heimdall version: {hdversion[1].strip()}")
+    try:
+        logger.info(f"Heimdall version: {hdversion[1].strip()}")
+    except:
+        logger.info(f"Issue with heimdall: {hdversion}")
 
 
 def main(page: Page, test: bool = False, test_config: str = "sargo"):
@@ -231,6 +243,28 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         actions=[
             Container(
                 content=ElevatedButton(
+                    icon=icons.QUESTION_MARK_ROUNDED,
+                    text="FAQ",
+                    on_click=lambda _: webbrowser.open(
+                        "https://openandroidinstaller.org/faq.html"
+                    ),
+                ),
+                padding=15,
+                tooltip="Frequently asked questions and encountered issues.",
+            ),
+            Container(
+                content=ElevatedButton(
+                    icon=icons.FEEDBACK_OUTLINED,
+                    text="Give feedback",
+                    on_click=lambda _: webbrowser.open(
+                        "https://openandroidinstaller.org/feedback.html"
+                    ),
+                ),
+                padding=15,
+                tooltip="Give feedback about your experience with OpenAndroidInstaller",
+            ),
+            Container(
+                content=ElevatedButton(
                     icon=icons.BUG_REPORT_OUTLINED,
                     text="Report a bug",
                     on_click=lambda _: webbrowser.open(
@@ -239,7 +273,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
                 ),
                 padding=15,
                 tooltip="Report an issue on github",
-            )
+            ),
         ],
     )
 

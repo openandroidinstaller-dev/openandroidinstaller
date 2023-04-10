@@ -23,9 +23,7 @@ from flet import (
     ElevatedButton,
     OutlinedButton,
     FilledButton,
-    Markdown,
     Row,
-    Text,
     colors,
     icons,
     TextButton,
@@ -35,6 +33,10 @@ from flet import (
 )
 from flet.buttons import CountinuosRectangleBorder
 
+from styles import (
+    Text,
+    Markdown,
+)
 from views import BaseView
 from app_state import AppState
 from widgets import get_title, confirm_button
@@ -67,9 +69,9 @@ class SelectFilesView(BaseView):
 An operating system (OS) is system software that manages computer hardware,
 software resources, and provides common services for computer programs. 
 Popular, custom operating systems for mobile devices based on Android are 
-- [LineageOS](https://lineageos.org/)
-- [/e/OS](https://e.foundation/e-os/) or
-- [LineageOS for microG](https://lineage.microg.org/)
+- [LineageOS](https://lineageos.org)
+- [/e/OS](https://e.foundation/e-os) or
+- [LineageOS for microG](https://lineage.microg.org)
 - and many others.
 
 Often, the related OS images are called 'ROM'. 'ROM' stands for *R*ead-*o*nly *m*emory,
@@ -81,7 +83,7 @@ A custom recovery is used for installing custom software on your device.
 This custom software can include smaller modifications like rooting your device or even
 replacing the firmware of the device with a completely custom ROM.
 
-OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about/).""",
+OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about).""",
                 on_tap_link=lambda e: self.page.launch_url(e.data),
             ),
             actions=[
@@ -115,7 +117,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
 
         # download link
         self.download_link = get_download_link(
-            self.state.config.metadata.get("devicecode", "ERROR")
+            self.state.config.metadata.get("device_code", "NOTFOUND")
         )
 
         # attach hidden dialogues
@@ -256,10 +258,8 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
             logger.info("No image selected.")
         # check if the image works with the device and show the filename in different colors accordingly
         if e.files:
-            device_code = self.state.config.device_code
             if image_works_with_device(
-                device_code=device_code,
-                alternative_device_code=self.state.config.alternative_device_code,
+                supported_device_codes=self.state.config.supported_device_codes,
                 image_path=self.state.image_path,
             ):
                 self.selected_image.color = colors.GREEN
@@ -300,8 +300,7 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
             device_code = self.state.config.device_code
             if not (
                 image_works_with_device(
-                    device_code=device_code,
-                    alternative_device_code=self.state.config.alternative_device_code,
+                    supported_device_codes=self.state.config.supported_device_codes,
                     image_path=self.state.image_path,
                 )
                 and recovery_works_with_device(

@@ -14,7 +14,7 @@
 # Author: Tobias Sterbak
 
 import zipfile
-from typing import Optional
+from typing import Optional, List
 
 import requests
 from loguru import logger
@@ -22,26 +22,25 @@ from loguru import logger
 
 def get_download_link(devicecode: str) -> Optional[str]:
     """Check if a lineageOS version for this device exists on download.lineageos.com and return the respective download link."""
-    url = f"https://download.lineageos.org/{devicecode}"
+    url = f"https://download.lineageos.org/api/v2/devices/{devicecode}"
     try:
         logger.info(f"Checking {url}")
         # Get Url
         res = requests.get(url, timeout=5)
         # if the request succeeds
         if res.status_code == 200:
-            logger.info(f"{url} exists.")
-            return url
+            download_url = f"https://download.lineageos.org/devices/{devicecode}/builds"
+            logger.info(f"{download_url} exists.")
+            return download_url
         else:
             logger.info(f"{url} doesn't exist, status_code: {res.status_code}")
-            return
+            return None
     except requests.exceptions.RequestException as e:
         logger.error(f"{url} doesn't exist, error: {e}")
-        return
+        return None
 
 
-def image_works_with_device(
-    device_code: str, alternative_device_code: str, image_path: str
-) -> bool:
+def image_works_with_device(supported_device_codes: List[str], image_path: str) -> bool:
     """Determine if an image works for the given device."""
     with zipfile.ZipFile(image_path) as image_zip:
         with image_zip.open(
@@ -51,9 +50,7 @@ def image_works_with_device(
             supported_devices = str(metadata[-1]).split("=")[-1][:-3].split(",")
             logger.info(f"Image works with device: {supported_devices}")
 
-            if (device_code in supported_devices) or (
-                alternative_device_code in supported_devices
-            ):
+            if any(code in supported_devices for code in supported_device_codes):
                 logger.success("Device supported by the selected image.")
                 return True
             else:

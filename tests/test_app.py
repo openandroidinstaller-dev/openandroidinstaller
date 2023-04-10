@@ -34,7 +34,7 @@ class MockConn:
         return MockResult()
 
 
-def test_app():
+def test_app_sargo():
     page = ft.Page(conn=MockConn(), session_id=1)
     # test if it would start up
     main(page=page, test=True, test_config="sargo")
@@ -43,6 +43,22 @@ def test_app():
     state = page.controls[0].state
     state.load_config(device_code="sargo")
     state.default_views.extend(state.addon_views)
-    for _ in range(len(state.steps) + 7):
+    number_of_steps = 14
+    for _ in range(number_of_steps):
+        page.controls[0].to_next_view(None)
+    assert "SuccessView" in str(page.controls[0].view.controls[0])
+
+
+def test_app_beyond2lte():
+    page = ft.Page(conn=MockConn(), session_id=1)
+    # test if it would start up
+    main(page=page, test=True, test_config="beyond2lte")
+
+    # test if you can go through all views
+    state = page.controls[0].state
+    state.load_config(device_code="sargo")
+    state.default_views.extend(state.addon_views)
+    number_of_steps = 14
+    for _ in range(number_of_steps):
         page.controls[0].to_next_view(None)
     assert "SuccessView" in str(page.controls[0].view.controls[0])

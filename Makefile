@@ -14,6 +14,9 @@ format:
 lint:
 	poetry run ruff openandroidinstaller/ --ignore E501
 
+typing:
+	poetry run mypy openandroidinstaller/. --ignore-missing-imports
+
 test: format lint
 	PYTHONPATH=openandroidinstaller:$(PYTHONPATH) poetry run pytest --cov=openandroidinstaller tests/
 

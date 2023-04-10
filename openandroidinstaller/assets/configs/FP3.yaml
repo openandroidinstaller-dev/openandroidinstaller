@@ -1,7 +1,10 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
-  devicename: Fairphone 3
-  devicecode: FP3
+  device_name: Fairphone 3
+  is_ab_device: true
+  device_code: FP3
+  supported_device_codes:
+    - FP3
 steps:
   unlock_bootloader:
     - type: link_button_with_confirm
@@ -29,17 +32,17 @@ steps:
       command: fastboot_reboot
     - type: confirm_button
       content: The bootloader is now unlocked. Since the device resets completely, you will need to re-enable USB debugging to continue.
-  flash_recovery:
+  boot_recovery:
     - type: confirm_button 
       content: >
-        Now you need to flash a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating, 
+        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating, 
         adapting and repairing of the operating system.
     - type: call_button
       content: Turn on your device. Once the device is fully booted, you need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
       content: Once the device is in fastboot mode, flash the custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
-      command: fastboot_flash_recovery
+      command: fastboot_boot_recovery
     - type: confirm_button 
       content: >
         Now reboot into recovery to verify the installation. Do not reboot into the existing OS, since it will overwrite the recovery you just installed!

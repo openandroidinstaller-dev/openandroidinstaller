@@ -25,20 +25,21 @@ from flet import (
     ElevatedButton,
     OutlinedButton,
     FilledButton,
-    Markdown,
     Row,
-    Text,
     TextButton,
     colors,
     icons,
 )
 from flet.buttons import CountinuosRectangleBorder
 
+from styles import (
+    Text,
+    Markdown,
+)
 from views import BaseView
 from app_state import AppState
 from widgets import get_title
-from tooling import search_device, check_ab_partition
-from installer_config import InstallerConfig
+from tooling import search_device
 
 
 class StartView(BaseView):
@@ -99,19 +100,21 @@ Now you are ready to continue.
             """Enable skipping unlocking the bootloader if selected."""
             if self.bootloader_switch.value:
                 logger.info("Skipping bootloader unlocking.")
-                self.state.steps = copy.deepcopy(self.state.config.flash_recovery)
+                self.state.steps = copy.deepcopy(self.state.config.boot_recovery)
                 self.state.num_total_steps = len(self.state.steps)
             else:
                 logger.info("Enabled unlocking the bootloader again.")
                 self.state.steps = copy.deepcopy(
                     self.state.config.unlock_bootloader
-                ) + copy.deepcopy(self.state.config.flash_recovery)
+                ) + copy.deepcopy(self.state.config.boot_recovery)
                 self.state.num_total_steps = len(self.state.steps)
 
         self.bootloader_switch = Switch(
             label="Bootloader is already unlocked.",
             on_change=check_bootloader_unlocked,
             disabled=True,
+            inactive_thumb_color=colors.YELLOW,
+            active_color=colors.GREEN,
         )
 
         # inform the user about the device detection
@@ -160,17 +163,22 @@ Now
 - **connect your device to this computer via USB** and
 - **allow USB debugging in the pop-up on your phone**.
 - Then **press the button 'Search device'**.
-- If you **already unlocked the bootloader** of your device, please toggle the switch below, to skip the procedure.
-If you don't know what this means, you most likely don't need to do anything and you can just continue.
 
 When everything works correctly you should see your device name here and you can continue.
                 """
                 ),
                 Divider(),
+                Markdown(
+                    """
+If you **already unlocked the bootloader** of your device, please toggle the switch below, to skip the procedure.
+If you don't know what this means, you most likely don't need to do anything and you can just continue.
+            """
+                ),
+                Row([self.bootloader_switch]),
+                Divider(),
                 Column(
                     [
                         self.device_detection_infobox,
-                        Row([self.bootloader_switch]),
                     ]
                 ),
                 Row(
@@ -179,7 +187,7 @@ When everything works correctly you should see your device name here and you can
                         FilledButton(
                             "Search for device",
                             on_click=self.search_devices,
-                            icon=icons.PHONE_ANDROID,
+                            icon=icons.DEVICES_OTHER_OUTLINED,
                             expand=True,
                             tooltip="Search for a connected device.",
                         ),
@@ -207,15 +215,12 @@ When everything works correctly you should see your device name here and you can
         # search the device
         if self.state.test:
             # this only happens for testing
-            device_code, is_ab = self.state.test_config, True
+            device_code = self.state.test_config
             logger.info(
                 f"Running search in development mode and loading config {device_code}.yaml."
             )
         else:
             device_code = search_device(
-                platform=self.state.platform, bin_path=self.state.bin_path
-            )
-            is_ab = check_ab_partition(
                 platform=self.state.platform, bin_path=self.state.bin_path
             )
             if device_code:
@@ -233,11 +238,9 @@ When everything works correctly you should see your device name here and you can
             self.device_name.value = device_code
             # load config from file
             self.state.load_config(device_code)
-            # write ab-info to state
-            self.state.is_ab = is_ab
             if self.state.config:
                 device_name = self.state.config.metadata.get(
-                    "devicename", "No device name in config."
+                    "device_name", "No device name in config."
                 )
             else:
                 device_name = None
@@ -247,8 +250,13 @@ When everything works correctly you should see your device name here and you can
                 self.continue_button.disabled = False
                 self.bootloader_switch.disabled = False
                 # overwrite the text field with the real name from the config
-                self.device_name.value = f"{device_name} (code: {InstallerConfig.device_code_mapping.get(device_code, device_code)})"
+                self.device_name.value = (
+                    f"{device_name} (code: {self.state.config.device_code})"
+                )
                 self.device_name.color = colors.GREEN
+                # if there are no steps for bootloader unlocking, assume there is nothing to do and toggle the switch
+                if len(self.state.config.unlock_bootloader) == 0:
+                    self.bootloader_switch.value = True
             else:
                 # failed to load config
                 logger.error(f"Failed to load config for {device_code}.")

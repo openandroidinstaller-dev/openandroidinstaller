@@ -16,7 +16,7 @@
 import webbrowser
 import regex as re
 from functools import partial
-from typing import Callable
+from typing import Callable, Optional
 
 from flet import (
     UserControl,
@@ -26,12 +26,15 @@ from flet import (
     ProgressRing,
     ProgressBar,
     Row,
-    Text,
     alignment,
     icons,
     IconButton,
     Image,
     Column,
+)
+
+from styles import (
+    Text,
 )
 
 
@@ -42,7 +45,12 @@ class TerminalBox(UserControl):
 
     def build(self):
         self._box = Container(
-            content=Column(scroll="auto", expand=True, auto_scroll=True),
+            content=Column(
+                controls=[Text("")],
+                scroll="auto",
+                expand=True,
+                auto_scroll=True,
+            ),
             margin=10,
             padding=10,
             alignment=alignment.top_left,
@@ -61,7 +69,10 @@ class TerminalBox(UserControl):
         Ignores empty lines.
         """
         if (type(line) == str) and line.strip():
-            self._box.content.controls.append(Text(f">{line.strip()}", selectable=True))
+            self._box.content.controls[0].value += f"\n>{line.strip()}"
+            self._box.content.controls[0].value = self._box.content.controls[
+                0
+            ].value.strip("\n")
             self.update()
 
     def toggle_visibility(self):
@@ -72,7 +83,7 @@ class TerminalBox(UserControl):
 
     def clear(self):
         """Clear terminal output."""
-        self._box.content.controls = []
+        self._box.content.controls[0].value = ""
         self.update()
 
     def update(self):
@@ -151,7 +162,7 @@ class ProgressIndicator(UserControl):
 
 
 def get_title(
-    title: str, info_button: IconButton = None, step_indicator_img: str = None
+    title: str, info_button: IconButton = None, step_indicator_img: Optional[str] = None
 ) -> Container:
     """Function to get the title header element for the right side view."""
     if info_button:

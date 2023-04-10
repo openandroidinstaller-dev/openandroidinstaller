@@ -16,7 +16,10 @@
 from pathlib import Path
 from subprocess import CalledProcessError
 
-from openandroidinstaller.tooling import adb_reboot, search_device, check_ab_partition
+from openandroidinstaller.tooling import (
+    adb_reboot,
+    search_device,
+)
 
 
 def test_adb_reboot_success(fp):
@@ -92,43 +95,3 @@ def test_search_device_failure(mocker):
     )
 
     assert device_code == None
-
-
-def test_check_ab_device_is_ab(mocker):
-    """Test if checking for ab device works fine."""
-    mocker.patch(
-        "openandroidinstaller.tooling.check_output",
-        return_value=b"[ro.boot.slot_suffix]: [_b]",
-    )
-
-    # test linux
-    is_ab = check_ab_partition(
-        platform="linux", bin_path=Path("openandroidinstaller/bin/")
-    )
-
-    assert is_ab
-
-    # test windows
-    is_ab = check_ab_partition(
-        platform="windows", bin_path=Path("openandroidinstaller/bin/")
-    )
-
-    assert is_ab
-
-
-def test_check_ab_device_not_ab(mocker):
-    """Test if checking for ab device returns False if it fails."""
-
-    def patched_check_output(*args, **kwargs):
-        raise CalledProcessError(returncode=1, cmd="output is None")
-
-    mocker.patch(
-        "openandroidinstaller.tooling.check_output",
-        patched_check_output,
-    )
-
-    is_ab = check_ab_partition(
-        platform="linux", bin_path=Path("openandroidinstaller/bin/")
-    )
-
-    assert not is_ab

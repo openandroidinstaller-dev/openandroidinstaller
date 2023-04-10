@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openandroidinstaller"
-version = "0.4.0-beta"
+version = "0.4.2-beta"
 description = "Install lineage OS in a nice and easy way."
 authors = ["Tobias Sterbak <hello@openandroidinstaller.org>"]
 license = "GPLv3"
@@ -25,6 +25,7 @@ pytest-cov = "^4.0.0"
 pytest-mock = "^3.10.0"
 bandit = "^1.7.4"
 pytest-subprocess = "^1.5.0"
+mypy = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 

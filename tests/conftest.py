@@ -11,9 +11,7 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-import os
 import pytest
-import subprocess
 from pathlib import Path
 
 
