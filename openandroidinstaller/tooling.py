@@ -382,30 +382,19 @@ def fastboot_boot_recovery(
     bin_path: Path, recovery: str, is_ab: bool = True
 ) -> TerminalResponse:
     """Temporarily, boot custom recovery with fastboot."""
-    # TODO: this can be unified now
-    if is_ab:
-        logger.info("Boot custom recovery with fastboot.")
-        for line in run_command(
-            "fastboot boot", target=f"{recovery}", bin_path=bin_path
-        ):
-            yield line
-        logger.info("Boot into TWRP with fastboot.")
-        for line in adb_wait_for_recovery(bin_path=bin_path):
-            yield line
-    else:
-        logger.info("Boot custom recovery with fastboot.")
-        for line in run_command(
-            "fastboot boot", target=f"{recovery}", bin_path=bin_path
-        ):
-            yield line
+    logger.info("Boot custom recovery with fastboot.")
+    for line in run_command(
+        "fastboot boot", target=f"{recovery}", bin_path=bin_path
+    ):
+        yield line
+    if not is_ab:
         if (type(line) == bool) and not line:
             logger.error("Booting recovery failed.")
             yield False
         else:
             yield True
-        logger.info("Boot into TWRP with fastboot.")
-        for line in adb_wait_for_recovery(bin_path=bin_path):
-            yield line
+    for line in adb_wait_for_recovery(bin_path=bin_path):
+        yield line
 
 
 def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
