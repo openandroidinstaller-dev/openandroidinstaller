@@ -262,30 +262,40 @@ def adb_twrp_wipe_and_install(
             yield line
 
 
-def adb_twrp_install_addons(
-    bin_path: Path, addons: List[str], is_ab: bool
+def adb_twrp_install_addon(
+    bin_path: Path, addon_path: str, is_ab: bool
 ) -> TerminalResponse:
-    """Flash addons through adb and twrp.
+    """Flash addon through adb and twrp.
 
     Only works for twrp recovery.
     """
-    logger.info("Install addons with twrp.")
+    logger.info(f"Install addon {addon_path} with twrp.")
     sleep(0.5)
     if is_ab:
         adb_wait_for_recovery(bin_path=bin_path)
-    logger.info("Sideload and install addons.")
-    for addon in addons:
-        # activate sideload
-        logger.info("Activate sideload.")
-        for line in activate_sideload(bin_path=bin_path):
-            yield line
-        # now flash os image
-        for line in adb_sideload(bin_path=bin_path, target=addon):
-            yield line
-        sleep(7)
+    # activate sideload
+    logger.info("Activate sideload.")
+    for line in activate_sideload(bin_path=bin_path):
+        yield line
+    logger.info("Sideload and install addon.")
+    # now flash the addon
+    for line in adb_sideload(bin_path=bin_path, target=addon_path):
+        yield line
+    sleep(7)
+    logger.info("done.")
+
+
+def adb_twrp_finish_install_addons(
+    bin_path: Path, is_ab: bool
+) -> TerminalResponse:
+    """Finish the process of flashing addons with TWRP and reboot.
+
+    Only works for twrp recovery.
+    """
     sleep(3)
     # finally reboot into os
     if is_ab:
+        logger.info("Switch partitions on a/b-partitioned device.")
         # reboot into the bootloader again
         for line in adb_reboot_bootloader(bin_path=bin_path):
             yield line
@@ -302,6 +312,7 @@ def adb_twrp_install_addons(
             yield line
     else:
         # reboot with adb
+        logger.info("Reboot into OS.")
         for line in adb_reboot(bin_path=bin_path):
             yield line
 
