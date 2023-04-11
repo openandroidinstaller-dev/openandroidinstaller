@@ -140,6 +140,13 @@ def activate_sideload(bin_path: Path) -> TerminalResponse:
         yield line
 
 
+@add_logging("Wait for device")
+def adb_wait_for_device(bin_path: Path) -> TerminalResponse:
+    """Use adb to wait for the device to become available."""
+    for line in run_command("adb wait-for-device", bin_path):
+        yield line
+
+
 @add_logging("Wait for recovery")
 def adb_wait_for_recovery(bin_path: Path) -> TerminalResponse:
     """Use adb to wait for the recovery to become available."""
@@ -229,7 +236,7 @@ def adb_twrp_wipe_and_install(
     for partition in ["dalvik", "cache"]:
         for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
             yield line
-        sleep(1)
+        sleep(3)
         if (type(line) == bool) and not line:
             logger.error(f"Wiping {partition} failed.")
             # TODO: if this fails, a fix can be to just sideload something and then adb reboot
@@ -238,17 +245,20 @@ def adb_twrp_wipe_and_install(
                 bin_path=bin_path,
             ):
                 yield line
+            sleep(1)
             if (type(line) == bool) and not line:
                 yield False
             break
         sleep(2)
     # finally reboot into os or to fastboot for flashing addons
-    sleep(7)
+    for line in adb_wait_for_recovery(bin_path):
+        yield line
     if install_addons:
         if is_ab:
             # reboot into the bootloader again
             for line in adb_reboot_bootloader(bin_path):
                 yield line
+            sleep(3)
             # boot to TWRP again
             for line in fastboot_boot_recovery(
                 bin_path=bin_path, recovery=recovery, is_ab=is_ab
@@ -281,7 +291,6 @@ def adb_twrp_install_addon(
     # now flash the addon
     for line in adb_sideload(bin_path=bin_path, target=addon_path):
         yield line
-    sleep(7)
     logger.info("done.")
 
 
@@ -293,6 +302,8 @@ def adb_twrp_finish_install_addons(
     Only works for twrp recovery.
     """
     sleep(3)
+    for line in adb_wait_for_recovery(bin_path):
+        yield line
     # finally reboot into os
     if is_ab:
         logger.info("Switch partitions on a/b-partitioned device.")

@@ -57,7 +57,7 @@ class InstallAddonsView(BaseView):
         # error text
         self.error_text = Text("", color=colors.RED)
         # text field to inform about the currently installing addon
-        self.addon_info_text = Text("")
+        self.addon_info_text = Text("", weight="bold")
 
         # switch to enable advanced output - here it means show terminal input/output in tool
         def check_advanced_switch(e):
@@ -179,6 +179,7 @@ This might take a while. At the end your phone will boot into the new OS.
                 # in case the install command is run, we want to update the progress bar
                 self.progress_indicator.display_progress_bar(line)
                 self.progress_indicator.update()
+            sleep(7)
 
         # reboot after installing the addons; here we might switch partitions on ab-partitioned devices
         for line in adb_twrp_finish_install_addons(
