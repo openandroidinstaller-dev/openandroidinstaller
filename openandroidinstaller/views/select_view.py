@@ -69,9 +69,9 @@ class SelectFilesView(BaseView):
 An operating system (OS) is system software that manages computer hardware,
 software resources, and provides common services for computer programs. 
 Popular, custom operating systems for mobile devices based on Android are 
-- [LineageOS](https://lineageos.org/)
-- [/e/OS](https://e.foundation/e-os/) or
-- [LineageOS for microG](https://lineage.microg.org/)
+- [LineageOS](https://lineageos.org)
+- [/e/OS](https://e.foundation/e-os) or
+- [LineageOS for microG](https://lineage.microg.org)
 - and many others.
 
 Often, the related OS images are called 'ROM'. 'ROM' stands for *R*ead-*o*nly *m*emory,
@@ -83,7 +83,7 @@ A custom recovery is used for installing custom software on your device.
 This custom software can include smaller modifications like rooting your device or even
 replacing the firmware of the device with a completely custom ROM.
 
-OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about/).""",
+OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about).""",
                 on_tap_link=lambda e: self.page.launch_url(e.data),
             ),
             actions=[
