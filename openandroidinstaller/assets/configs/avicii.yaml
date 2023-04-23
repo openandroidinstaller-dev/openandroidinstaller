@@ -32,6 +32,7 @@ steps:
         Make sure your device is turned on. You need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
+      img: twrp-start.jpeg
       content: >
         Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_boot_recovery
@@ -41,6 +42,7 @@ steps:
         We can ensure none of that will happen by copying the contents of the active slot to the inactive slot. Press 'confirm and run' to to this. Once you are in the bootloader again, continue.
       command: adb_twrp_copy_partitions
     - type: call_button
+      img: twrp-start.jpeg
       content: >
         Now we need to boot into recovery again. Press run and when you see the TWRP screen you can continue.
       command: fastboot_boot_recovery
