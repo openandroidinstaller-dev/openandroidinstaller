@@ -177,18 +177,11 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path) -> TerminalRespo
 
 @add_logging("Perform a factory reset with adb and twrp.", return_if_fail=True)
 def adb_twrp_format_data(bin_path: Path) -> TerminalResponse:
-    """Perform a factory reset with twrp and adb."""
-    for line in run_command("adb shell twrp format data", bin_path):
-        yield line
-
-
-@add_logging("Wipe the selected partition with adb and twrp.", return_if_fail=True)
-def adb_twrp_wipe_partition(bin_path: Path, partition: str) -> TerminalResponse:
     """Perform a factory reset with twrp and adb.
 
     If `format data` fails (for example because of old TWRP versions) we fall back to `wipe data`.
     """
-    for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
+    for line in run_command("adb shell twrp format data", bin_path):
         yield line
     if (type(line) == bool) and not line:
         logger.info(
@@ -197,6 +190,13 @@ def adb_twrp_wipe_partition(bin_path: Path, partition: str) -> TerminalResponse:
         sleep(1)
         for line in adb_twrp_wipe_partition(bin_path=bin_path, partition="data"):
             yield line
+
+
+@add_logging("Wipe the selected partition with adb and twrp.", return_if_fail=True)
+def adb_twrp_wipe_partition(bin_path: Path, partition: str) -> TerminalResponse:
+    """Perform a factory reset with twrp and adb."""
+    for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
+        yield line
 
 
 def adb_twrp_wipe_and_install(
