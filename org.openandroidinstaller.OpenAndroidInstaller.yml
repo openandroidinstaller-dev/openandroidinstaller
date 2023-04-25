@@ -5,15 +5,26 @@ sdk: org.freedesktop.Sdk
 command: openandroidinstaller
 finish-args:
   - --share=ipc
-  - --socket=x11
+  - --socket=fallback-x11
   - --socket=wayland
-  - --filesystem=host
+  - --filesystem=xdg-documents
   - --device=dri
 modules:
+  # - generated-poetry-sources.json
   - name: OpenAndroidInstaller
     buildsystem: simple
     build-commands:
-      - install -D openandroidinstaller /app/bin/openandroidinstaller
+      - install -d dist/ app/
+    #- cp dist/openandroidinstaller app/openandroidinstaller
+      - install -D dist/openandroidinstaller app/bin/openandroidinstaller
+      - ls
+      - ls app/bin/
+      - ls dist/
     sources:
-      - type: file
-        path: dist/openandroidinstaller
+      - type: dir
+        path: dist/
+        dest: dist/
+    #  - pip3 install --no-deps --use-pep517 --prefix=${FLATPAK_DEST} .
+    # sources:
+    #   - type: archive
+    #     path: dist/openandroidinstaller-0.4.2b0.tar.gz
