@@ -108,14 +108,14 @@ class StepView(BaseView):
         self.progress_indicator = ProgressIndicator(expand=True)
 
         # main controls
-        steps_indictor_img_lookup = {
+        steps_indicator_img_lookup = {
             "Unlock the bootloader": "steps-header-unlock.png",
             "Boot custom recovery": "steps-header-recovery.png",
         }
         self.right_view_header.controls = [
             get_title(
                 f"{self.step.title}",
-                step_indicator_img=steps_indictor_img_lookup.get(self.step.title),
+                step_indicator_img=steps_indicator_img_lookup.get(self.step.title),
             )
         ]
         self.right_view.controls = [

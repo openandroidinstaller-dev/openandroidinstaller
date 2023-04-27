@@ -143,7 +143,7 @@ This might take a while. At the end your phone will boot into the new OS.
 
     def run_install_addons(self, e):
         """
-        Run the addon installation process trough twrp.
+        Run the addon installation process through twrp.
 
         Some parts of the command are changed by placeholders.
         """
