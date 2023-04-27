@@ -215,7 +215,7 @@ Every step in the config file corresponds to one view in the application. These 
   - `call_button`: Display the content text and a button that runs a given command. After the command is run, a confirm button is displayed to allow the user to move to the next step.
   - `call_button_with_input`: Display the content text, an input field and a button that runs a given command. The inputtext, can be used in the command by using the `<inputtext>` placeholder in the command field. After the command is run, a confirm button is displayed to allow the user to move to the next step.
   - `link_button_with_confirm`: Display a button that opens a browser with a given link, confirm afterwards. Link is given in `link`.
-- `content`: str; The content text displayed alongside the action of the step. Used to inform the user about whats going on.
+- `content`: str; The content text displayed alongside the action of the step. Used to inform the user about what's going on.
 - `command`: [ONLY for call_button* steps] str; The command to run. One of `adb_reboot`, `adb_reboot_bootloader`, `adb_reboot_download`, `adb_sideload`, `adb_twrp_wipe_and_install`, `adb_twrp_copy_partitions`, `fastboot_boot_recovery`, `fastboot_unlock_with_code`, `fastboot_unlock`, `fastboot_oem_unlock`, `fastboot_get_unlock_data`, `fastboot_reboot`, `heimdall_flash_recovery`.
 - `img`: [OPTIONAL] Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.

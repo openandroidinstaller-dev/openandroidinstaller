@@ -85,7 +85,7 @@ def add_logging(step_desc: str, return_if_fail: bool = False) -> Callable:
 
     def logging_decorator(func) -> Callable:
         def logging(*args, **kwargs) -> TerminalResponse:
-            logger.info(f"{step_desc} - Paramters: {kwargs}")
+            logger.info(f"{step_desc} - Parameters: {kwargs}")
             for line in func(*args, **kwargs):
                 if (type(line) == bool) and not line:
                     logger.error(f"{step_desc} Failed!")
