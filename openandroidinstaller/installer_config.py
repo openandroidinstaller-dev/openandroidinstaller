@@ -98,7 +98,7 @@ class InstallerConfig:
 
 def _find_config_file(device_code: str, config_path: Path) -> Optional[Path]:
     """Find the config file which is supported by the given device code."""
-    for path in config_path.rglob("*.yaml"):
+    for path in config_path.glob("*.yaml"):
         with open(path, "r", encoding="utf-8") as stream:
             try:
                 raw_config = dict(yaml.safe_load(stream))
