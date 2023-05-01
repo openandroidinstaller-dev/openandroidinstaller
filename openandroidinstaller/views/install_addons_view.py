@@ -33,7 +33,7 @@ from styles import (
 
 from views import BaseView
 from app_state import AppState
-from tooling import adb_twrp_install_addons
+from tooling import adb_twrp_install_addons, adb_reboot
 from widgets import (
     confirm_button,
     get_title,
@@ -158,16 +158,22 @@ This might take a while. At the end your phone will boot into the new OS.
         self.right_view.update()
 
         # run the install script
-        for line in adb_twrp_install_addons(
-            addons=self.state.addon_paths,
-            bin_path=self.state.bin_path,
-            is_ab=self.state.config.is_ab,
-        ):
-            # write the line to advanced output terminal
-            self.terminal_box.write_line(line)
-            # in case the install command is run, we want to update the progress bar
-            self.progress_indicator.display_progress_bar(line)
-            self.progress_indicator.update()
+        if self.state.addon_paths:
+            for line in adb_twrp_install_addons(
+                addons=self.state.addon_paths,
+                bin_path=self.state.bin_path,
+                is_ab=self.state.config.is_ab,
+            ):
+                # write the line to advanced output terminal
+                self.terminal_box.write_line(line)
+                # in case the install command is run, we want to update the progress bar
+                self.progress_indicator.display_progress_bar(line)
+                self.progress_indicator.update()
+        else:
+            logger.info("No addons selected. Rebooting to OS.")
+            for line in adb_reboot(bin_path=self.state.bin_path):
+                # write the line to advanced output terminal
+                self.terminal_box.write_line(line)
         success = line  # the last element of the iterable is a boolean encoding success/failure
 
         # update the view accordingly
@@ -177,7 +183,7 @@ This might take a while. At the end your phone will boot into the new OS.
             # also remove the last error text if it happened
             self.error_text.value = "Installation failed! Try again or make sure everything is setup correctly."
         else:
-            sleep(5)  # wait to make sure everything is fine
+            sleep(4)  # wait to make sure everything is fine
             logger.success("Installation process was successful. Allow to continue.")
             # enable the confirm button and disable the call button
             self.confirm_button.disabled = False
