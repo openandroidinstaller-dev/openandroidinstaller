@@ -181,8 +181,13 @@ All kinds of contributions are welcome. These include:
 - Fix and improve texts in configs and in the application.
 - Test the tool for a supported device.
 - Create a config for a new device.
-- Test the application on your computer.
+- Test the application on your computer and/or device.
 - Contribute an application build for a new platform.
+- Add features and/or improve the code base.
+- Report bugs.
+
+More details on how to contribute can be found [here](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/CONTRIBUTING.md).
+Please have a look before opening an issue or starting to contribute.
 
 ### How to contribute your own installation configurations
 
