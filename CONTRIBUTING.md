@@ -4,6 +4,15 @@
 
 This document contains some resources which should help you in doing that.
 
+All kinds of contributions are welcome. These include:
+- Fix and improve texts in configs and in the application.
+- Test the tool for a supported device.
+- Create a config for a new device.
+- Test the application on your computer and/or device.
+- Contribute an application build for a new platform.
+- Add features and/or improve the code base.
+- Report bugs.
+
 ## Code Of Conduct
 
 Everyone who contributes to the project must follow [our code of conduct](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/CODE_OF_CONDUCT.md).
