@@ -38,7 +38,7 @@ If you wish to backup the TA partition first, you can find tutorials related to 
 
 Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
 
-1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
+1. Download the [.exe or appropriate executable file for your OS](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases) from the releases or get the [official flatpak from flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller). You might need to change permissions to run the executable.
     - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
 2. Download the custom ROM image and the TWRP recovery image for your device and optionally some addons. A source for files can be found on the following websites:
     - some custom ROMs:
