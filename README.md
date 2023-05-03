@@ -5,6 +5,7 @@
   [![License](https://img.shields.io/github/license/openandroidinstaller-dev/openandroidinstaller?color=green&style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/LICENSE)
   [![Release](https://img.shields.io/github/v/release/openandroidinstaller-dev/openandroidinstaller?include_prereleases&style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
   [![Downloads](https://img.shields.io/github/downloads/openandroidinstaller-dev/openandroidinstaller/total?style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
+  [![Flathub](https://img.shields.io/flathub/downloads/org.openandroidinstaller.OpenAndroidInstaller?label=flathub%20installs&style=flat-square)](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller)
   [![Twitter](https://img.shields.io/twitter/follow/oainstaller?style=social)](https://twitter.com/OAInstaller)
   [![Mastodon](https://img.shields.io/mastodon/follow/109341220262803943?domain=https%3A%2F%2Ffosstodon.org&style=social)](https://fosstodon.org/@openandroidinstaller)
   <p>Makes installing alternative Android distributions nice and easy.</p>
