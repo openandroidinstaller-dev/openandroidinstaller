@@ -14,5 +14,11 @@
     </p>
   </description>
   
+  <url type="homepage">https://openandroidinstaller.org/</url>
+  <url type="bugtracker">https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/</url>
+  <url type="help">https://openandroidinstaller.org/faq.html</url>
+  <url type="vcs-browser">https://github.com/openandroidinstaller-dev/openandroidinstaller/</url>
+  <url type="contribute">https://openandroidinstaller.org/#contribute</url>
+  
   <launchable type="desktop-id">org.openandroidinstaller.OpenAndroidInstaller.desktop</launchable>
 </component>
