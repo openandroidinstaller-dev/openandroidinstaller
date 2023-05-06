@@ -24,7 +24,7 @@ from subprocess import (
 )
 import shlex
 from time import sleep
-from typing import List, Optional, Union, Generator, Callable
+from typing import Optional, Union, Generator, Callable
 
 from loguru import logger
 
@@ -140,6 +140,13 @@ def activate_sideload(bin_path: Path) -> TerminalResponse:
         yield line
 
 
+@add_logging("Wait for device")
+def adb_wait_for_device(bin_path: Path) -> TerminalResponse:
+    """Use adb to wait for the device to become available."""
+    for line in run_command("adb wait-for-device", bin_path):
+        yield line
+
+
 @add_logging("Wait for recovery")
 def adb_wait_for_recovery(bin_path: Path) -> TerminalResponse:
     """Use adb to wait for the recovery to become available."""
@@ -229,7 +236,7 @@ def adb_twrp_wipe_and_install(
     for partition in ["dalvik", "cache"]:
         for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
             yield line
-        sleep(1)
+        sleep(3)
         if (type(line) == bool) and not line:
             logger.error(f"Wiping {partition} failed.")
             # TODO: if this fails, a fix can be to just sideload something and then adb reboot
@@ -238,17 +245,20 @@ def adb_twrp_wipe_and_install(
                 bin_path=bin_path,
             ):
                 yield line
+            sleep(1)
             if (type(line) == bool) and not line:
                 yield False
             break
         sleep(2)
     # finally reboot into os or to fastboot for flashing addons
-    sleep(7)
+    for line in adb_wait_for_recovery(bin_path):
+        yield line
     if install_addons:
         if is_ab:
             # reboot into the bootloader again
             for line in adb_reboot_bootloader(bin_path):
                 yield line
+            sleep(3)
             # boot to TWRP again
             for line in fastboot_boot_recovery(
                 bin_path=bin_path, recovery=recovery, is_ab=is_ab
@@ -262,30 +272,39 @@ def adb_twrp_wipe_and_install(
             yield line
 
 
-def adb_twrp_install_addons(
-    bin_path: Path, addons: List[str], is_ab: bool
+def adb_twrp_install_addon(
+    bin_path: Path, addon_path: str, is_ab: bool
 ) -> TerminalResponse:
-    """Flash addons through adb and twrp.
+    """Flash addon through adb and twrp.
 
     Only works for twrp recovery.
     """
-    logger.info("Install addons with twrp.")
+    logger.info(f"Install addon {addon_path} with twrp.")
     sleep(0.5)
     if is_ab:
         adb_wait_for_recovery(bin_path=bin_path)
-    logger.info("Sideload and install addons.")
-    for addon in addons:
-        # activate sideload
-        logger.info("Activate sideload.")
-        for line in activate_sideload(bin_path=bin_path):
-            yield line
-        # now flash os image
-        for line in adb_sideload(bin_path=bin_path, target=addon):
-            yield line
-        sleep(7)
+    # activate sideload
+    logger.info("Activate sideload.")
+    for line in activate_sideload(bin_path=bin_path):
+        yield line
+    logger.info("Sideload and install addon.")
+    # now flash the addon
+    for line in adb_sideload(bin_path=bin_path, target=addon_path):
+        yield line
+    logger.info("done.")
+
+
+def adb_twrp_finish_install_addons(bin_path: Path, is_ab: bool) -> TerminalResponse:
+    """Finish the process of flashing addons with TWRP and reboot.
+
+    Only works for twrp recovery.
+    """
     sleep(3)
+    for line in adb_wait_for_recovery(bin_path):
+        yield line
     # finally reboot into os
     if is_ab:
+        logger.info("Switch partitions on a/b-partitioned device.")
         # reboot into the bootloader again
         for line in adb_reboot_bootloader(bin_path=bin_path):
             yield line
@@ -302,6 +321,7 @@ def adb_twrp_install_addons(
             yield line
     else:
         # reboot with adb
+        logger.info("Reboot into OS.")
         for line in adb_reboot(bin_path=bin_path):
             yield line
 
@@ -360,30 +380,17 @@ def fastboot_boot_recovery(
     bin_path: Path, recovery: str, is_ab: bool = True
 ) -> TerminalResponse:
     """Temporarily, boot custom recovery with fastboot."""
-    # TODO: this can be unified now
-    if is_ab:
-        logger.info("Boot custom recovery with fastboot.")
-        for line in run_command(
-            "fastboot boot", target=f"{recovery}", bin_path=bin_path
-        ):
-            yield line
-        logger.info("Boot into TWRP with fastboot.")
-        for line in adb_wait_for_recovery(bin_path=bin_path):
-            yield line
-    else:
-        logger.info("Boot custom recovery with fastboot.")
-        for line in run_command(
-            "fastboot boot", target=f"{recovery}", bin_path=bin_path
-        ):
-            yield line
+    logger.info("Boot custom recovery with fastboot.")
+    for line in run_command("fastboot boot", target=f"{recovery}", bin_path=bin_path):
+        yield line
+    if not is_ab:
         if (type(line) == bool) and not line:
             logger.error("Booting recovery failed.")
             yield False
         else:
             yield True
-        logger.info("Boot into TWRP with fastboot.")
-        for line in adb_wait_for_recovery(bin_path=bin_path):
-            yield line
+    for line in adb_wait_for_recovery(bin_path=bin_path):
+        yield line
 
 
 def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:

@@ -40,7 +40,7 @@ class AppState:
         # placeholders
         self.advanced = False
         self.install_addons = False
-        self.addon_paths = None
+        self.addon_paths = []
         self.config = None
         self.image_path = None
         self.recovery_path = None
