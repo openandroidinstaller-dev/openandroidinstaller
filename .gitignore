@@ -26,6 +26,7 @@ wheels/
 heimdall/
 libusb-windows/
 openandroidinstaller/bin/
+.flatpak-builder
 
 # Log files
 pip-log.txt
