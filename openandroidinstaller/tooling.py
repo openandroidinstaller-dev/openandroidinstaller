@@ -24,7 +24,7 @@ from subprocess import (
 )
 import shlex
 from time import sleep
-from typing import List, Optional, Union, Generator, Callable
+from typing import Optional, Union, Generator, Callable
 
 from loguru import logger
 
@@ -85,7 +85,7 @@ def add_logging(step_desc: str, return_if_fail: bool = False) -> Callable:
 
     def logging_decorator(func) -> Callable:
         def logging(*args, **kwargs) -> TerminalResponse:
-            logger.info(f"{step_desc} - Paramters: {kwargs}")
+            logger.info(f"{step_desc} - Parameters: {kwargs}")
             for line in func(*args, **kwargs):
                 if (type(line) == bool) and not line:
                     logger.error(f"{step_desc} Failed!")
@@ -294,9 +294,7 @@ def adb_twrp_install_addon(
     logger.info("done.")
 
 
-def adb_twrp_finish_install_addons(
-    bin_path: Path, is_ab: bool
-) -> TerminalResponse:
+def adb_twrp_finish_install_addons(bin_path: Path, is_ab: bool) -> TerminalResponse:
     """Finish the process of flashing addons with TWRP and reboot.
 
     Only works for twrp recovery.
@@ -383,9 +381,7 @@ def fastboot_boot_recovery(
 ) -> TerminalResponse:
     """Temporarily, boot custom recovery with fastboot."""
     logger.info("Boot custom recovery with fastboot.")
-    for line in run_command(
-        "fastboot boot", target=f"{recovery}", bin_path=bin_path
-    ):
+    for line in run_command("fastboot boot", target=f"{recovery}", bin_path=bin_path):
         yield line
     if not is_ab:
         if (type(line) == bool) and not line:
