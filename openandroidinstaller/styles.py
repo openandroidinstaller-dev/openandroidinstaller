@@ -27,4 +27,9 @@ class Markdown(ft.Markdown):
     """Markdown element to replace the markdown element from flet but is selectable."""
 
     def __init__(self, *args, **kwargs):
-        super().__init__(selectable=True, auto_follow_links=True, *args, **kwargs)
+        super().__init__(
+            selectable=True,
+            on_tap_link=lambda e: self.page.launch_url(e.data),
+            *args,
+            **kwargs
+        )
