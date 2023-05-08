@@ -31,6 +31,7 @@ from flet import (
 
 from styles import (
     Text,
+    Markdown,
 )
 
 from views import BaseView
@@ -119,7 +120,7 @@ class StepView(BaseView):
             )
         ]
         self.right_view.controls = [
-            Text(f"{self.step.content}"),
+            Markdown(f"{self.step.content}"),
         ]
         # basic view depending on step.type
         logger.info(f"Starting step of type {self.step.type}.")
