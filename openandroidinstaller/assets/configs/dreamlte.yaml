@@ -2,9 +2,12 @@ metadata:
   maintainer: Allaeddine BOULEFAAT (allaeddineomc)
   device_name: Samsung Galaxy s 8
   is_ab_device: false
-  device_code: dreamlte 
+  device_code: dreamlte
   supported_device_codes:
-    - dreamlte 
+    - dreamlte
+  twrp-link: dreamlte
+requirements:
+  android: 9.0
 steps:
   unlock_bootloader:
   boot_recovery:
