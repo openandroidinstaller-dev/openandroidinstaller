@@ -183,7 +183,7 @@ def adb_twrp_format_data(bin_path: Path) -> TerminalResponse:
     """
     unknown_command = False
     for line in run_command("adb shell twrp format data", bin_path):
-        if "Unrecognized script command" in line:
+        if (type(line) == str) and ("Unrecognized script command" in line):
             unknown_command = True
         yield line
     
