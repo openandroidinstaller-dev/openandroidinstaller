@@ -181,9 +181,14 @@ def adb_twrp_format_data(bin_path: Path) -> TerminalResponse:
 
     If `format data` fails (for example because of old TWRP versions) we fall back to `wipe data`.
     """
+    unknown_command = False
     for line in run_command("adb shell twrp format data", bin_path):
+        if "Unrecognized script command" in line:
+            unknown_command = True
         yield line
-    if (type(line) == bool) and not line:
+    
+    # if it fails because the command is unknown, retry with wipe data.
+    if unknown_command:
         logger.info(
             "Factory reset with `adb twrp format data` failed. Trying `adb twrp wipe data` now."
         )
