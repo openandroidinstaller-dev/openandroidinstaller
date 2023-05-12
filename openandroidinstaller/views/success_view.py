@@ -59,7 +59,6 @@ Also, you can consider contributing to make it better. There are a lot of differ
 
 [How to contribute]({contribute_link})
 """,
-                on_tap_link=lambda e: self.page.launch_url(e.data),
             ),
             Row(
                 [

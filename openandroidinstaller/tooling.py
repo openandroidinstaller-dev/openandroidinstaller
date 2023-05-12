@@ -186,7 +186,7 @@ def adb_twrp_format_data(bin_path: Path) -> TerminalResponse:
         if (type(line) == str) and ("Unrecognized script command" in line):
             unknown_command = True
         yield line
-    
+
     # if it fails because the command is unknown, retry with wipe data.
     if unknown_command:
         logger.info(
