@@ -184,9 +184,24 @@ def adb_twrp_copy_partitions(bin_path: Path, config_path: Path) -> TerminalRespo
 
 @add_logging("Perform a factory reset with adb and twrp.", return_if_fail=True)
 def adb_twrp_format_data(bin_path: Path) -> TerminalResponse:
-    """Perform a factory reset with twrp and adb."""
+    """Perform a factory reset with twrp and adb.
+
+    If `format data` fails (for example because of old TWRP versions) we fall back to `wipe data`.
+    """
+    unknown_command = False
     for line in run_command("adb shell twrp format data", bin_path):
+        if (type(line) == str) and ("Unrecognized script command" in line):
+            unknown_command = True
         yield line
+
+    # if it fails because the command is unknown, retry with wipe data.
+    if unknown_command:
+        logger.info(
+            "Factory reset with `adb twrp format data` failed. Trying `adb twrp wipe data` now."
+        )
+        sleep(1)
+        for line in adb_twrp_wipe_partition(bin_path=bin_path, partition="data"):
+            yield line
 
 
 @add_logging("Wipe the selected partition with adb and twrp.", return_if_fail=True)
