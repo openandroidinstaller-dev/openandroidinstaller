@@ -42,7 +42,6 @@ def run_command(
     enable_logging: bool = True,
 ) -> TerminalResponse:
     """Run a command with a tool (adb, fastboot, heimdall)."""
-    yield f"${full_command}"
     # split the command and extract the tool part
     tool, *command = shlex.split(full_command)
     if tool not in ["adb", "fastboot", "heimdall"]:
@@ -55,10 +54,11 @@ def run_command(
     else:
         command_list = [str(bin_path.joinpath(Path(f"{tool}")))] + command
         si = None
-    if enable_logging:
-        logger.info(f"Run command: {command_list}")
     if target:
         command_list.append(f"{target}")
+    if enable_logging:
+        logger.info(f"Run command: {command_list}")
+    yield f"${full_command}"
     # run the command
     with subprocess.Popen(
         command_list,
