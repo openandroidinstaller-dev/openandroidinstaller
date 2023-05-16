@@ -8,13 +8,12 @@ metadata:
 steps:
   unlock_bootloader:
   boot_recovery:
-    - type: confirm_button 
+    - type: call_button
       content: >
         Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating, 
         adapting and repairing of the operating system.
-    - type: call_button
-      content: >
-        Once the device is fully booted, you need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
+        
+        Make sure your device is turned on and connected to the computer. Boot into the bootloader by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
       img: twrp-start.jpeg
