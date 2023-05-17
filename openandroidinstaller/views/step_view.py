@@ -31,6 +31,7 @@ from flet import (
 
 from styles import (
     Text,
+    Markdown,
 )
 
 from views import BaseView
@@ -108,18 +109,18 @@ class StepView(BaseView):
         self.progress_indicator = ProgressIndicator(expand=True)
 
         # main controls
-        steps_indictor_img_lookup = {
+        steps_indicator_img_lookup = {
             "Unlock the bootloader": "steps-header-unlock.png",
             "Boot custom recovery": "steps-header-recovery.png",
         }
         self.right_view_header.controls = [
             get_title(
                 f"{self.step.title}",
-                step_indicator_img=steps_indictor_img_lookup.get(self.step.title),
+                step_indicator_img=steps_indicator_img_lookup.get(self.step.title),
             )
         ]
         self.right_view.controls = [
-            Text(f"{self.step.content}"),
+            Markdown(f"{self.step.content}"),
         ]
         # basic view depending on step.type
         logger.info(f"Starting step of type {self.step.type}.")

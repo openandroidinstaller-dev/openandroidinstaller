@@ -55,11 +55,8 @@ from views import (
 )
 from tooling import run_command
 
-# where to write the logs
-logger.add("openandroidinstaller.log")
-
 # VERSION number
-VERSION = "0.4.2-beta"
+VERSION = "0.4.3-beta"
 
 # detect platform
 PLATFORM = sys.platform
@@ -317,8 +314,19 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
 @click.option(
     "--test_config", default="sargo", type=str, help="Config to use for testing"
 )
-def startup(test: bool, test_config: str):
+@click.option(
+    "-l",
+    "--logging_path",
+    type=str,
+    default=".",
+    help="Path where to store the log file.",
+)
+def startup(test: bool, test_config: str, logging_path: str):
     "Main entrypoint to the app."
+    # where to write the logs
+    logger.add(f"{logging_path}/openandroidinstaller.log")
+
+    # start the app
     ft.app(
         target=functools.partial(main, test=test, test_config=test_config),
         assets_dir="assets",
