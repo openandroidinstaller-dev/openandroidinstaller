@@ -10,7 +10,7 @@
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
-# If not, see <https://www.gnu.org/licenses/>."""
+# If not, see <https://www.gnu.org/licenses>."""
 # Author: Tobias Sterbak
 
 from app_state import AppState
