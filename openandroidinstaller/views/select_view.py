@@ -84,7 +84,6 @@ This custom software can include smaller modifications like rooting your device 
 replacing the firmware of the device with a completely custom ROM.
 
 OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about).""",
-                on_tap_link=lambda e: self.page.launch_url(e.data),
             ),
             actions=[
                 TextButton("Close", on_click=self.close_close_explain_images_dlg),

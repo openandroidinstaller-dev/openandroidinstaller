@@ -5,6 +5,7 @@
   [![License](https://img.shields.io/github/license/openandroidinstaller-dev/openandroidinstaller?color=green&style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/LICENSE)
   [![Release](https://img.shields.io/github/v/release/openandroidinstaller-dev/openandroidinstaller?include_prereleases&style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
   [![Downloads](https://img.shields.io/github/downloads/openandroidinstaller-dev/openandroidinstaller/total?style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
+  [![Flathub](https://img.shields.io/flathub/downloads/org.openandroidinstaller.OpenAndroidInstaller?label=flathub%20installs&style=flat-square)](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller)
   [![Twitter](https://img.shields.io/twitter/follow/oainstaller?style=social)](https://twitter.com/OAInstaller)
   [![Mastodon](https://img.shields.io/mastodon/follow/109341220262803943?domain=https%3A%2F%2Ffosstodon.org&style=social)](https://fosstodon.org/@openandroidinstaller)
   <p>Makes installing alternative Android distributions nice and easy.</p>
@@ -38,8 +39,8 @@ If you wish to backup the TA partition first, you can find tutorials related to 
 
 Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
 
-1. Download the AppImage, .exe or appropriate executable file for your OS. You might need to change permissions to run the executable.
-    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
+1. Download the [.exe or appropriate executable file for your OS](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases) from the releases or get the [official flatpak from flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller). You might need to change permissions to run the executable.
+    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
 2. Download the custom ROM image and the TWRP recovery image for your device and optionally some addons. A source for files can be found on the following websites:
     - some custom ROMs:
       - [LineageOS](https://wiki.lineageos.org/devices)
@@ -62,7 +63,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 ## Officially supported devices
 
-Currently, the **we support 58 devices** by various vendors and working on adding more soon!
+Currently, the **we support 60 devices** by various vendors and working on adding more soon!
 
 
 Support for these devices is provided as best effort, but things might still go wrong.
@@ -76,12 +77,14 @@ Samsung | Galaxy J7 2015 | j7elte | | tested
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte) | SM-A510F | tested
 Samsung | Galaxy A7 2016 | a7xelte | | tested
+Samsung | Galaxy Grand Prime VE | grandprimevelte | SM-G531F | tested
 Samsung | Galaxy S III Neo | s3ve3g | GT-I9301I | tested
 Samsung | Galaxy S4 Mini LTE| [serranoltexx](https://wiki.lineageos.org/devices/serranoltexx) | | tested
 Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx) | | tested
 Samsung | Galaxy S6 Edge | [zeroltexx](https://wiki.lineageos.org/devices/zeroltexx) | | tested
 Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte) | SM-G930F | tested
 Samsung | Galaxy S7 Edge | [hero2lte](https://wiki.lineageos.org/devices/hero2lte) | | tested
+Samsung | Galaxy S8 | [dreamlte](https://wiki.lineageos.org/devices/dreamlte) | | tested
 Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte) | | tested
 Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte) | | tested
 Samsung | Galaxy S10e | [beyond0lte](https://wiki.lineageos.org/devices/beyond0lte) | | tested
@@ -182,8 +185,13 @@ All kinds of contributions are welcome. These include:
 - Fix and improve texts in configs and in the application.
 - Test the tool for a supported device.
 - Create a config for a new device.
-- Test the application on your computer.
+- Test the application on your computer and/or device.
 - Contribute an application build for a new platform.
+- Add features and/or improve the code base.
+- Report bugs.
+
+More details on how to contribute can be found [here](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/CONTRIBUTING.md).
+Please have a look before opening an issue or starting to contribute.
 
 A detailed list can be found [here](https://openandroidinstaller.org/#contribute).
 
@@ -198,7 +206,7 @@ If you want to use the tool for a non-supported smartphone, the fastest way is t
 A config file consists of two parts. The first part are some metadata about the device and the second parts are the steps to unlock the bootloader, boot a recovery and install the ROMs.
 
 ##### How to write Metadata
-Every config file should have metadata with the following fields:
+Every config file should have `metadata` with the following fields:
 - `maintainer`: str; Maintainer and author of the config file.
 - `device_name`: str; Name of the device.
 - `is_ab_device`: bool; A boolean to determine if the device is a/b-partitioned or not.
@@ -206,7 +214,7 @@ Every config file should have metadata with the following fields:
 - `supported_device_codes`: List[str]; A list of supported device codes for the config. The config will be loaded based on this field.
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
 
-In addition to these metadata, every config can have optional requirements. If these are set, the user is asked to check if they are meet.
+In addition to these metadata, every config can have optional `requirements`. If these are set, the user is asked to check if they are meet.
 - `android`: [OPTIONAL] int|str; Android version to install prior to installing a custom ROM.
 - `firmware`: [OPTIONAL] str; specific firmware version to install before installing a custom ROM.
 
@@ -218,13 +226,13 @@ Every step in the config file corresponds to one view in the application. These 
   - `call_button`: Display the content text and a button that runs a given command. After the command is run, a confirm button is displayed to allow the user to move to the next step.
   - `call_button_with_input`: Display the content text, an input field and a button that runs a given command. The inputtext, can be used in the command by using the `<inputtext>` placeholder in the command field. After the command is run, a confirm button is displayed to allow the user to move to the next step.
   - `link_button_with_confirm`: Display a button that opens a browser with a given link, confirm afterwards. Link is given in `link`.
-- `content`: str; The content text displayed alongside the action of the step. Used to inform the user about whats going on.
-- `command`: [ONLY for call_button* steps] str; The command to run. One of `adb_reboot`, `adb_reboot_bootloader`, `adb_reboot_download`, `adb_sideload`, `adb_twrp_wipe_and_install`, `adb_twrp_copy_partitions`, `fastboot_boot_recovery`, `fastboot_unlock_with_code`, `fastboot_unlock`, `fastboot_oem_unlock`, `fastboot_get_unlock_data`, `fastboot_reboot`, `heimdall_flash_recovery`.
 - `img`: [OPTIONAL] Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
-- `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
+- `content`: str; The content text displayed alongside the action of the step. Used to inform the user about what's going on. For consistency and better readability the text should be moved into the next line using `>`.
 - `link`: [OPTIONAL] Link to use for the link button if type is `link_button_with_confirm`.
+- `command`: [ONLY for call_button* steps] str; The command to run. One of `adb_reboot`, `adb_reboot_bootloader`, `adb_reboot_download`, `adb_sideload`, `adb_twrp_wipe_and_install`, `adb_twrp_copy_partitions`, `fastboot_boot_recovery`, `fastboot_unlock_with_code`, `fastboot_unlock`, `fastboot_oem_unlock`, `fastboot_get_unlock_data`, `fastboot_reboot`, `heimdall_flash_recovery`.
+- `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 
-You can also use the `requirements` field in the yaml, to specify `firmware` or `android` version requirements. The user will then be prompted if these requirements are satisfied. 
+**Please try to retain this order of these fields in your config to ensure consistency.**
 
 ## How to build the application for your platform
 

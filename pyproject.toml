@@ -1,9 +1,12 @@
 [tool.poetry]
 name = "openandroidinstaller"
-version = "0.4.2-beta"
+version = "0.4.3-beta"
 description = "Install lineage OS in a nice and easy way."
 authors = ["Tobias Sterbak <hello@openandroidinstaller.org>"]
 license = "GPLv3"
+readme = "README.md"
+homepage = "https://openandroidinstaller.org"
+include = ["openandroidinstaller/bin/*", "openandroidinstaller/bin/*/*"]
 
 [tool.poetry.dependencies]
 python = "<3.11,>=3.9"

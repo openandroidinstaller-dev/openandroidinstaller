@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.openandroidinstaller.OpenAndroidInstaller</id>
+  
+  <name>OpenAndroidInstaller</name>
+  <summary> Makes installing alternative Android distributions nice and easy. </summary>
+  
+  <metadata_license>CC-BY-SA-4.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      The OpenAndroidInstaller project helps Android users to keep their smartphone&apos;s operating system up to date with free software and to continue using the device even though the manufacturer no longer offers updates. With a graphical installation software, users are easily guided through the installation process of free Android operating systems like LineageOS.
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">org.openandroidinstaller.OpenAndroidInstaller.desktop</launchable>
+</component>

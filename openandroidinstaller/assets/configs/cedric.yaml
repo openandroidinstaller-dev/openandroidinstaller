@@ -23,7 +23,8 @@ steps:
         Copy the code from the last step to the website and follow the instructions there. Then continue here.
       link: https://motorola-global-portal.custhelp.com/app/standalone/bootloader/unlock-your-device-a
     - type: confirm_button
-      content: Connect the device to your PC via USB. And confirm to continue.
+      content: >
+        Connect the device to your PC via USB. And confirm to continue.
     - type: call_button_with_input
       content: >
         Use your code to unlock the bootloader of your device. Type in the full 21 character code you received by email (Example: 5RTSQCYL7ZJKL4NN35MY). Then confirm an run. Afterwards you can continue.
@@ -45,5 +46,7 @@ steps:
         Make sure your device is turned on. You need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
-      content: Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
+      img: twrp-start.jpeg
+      content: >
+        Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_boot_recovery
