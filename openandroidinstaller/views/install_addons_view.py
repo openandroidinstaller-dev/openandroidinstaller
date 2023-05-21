@@ -16,6 +16,7 @@
 from loguru import logger
 from time import sleep
 from typing import Callable
+from pathlib import Path
 
 from flet import (
     Column,
@@ -33,7 +34,7 @@ from styles import (
 
 from views import BaseView
 from app_state import AppState
-from tooling import adb_twrp_install_addons
+from tooling import adb_twrp_install_addon, adb_twrp_finish_install_addons, adb_reboot
 from widgets import (
     confirm_button,
     get_title,
@@ -55,6 +56,8 @@ class InstallAddonsView(BaseView):
         """Create the content of the view."""
         # error text
         self.error_text = Text("", color=colors.RED)
+        # text field to inform about the currently installing addon
+        self.addon_info_text = Text("", weight="bold")
 
         # switch to enable advanced output - here it means show terminal input/output in tool
         def check_advanced_switch(e):
@@ -112,8 +115,9 @@ This might take a while. At the end your phone will boot into the new OS.
         # build the view
         self.right_view.controls.extend(
             [
-                Row([self.error_text]),
+                Row([self.addon_info_text]),
                 Row([self.progress_indicator]),
+                Row([self.error_text]),
                 Column(
                     [
                         self.advanced_switch,
@@ -143,31 +147,52 @@ This might take a while. At the end your phone will boot into the new OS.
 
     def run_install_addons(self, e):
         """
-        Run the addon installation process trough twrp.
+        Run the addon installation process through twrp.
 
         Some parts of the command are changed by placeholders.
         """
         # disable the call button while the command is running
         self.install_button.disabled = True
         self.error_text.value = ""
-        # reset the progress indicators
-        self.progress_indicator.clear()
+        self.addon_info_text.value = ""
         # reset terminal output
         if self.state.advanced:
             self.terminal_box.clear()
         self.right_view.update()
 
         # run the install script
-        for line in adb_twrp_install_addons(
-            addons=self.state.addon_paths,
-            bin_path=self.state.bin_path,
-            is_ab=self.state.config.is_ab,
-        ):
-            # write the line to advanced output terminal
-            self.terminal_box.write_line(line)
-            # in case the install command is run, we want to update the progress bar
-            self.progress_indicator.display_progress_bar(line)
-            self.progress_indicator.update()
+        for addon_num, addon_path in enumerate(self.state.addon_paths):
+            # reset the progress indicators
+            self.progress_indicator.clear()
+            # inform about the currently installed addon
+            self.addon_info_text.value = f"{addon_num + 1}/{len(self.state.addon_paths)}: Installing {Path(addon_path).name} ..."
+            self.right_view.update()
+
+            # install one addon at the time
+            for line in adb_twrp_install_addon(
+                addon_path=addon_path,
+                bin_path=self.state.bin_path,
+                is_ab=self.state.config.is_ab,
+            ):
+                # write the line to advanced output terminal
+                self.terminal_box.write_line(line)
+                # in case the install command is run, we want to update the progress bar
+                self.progress_indicator.display_progress_bar(line)
+                self.progress_indicator.update()
+            sleep(7)
+
+        if self.state.addon_paths:
+            # reboot after installing the addons; here we might switch partitions on ab-partitioned devices
+            for line in adb_twrp_finish_install_addons(
+                bin_path=self.state.bin_path,
+                is_ab=self.state.config.is_ab,
+            ):
+                self.terminal_box.write_line(line)
+        else:
+            logger.info("No addons selected. Rebooting to OS.")
+            for line in adb_reboot(bin_path=self.state.bin_path):
+                # write the line to advanced output terminal
+                self.terminal_box.write_line(line)
         success = line  # the last element of the iterable is a boolean encoding success/failure
 
         # update the view accordingly
@@ -177,7 +202,7 @@ This might take a while. At the end your phone will boot into the new OS.
             # also remove the last error text if it happened
             self.error_text.value = "Installation failed! Try again or make sure everything is setup correctly."
         else:
-            sleep(5)  # wait to make sure everything is fine
+            sleep(4)  # wait to make sure everything is fine
             logger.success("Installation process was successful. Allow to continue.")
             # enable the confirm button and disable the call button
             self.confirm_button.disabled = False

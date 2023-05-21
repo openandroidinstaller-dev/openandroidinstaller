@@ -8,22 +8,23 @@ metadata:
 steps:
   unlock_bootloader:
     - type: call_button
-      command: adb_reboot_bootloader
       content: >
         As a first step, you need to unlock the bootloader of your device. A bootloader is the piece of software, that tells your phone
         how to start and run an operating system (like Android). You need to boot into fastboot mode by pressing the 'Confirm and run' button. Then continue.
+      command: adb_reboot_bootloader
     - type: call_button
-      command: fastboot_get_unlock_data
       content: >
         Now you need to get your device ID to get an unlock code from Motorola. Press 'Confirm and run' to get the ID. (You need to toggle 'Advanced Output' here to see it.)
         Copy it to a separate file to use it in the next step.
+      command: fastboot_get_unlock_data
     - type: link_button_with_confirm
       content: >
         Click on the button to open the instructions on Motorola's official unlocking website to generate an unlock code for your bootloader.
         Copy the code from the last step to the website and follow the instructions there. Then continue here.
       link: https://motorola-global-portal.custhelp.com/app/standalone/bootloader/unlock-your-device-a
     - type: confirm_button
-      content: Connect the device to your PC via USB. And confirm to continue.
+      content: >
+        Connect the device to your PC via USB. And confirm to continue.
     - type: call_button_with_input
       content: >
         Use your code to unlock the bootloader of your device. Type in the full 21 character code you received by email (Example: 5RTSQCYL7ZJKL4NN35MY). Then confirm an run. Afterwards you can continue.
@@ -45,5 +46,7 @@ steps:
         Make sure your device is turned on. You need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
-      content: Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
+      img: twrp-start.jpeg
+      content: >
+        Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_boot_recovery
