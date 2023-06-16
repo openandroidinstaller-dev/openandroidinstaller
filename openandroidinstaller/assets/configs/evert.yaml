@@ -4,7 +4,8 @@ metadata:
   is_ab_device: true
   device_code: evert 
   supported_device_codes:
-    - evert 
+    - evert
+    - evert_n
 steps:
   unlock_bootloader:
     - type: call_button 
