@@ -76,10 +76,10 @@ class InstallerConfig:
                     metadata = config["metadata"]
                     requirements = config.get("requirements", None)
                 else:
-                    logger.info("Validation of config failed.")
+                    logger.error(f"Validation of config at {path} failed.")
                     return None
             except yaml.YAMLError as exc:
-                logger.info(exc)
+                logger.error(f"Loading the config from {path} failed with {exc}")
                 return None
 
         if raw_steps.get("unlock_bootloader") is not None:
@@ -137,7 +137,7 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
                 logger.info(f"Config metadata: {config.metadata}.")
             return config
         else:
-            logger.info(f"No device config found for {path}.")
+            logger.info(f"No device config found for device code '{device_code}'.")
             return None
 
 

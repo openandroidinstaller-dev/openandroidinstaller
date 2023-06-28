@@ -485,7 +485,7 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
         else:
             raise Exception(f"Unknown platform {platform}.")
         device_code = output.split("[")[-1].strip()[:-1].strip()
-        logger.info(device_code)
+        logger.info(f"Found device code '{device_code}'")
         return device_code
     except CalledProcessError:
         logger.error("Failed to detect a device.")
