@@ -193,6 +193,8 @@ def configure(page: Page):
     page.window_left = 120
     page.scroll = "adaptive"
     page.horizontal_alignment = "center"
+    page.window_min_width = 1000
+    page.window_min_height = 600
 
 
 def log_version_infos(bin_path):
@@ -234,7 +236,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         leading_width=56,
         toolbar_height=72,
         elevation=0,
-        title=Text(f"OpenAndroidInstaller version {VERSION}", style="displaySmall"),
+        title=Text(f"OpenAndroidInstaller version {VERSION}"), #, style="displaySmall"),
         center_title=False,
         bgcolor="#00d886",
         actions=[
