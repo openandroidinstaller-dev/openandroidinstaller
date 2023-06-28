@@ -56,7 +56,7 @@ from views import (
 from tooling import run_command
 
 # VERSION number
-VERSION = "0.4.3-beta"
+VERSION = "0.4.4-beta"
 
 # detect platform
 PLATFORM = sys.platform
