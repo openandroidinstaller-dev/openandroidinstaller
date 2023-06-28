@@ -229,7 +229,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
     # header
     page.appbar = AppBar(
         leading=Image(
-            src="/assets/logo-192x192.png", height=40, width=40, border_radius=40
+            src="/logo-192x192.png", height=40, width=40, border_radius=40
         ),
         leading_width=56,
         toolbar_height=72,
