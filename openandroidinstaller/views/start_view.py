@@ -14,6 +14,7 @@
 # Author: Tobias Sterbak
 
 import copy
+import webbrowser
 from loguru import logger
 from typing import Callable
 
@@ -122,6 +123,13 @@ Now you are ready to continue.
         self.device_detection_infobox = Row(
             [Text("Detected device:"), self.device_name]
         )
+        self.device_request_row = Row([], alignment="center")
+        self.device_infobox = Column(
+            [
+                self.device_detection_infobox,
+                self.device_request_row,
+            ]
+        )
 
     def build(self):
         self.clear()
@@ -176,17 +184,13 @@ If you don't know what this means, you most likely don't need to do anything and
                 ),
                 Row([self.bootloader_switch]),
                 Divider(),
-                Column(
-                    [
-                        self.device_detection_infobox,
-                    ]
-                ),
+                self.device_infobox,
                 Row(
                     [
                         self.back_button,
                         FilledButton(
                             "Search for device",
-                            on_click=self.search_devices,
+                            on_click=self.search_devices_clicked,
                             icon=icons.DEVICES_OTHER_OUTLINED,
                             expand=True,
                             tooltip="Search for a connected device.",
@@ -210,8 +214,9 @@ If you don't know what this means, you most likely don't need to do anything and
         self.dlg_help_developer_options.open = False
         self.page.update()
 
-    def search_devices(self, e):
+    def search_devices_clicked(self, e):
         """Search the device when the button is clicked."""
+        self.device_request_row.controls.clear()
         # search the device
         if self.state.test:
             # this only happens for testing
@@ -258,10 +263,21 @@ If you don't know what this means, you most likely don't need to do anything and
                 if len(self.state.config.unlock_bootloader) == 0:
                     self.bootloader_switch.value = True
             else:
-                # failed to load config
-                logger.error(f"Failed to load config for {device_code}.")
+                # failed to load config or device is not supported
+                logger.error(
+                    f"Device with code '{device_code}' is not supported or the config is corrupted. Please check the logs for more information."
+                )
                 self.device_name.value = (
-                    f"Failed to load config for device with code {device_code}."
+                    f"Device with code '{device_code}' is not supported yet."
+                )
+                # add request support for device button
+                request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?assignees=&labels=device&projects=&template=device-support-request.md&title=Add support for {device_code}"
+                self.device_request_row.controls.append(
+                    ElevatedButton(
+                        "Request support for this device",
+                        icon=icons.PHONELINK_SETUP_OUTLINED,
+                        on_click=lambda _: webbrowser.open(request_url),
+                    )
                 )
                 self.device_name.color = colors.RED
         self.view.update()
