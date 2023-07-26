@@ -369,6 +369,13 @@ def fastboot_unlock(bin_path: Path) -> TerminalResponse:
         yield line
 
 
+@add_logging("Critically unlocking the device with fastboot without code.")
+def fastboot_unlock_critical(bin_path: Path) -> TerminalResponse:
+    """Unlock critical the device with fastboot and without code."""
+    for line in run_command("fastboot flashing unlock_critical", bin_path):
+        yield line
+
+
 @add_logging("OEM unlocking the device with fastboot.")
 def fastboot_oem_unlock(bin_path: Path) -> TerminalResponse:
     """OEM unlock the device with fastboot and without code."""
@@ -485,7 +492,7 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
         else:
             raise Exception(f"Unknown platform {platform}.")
         device_code = output.split("[")[-1].strip()[:-1].strip()
-        logger.info(device_code)
+        logger.info(f"Found device code '{device_code}'")
         return device_code
     except CalledProcessError:
         logger.error("Failed to detect a device.")

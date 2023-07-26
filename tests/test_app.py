@@ -46,7 +46,12 @@ def test_app_sargo():
     number_of_steps = 14
     for _ in range(number_of_steps):
         page.controls[0].to_next_view(None)
-    assert "SuccessView" in str(page.controls[0].view.controls[0])
+    assert "Installation completed successfully!" in str(
+        page.controls[0]
+        .view.controls[0]
+        .right_view_header.controls[0]
+        .content.controls[0]
+    )
 
 
 def test_app_beyond2lte():
@@ -61,4 +66,9 @@ def test_app_beyond2lte():
     number_of_steps = 14
     for _ in range(number_of_steps):
         page.controls[0].to_next_view(None)
-    assert "SuccessView" in str(page.controls[0].view.controls[0])
+    assert "Installation completed successfully!" in str(
+        page.controls[0]
+        .view.controls[0]
+        .right_view_header.controls[0]
+        .content.controls[0]
+    )

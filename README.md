@@ -63,7 +63,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 ## Officially supported devices
 
-Currently, the **we support 60 devices** by various vendors and working on adding more soon!
+Currently, the **we support 62 devices** by various vendors and working on adding more soon!
 
 
 Support for these devices is provided as best effort, but things might still go wrong.
@@ -76,9 +76,11 @@ Vendor | Device Name | CodeName | Models | Status
 Samsung | Galaxy J7 2015 | j7elte | | tested
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte) | SM-A510F | tested
+Samsung | Galaxy A5 2017 | [a5y17lte](https://wiki.lineageos.org/devices/a5y17lte) | | tested
 Samsung | Galaxy A7 2016 | a7xelte | | tested
 Samsung | Galaxy Grand Prime VE | grandprimevelte | SM-G531F | tested
 Samsung | Galaxy S III Neo | s3ve3g | GT-I9301I | tested
+Samsung | Galaxy Tab S2 | [gts210vewifi](https://wiki.lineageos.org/devices/gts210vewifi/) | T813 | tested
 Samsung | Galaxy S4 Mini LTE| [serranoltexx](https://wiki.lineageos.org/devices/serranoltexx) | | tested
 Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx) | | tested
 Samsung | Galaxy S6 Edge | [zeroltexx](https://wiki.lineageos.org/devices/zeroltexx) | | tested

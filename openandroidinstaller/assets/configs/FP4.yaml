@@ -13,19 +13,27 @@ steps:
         how to start and run an operating system (like Android). Your device should be turned on.
         Click on the button to open the instructions on the Fairphone Support official unlocking website to generate an unlock code for your device.
         Once you've done that, continue.
-      link: https://support.fairphone.com/hc/en-us/articles/4405858258961-FP4-Manage-the-bootloader
+      link: https://www.fairphone.com/en/bootloader-unlocking-code-for-fairphone-3/
     - type: call_button
       content: >
         Press 'Confirm and run' to reboot into the bootloader.
       command: adb_reboot_bootloader
-    - type: confirm_button
-      content: >
-        Select 'Restart bootloader' on your smartphone screen by pressing the volume button and the confirm by pushing the power button.
-        Then press 'Confirm and continue' here.
     - type: call_button
       content: >
         In this step you actually unlock the bootloader. Just press 'Confirm and run' here. Once it's done, press continue here.
       command: fastboot_unlock
+    - type: confirm_button
+      content: >
+        Follow the instructions on the Fairphone screen. This command will wipe all the personal data on your phone.
+    - type: call_button
+      content: >
+        After the phone reboots, boot into the fastboot mode once again by pressing 'Confirm and run' here. Then continue.
+      command: adb_reboot_bootloader
+    - type: call_button
+      content: >
+        When you are in fastboot mode again, you need to run another unlock step here.
+        Just press 'Confirm and run' here. Once it's done, press continue here.
+      command: fastboot_unlock_critical
     - type: confirm_button
       content: >
         Follow the instructions on the Fairphone screen. This command will wipe all the personal data on your phone.

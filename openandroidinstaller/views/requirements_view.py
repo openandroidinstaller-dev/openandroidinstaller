@@ -29,7 +29,7 @@ from flet import (
     TextButton,
     AlertDialog,
 )
-from flet.buttons import CountinuosRectangleBorder
+from flet_core.buttons import CountinuosRectangleBorder
 
 from styles import (
     Text,

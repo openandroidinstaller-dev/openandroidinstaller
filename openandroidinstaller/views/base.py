@@ -39,7 +39,7 @@ class BaseView(UserControl):
         # left part of the display: used for displaying the images
         self.left_view = Column(
             width=self.column_width,
-            controls=[Image(src=f"/assets/imgs/{image}", height=600)],
+            controls=[Image(src=f"/imgs/{image}", height=600)],
             expand=True,
             horizontal_alignment="center",
         )

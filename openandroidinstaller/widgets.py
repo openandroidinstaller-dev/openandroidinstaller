@@ -173,7 +173,7 @@ def get_title(
         content = Column(
             controls=[
                 Image(
-                    src=f"/assets/imgs/{step_indicator_img}",
+                    src=f"/imgs/{step_indicator_img}",
                     fit="fitWidth",
                     tooltip=f"Current step: {title}",
                     width=600,
