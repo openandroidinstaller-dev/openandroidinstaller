@@ -170,6 +170,7 @@ To get started you need to
 Now 
 - **connect your device to this computer via USB** and
 - **allow USB debugging in the pop-up on your phone**.
+- You might also need to **activate "data transfer"** in the connection settings.
 - Then **press the button 'Search device'**.
 
 When everything works correctly you should see your device name here and you can continue.
