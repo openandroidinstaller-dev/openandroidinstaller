@@ -230,13 +230,13 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
 
     # header
     page.appbar = AppBar(
-        leading=Image(
-            src="/logo-192x192.png", height=40, width=40, border_radius=40
-        ),
+        leading=Image(src="/logo-192x192.png", height=40, width=40, border_radius=40),
         leading_width=56,
         toolbar_height=72,
         elevation=0,
-        title=Text(f"OpenAndroidInstaller version {VERSION}"), #, style="displaySmall"),
+        title=Text(
+            f"OpenAndroidInstaller version {VERSION}"
+        ),  # , style="displaySmall"),
         center_title=False,
         bgcolor="#00d886",
         actions=[
