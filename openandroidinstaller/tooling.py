@@ -368,6 +368,11 @@ def fastboot_unlock(bin_path: Path) -> TerminalResponse:
     for line in run_command("fastboot flashing unlock", bin_path):
         yield line
 
+@add_logging("Critically unlocking the device with fastboot without code.")
+def fastboot_unlock_critical(bin_path: Path) -> TerminalResponse:
+    """Unlock critical the device with fastboot and without code."""
+    for line in run_command("fastboot flashing unlock_critical", bin_path):
+        yield line
 
 @add_logging("OEM unlocking the device with fastboot.")
 def fastboot_oem_unlock(bin_path: Path) -> TerminalResponse:
