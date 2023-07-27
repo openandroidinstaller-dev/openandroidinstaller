@@ -7,6 +7,12 @@ metadata:
   supported_device_codes:
     - ginkgo
     - biloba
+  notes: >
+    - If something goes wrong, you can reinstall MiUI here : https://xiaomifirmwareupdater.com/miui/lavender/
+
+    - You should install Android 10 or newer ROM.
+
+    - Be careful when choosing OrangeFox version, Android 12 & 13 ROM needs OrangeFox version code with `A12`, for example `R11.1_5_A12`.
 requirements:
   android: 10 (Q)
 steps:
@@ -14,7 +20,7 @@ steps:
     - type: confirm_button
       content: >
         As a first step, you need to unlock the bootloader. A bootloader is the piece of software, that tells your phone
-        how to start and run an operating system (like Android). Your device should be turned on.
+        how to start and run an operating system (like Android). Your device should be turned on. This will reset your phone.
       allow_skip: true
     - type: link_button_with_confirm
       content: >

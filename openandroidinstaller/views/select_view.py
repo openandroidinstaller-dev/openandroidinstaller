@@ -184,6 +184,17 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         else:
             recovery = "TWRP"
             recoveryFile = f"`twrp-3.7.0_12-0-{self.state.config.device_code}.img`"
+
+        if "notes" in self.state.config.metadata:
+            self.right_view.controls.extend(
+                [
+                    Text("Important notes for your device", style="titleSmall", color=colors.RED, weight="bold", ),
+                    Markdown(
+                        f"""{self.state.config.metadata['notes']}"""
+                    )
+                ]
+            )
+
         self.right_view.controls.extend(
             [
                 Text("Select an OS image:", style="titleSmall"),
@@ -212,7 +223,7 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
                     f"""
 The recovery image should look something like {recoveryFile}.
 
-**Note:** This tool **only supports {recovery} recoveries**.""",
+**Note:** This tool **only supports {recovery} recoveries** for this phone.""",
                     extension_set="gitHubFlavored",
                 ),
                 Row(
