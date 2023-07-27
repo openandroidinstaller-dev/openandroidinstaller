@@ -6,9 +6,9 @@ metadata:
   recovery: orangefox
   supported_device_codes:
     - ginkgo
-    - biloba
+    - willow
   notes: >
-    - If something goes wrong, you can reinstall MiUI here : https://xiaomifirmwareupdater.com/miui/lavender/
+    - If something goes wrong, you can reinstall MiUI here : https://xiaomifirmwareupdater.com/miui/ginkgo/
 
     - You should install Android 10 or newer ROM.
 

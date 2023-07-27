@@ -171,10 +171,10 @@ OnePlus | 9 | lemonade | | under development
 
 <details><summary><b>Xiaomi</b></summary>
 
-Vendor | Device Name       | CodeName                                                | Models   | Status
----|-------------------|---------------------------------------------------------|----------|---
-Xiaomi | Redmi Note 7      | [lavender](https://wiki.lineageos.org/devices/lavender) | lavender | tested
-Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo)     | ginkgo   | untested
+Vendor | Device Name       | CodeName                                                | Models          | Status
+---|-------------------|---------------------------------------------------------|-----------------|---
+Xiaomi | Redmi Note 7      | [lavender](https://wiki.lineageos.org/devices/lavender) | lavender        | tested
+Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo)     | ginkgo / willow | untested
 </details>
 
 And more to come!
