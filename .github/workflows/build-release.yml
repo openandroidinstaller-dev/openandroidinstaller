@@ -86,7 +86,7 @@ jobs:
     - name: Display structure of downloaded files
       run: ls -R
     - name: Create release
-      uses: dciborow/action-github-releases@latest
+      uses: dciborow/action-github-releases@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
