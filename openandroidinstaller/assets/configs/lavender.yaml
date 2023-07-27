@@ -1,0 +1,48 @@
+metadata:
+  maintainer: A non (anon)
+  device_name: Xiaomi Redmi Note 7
+  is_ab_device: false
+  device_code: lavender
+  recovery: orangefox
+  supported_device_codes:
+    - lavender
+requirements:
+  android: 10 (Q)
+steps:
+  unlock_bootloader:
+    - type: confirm_button
+      content: >
+        As a first step, you need to unlock the bootloader. A bootloader is the piece of software, that tells your phone
+        how to start and run an operating system (like Android). Your device should be turned on.
+      allow_skip: true
+    - type: link_button_with_confirm
+      content: >
+        Please download official Xiaomi unlock tool, and follow instructions.
+        https://en.miui.com/unlock/download_en.html
+        You may have to wait 7 days before being able to unlock the bootloader.
+        Do not attempt to bypass this limitation / use non officials tools, you may brick your phone.
+      link: https://en.miui.com/unlock/download_en.html
+      allow_skip: true
+    - type: confirm_button
+      content: >
+        The bootloader is now unlocked. Since the device resets completely, you will need to re-enable USB debugging to continue.
+  boot_recovery:
+    - type: confirm_button
+      content: >
+        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
+        adapting and repairing of the operating system.
+    - type: call_button
+      content: >
+        Once the device is fully booted, you need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
+      command: adb_reboot_bootloader
+    - type: call_button
+      content: >
+        Install the recovery you chosen before by pressing 'Confirm and run'. Once it's done continue.
+      command: fastboot_flash_recovery
+    - type: call_button
+      img: ofox.png
+      content: >
+        Reboot to recovery by pressing 'Confirm and run', and hold the Vol+ button of your phone UNTIL you see the recovery.
+        If MiUI starts, you have to start the process again, since MiUI delete the recovery you just flashed.
+        Once it's done continue.
+      command: fastboot_reboot_recovery

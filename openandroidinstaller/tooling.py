@@ -139,6 +139,11 @@ def activate_sideload(bin_path: Path) -> TerminalResponse:
     for line in adb_wait_for_sideload(bin_path=bin_path):
         yield line
 
+@add_logging("Activate sideloading in OranfeFox.", return_if_fail=True)
+def activate_sideload_ofox(bin_path: Path) -> TerminalResponse:
+    """Activate sideload with adb shell in OrangeFox."""
+    for line in run_command("adb shell twrp sideload help", bin_path): # Why help ? Don't know, but it works
+        yield line
 
 @add_logging("Wait for device")
 def adb_wait_for_device(bin_path: Path) -> TerminalResponse:
@@ -216,12 +221,13 @@ def adb_twrp_wipe_and_install(
     target: str,
     config_path: Path,
     is_ab: bool,
+    which_recovery: str,
     install_addons=True,
     recovery: Optional[str] = None,
 ) -> TerminalResponse:
     """Wipe and format data with twrp, then flash os image with adb.
 
-    Only works for twrp recovery.
+    Only works for twrp and orangefox recovery.
     """
     logger.info("Wipe and format data with twrp, then install os image.")
     for line in adb_wait_for_recovery(bin_path):
@@ -239,15 +245,30 @@ def adb_twrp_wipe_and_install(
         sleep(1)
 
     # activate sideload
-    logger.info("Wiping is done, now activate sideload.")
-    for line in activate_sideload(bin_path=bin_path):
-        yield line
+    if which_recovery == 'twrp':
+        logger.info("Wiping is done, now activate sideload.")
+        for line in activate_sideload(bin_path=bin_path):
+            yield line
+    else:
+        logger.info("Wiping is done, now activate sideload (ofox)")
+        for line in activate_sideload_ofox(bin_path=bin_path):
+            yield line
+        sleep(5)
+
     # now flash os image
     logger.info("Sideload and install os image.")
     for line in adb_sideload(bin_path=bin_path, target=target):
         yield line
+
     # wipe some cache partitions
-    sleep(7)
+    if which_recovery == 'orangefox':
+        logger.info("Waiting for OrangeFox to restart...")
+        for line in adb_wait_for_recovery(bin_path):
+            yield line
+    else:
+        sleep(7)
+
+    logger.info("Wiping cache and dalvik...")
     for partition in ["dalvik", "cache"]:
         for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
             yield line
@@ -497,3 +518,24 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
     except CalledProcessError:
         logger.error("Failed to detect a device.")
         return None
+
+@add_logging("Flash custom recovery with fastboot.")
+def fastboot_flash_recovery(
+    bin_path: Path, recovery: str, is_ab: bool = True
+) -> TerminalResponse:
+    """Flash custom recovery with fastboot."""
+    logger.info("Flash custom recovery with fastboot.")
+    for line in run_command("fastboot flash recovery ", target=f"{recovery}", bin_path=bin_path):
+        yield line
+    if not is_ab:
+        if (type(line) == bool) and not line:
+            logger.error("Flashing recovery failed.")
+            yield False
+        else:
+            yield True
+
+@add_logging("Rebooting device to recovery.")
+def fastboot_reboot_recovery(bin_path: Path) -> TerminalResponse:
+    """Reboot to recovery with fastboot"""
+    for line in run_command("fastboot reboot recovery", bin_path):
+        yield line

@@ -51,6 +51,8 @@ from tooling import (
     fastboot_unlock_with_code,
     fastboot_get_unlock_data,
     heimdall_flash_recovery,
+    fastboot_flash_recovery,
+    fastboot_reboot_recovery,
 )
 from widgets import (
     call_button,
@@ -235,6 +237,12 @@ class StepView(BaseView):
             "heimdall_flash_recovery": partial(
                 heimdall_flash_recovery, recovery=self.state.recovery_path
             ),
+            "fastboot_flash_recovery": partial(
+                fastboot_flash_recovery,
+                recovery=self.state.recovery_path,
+                is_ab=self.state.config.is_ab,
+            ),
+            "fastboot_reboot_recovery": fastboot_reboot_recovery,
         }
 
         # run the right command

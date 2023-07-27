@@ -83,7 +83,7 @@ A custom recovery is used for installing custom software on your device.
 This custom software can include smaller modifications like rooting your device or even
 replacing the firmware of the device with a completely custom ROM.
 
-OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about).""",
+OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about) or [OrangeFox recovery](https://wiki.orangefox.tech/en/home), depending of your device.""",
             ),
             actions=[
                 TextButton("Close", on_click=self.close_close_explain_images_dlg),
@@ -91,7 +91,6 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             actions_alignment="end",
             shape=CountinuosRectangleBorder(radius=0),
         )
-
         # initialize file pickers
         self.pick_image_dialog = FilePicker(on_result=self.pick_image_result)
         self.pick_recovery_dialog = FilePicker(on_result=self.pick_recovery_result)
@@ -179,6 +178,12 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 )
             )
         # attach the controls for uploading image and recovery
+        if(self.state.config.metadata['recovery'] == "orangefox"):
+            recovery = "OrangeFox"
+            recoveryFile = "`recovery.img`"
+        else:
+            recovery = "TWRP"
+            recoveryFile = f"`twrp-3.7.0_12-0-{self.state.config.device_code}.img`"
         self.right_view.controls.extend(
             [
                 Text("Select an OS image:", style="titleSmall"),
@@ -202,18 +207,18 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
                 ),
                 self.selected_image,
                 Divider(),
-                Text("Select a TWRP recovery image:", style="titleSmall"),
+                Text(f"Select a {recovery} recovery image:", style="titleSmall"),
                 Markdown(
                     f"""
-The recovery image should look something like `twrp-3.7.0_12-0-{self.state.config.device_code}.img`.
+The recovery image should look something like {recoveryFile}.
 
-**Note:** This tool **only supports TWRP recoveries**.""",
+**Note:** This tool **only supports {recovery} recoveries**.""",
                     extension_set="gitHubFlavored",
                 ),
                 Row(
                     [
                         FilledButton(
-                            "Pick TWRP recovery file",
+                            f"Pick {recovery} recovery file",
                             icon=icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_recovery_dialog.pick_files(
                                 allow_multiple=False,

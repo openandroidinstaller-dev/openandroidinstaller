@@ -69,6 +69,9 @@ def recovery_works_with_device(device_code: str, recovery_path: str) -> bool:
     if (device_code in recovery_file_name) and ("twrp" in recovery_file_name):
         logger.success("Device supported by the selected recovery.")
         return True
+    elif recovery_file_name == "recovery.img":
+        logger.error("Cannot check recovery. Supposing it is OrangeFox.")
+        return True
     else:
         logger.error(f"Recovery file {recovery_file_name} is not supported.")
         return False
