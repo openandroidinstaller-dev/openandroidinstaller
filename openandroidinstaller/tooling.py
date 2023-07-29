@@ -221,7 +221,7 @@ def adb_twrp_wipe_and_install(
     target: str,
     config_path: Path,
     is_ab: bool,
-    which_recovery: str,
+    chosen_recovery: str,
     install_addons=True,
     recovery: Optional[str] = None,
 ) -> TerminalResponse:
@@ -245,7 +245,7 @@ def adb_twrp_wipe_and_install(
         sleep(1)
 
     # activate sideload
-    if which_recovery == 'twrp':
+    if chosen_recovery == 'twrp':
         logger.info("Wiping is done, now activate sideload.")
         for line in activate_sideload(bin_path=bin_path):
             yield line
@@ -261,12 +261,11 @@ def adb_twrp_wipe_and_install(
         yield line
 
     # wipe some cache partitions
-    if which_recovery == 'orangefox':
+    if chosen_recovery == 'orangefox':
         logger.info("Waiting for OrangeFox to restart...")
         for line in adb_wait_for_recovery(bin_path):
             yield line
-    else:
-        sleep(7)
+    sleep(7)
 
     logger.info("Wiping cache and dalvik...")
     for partition in ["dalvik", "cache"]:
@@ -536,6 +535,10 @@ def fastboot_flash_recovery(
 
 @add_logging("Rebooting device to recovery.")
 def fastboot_reboot_recovery(bin_path: Path) -> TerminalResponse:
-    """Reboot to recovery with fastboot"""
+    """
+    Reboot to recovery with fastboot
+
+    WARNING : On some devices, users should perform a key combo
+    """
     for line in run_command("fastboot reboot recovery", bin_path):
         yield line

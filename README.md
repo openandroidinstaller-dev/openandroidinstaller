@@ -48,8 +48,12 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
       - [LineageOS for microg](https://download.lineage.microg.org)
       - [BlissRoms](https://blissroms.org)
       - [PixelExperience](https://download.pixelexperience.org)
+      - [crDroid](https://crdroid.net/)
+      - [ArrowOS](https://arrowos.net/)
+      - [DivestOS](https://divestos.org/)
     - TWRP Recovery:
       - [TWRP recovery](https://twrp.me/Devices)
+      - [OrangeFox](https://wiki.orangefox.tech)
     - Optional Addons:
       - There are different packages of *Google Apps* available.
         - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)
@@ -63,7 +67,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 ## Officially supported devices
 
-Currently, the **we support 65 devices** by various vendors and working on adding more soon!
+Currently, the **we support 68 devices** by various vendors and working on adding more soon!
 
 
 Support for these devices is provided as best effort, but things might still go wrong.
@@ -171,14 +175,15 @@ OnePlus | 9 | lemonade | | under development
 
 <details><summary><b>Xiaomi</b></summary>
 
-Vendor | Device Name       | CodeName                                                | Models          | Status
----|-------------------|---------------------------------------------------------|-----------------|---
-Xiaomi | Redmi Note 7      | [lavender](https://wiki.lineageos.org/devices/lavender) | lavender        | tested
-Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo)     | ginkgo / willow | untested
+Vendor | Device Name                      | CodeName                                               | Models                                   | Status
+---|----------------------------------|--------------------------------------------------------|------------------------------------------|---
+Xiaomi | Redmi Note 7                     | [lavender](https://wiki.lineageos.org/devices/lavender) | lavender                                 | tested
+Xiaomi | Redmi Note 8 / 8T                | [ginkgo](https://wiki.lineageos.org/devices/ginkgo)    | ginkgo / willow                          | untested
+Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) | rosemary / maltose / secret / rosemary_p | untested
+Xiaomi | Redmi 9A / 9C / 9AT / 9i / 9A Sport / 10A / 10A Sport | [garden](https://wiki.lineageos.org/devices/garden)    | garden / dandelion / blossom / angelican          | tested
 </details>
 
 And more to come!
-
 
 ## Run OpenAndroidInstaller for development
 
@@ -223,7 +228,7 @@ Every config file should have `metadata` with the following fields:
 - `device_code`: str; The official device code.
 - `supported_device_codes`: List[str]; A list of supported device codes for the config. The config will be loaded based on this field.
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
-- `recovery`: [OPTIONAL] str; can be twrp or orangefox (twrp by default)
+- `supported_recovery`: [OPTIONAL] List[str]; A lit of supported recoveries. For the moment, can be twrp and/or orangefox (twrp by default)
 - `notes`: [OPTIONAL] str; specific phone information, showed before choosing ROM / recovery
 
 In addition to these metadata, every config can have optional `requirements`. If these are set, the user is asked to check if they are meet.

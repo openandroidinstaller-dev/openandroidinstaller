@@ -40,7 +40,7 @@ from styles import (
 from views import BaseView
 from app_state import AppState
 from widgets import get_title, confirm_button
-from utils import get_download_link, image_works_with_device, recovery_works_with_device
+from utils import get_download_link, image_works_with_device, recovery_works_with_device, which_recovery
 
 
 class SelectFilesView(BaseView):
@@ -178,12 +178,16 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 )
             )
         # attach the controls for uploading image and recovery
-        if(self.state.config.metadata['recovery'] == "orangefox"):
-            recovery = "OrangeFox"
-            recoveryFile = "`recovery.img`"
-        else:
+        recovery, recoveryFile = "", ""
+        if "twrp" in self.state.config.supported_recovery:
             recovery = "TWRP"
             recoveryFile = f"`twrp-3.7.0_12-0-{self.state.config.device_code}.img`"
+        if "orangefox" in self.state.config.supported_recovery:
+            if recovery != "":
+                recovery += " or "
+                recoveryFile += " or "
+            recovery += "OrangeFox"
+            recoveryFile += "`recovery.img`"
 
         if "notes" in self.state.config.metadata:
             self.right_view.controls.extend(
@@ -223,7 +227,7 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
                     f"""
 The recovery image should look something like {recoveryFile}.
 
-**Note:** This tool **only supports {recovery} recoveries** for this phone.""",
+**Note:** This tool **only supports {recovery} recovery** for this phone.""",
                     extension_set="gitHubFlavored",
                 ),
                 Row(
@@ -297,11 +301,14 @@ The recovery image should look something like {recoveryFile}.
             logger.info("No image selected.")
         # check if the recovery works with the device and show the filename in different colors accordingly
         if e.files:
-            device_code = self.state.config.device_code
             if recovery_works_with_device(
-                device_code=device_code, recovery_path=self.state.recovery_path
+                supported_device_codes=self.state.config.supported_device_codes,
+                supported_recovery=self.state.config.supported_recovery,
+                recovery_path=self.state.recovery_path
             ):
                 self.selected_recovery.color = colors.GREEN
+                self.state.chosen_recovery = which_recovery(self.state.recovery_path)
+                logger.info(f"Chosen recovery : {self.state.chosen_recovery}")
             else:
                 self.selected_recovery.color = colors.RED
         # update
@@ -312,14 +319,15 @@ The recovery image should look something like {recoveryFile}.
         if (".zip" in self.selected_image.value) and (
             ".img" in self.selected_recovery.value
         ):
-            device_code = self.state.config.device_code
             if not (
                 image_works_with_device(
                     supported_device_codes=self.state.config.supported_device_codes,
                     image_path=self.state.image_path,
                 )
                 and recovery_works_with_device(
-                    device_code=device_code, recovery_path=self.state.recovery_path
+                    supported_device_codes=self.state.config.supported_device_codes,
+                    supported_recovery=self.state.config.supported_recovery,
+                    recovery_path=self.state.recovery_path
                 )
             ):
                 # if image and recovery work for device allow to move on, otherwise display message

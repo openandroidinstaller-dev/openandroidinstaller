@@ -1,21 +1,22 @@
 metadata:
   maintainer: A non (anon)
-  device_name: Xiaomi Redmi Note 7
+  device_name: Xiaomi Redmi Note 10S / 11SE / Poco M5S
   is_ab_device: false
-  device_code: lavender
+  device_code: rosemary
   supported_recovery:
     - orangefox
     - twrp
   supported_device_codes:
-    - lavender
+    - rosemary
+    - secret
+    - maltose
+    - rosemary_p
   notes: >
-    - If something goes wrong, you can reinstall MiUI here : https://xiaomifirmwareupdater.com/miui/lavender/
-    
-    - You should install Android 10 or newer ROM.
-    
+    - If something goes wrong, you can reinstall MiUI here : https://xiaomifirmwareupdater.com
+
+    - Please respect the requested by the ROM developers version for MIUI and Android
+
     - Be careful when choosing OrangeFox version, Android 12 & 13 ROM needs OrangeFox version code with `A12`, for example `R11.1_5_A12`. Android 10 & 11 ROM needs OrangeFox version code without `A12` (bellow on the page)
-requirements:
-  android: 10 (Q)
 steps:
   unlock_bootloader:
     - type: confirm_button
@@ -46,11 +47,5 @@ steps:
     - type: call_button
       content: >
         Install the recovery you chosen before by pressing 'Confirm and run'. Once it's done continue.
-      command: fastboot_flash_recovery
-    - type: call_button
-      img: ofox.png
-      content: >
-        Reboot to recovery by pressing 'Confirm and run', and hold the Vol+ button of your phone UNTIL you see the recovery.
-        If MiUI starts, you have to start the process again, since MiUI delete the recovery you just flashed.
-        Once it's done continue.
-      command: fastboot_reboot_recovery
+        UNTESTED : Need to hold Vol+ or no ?
+      command: fastboot_flash_boot

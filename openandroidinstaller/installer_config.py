@@ -62,6 +62,7 @@ class InstallerConfig:
         self.requirements = requirements
         self.device_code = metadata.get("device_code")
         self.is_ab = metadata.get("is_ab_device", False)
+        self.supported_recovery = metadata.get("supported_recovery")
         self.supported_device_codes = metadata.get("supported_device_codes")
         self.twrp_link = metadata.get("twrp-link")
 
@@ -124,8 +125,8 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
     if custom_path:
         config = InstallerConfig.from_file(custom_path)
         logger.info(f"Loaded custom device config from {custom_path}.")
-        if 'recovery' not in config.metadata:
-            config.metadata.update({'recovery': 'twrp'})
+        if 'supported_recovery' not in config.metadata:
+            config.metadata.update({"supported_recovery": "['twrp']"})
         logger.info(f"Config metadata: {config.metadata}.")
         return config
     else:
@@ -135,9 +136,9 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
         if path:
             config = InstallerConfig.from_file(path)
             logger.info(f"Loaded device config from {path}.")
-            if 'recovery' not in config.metadata:
-                config.metadata.update({'recovery': 'twrp'})
             if config:
+                if 'supported_recovery' not in config.metadata:
+                    config.metadata.update({"supported_recovery": "['twrp']"})
                 logger.info(f"Config metadata: {config.metadata}.")
             return config
         else:
@@ -170,7 +171,7 @@ def validate_config(config: str) -> bool:
                 "device_code": str,
                 "supported_device_codes": [str],
                 schema.Optional("twrp-link"): str,
-                schema.Optional("recovery"): str,
+                schema.Optional("supported_recovery"): [str],
                 schema.Optional("notes"): str,
             },
             schema.Optional("requirements"): {
