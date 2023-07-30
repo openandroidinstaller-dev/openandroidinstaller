@@ -149,6 +149,7 @@ Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/
 Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | | tested
 Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | | tested
 Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | | tested
+Motorola | Moto G8 Power | [sofiar](https://wiki.lineageos.org/devices/ocean) | XT2041-3 | untested
 </details>
 
 <details><summary><b>OnePlus</b></summary>
