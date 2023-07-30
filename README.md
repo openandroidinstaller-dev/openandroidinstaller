@@ -183,11 +183,11 @@ All kinds of contributions are welcome. These include:
 - Add features and/or improve the code base.
 - Report bugs.
 
-[How to contribute your own installation configurations](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/doc/How_to_contribute_your_own_installation_configurations.md)
+[How to contribute your own installation configurations](https://github.com/Heus-Sueh/openandroidinstaller/blob/main/doc/How_to_contribute_your_own_installation_configurations.md)
 
-[How to build the application for your platform](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/doc/building_the_application_for_your_platform.md)
+[How to build the application for your platform](https://github.com/Heus-Sueh/openandroidinstaller/blob/main/doc/building_the_application_for_your_platform.md)
 
-[Unlocking the bootloader](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/doc/Unlocking_the_bootloader.md)
+[Unlocking the bootloader](https://github.com/Heus-Sueh/openandroidinstaller/blob/main/doc/Unlocking_the_bootloader.md)
 
 More details on how to contribute can be found [here](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/CONTRIBUTING.md).
 Please have a look before opening an issue or starting to contribute.
