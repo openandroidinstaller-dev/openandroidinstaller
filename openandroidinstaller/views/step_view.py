@@ -45,6 +45,8 @@ from tooling import (
     adb_twrp_copy_partitions,
     fastboot_boot_recovery,
     fastboot_flash_boot,
+    fastboot_flash_recovery,
+    fastboot_reboot_recovery,
     fastboot_oem_unlock,
     fastboot_reboot,
     fastboot_unlock,
@@ -231,6 +233,12 @@ class StepView(BaseView):
                 fastboot_flash_boot,
                 recovery=self.state.recovery_path,
             ),
+            "fastboot_flash_recovery": partial(
+                fastboot_flash_recovery,
+                recovery=self.state.recovery_path,
+                is_ab=self.state.config.is_ab,
+            ),
+            "fastboot_reboot_recovery": fastboot_reboot_recovery,
             "fastboot_reboot": fastboot_reboot,
             "heimdall_flash_recovery": partial(
                 heimdall_flash_recovery, recovery=self.state.recovery_path

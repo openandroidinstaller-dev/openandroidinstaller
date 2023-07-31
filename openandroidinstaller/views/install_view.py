@@ -171,7 +171,7 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
 
     def run_install(self, e):
         """
-        Run the installation process through twrp.
+        Run the installation process through recovery.
 
         Some parts of the command are changed by placeholders.
         """
@@ -193,6 +193,7 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
             bin_path=self.state.bin_path,
             install_addons=self.state.install_addons,
             is_ab=self.state.config.is_ab,
+            chosen_recovery=self.state.chosen_recovery,
             recovery=self.state.recovery_path,
         ):
             # write the line to advanced output terminal
