@@ -93,3 +93,4 @@ def which_recovery(recovery_path: str) -> str:
         return "orangefox"
     logger.error("Unable to determine which recovery was selected !")
     return None
+

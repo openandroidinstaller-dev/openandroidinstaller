@@ -175,12 +175,13 @@ OnePlus | 9 | lemonade | | under development
 
 <details><summary><b>Xiaomi</b></summary>
 
-Vendor | Device Name                      | CodeName                                               | Models                                   | Status
----|----------------------------------|--------------------------------------------------------|------------------------------------------|---
-Xiaomi | Redmi Note 7                     | [lavender](https://wiki.lineageos.org/devices/lavender) | lavender                                 | tested
-Xiaomi | Redmi Note 8 / 8T                | [ginkgo](https://wiki.lineageos.org/devices/ginkgo)    | ginkgo / willow                          | untested
-Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) | rosemary / maltose / secret / rosemary_p | untested
-Xiaomi | Redmi 9A / 9C / 9AT / 9i / 9A Sport / 10A / 10A Sport | [garden](https://wiki.lineageos.org/devices/garden)    | garden / dandelion / blossom / angelican          | tested
+Vendor | Device Name                                         | CodeName                                                                                 | Models | Status
+---|-----------------------------------------------------|------------------------------------------------------------------------------------------|-------|---
+Xiaomi | Redmi Note 7                                        | [lavender](https://wiki.lineageos.org/devices/lavender)                                  |       | tested
+Xiaomi | Redmi Note 8 / 8T                                   | [ginkgo / willow](https://wiki.lineageos.org/devices/ginkgo)                             |       | untested
+Xiaomi | Redmi Note 10S / 11SE / Poco M5S                    | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p   |       | untested
+Xiaomi | Redmi 7A / 8 / 8A / 8A Dual                         | [Mi439](https://wiki.lineageos.org/devices/Mi439) : pine / olive / olivelite / olivewood |       | tested
+Xiaomi | Redmi 9A / 9C / 9AT / 9i / 9A Sport / 10A / 10A Sport | garden / dandelion / blossom / angelican                                                 |       | tested
 </details>
 
 And more to come!
@@ -228,7 +229,8 @@ Every config file should have `metadata` with the following fields:
 - `device_code`: str; The official device code.
 - `supported_device_codes`: List[str]; A list of supported device codes for the config. The config will be loaded based on this field.
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
-- `supported_recovery`: [OPTIONAL] List[str]; A lit of supported recoveries. For the moment, can be twrp and/or orangefox (twrp by default)
+- `additional_steps` : [OPTIONAL] List[str]; A list of additional steps. Could be `dtbo`, `vbmeta`, `super_empty`.
+- `supported_recovery`: [OPTIONAL] List[str]; A list of supported recoveries. For the moment, can be twrp and/or orangefox (twrp by default)
 - `notes`: [OPTIONAL] str; specific phone information, showed before choosing ROM / recovery
 
 In addition to these metadata, every config can have optional `requirements`. If these are set, the user is asked to check if they are meet.
@@ -246,7 +248,7 @@ Every step in the config file corresponds to one view in the application. These 
 - `img`: [OPTIONAL] Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
 - `content`: str; The content text displayed alongside the action of the step. Used to inform the user about what's going on. For consistency and better readability the text should be moved into the next line using `>`.
 - `link`: [OPTIONAL] Link to use for the link button if type is `link_button_with_confirm`.
-- `command`: [ONLY for call_button* steps] str; The command to run. One of `adb_reboot`, `adb_reboot_bootloader`, `adb_reboot_download`, `adb_sideload`, `adb_twrp_wipe_and_install`, `adb_twrp_copy_partitions`, `fastboot_boot_recovery`, `fastboot_reboot_recovery`, `fastboot_flash_recovery` `fastboot_unlock_with_code`, `fastboot_unlock`, `fastboot_oem_unlock`, `fastboot_get_unlock_data`, `fastboot_reboot`, `heimdall_flash_recovery`.
+- `command`: [ONLY for call_button* steps] str; The command to run. One of `adb_reboot`, `adb_reboot_bootloader`, `adb_reboot_download`, `adb_sideload`, `adb_twrp_wipe_and_install`, `adb_twrp_copy_partitions`, `fastboot_boot_recovery`, `fastboot_reboot_recovery`, `fastboot_flash_recovery` `fastboot_unlock_with_code`, `fastboot_flash_additional_partitions`, `fastboot_unlock`, `fastboot_oem_unlock`, `fastboot_get_unlock_data`, `fastboot_reboot`, `heimdall_flash_recovery`.
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 
 **Please try to retain this order of these fields in your config to ensure consistency.**

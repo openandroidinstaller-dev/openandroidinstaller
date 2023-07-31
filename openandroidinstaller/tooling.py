@@ -523,7 +523,6 @@ def fastboot_flash_recovery(
     bin_path: Path, recovery: str, is_ab: bool = True
 ) -> TerminalResponse:
     """Flash custom recovery with fastboot."""
-    logger.info("Flash custom recovery with fastboot.")
     for line in run_command("fastboot flash recovery ", target=f"{recovery}", bin_path=bin_path):
         yield line
     if not is_ab:
@@ -532,6 +531,50 @@ def fastboot_flash_recovery(
             yield False
         else:
             yield True
+
+@add_logging("Flash additional partitions with fastboot")
+def fastboot_flash_additional_partitions(
+    bin_path: Path, dtbo: str, vbmeta: str, super_empty: str, is_ab: bool = True
+) -> TerminalResponse:
+    """Flash additional partitions (dtbo, vbmeta, super_empty) with fastboot."""
+    if dtbo:
+        for line in run_command("fastboot flash dtbo ", target=f"{dtbo}", bin_path=bin_path):
+            yield line
+        if not is_ab:
+            if (type(line) == bool) and not line:
+                logger.error("Flashing dtbo failed.")
+                yield False
+            else:
+                yield True
+    else:
+        logger.info("No dtbo selected. Skipping")
+        yield True
+
+    if vbmeta:
+        for line in run_command("fastboot flash vbmeta ", target=f"{vbmeta}", bin_path=bin_path):
+            yield line
+        if not is_ab:
+            if (type(line) == bool) and not line:
+                logger.error("Flashing vbmeta failed.")
+                yield False
+            else:
+                yield True
+    else:
+        logger.info("No vbmeta selected. Skipping")
+        yield True
+
+    if super_empty:
+        for line in run_command("fastboot wipe-super ", target=f"{super_empty}", bin_path=bin_path):
+            yield line
+        if not is_ab:
+            if (type(line) == bool) and not line:
+                logger.error("Wiping super failed.")
+                yield False
+            else:
+                yield True
+    else:
+        logger.info("No super_empty selected. Skipping")
+        yield True
 
 @add_logging("Rebooting device to recovery.")
 def fastboot_reboot_recovery(bin_path: Path) -> TerminalResponse:
