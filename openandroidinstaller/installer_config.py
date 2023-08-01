@@ -166,6 +166,7 @@ def validate_config(config: str) -> bool:
                 "device_code": str,
                 "supported_device_codes": [str],
                 schema.Optional("twrp-link"): str,
+                schema.Optional("notes"): str,
             },
             schema.Optional("requirements"): {
                 schema.Optional("android"): schema.Or(str, int),

@@ -144,6 +144,20 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
 
         # text row to show infos during the process
         self.info_field = Row()
+
+        # Device specific notes
+        if "notes" in self.state.config.metadata:
+            self.right_view.controls.extend(
+                [
+                    Text(
+                        "Important notes for your device",
+                        style="titleSmall",
+                        color=colors.RED,
+                        weight="bold",
+                    ),
+                    Markdown(f"""{self.state.config.metadata['notes']}"""),
+                ]
+            )
         # if there is an available download, show the button to the page
         if self.download_link:
             twrp_download_link = f"https://dl.twrp.me/{self.state.config.twrp_link if self.state.config.twrp_link else self.state.config.device_code}"

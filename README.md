@@ -215,6 +215,7 @@ Every config file should have `metadata` with the following fields:
 - `device_code`: str; The official device code.
 - `supported_device_codes`: List[str]; A list of supported device codes for the config. The config will be loaded based on this field.
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
+- `notes`: [OPTIONAL] str; specific phone information, showed before choosing ROM / recovery
 
 In addition to these metadata, every config can have optional `requirements`. If these are set, the user is asked to check if they are meet.
 - `android`: [OPTIONAL] int|str; Android version to install prior to installing a custom ROM.
