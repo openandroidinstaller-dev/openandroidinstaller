@@ -95,14 +95,26 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         # initialize file pickers
         self.pick_image_dialog = FilePicker(on_result=self.pick_image_result)
         self.pick_recovery_dialog = FilePicker(on_result=self.pick_recovery_result)
+        self.pick_dtbo_dialog = FilePicker(on_result=self.pick_dtbo_result)
+        self.pick_vbmeta_dialog = FilePicker(on_result=self.pick_vbmeta_result)
+        self.pick_super_empty_dialog = FilePicker(
+            on_result=self.pick_super_empty_result
+        )
+
         self.selected_image = Text("Selected image: ")
         self.selected_recovery = Text("Selected recovery: ")
+        self.selected_dtbo = Text("Selected dtbo: ")
+        self.selected_vbmeta = Text("Selected vbmeta: ")
+        self.selected_super_empty = Text("Selected super_empty: ")
 
         # initialize and manage button state.
         self.confirm_button = confirm_button(self.on_confirm)
         self.confirm_button.disabled = True
         self.pick_recovery_dialog.on_result = self.enable_button_if_ready
         self.pick_image_dialog.on_result = self.enable_button_if_ready
+        self.pick_dtbo_dialog.on_result = self.enable_button_if_ready
+        self.pick_vbmeta_dialog.on_result = self.enable_button_if_ready
+        self.pick_super_empty_dialog.on_result = self.enable_button_if_ready
         # back button
         self.back_button = ElevatedButton(
             "Back",
@@ -122,6 +134,9 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         # attach hidden dialogues
         self.right_view.controls.append(self.pick_image_dialog)
         self.right_view.controls.append(self.pick_recovery_dialog)
+        self.right_view.controls.append(self.pick_dtbo_dialog)
+        self.right_view.controls.append(self.pick_vbmeta_dialog)
+        self.right_view.controls.append(self.pick_super_empty_dialog)
 
         # create help/info button to show the help dialog
         info_button = OutlinedButton(
@@ -226,6 +241,83 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
                 ),
                 self.selected_recovery,
                 Divider(),
+            ]
+        )
+
+        # attach the controls for uploading others partitions, like dtbo, vbmeta & super_empty
+        if "dtbo" in self.state.config.metadata["additional_steps"]:
+            self.right_view.controls.extend(
+                [
+                    Text("Select other specific images:", style="titleSmall"),
+                    Markdown(
+                        """
+        Depending of the ROM, OpenAndroidInstaller may have to install additional images.
+        These images are usually needed for Android 13 ROM.
+        Make sure the file is for **your exact phone model!**
+                                """
+                    ),
+                    Row(
+                        [
+                            FilledButton(
+                                "Pick `dtbo.img` image",
+                                icon=icons.UPLOAD_FILE,
+                                on_click=lambda _: self.pick_dtbo_dialog.pick_files(
+                                    allow_multiple=False,
+                                    file_type="custom",
+                                    allowed_extensions=["img"],
+                                ),
+                                expand=True,
+                            ),
+                        ]
+                    ),
+                    self.selected_dtbo,
+                ]
+            )
+        if "vbmeta" in self.state.config.metadata["additional_steps"]:
+            self.right_view.controls.extend(
+                [
+                    Row(
+                        [
+                            FilledButton(
+                                "Pick `vbmeta.img` image",
+                                icon=icons.UPLOAD_FILE,
+                                on_click=lambda _: self.pick_vbmeta_dialog.pick_files(
+                                    allow_multiple=False,
+                                    file_type="custom",
+                                    allowed_extensions=["img"],
+                                ),
+                                expand=True,
+                            ),
+                        ]
+                    ),
+                    self.selected_vbmeta,
+                ]
+            )
+        if "super_empty" in self.state.config.metadata["additional_steps"]:
+            self.right_view.controls.extend(
+                [
+                    Row(
+                        [
+                            FilledButton(
+                                "Pick `super_empty.img` image",
+                                icon=icons.UPLOAD_FILE,
+                                on_click=lambda _: self.pick_super_empty_dialog.pick_files(
+                                    allow_multiple=False,
+                                    file_type="custom",
+                                    allowed_extensions=["img"],
+                                ),
+                                expand=True,
+                            ),
+                        ]
+                    ),
+                    self.selected_super_empty,
+                    Divider(),
+                ]
+            )
+
+        # attach the bottom buttons
+        self.right_view.controls.extend(
+            [
                 self.info_field,
                 Row([self.back_button, self.confirm_button]),
             ]
@@ -291,6 +383,61 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
         # update
         self.selected_recovery.update()
 
+    def pick_dtbo_result(self, e: FilePickerResultEvent):
+        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        # update the textfield with the name of the file
+        self.selected_dtbo.value = self.selected_dtbo.value.split(":")[0] + f": {path}"
+        if e.files:
+            # check if the dtbo works with the device and show the filename in different colors accordingly
+            if path == "dtbo.img":
+                self.selected_dtbo.color = colors.GREEN
+                self.state.dtbo_path = e.files[0].path
+                logger.info(f"Selected dtbo from {self.state.dtbo_path}")
+            else:
+                self.selected_dtbo.color = colors.RED
+        else:
+            logger.info("No image selected.")
+        # update
+        self.selected_dtbo.update()
+
+    def pick_vbmeta_result(self, e: FilePickerResultEvent):
+        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        # update the textfield with the name of the file
+        self.selected_vbmeta.value = (
+            self.selected_vbmeta.value.split(":")[0] + f": {path}"
+        )
+        if e.files:
+            # check if the vbmeta works with the device and show the filename in different colors accordingly
+            if path == "vbmeta.img":
+                self.selected_vbmeta.color = colors.GREEN
+                self.state.vbmeta_path = e.files[0].path
+                logger.info(f"Selected vbmeta from {self.state.vbmeta_path}")
+            else:
+                self.selected_vbmeta.color = colors.RED
+        else:
+            logger.info("No image selected.")
+        # update
+        self.selected_vbmeta.update()
+
+    def pick_super_empty_result(self, e: FilePickerResultEvent):
+        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        # update the textfield with the name of the file
+        self.selected_super_empty.value = (
+            self.selected_super_empty.value.split(":")[0] + f": {path}"
+        )
+        if e.files:
+            # check if the super_empty works with the device and show the filename in different colors accordingly
+            if path == "super_empty.img":
+                self.selected_super_empty.color = colors.GREEN
+                self.state.super_empty_path = e.files[0].path
+                logger.info(f"Selected super_empty from {self.state.super_empty_path}")
+            else:
+                self.selected_super_empty.color = colors.RED
+        else:
+            logger.info("No image selected.")
+        # update
+        self.selected_super_empty.update()
+
     def enable_button_if_ready(self, e):
         """Enable the confirm button if both files have been selected."""
         if (".zip" in self.selected_image.value) and (
@@ -320,6 +467,29 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
                 self.confirm_button.disabled = True
                 self.right_view.update()
                 return
+
+            if (
+                (self.selected_dtbo.color and self.selected_dtbo.color == "red")
+                or (self.selected_vbmeta.color and self.selected_vbmeta.color == "red")
+                or (
+                    self.selected_super_empty.color
+                    and self.selected_super_empty.color == "red"
+                )
+            ):
+                logger.error(
+                    "Some additional images don't match. Please select different ones."
+                )
+                self.info_field.controls = [
+                    Text(
+                        "Some additional images don't match. Select right ones or unselect them.",
+                        color=colors.RED,
+                        weight="bold",
+                    )
+                ]
+                self.confirm_button.disabled = True
+                self.right_view.update()
+                return
+
             logger.info("Image and recovery work with the device. You can continue.")
             self.info_field.controls = []
             self.confirm_button.disabled = False
