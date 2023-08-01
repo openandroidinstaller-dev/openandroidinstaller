@@ -2,7 +2,7 @@
 name: Device support request
 about: Request support for a new device
 title: ''
-labels: ''
+labels: 'device'
 assignees: ''
 
 ---
