@@ -42,13 +42,16 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 1. Download the [.exe or appropriate executable file for your OS](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases) from the releases or get the [official flatpak from flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller). You might need to change permissions to run the executable.
     - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
 2. Download the custom ROM image and the TWRP recovery image for your device and optionally some addons. A source for files can be found on the following websites:
-    - some custom ROMs:
+    - Some custom ROMs:
       - [LineageOS](https://wiki.lineageos.org/devices)
       - [/e/OS](https://doc.e.foundation/devices)
       - [LineageOS for microg](https://download.lineage.microg.org)
       - [BlissRoms](https://blissroms.org)
       - [PixelExperience](https://download.pixelexperience.org)
-    - some recoveries:
+      - [crDroid](https://crdroid.net/)
+      - [ArrowOS](https://arrowos.net/)
+      - [DivestOS](https://divestos.org/)
+    - Recoveries:
       - [TWRP recovery](https://twrp.me/Devices)
       - [OrangeFox](https://wiki.orangefox.tech)
     - Optional Addons:
