@@ -169,6 +169,13 @@ OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | | tested
 OnePlus | 9 | lemonade | | under development
 </details>
 
+<details><summary><b>Xiaomi</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
+</details>
+
 And more to come!
 
 
