@@ -243,7 +243,7 @@ def adb_twrp_wipe_and_install(
 
     sleep(1)
     # wipe some partitions
-    for partition in ["cache", "system"]:
+    for partition in ["cache", "dalvik", "system"]:
         for line in adb_twrp_wipe_partition(bin_path=bin_path, partition=partition):
             yield line
         sleep(1)
@@ -262,30 +262,27 @@ def adb_twrp_wipe_and_install(
     logger.info("Sideload and install os image.")
     for line in adb_sideload(bin_path=bin_path, target=target):
         yield line
-    # wipe some cache partitions
-    if chosen_recovery == "orangefox":
-        logger.info("Waiting for OrangeFox to restart...")
-        for line in adb_wait_for_recovery(bin_path):
-            yield line
     sleep(7)
-    logger.info("Wiping cache and dalvik...")
-    for partition in ["dalvik", "cache"]:
-        for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
-            yield line
-        sleep(3)
-        if (type(line) == bool) and not line:
-            logger.error(f"Wiping {partition} failed.")
-            # TODO: if this fails, a fix can be to just sideload something and then adb reboot
-            for line in adb_sideload(
-                target=f"{config_path.parent.joinpath(Path('helper.txt'))}",
-                bin_path=bin_path,
-            ):
+    # wipe some cache partitions
+    if chosen_recovery == "twrp": # OrangeFox go in buggy sideload mode when wiping dalvik here (and already been wiped before)
+        logger.info("Wiping cache and dalvik...")
+        for partition in ["dalvik", "cache"]:
+            for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
                 yield line
-            sleep(1)
+            sleep(3)
             if (type(line) == bool) and not line:
-                yield False
-            break
-        sleep(2)
+                logger.error(f"Wiping {partition} failed.")
+                # TODO: if this fails, a fix can be to just sideload something and then adb reboot
+                for line in adb_sideload(
+                    target=f"{config_path.parent.joinpath(Path('helper.txt'))}",
+                    bin_path=bin_path,
+                ):
+                    yield line
+                sleep(1)
+                if (type(line) == bool) and not line:
+                    yield False
+                break
+            sleep(2)
     # finally reboot into os or to fastboot for flashing addons
     for line in adb_wait_for_recovery(bin_path):
         yield line
@@ -309,7 +306,7 @@ def adb_twrp_wipe_and_install(
 
 
 def adb_twrp_install_addon(
-    bin_path: Path, addon_path: str, is_ab: bool
+    bin_path: Path, addon_path: str, chosen_recovery: str, is_ab: bool
 ) -> TerminalResponse:
     """Flash addon through adb and twrp.
 
@@ -321,8 +318,13 @@ def adb_twrp_install_addon(
         adb_wait_for_recovery(bin_path=bin_path)
     # activate sideload
     logger.info("Activate sideload.")
-    for line in activate_sideload(bin_path=bin_path):
-        yield line
+    if chosen_recovery == "twrp":
+        for line in activate_sideload(bin_path=bin_path):
+            yield line
+    else:
+        for line in activate_sideload_ofox(bin_path=bin_path):
+            yield  line
+        sleep(5)
     logger.info("Sideload and install addon.")
     # now flash the addon
     for line in adb_sideload(bin_path=bin_path, target=addon_path):
