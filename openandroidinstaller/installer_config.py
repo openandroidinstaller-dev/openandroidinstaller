@@ -65,7 +65,6 @@ class InstallerConfig:
         self.supported_device_codes = metadata.get("supported_device_codes")
         self.twrp_link = metadata.get("twrp-link")
         self.supported_recovery = metadata.get("supported_recovery")
-        self.additional_steps = metadata.get("additional_steps")
 
     @classmethod
     def from_file(cls, path):

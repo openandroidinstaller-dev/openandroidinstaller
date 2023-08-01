@@ -48,8 +48,9 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
       - [LineageOS for microg](https://download.lineage.microg.org)
       - [BlissRoms](https://blissroms.org)
       - [PixelExperience](https://download.pixelexperience.org)
-    - TWRP Recovery:
+    - some recoveries:
       - [TWRP recovery](https://twrp.me/Devices)
+      - [OrangeFox](https://wiki.orangefox.tech)
     - Optional Addons:
       - There are different packages of *Google Apps* available.
         - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)
@@ -214,6 +215,7 @@ Every config file should have `metadata` with the following fields:
 - `is_ab_device`: bool; A boolean to determine if the device is a/b-partitioned or not.
 - `device_code`: str; The official device code.
 - `supported_device_codes`: List[str]; A list of supported device codes for the config. The config will be loaded based on this field.
+- `supported_recovery`: [OPTIONAL] List[str]; A list of supported recoveries. For the moment, can be twrp and/or orangefox (twrp by default)
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
 
 In addition to these metadata, every config can have optional `requirements`. If these are set, the user is asked to check if they are meet.
