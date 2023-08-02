@@ -147,6 +147,13 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
 
         # Device specific notes
         if "notes" in self.state.config.metadata:
+            notes = ""
+            if "brand" in self.state.config.metadata and (self.state.config.metadata['brand'] == "xiaomi" or self.state.config.metadata['brand'] == "poco"):
+                notes += "- If something goes wrong, you can reinstall MiUI here :\n<https://xiaomifirmwareupdater.com/miui/lavender/>\n\n"
+            if "untested" in self.state.config.metadata and self.state.config.metadata['untested'] == True:
+                notes += "- **This device has never been tested with OpenAndroidInstaller.** The installation can go wrong. You may have to finish the installation process with command line. If you test, please report the result on GitHub.\n\n"
+            for note in self.state.config.metadata['notes']:
+                notes += "- " + note + "\n\n"
             self.right_view.controls.extend(
                 [
                     Text(
@@ -155,7 +162,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                         color=colors.RED,
                         weight="bold",
                     ),
-                    Markdown(f"""{self.state.config.metadata['notes']}"""),
+                    Markdown(f"""{notes}"""),
                 ]
             )
         # if there is an available download, show the button to the page

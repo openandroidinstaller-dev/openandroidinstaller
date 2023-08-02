@@ -210,12 +210,14 @@ A config file consists of two parts. The first part are some metadata about the 
 ##### How to write Metadata
 Every config file should have `metadata` with the following fields:
 - `maintainer`: str; Maintainer and author of the config file.
+- `brand`: [OPTIONAL] str; Name of the brand. Can be used to make brand specific actions.
 - `device_name`: str; Name of the device.
 - `is_ab_device`: bool; A boolean to determine if the device is a/b-partitioned or not.
 - `device_code`: str; The official device code.
 - `supported_device_codes`: List[str]; A list of supported device codes for the config. The config will be loaded based on this field.
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
-- `notes`: [OPTIONAL] str; specific phone information, showed before choosing ROM / recovery
+- `notes`: [OPTIONAL] List[str]; specific phone information, showed before choosing ROM / recovery
+- `untested`: [OPTIONAL] bool; If `true`, a warning message is showed during installation process.
 
 In addition to these metadata, every config can have optional `requirements`. If these are set, the user is asked to check if they are meet.
 - `android`: [OPTIONAL] int|str; Android version to install prior to installing a custom ROM.
