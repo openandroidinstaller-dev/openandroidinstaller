@@ -1,5 +1,6 @@
 metadata:
   maintainer: A non (anon)
+  brand: xiaomi
   device_name: Xiaomi Redmi Note 10S / 11SE / Poco M5S
   is_ab_device: false
   device_code: rosemary
@@ -11,8 +12,8 @@ metadata:
     - secret
     - maltose
     - rosemary_p
-  notes: >
-    - If something goes wrong, you can reinstall MiUI here : https://xiaomifirmwareupdater.com
+  untested: true
+  notes:
     - Please respect the requested by the ROM developers version for MIUI and Android
     - Be careful when choosing OrangeFox version, Android 12 & 13 ROM needs OrangeFox version code with `A12`, for example `R11.1_5_A12`. Android 10 & 11 ROM needs OrangeFox version code without `A12` (bellow on the page)
 steps:
