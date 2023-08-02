@@ -169,6 +169,12 @@ OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | | tested
 OnePlus | 9 | lemonade | | under development
 </details>
 
+<details><summary><b>Xiaomi</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
+</details>
 And more to come!
 
 
