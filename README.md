@@ -169,6 +169,13 @@ OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | | tested
 OnePlus | 9 | lemonade | | under development
 </details>
 
+<details><summary><b>Xiaomi</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinci) / davinciin |  | untested
+</details>
+
 And more to come!
 
 
