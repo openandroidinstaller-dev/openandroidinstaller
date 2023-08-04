@@ -74,8 +74,8 @@ def recovery_works_with_device(
     for codename in supported_device_codes:
         if (
             (codename in recovery_file_name)
-            and ("twrp" in recovery_file_name or "TWRP" in recovery_file_name)
-            and ("twrp" in supported_recovery or not supported_recovery)
+            and ("twrp" in recovery_file_name.lower())
+            and ("twrp" in supported_recovery)
         ):
             logger.success("Selected recovery supported for this device.")
             return True
@@ -88,8 +88,9 @@ def recovery_works_with_device(
     return False
 
 
-def which_recovery(recovery_path: str) -> str:
+def which_recovery_from_path(recovery_path: str) -> str:
     """Determine which recovery was selected
+
     This does not replace recovery_works_with_device.
     BEWARE: THE RECOVERY PART IS STILL VERY BASIC!
     """

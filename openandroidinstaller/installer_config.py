@@ -64,7 +64,7 @@ class InstallerConfig:
         self.is_ab = metadata.get("is_ab_device", False)
         self.supported_device_codes = metadata.get("supported_device_codes")
         self.twrp_link = metadata.get("twrp-link")
-        self.supported_recovery = metadata.get("supported_recovery", ["twrp"])
+        self.supported_recovery = metadata.get("supported_recovery", ["twrp"]) # if it is not given, we assume TWRP
 
     @classmethod
     def from_file(cls, path):

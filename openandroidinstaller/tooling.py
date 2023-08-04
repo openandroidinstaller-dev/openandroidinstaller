@@ -233,7 +233,7 @@ def adb_twrp_wipe_and_install(
 
     Only works for twrp and OrangeFox recovery.
     """
-    logger.info("Wipe and format data with twrp, then install os image.")
+    logger.info(f"Wipe and format data with {chosen_recovery}, then install os image.")
     for line in adb_wait_for_recovery(bin_path):
         yield line
 
@@ -249,13 +249,12 @@ def adb_twrp_wipe_and_install(
         sleep(1)
 
     # activate sideload
-    if chosen_recovery == "twrp":
-        logger.info("Wiping is done, now activate sideload.")
-        for line in activate_sideload(bin_path=bin_path):
+    logger.info(f"Wiping is done, now activate sideload with {chosen_recovery}.")
+    if chosen_recovery == "orangefox":
+        for line in activate_sideload_ofox(bin_path=bin_path):
             yield line
     else:
-        logger.info("Wiping is done, now activate sideload (ofox)")
-        for line in activate_sideload_ofox(bin_path=bin_path):
+        for line in activate_sideload(bin_path=bin_path):
             yield line
         sleep(5)
     # now flash os image
@@ -264,12 +263,13 @@ def adb_twrp_wipe_and_install(
         yield line
     sleep(7)
     # wipe some cache partitions
-    if chosen_recovery == "twrp": # OrangeFox go in buggy sideload mode when wiping dalvik here (and already been wiped before)
+    if (chosen_recovery != "orangefox"):  
+        # OrangeFox go in buggy sideload mode when wiping dalvik here (and already been wiped before)
         logger.info("Wiping cache and dalvik...")
         for partition in ["dalvik", "cache"]:
             for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
                 yield line
-            sleep(3)
+            sleep(2)
             if (type(line) == bool) and not line:
                 logger.error(f"Wiping {partition} failed.")
                 # TODO: if this fails, a fix can be to just sideload something and then adb reboot
@@ -312,18 +312,18 @@ def adb_twrp_install_addon(
 
     Only works for twrp recovery.
     """
-    logger.info(f"Install addon {addon_path} with twrp.")
+    logger.info(f"Install addon {addon_path} with {chosen_recovery}.")
     sleep(0.5)
     if is_ab:
         adb_wait_for_recovery(bin_path=bin_path)
     # activate sideload
     logger.info("Activate sideload.")
-    if chosen_recovery == "twrp":
-        for line in activate_sideload(bin_path=bin_path):
+    if chosen_recovery == "orangefox":
+        for line in activate_sideload_ofox(bin_path=bin_path):
             yield line
     else:
-        for line in activate_sideload_ofox(bin_path=bin_path):
-            yield  line
+        for line in activate_sideload(bin_path=bin_path):
+            yield line
         sleep(5)
     logger.info("Sideload and install addon.")
     # now flash the addon

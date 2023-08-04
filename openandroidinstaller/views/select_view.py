@@ -44,7 +44,7 @@ from utils import (
     get_download_link,
     image_works_with_device,
     recovery_works_with_device,
-    which_recovery,
+    which_recovery_from_path,
 )
 
 
@@ -304,7 +304,7 @@ The recovery image should look something like {recoveryFile}.
                 recovery_path=self.state.recovery_path,
             ):
                 self.selected_recovery.color = colors.GREEN
-                self.state.chosen_recovery = which_recovery(self.state.recovery_path)
+                self.state.chosen_recovery = which_recovery_from_path(self.state.recovery_path)
                 logger.info(f"Chosen recovery : {self.state.chosen_recovery}")
             else:
                 self.selected_recovery.color = colors.RED
