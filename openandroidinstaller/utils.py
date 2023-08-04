@@ -59,6 +59,20 @@ def image_works_with_device(supported_device_codes: List[str], image_path: str) 
                 )
                 return False
 
+def image_sdk_level(image_path: str) -> int:
+    """
+    Determine Android version of the selected image.
+    Android 13 : 33
+    """
+    with zipfile.ZipFile(image_path) as image_zip:
+        with image_zip.open(
+            "META-INF/com/android/metadata", mode="r"
+        ) as image_metadata:
+            metadata = image_metadata.readlines()
+            for line in metadata:
+                if b"sdk-level" in line:
+                    return int(line[line.find(b'=')+1:-1].decode("utf-8"))
+    return 0
 
 def recovery_works_with_device(device_code: str, recovery_path: str) -> bool:
     """Determine if a recovery works for the given device.
