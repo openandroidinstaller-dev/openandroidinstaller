@@ -14,8 +14,8 @@ jobs:
       matrix:
         os: ['ubuntu-20.04', 'ubuntu-latest']
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
       with:
         python-version: 3.9
     - run: pip install -r requirements.txt
@@ -32,8 +32,8 @@ jobs:
       matrix:
         os: ['ubuntu-20.04', 'ubuntu-latest', 'macos-latest']
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
       with:
         python-version: 3.9
     - run: pip install -r requirements.txt
@@ -48,8 +48,8 @@ jobs:
     needs: ci
     runs-on: 'windows-latest'
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
       with:
         python-version: 3.9
     - run: pip install -r requirements.txt
@@ -66,7 +66,7 @@ jobs:
       - build-windows
     runs-on: 'ubuntu-latest'
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Download artifact
       uses: actions/download-artifact@v3
     - name: Display structure of downloaded files
@@ -86,7 +86,7 @@ jobs:
     - name: Display structure of downloaded files
       run: ls -R
     - name: Create release
-      uses: marvinpinto/action-automatic-releases@latest
+      uses: dciborow/action-github-releases@v1.0.1
       if: startsWith(github.ref, 'refs/tags/')
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
