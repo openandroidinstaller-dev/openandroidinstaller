@@ -86,7 +86,7 @@ Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx
 Samsung | Galaxy S6 Edge | [zeroltexx](https://wiki.lineageos.org/devices/zeroltexx) | | tested
 Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte) | SM-G930F | tested
 Samsung | Galaxy S7 Edge | [hero2lte](https://wiki.lineageos.org/devices/hero2lte) | | tested
-Samsung | Galaxy S8 | [dreamlte](https://wiki.lineageos.org/devices/dreamlte) | | tested
+Samsung | Galaxy S8 | dreamlte | | tested
 Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte) | | tested
 Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte) | | tested
 Samsung | Galaxy S10e | [beyond0lte](https://wiki.lineageos.org/devices/beyond0lte) | | tested
