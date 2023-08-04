@@ -7,9 +7,10 @@ assignees: ''
 
 ---
 
-**Device name**
-Please enter the name of the device you would like to request support for.
-If you know the device code, please also add it here.
+**Device informations**
+- Brand: 
+- Model name: 
+- Device code: (if unknown, leave blank)
 
 **Device images**
 Please provide links to any available images of the device, such as official stock firmware or custom ROMs you would like to install.
