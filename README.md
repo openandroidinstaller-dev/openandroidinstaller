@@ -42,14 +42,18 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 1. Download the [.exe or appropriate executable file for your OS](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases) from the releases or get the [official flatpak from flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller). You might need to change permissions to run the executable.
     - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
 2. Download the custom ROM image and the TWRP recovery image for your device and optionally some addons. A source for files can be found on the following websites:
-    - some custom ROMs:
+    - Some custom ROMs:
       - [LineageOS](https://wiki.lineageos.org/devices)
       - [/e/OS](https://doc.e.foundation/devices)
       - [LineageOS for microg](https://download.lineage.microg.org)
       - [BlissRoms](https://blissroms.org)
       - [PixelExperience](https://download.pixelexperience.org)
-    - TWRP Recovery:
+      - [crDroid](https://crdroid.net/)
+      - [ArrowOS](https://arrowos.net/)
+      - [DivestOS](https://divestos.org/)
+    - Recoveries:
       - [TWRP recovery](https://twrp.me/Devices)
+      - [OrangeFox](https://wiki.orangefox.tech)
     - Optional Addons:
       - There are different packages of *Google Apps* available.
         - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)
@@ -214,6 +218,7 @@ Every config file should have `metadata` with the following fields:
 - `is_ab_device`: bool; A boolean to determine if the device is a/b-partitioned or not.
 - `device_code`: str; The official device code.
 - `supported_device_codes`: List[str]; A list of supported device codes for the config. The config will be loaded based on this field.
+- `supported_recovery`: [OPTIONAL] List[str]; A list of supported recoveries. For the moment, can be twrp and/or orangefox (twrp by default)
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
 
 In addition to these metadata, every config can have optional `requirements`. If these are set, the user is asked to check if they are meet.

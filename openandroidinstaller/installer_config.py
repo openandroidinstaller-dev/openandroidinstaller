@@ -64,6 +64,7 @@ class InstallerConfig:
         self.is_ab = metadata.get("is_ab_device", False)
         self.supported_device_codes = metadata.get("supported_device_codes")
         self.twrp_link = metadata.get("twrp-link")
+        self.supported_recovery = metadata.get("supported_recovery")
 
     @classmethod
     def from_file(cls, path):
@@ -124,6 +125,8 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
     if custom_path:
         config = InstallerConfig.from_file(custom_path)
         logger.info(f"Loaded custom device config from {custom_path}.")
+        if "supported_recovery" not in config.metadata:
+            config.metadata.update({"supported_recovery": "['twrp']"})
         logger.info(f"Config metadata: {config.metadata}.")
         return config
     else:
@@ -134,6 +137,8 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
             config = InstallerConfig.from_file(path)
             logger.info(f"Loaded device config from {path}.")
             if config:
+                if "supported_recovery" not in config.metadata:
+                    config.metadata.update({"supported_recovery": "['twrp']"})
                 logger.info(f"Config metadata: {config.metadata}.")
             return config
         else:
@@ -150,7 +155,7 @@ def validate_config(config: str) -> bool:
         ),
         "content": str,
         schema.Optional("command"): Regex(
-            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|fastboot_boot_recovery|fastboot_flash_boot|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
+            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|fastboot_boot_recovery|fastboot_flash_recovery|fastboot_reboot_recovery|fastboot_flash_boot|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
         ),
         schema.Optional("allow_skip"): bool,
         schema.Optional("img"): str,
@@ -166,6 +171,7 @@ def validate_config(config: str) -> bool:
                 "device_code": str,
                 "supported_device_codes": [str],
                 schema.Optional("twrp-link"): str,
+                schema.Optional("supported_recovery"): [str],
             },
             schema.Optional("requirements"): {
                 schema.Optional("android"): schema.Or(str, int),

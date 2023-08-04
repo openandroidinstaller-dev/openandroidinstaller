@@ -40,7 +40,12 @@ from styles import (
 from views import BaseView
 from app_state import AppState
 from widgets import get_title, confirm_button
-from utils import get_download_link, image_works_with_device, recovery_works_with_device
+from utils import (
+    get_download_link,
+    image_works_with_device,
+    recovery_works_with_device,
+    which_recovery,
+)
 
 
 class SelectFilesView(BaseView):
@@ -83,7 +88,8 @@ A custom recovery is used for installing custom software on your device.
 This custom software can include smaller modifications like rooting your device or even
 replacing the firmware of the device with a completely custom ROM.
 
-OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about).""",
+OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about)
+or [OrangeFox recovery](https://wiki.orangefox.tech/en/home), depending of your device.""",
             ),
             actions=[
                 TextButton("Close", on_click=self.close_close_explain_images_dlg),
@@ -152,7 +158,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 Column(
                     [
                         Text(
-                            "You can bring your own image and recovery or you download the officially supported image file for your device here:"
+                            "You can bring your own image and recovery or you download the officially supported LineageOS image file for your device here:"
                         ),
                         Row(
                             [
@@ -179,6 +185,17 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 )
             )
         # attach the controls for uploading image and recovery
+        recovery, recoveryFile = "", ""
+        if "twrp" in self.state.config.supported_recovery:
+            recovery = "TWRP"
+            recoveryFile = f"`twrp-3.7.0_12-0-{self.state.config.device_code}.img`"
+        if "orangefox" in self.state.config.supported_recovery:
+            if recovery != "":
+                recovery += " or "
+                recoveryFile += " or "
+            recovery += "OrangeFox"
+            recoveryFile += "`recovery.img`"
+
         self.right_view.controls.extend(
             [
                 Text("Select an OS image:", style="titleSmall"),
@@ -202,18 +219,18 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
                 ),
                 self.selected_image,
                 Divider(),
-                Text("Select a TWRP recovery image:", style="titleSmall"),
+                Text(f"Select a {recovery} recovery image:", style="titleSmall"),
                 Markdown(
                     f"""
-The recovery image should look something like `twrp-3.7.0_12-0-{self.state.config.device_code}.img`.
+The recovery image should look something like {recoveryFile}.
 
-**Note:** This tool **only supports TWRP recoveries**.""",
+**Note:** This tool **only supports {recovery} recovery** for this phone.""",
                     extension_set="gitHubFlavored",
                 ),
                 Row(
                     [
                         FilledButton(
-                            "Pick TWRP recovery file",
+                            f"Pick {recovery} recovery file",
                             icon=icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_recovery_dialog.pick_files(
                                 allow_multiple=False,
@@ -281,14 +298,17 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
             logger.info("No image selected.")
         # check if the recovery works with the device and show the filename in different colors accordingly
         if e.files:
-            device_code = self.state.config.device_code
             if recovery_works_with_device(
-                device_code=device_code, recovery_path=self.state.recovery_path
+                supported_device_codes=self.state.config.supported_device_codes,
+                supported_recovery=self.state.config.supported_recovery,
+                recovery_path=self.state.recovery_path,
             ):
                 self.selected_recovery.color = colors.GREEN
+                self.state.chosen_recovery = which_recovery(self.state.recovery_path)
+                logger.info(f"Chosen recovery : {self.state.chosen_recovery}")
             else:
                 self.selected_recovery.color = colors.RED
-        # update
+            # update
         self.selected_recovery.update()
 
     def enable_button_if_ready(self, e):
@@ -296,14 +316,15 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
         if (".zip" in self.selected_image.value) and (
             ".img" in self.selected_recovery.value
         ):
-            device_code = self.state.config.device_code
             if not (
                 image_works_with_device(
                     supported_device_codes=self.state.config.supported_device_codes,
                     image_path=self.state.image_path,
                 )
                 and recovery_works_with_device(
-                    device_code=device_code, recovery_path=self.state.recovery_path
+                    supported_device_codes=self.state.config.supported_device_codes,
+                    supported_recovery=self.state.config.supported_recovery,
+                    recovery_path=self.state.recovery_path,
                 )
             ):
                 # if image and recovery work for device allow to move on, otherwise display message
@@ -312,7 +333,7 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
                 )
                 self.info_field.controls = [
                     Text(
-                        "Image and/or recovery don't work with the device. Make sure you use a TWRP-based recovery.",
+                        "Image and/or recovery don't work with the device. Make sure you use a supported recovery.",
                         color=colors.RED,
                         weight="bold",
                     )
