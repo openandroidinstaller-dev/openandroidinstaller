@@ -64,6 +64,7 @@ class InstallerConfig:
         self.is_ab = metadata.get("is_ab_device", False)
         self.supported_device_codes = metadata.get("supported_device_codes")
         self.twrp_link = metadata.get("twrp-link")
+        self.supported_recovery = metadata.get("supported_recovery", ["twrp"]) # if it is not given, we assume TWRP
 
     @classmethod
     def from_file(cls, path):
@@ -150,7 +151,7 @@ def validate_config(config: str) -> bool:
         ),
         "content": str,
         schema.Optional("command"): Regex(
-            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|fastboot_boot_recovery|fastboot_flash_boot|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
+            r"adb_reboot|adb_reboot_bootloader|adb_reboot_download|adb_sideload|adb_twrp_wipe_and_install|adb_twrp_copy_partitions|fastboot_boot_recovery|fastboot_flash_recovery|fastboot_reboot_recovery|fastboot_flash_boot|fastboot_unlock_with_code|fastboot_get_unlock_data|fastboot_unlock|fastboot_oem_unlock|fastboot_reboot|heimdall_flash_recovery"
         ),
         schema.Optional("allow_skip"): bool,
         schema.Optional("img"): str,
@@ -166,6 +167,7 @@ def validate_config(config: str) -> bool:
                 "device_code": str,
                 "supported_device_codes": [str],
                 schema.Optional("twrp-link"): str,
+                schema.Optional("supported_recovery"): [str],
             },
             schema.Optional("requirements"): {
                 schema.Optional("android"): schema.Or(str, int),

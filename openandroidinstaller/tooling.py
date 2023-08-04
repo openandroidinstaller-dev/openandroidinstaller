@@ -140,6 +140,15 @@ def activate_sideload(bin_path: Path) -> TerminalResponse:
         yield line
 
 
+@add_logging("Activate sideloading in OranfeFox.", return_if_fail=True)
+def activate_sideload_ofox(bin_path: Path) -> TerminalResponse:
+    """Activate sideload with adb shell in OrangeFox."""
+    for line in run_command(
+        "adb shell twrp sideload help", bin_path
+    ):  # Why help ? Don't know, but it works
+        yield line
+
+
 @add_logging("Wait for device")
 def adb_wait_for_device(bin_path: Path) -> TerminalResponse:
     """Use adb to wait for the device to become available."""
@@ -216,14 +225,15 @@ def adb_twrp_wipe_and_install(
     target: str,
     config_path: Path,
     is_ab: bool,
+    chosen_recovery: str,
     install_addons=True,
     recovery: Optional[str] = None,
 ) -> TerminalResponse:
-    """Wipe and format data with twrp, then flash os image with adb.
+    """Wipe and format data with recovery, then flash os image with adb.
 
-    Only works for twrp recovery.
+    Only works for twrp and OrangeFox recovery.
     """
-    logger.info("Wipe and format data with twrp, then install os image.")
+    logger.info(f"Wipe and format data with {chosen_recovery}, then install os image.")
     for line in adb_wait_for_recovery(bin_path):
         yield line
 
@@ -233,38 +243,46 @@ def adb_twrp_wipe_and_install(
 
     sleep(1)
     # wipe some partitions
-    for partition in ["cache", "system"]:
+    for partition in ["cache", "dalvik", "system"]:
         for line in adb_twrp_wipe_partition(bin_path=bin_path, partition=partition):
             yield line
         sleep(1)
 
     # activate sideload
-    logger.info("Wiping is done, now activate sideload.")
-    for line in activate_sideload(bin_path=bin_path):
-        yield line
+    logger.info(f"Wiping is done, now activate sideload with {chosen_recovery}.")
+    if chosen_recovery == "orangefox":
+        for line in activate_sideload_ofox(bin_path=bin_path):
+            yield line
+    else:
+        for line in activate_sideload(bin_path=bin_path):
+            yield line
+        sleep(5)
     # now flash os image
     logger.info("Sideload and install os image.")
     for line in adb_sideload(bin_path=bin_path, target=target):
         yield line
-    # wipe some cache partitions
     sleep(7)
-    for partition in ["dalvik", "cache"]:
-        for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
-            yield line
-        sleep(3)
-        if (type(line) == bool) and not line:
-            logger.error(f"Wiping {partition} failed.")
-            # TODO: if this fails, a fix can be to just sideload something and then adb reboot
-            for line in adb_sideload(
-                target=f"{config_path.parent.joinpath(Path('helper.txt'))}",
-                bin_path=bin_path,
-            ):
+    # wipe some cache partitions
+    if (chosen_recovery != "orangefox"):  
+        # OrangeFox go in buggy sideload mode when wiping dalvik here (and already been wiped before)
+        logger.info("Wiping cache and dalvik...")
+        for partition in ["dalvik", "cache"]:
+            for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
                 yield line
-            sleep(1)
+            sleep(2)
             if (type(line) == bool) and not line:
-                yield False
-            break
-        sleep(2)
+                logger.error(f"Wiping {partition} failed.")
+                # TODO: if this fails, a fix can be to just sideload something and then adb reboot
+                for line in adb_sideload(
+                    target=f"{config_path.parent.joinpath(Path('helper.txt'))}",
+                    bin_path=bin_path,
+                ):
+                    yield line
+                sleep(1)
+                if (type(line) == bool) and not line:
+                    yield False
+                break
+            sleep(2)
     # finally reboot into os or to fastboot for flashing addons
     for line in adb_wait_for_recovery(bin_path):
         yield line
@@ -288,20 +306,25 @@ def adb_twrp_wipe_and_install(
 
 
 def adb_twrp_install_addon(
-    bin_path: Path, addon_path: str, is_ab: bool
+    bin_path: Path, addon_path: str, chosen_recovery: str, is_ab: bool
 ) -> TerminalResponse:
     """Flash addon through adb and twrp.
 
     Only works for twrp recovery.
     """
-    logger.info(f"Install addon {addon_path} with twrp.")
+    logger.info(f"Install addon {addon_path} with {chosen_recovery}.")
     sleep(0.5)
     if is_ab:
         adb_wait_for_recovery(bin_path=bin_path)
     # activate sideload
     logger.info("Activate sideload.")
-    for line in activate_sideload(bin_path=bin_path):
-        yield line
+    if chosen_recovery == "orangefox":
+        for line in activate_sideload_ofox(bin_path=bin_path):
+            yield line
+    else:
+        for line in activate_sideload(bin_path=bin_path):
+            yield line
+        sleep(5)
     logger.info("Sideload and install addon.")
     # now flash the addon
     for line in adb_sideload(bin_path=bin_path, target=addon_path):
@@ -497,3 +520,30 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
     except CalledProcessError:
         logger.error("Failed to detect a device.")
         return None
+
+
+@add_logging("Flash custom recovery with fastboot.")
+def fastboot_flash_recovery(
+    bin_path: Path, recovery: str, is_ab: bool = True
+) -> TerminalResponse:
+    """Flash custom recovery with fastboot."""
+    for line in run_command(
+        "fastboot flash recovery ", target=f"{recovery}", bin_path=bin_path
+    ):
+        yield line
+    if not is_ab:
+        if (type(line) == bool) and not line:
+            logger.error("Flashing recovery failed.")
+            yield False
+        else:
+            yield True
+
+
+@add_logging("Rebooting device to recovery.")
+def fastboot_reboot_recovery(bin_path: Path) -> TerminalResponse:
+    """
+    Reboot to recovery with fastboot
+    WARNING : On some devices, users should perform a key combo
+    """
+    for line in run_command("fastboot reboot recovery", bin_path):
+        yield line

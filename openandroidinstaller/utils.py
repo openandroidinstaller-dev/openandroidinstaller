@@ -60,15 +60,44 @@ def image_works_with_device(supported_device_codes: List[str], image_path: str) 
                 return False
 
 
-def recovery_works_with_device(device_code: str, recovery_path: str) -> bool:
+def recovery_works_with_device(
+    supported_device_codes: [str], supported_recovery: [str], recovery_path: str
+) -> bool:
     """Determine if a recovery works for the given device.
 
     BEWARE: THE RECOVERY PART IS STILL VERY BASIC!
     """
     recovery_file_name = recovery_path.split("/")[-1]
-    if (device_code in recovery_file_name) and ("twrp" in recovery_file_name):
-        logger.success("Device supported by the selected recovery.")
-        return True
-    else:
-        logger.error(f"Recovery file {recovery_file_name} is not supported.")
+    if recovery_file_name[-4:] != ".img":
+        logger.error(f"The file {recovery_file_name} is not a recovery file")
         return False
+    for codename in supported_device_codes:
+        if (
+            (codename in recovery_file_name)
+            and ("twrp" in recovery_file_name.lower())
+            and ("twrp" in supported_recovery)
+        ):
+            logger.success("Selected recovery supported for this device.")
+            return True
+        elif recovery_file_name == "recovery.img" and (
+            "orangefox" in supported_recovery
+        ):
+            logger.error("Cannot check recovery. Supposing it is OrangeFox.")
+            return True
+    logger.error(f"Recovery file {recovery_file_name} is not supported.")
+    return False
+
+
+def which_recovery_from_path(recovery_path: str) -> str:
+    """Determine which recovery was selected
+
+    This does not replace recovery_works_with_device.
+    BEWARE: THE RECOVERY PART IS STILL VERY BASIC!
+    """
+    recovery_file_name = recovery_path.split("/")[-1]
+    if "twrp" in recovery_file_name or "TWRP" in recovery_file_name:
+        return "twrp"
+    if recovery_file_name == "recovery.img":
+        return "orangefox"
+    logger.error("Unable to determine which recovery was selected !")
+    return None

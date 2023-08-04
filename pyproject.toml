@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openandroidinstaller"
-version = "0.4.4-beta"
+version = "0.5.0-beta"
 description = "Install lineage OS in a nice and easy way."
 authors = ["Tobias Sterbak <hello@openandroidinstaller.org>"]
 license = "GPLv3"

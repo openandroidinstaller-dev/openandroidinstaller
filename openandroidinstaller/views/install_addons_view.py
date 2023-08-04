@@ -172,6 +172,7 @@ This might take a while. At the end your phone will boot into the new OS.
             for line in adb_twrp_install_addon(
                 addon_path=addon_path,
                 bin_path=self.state.bin_path,
+                chosen_recovery=self.state.chosen_recovery,
                 is_ab=self.state.config.is_ab,
             ):
                 # write the line to advanced output terminal
