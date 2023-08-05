@@ -463,6 +463,34 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
         yield True
 
 
+@add_logging("Flash custom recovery with fastboot.")
+def fastboot_flash_recovery(
+    bin_path: Path, recovery: str, is_ab: bool = True
+) -> TerminalResponse:
+    """Flash custom recovery with fastboot."""
+    for line in run_command(
+        "fastboot flash recovery ", target=f"{recovery}", bin_path=bin_path
+    ):
+        yield line
+    if not is_ab:
+        if (type(line) == bool) and not line:
+            logger.error("Flashing recovery failed.")
+            yield False
+        else:
+            yield True
+
+
+@add_logging("Rebooting device to recovery.")
+def fastboot_reboot_recovery(bin_path: Path) -> TerminalResponse:
+    """
+    Reboot to recovery with fastboot
+
+    WARNING : On some devices, users should perform a key combo
+    """
+    for line in run_command("fastboot reboot recovery", bin_path):
+        yield line
+
+
 def heimdall_wait_for_download_available(bin_path: Path) -> bool:
     """Use heimdall detect to wait for download mode to become available on the device."""
     logger.info("Wait for download mode to become available.")
@@ -520,30 +548,3 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
     except CalledProcessError:
         logger.error("Failed to detect a device.")
         return None
-
-
-@add_logging("Flash custom recovery with fastboot.")
-def fastboot_flash_recovery(
-    bin_path: Path, recovery: str, is_ab: bool = True
-) -> TerminalResponse:
-    """Flash custom recovery with fastboot."""
-    for line in run_command(
-        "fastboot flash recovery ", target=f"{recovery}", bin_path=bin_path
-    ):
-        yield line
-    if not is_ab:
-        if (type(line) == bool) and not line:
-            logger.error("Flashing recovery failed.")
-            yield False
-        else:
-            yield True
-
-
-@add_logging("Rebooting device to recovery.")
-def fastboot_reboot_recovery(bin_path: Path) -> TerminalResponse:
-    """
-    Reboot to recovery with fastboot
-    WARNING : On some devices, users should perform a key combo
-    """
-    for line in run_command("fastboot reboot recovery", bin_path):
-        yield line
