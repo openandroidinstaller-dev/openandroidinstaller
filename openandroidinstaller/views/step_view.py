@@ -48,6 +48,7 @@ from tooling import (
     fastboot_oem_unlock,
     fastboot_reboot,
     fastboot_unlock,
+    fastboot_unlock_critical,
     fastboot_unlock_with_code,
     fastboot_get_unlock_data,
     heimdall_flash_recovery,
@@ -217,6 +218,7 @@ class StepView(BaseView):
                 adb_twrp_copy_partitions, config_path=self.state.config_path
             ),
             "fastboot_unlock": fastboot_unlock,
+            "fastboot_unlock_critical": fastboot_unlock_critical,
             "fastboot_unlock_with_code": partial(
                 fastboot_unlock_with_code, unlock_code=self.inputtext.value
             ),
