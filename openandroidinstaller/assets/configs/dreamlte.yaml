@@ -7,7 +7,7 @@ metadata:
     - dreamlte
   twrp-link: dreamlte
 requirements:
-  android: 9.0
+  android: 9
 steps:
   unlock_bootloader:
   boot_recovery:
