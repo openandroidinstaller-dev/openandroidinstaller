@@ -416,7 +416,7 @@ def fastboot_boot_recovery(
 
 
 def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
-    """Temporarily, flash custom recovery with fastboot to boot partition."""
+    """Flash custom recovery with fastboot to boot partition."""
     logger.info("Flash custom recovery with fastboot.")
     for line in run_command(
         "fastboot flash boot", target=f"{recovery}", bin_path=bin_path
@@ -438,6 +438,54 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
         yield False
     else:
         yield True
+
+
+@add_logging("Flash additional partitions with fastboot")
+def fastboot_flash_additional_partitions(
+    bin_path: Path, dtbo: Optional[str], vbmeta: Optional[str], super_empty: Optional[str], is_ab: bool = True
+) -> TerminalResponse:
+    """Flash additional partitions (dtbo, vbmeta, super_empty) with fastboot."""
+    logger.info("Flash additional partitions with fastboot.")
+    if dtbo:
+        logger.info("dtbo selected. Flashing dtbo partition.")
+        for line in run_command(
+            "fastboot flash dtbo ", target=f"{dtbo}", bin_path=bin_path
+        ):
+            yield line
+        if not is_ab:
+            if (type(line) == bool) and not line:
+                logger.error("Flashing dtbo failed.")
+                yield False
+            else:
+                yield True
+    else:
+        yield True
+
+    if vbmeta:
+        logger.info("vbmeta selected. Flashing vbmeta partition.")
+        for line in run_command(
+            "fastboot flash vbmeta ", target=f"{vbmeta}", bin_path=bin_path
+        ):
+            yield line
+        if not is_ab:
+            if (type(line) == bool) and not line:
+                logger.error("Flashing vbmeta failed.")
+                yield False
+            else:
+                yield True
+
+    if super_empty:
+        logger.info("super_empty selected. Wiping super partition.")
+        for line in run_command(
+            "fastboot wipe-super ", target=f"{super_empty}", bin_path=bin_path
+        ):
+            yield line
+        if not is_ab:
+            if (type(line) == bool) and not line:
+                logger.error("Wiping super failed.")
+                yield False
+            else:
+                yield True
 
 
 def heimdall_wait_for_download_available(bin_path: Path) -> bool:
@@ -497,54 +545,3 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
     except CalledProcessError:
         logger.error("Failed to detect a device.")
         return None
-
-
-@add_logging("Flash additional partitions with fastboot")
-def fastboot_flash_additional_partitions(
-    bin_path: Path, dtbo: str, vbmeta: str, super_empty: str, is_ab: bool = True
-) -> TerminalResponse:
-    """Flash additional partitions (dtbo, vbmeta, super_empty) with fastboot."""
-    if dtbo:
-        for line in run_command(
-            "fastboot flash dtbo ", target=f"{dtbo}", bin_path=bin_path
-        ):
-            yield line
-        if not is_ab:
-            if (type(line) == bool) and not line:
-                logger.error("Flashing dtbo failed.")
-                yield False
-            else:
-                yield True
-    else:
-        logger.info("No dtbo selected. Skipping")
-        yield True
-
-    if vbmeta:
-        for line in run_command(
-            "fastboot flash vbmeta ", target=f"{vbmeta}", bin_path=bin_path
-        ):
-            yield line
-        if not is_ab:
-            if (type(line) == bool) and not line:
-                logger.error("Flashing vbmeta failed.")
-                yield False
-            else:
-                yield True
-    else:
-        logger.info("No vbmeta selected. Skipping")
-        yield True
-
-    if super_empty:
-        for line in run_command(
-            "fastboot wipe-super ", target=f"{super_empty}", bin_path=bin_path
-        ):
-            yield line
-        if not is_ab:
-            if (type(line) == bool) and not line:
-                logger.error("Wiping super failed.")
-                yield False
-            else:
-                yield True
-    else:
-        logger.info("No super_empty selected. Skipping")
-        yield True

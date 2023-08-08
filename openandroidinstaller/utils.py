@@ -61,9 +61,10 @@ def image_works_with_device(supported_device_codes: List[str], image_path: str) 
 
 
 def image_sdk_level(image_path: str) -> int:
-    """
-    Determine Android version of the selected image.
-    Android 13 : 33
+    """Determine Android version of the selected image.
+
+    Example: 
+        Android 13: 33
     """
     with zipfile.ZipFile(image_path) as image_zip:
         with image_zip.open(

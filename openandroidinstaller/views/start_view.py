@@ -206,8 +206,7 @@ If you **already unlocked the bootloader** of your device or already **flashed a
 If you don't know what this means, you most likely don't need to do anything and you can just continue.
             """
                 ),
-                Row([self.bootloader_switch]),
-                Row([self.recovery_switch]),
+                Row([self.bootloader_switch, self.recovery_switch]),
                 Divider(),
                 self.device_infobox,
                 Row(

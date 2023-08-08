@@ -16,6 +16,7 @@ Every config file should have `metadata` with the following fields:
 - `device_code`: str; The official device code.
 - `supported_device_codes`: List[str]; A list of supported device codes for the config. The config will be loaded based on this field.
 - `twrp-link`: [OPTIONAL] str; name of the corresponding twrp page.
+- `additional_steps` : [OPTIONAL] List[str]; A list of additional steps. Can be `dtbo`, `vbmeta`, `vendor_boot` or `super_empty`.
 
 In addition to these metadata, every config can have optional `requirements`. If these are set, the user is asked to check if they are meet.
 - `android`: [OPTIONAL] int|str; Android version to install prior to installing a custom ROM.
@@ -32,7 +33,7 @@ Every step in the config file corresponds to one view in the application. These 
 - `img`: [OPTIONAL] Display an image on the left pane of the step view. Images are loaded from `openandroidinstaller/assets/imgs/`.
 - `content`: str; The content text displayed alongside the action of the step. Used to inform the user about what's going on. For consistency and better readability the text should be moved into the next line using `>`.
 - `link`: [OPTIONAL] Link to use for the link button if type is `link_button_with_confirm`.
-- `command`: [ONLY for call_button* steps] str; The command to run. One of `adb_reboot`, `adb_reboot_bootloader`, `adb_reboot_download`, `adb_sideload`, `adb_twrp_wipe_and_install`, `adb_twrp_copy_partitions`, `fastboot_boot_recovery`, `fastboot_unlock_with_code`, `fastboot_unlock`, `fastboot_oem_unlock`, `fastboot_get_unlock_data`, `fastboot_reboot`, `heimdall_flash_recovery`.
+- `command`: [ONLY for call_button* steps] str; The command to run. One of `adb_reboot`, `adb_reboot_bootloader`, `adb_reboot_download`, `adb_sideload`, `adb_twrp_wipe_and_install`, `adb_twrp_copy_partitions`, `fastboot_boot_recovery`, `fastboot_flash_additional_partitions`, `fastboot_unlock_with_code`, `fastboot_unlock`, `fastboot_unlock_critical`, `fastboot_oem_unlock`, `fastboot_get_unlock_data`, `fastboot_reboot`, `heimdall_flash_recovery`.
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 
 **Please try to retain this order of these fields in your config to ensure consistency.**
