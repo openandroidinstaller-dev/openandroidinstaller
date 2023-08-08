@@ -300,7 +300,7 @@ If you don't know what this means, you most likely don't need to do anything and
                     f"Device with code '{device_code}' is not supported yet."
                 )
                 # add request support for device button
-                request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?assignees=&labels=device&projects=&template=device-support-request.md&title=Add support for {device_code}"
+                request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?labels=device&template=device-support-request.yaml&title=Add support for {device_code}"
                 self.device_request_row.controls.append(
                     ElevatedButton(
                         "Request support for this device",
