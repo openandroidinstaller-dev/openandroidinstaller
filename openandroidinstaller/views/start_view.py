@@ -104,9 +104,7 @@ Now you are ready to continue.
                 self.state.steps = []
             else:
                 logger.info("Enabled unlocking the bootloader again.")
-                self.state.steps = copy.deepcopy(
-                    self.state.config.unlock_bootloader
-                ) 
+                self.state.steps = copy.deepcopy(self.state.config.unlock_bootloader)
             # if the recovery is already flashed, skip flashing it again
             if self.recovery_switch.value == False:
                 self.state.steps += copy.deepcopy(self.state.config.boot_recovery)
@@ -122,12 +120,10 @@ Now you are ready to continue.
         # toggleswitch to allow skipping flashing recovery
         def check_recovery_already_flashed(e):
             """Enable skipping flashing recovery if selected."""
-            
+
             # manage the bootloader unlocking switch
             if self.bootloader_switch.value == False:
-                self.state.steps = copy.deepcopy(
-                    self.state.config.unlock_bootloader
-                )
+                self.state.steps = copy.deepcopy(self.state.config.unlock_bootloader)
             else:
                 self.state.steps = []
 

@@ -195,7 +195,6 @@ Please have a look before opening an issue or starting to contribute.
 A detailed list can be found [here](https://openandroidinstaller.org/#contribute).
 
 
-
 ## Tools
 
 - The [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools) (such as adb and fastboot) are [Apache](https://android.googlesource.com/platform/system/adb/+/refs/heads/master/NOTICE)-licensed universal Android utilities
