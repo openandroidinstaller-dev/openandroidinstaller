@@ -41,7 +41,12 @@ from styles import (
 from views import BaseView
 from app_state import AppState
 from widgets import get_title, confirm_button
-from utils import get_download_link, image_works_with_device, recovery_works_with_device, image_sdk_level
+from utils import (
+    get_download_link,
+    image_works_with_device,
+    recovery_works_with_device,
+    image_sdk_level,
+)
 
 
 class SelectFilesView(BaseView):
@@ -104,9 +109,15 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
 
         self.selected_image = Text("Selected image: ")
         self.selected_recovery = Text("Selected recovery: ")
-        self.selected_dtbo = Checkbox(fill_color=colors.RED, value=None, disabled=True, tristate=True)
-        self.selected_vbmeta = Checkbox(fill_color=colors.RED, value=None, disabled=True, tristate=True)
-        self.selected_super_empty = Checkbox(fill_color=colors.RED, value=None, disabled=True, tristate=True)
+        self.selected_dtbo = Checkbox(
+            fill_color=colors.RED, value=None, disabled=True, tristate=True
+        )
+        self.selected_vbmeta = Checkbox(
+            fill_color=colors.RED, value=None, disabled=True, tristate=True
+        )
+        self.selected_super_empty = Checkbox(
+            fill_color=colors.RED, value=None, disabled=True, tristate=True
+        )
 
         # initialize and manage button state.
         self.confirm_button = confirm_button(self.on_confirm)
@@ -133,13 +144,15 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         )
 
         # attach hidden dialogues
-        self.right_view.controls.extend([
-            self.pick_image_dialog,
-            self.pick_recovery_dialog,
-            self.pick_dtbo_dialog,
-            self.pick_vbmeta_dialog,
-            self.pick_super_empty_dialog
-        ])
+        self.right_view.controls.extend(
+            [
+                self.pick_image_dialog,
+                self.pick_recovery_dialog,
+                self.pick_dtbo_dialog,
+                self.pick_vbmeta_dialog,
+                self.pick_super_empty_dialog,
+            ]
+        )
 
         # create help/info button to show the help dialog
         info_button = OutlinedButton(
@@ -264,14 +277,17 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
         # attach the controls for uploading others partitions, like dtbo, vbmeta & super_empty
         additional_image_selection = []
         if self.state.config.metadata["additional_steps"]:
-            additional_image_selection.extend([
+            additional_image_selection.extend(
+                [
                     Text("Select required additional images:", style="titleSmall"),
-                    Markdown("""
+                    Markdown(
+                        """
 Your selected device and ROM requires flashing of additional partitions. Please select the required images below.
 
 Make sure the file is for **your exact phone model!**""",
-                    )
-            ])
+                    ),
+                ]
+            )
         if "dtbo" in self.state.config.metadata["additional_steps"]:
             self.selected_dtbo.value = False
             additional_image_selection.extend(
@@ -372,7 +388,10 @@ Make sure the file is for **your exact phone model!**""",
             else:
                 self.selected_image.color = colors.RED
         # if the image works and the sdk level is 33 or higher, show the additional image selection
-        if self.selected_image.color == colors.GREEN and image_sdk_level(self.state.image_path) >= 33:
+        if (
+            self.selected_image.color == colors.GREEN
+            and image_sdk_level(self.state.image_path) >= 33
+        ):
             self.toggle_additional_image_selection()
         else:
             self.additional_image_selection.controls = []
@@ -485,7 +504,14 @@ Make sure the file is for **your exact phone model!**""",
                 return
 
             # check if the additional images work with the device
-            if any(v == False for v in [self.selected_dtbo.value, self.selected_vbmeta.value, self.selected_super_empty.value]):
+            if any(
+                v == False
+                for v in [
+                    self.selected_dtbo.value,
+                    self.selected_vbmeta.value,
+                    self.selected_super_empty.value,
+                ]
+            ):
                 logger.error(
                     "Some additional images don't match. Please select different ones."
                 )
