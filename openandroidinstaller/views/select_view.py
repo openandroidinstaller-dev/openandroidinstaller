@@ -154,8 +154,8 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             ]
         )
 
-        # create help/info button to show the help dialog
-        info_button = OutlinedButton(
+        # create help/info button to show the help dialog for the image and recovery selection
+        explain_images_button = OutlinedButton(
             "What is this?",
             on_click=self.open_explain_images_dlg,
             expand=True,
@@ -168,7 +168,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.right_view_header.controls.append(
             get_title(
                 "Now pick an OS image and a recovery file:",
-                info_button=info_button,
+                info_button=explain_images_button,
                 step_indicator_img="steps-header-select.png",
             )
         )
@@ -289,7 +289,10 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
         return self.view
 
     def get_notes(self) -> str:
-        """Prepare and get notes for the specific device from config."""
+        """Prepare and get notes for the specific device from config.
+
+        These notes should be displayed to the user.
+        """
         notes = []
 
         brand = self.state.config.metadata.get("brand", "")
@@ -311,12 +314,67 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
 
     def toggle_additional_image_selection(self):
         """Toggle the visibility of the additional image selection controls."""
+        # dialogue box to explain additional required images
+        self.dlg_explain_additional_images = AlertDialog(
+            modal=True,
+            title=Text("Why do I need additional images and where do I get them?"),
+            content=Markdown(
+                f"""## About additional images
+Some devices require additional images to be flashed before the recovery and OS image can be flashed.
+Not all images explained below are required for all devices. The installer will tell you which images are required for your device.
+
+### dtbo.img
+The `dtbo.img` is a partition image that contains the device tree overlay.
+
+### vbmeta.img
+The `vbmeta.img` is a partition image that contains the verified boot metadata.
+This is required to prevent issues with the verified boot process.
+
+### super_empty.img
+The `super_empty.img` is used to wipe the super partition. This is required to
+prevent issues with the super partition when flashing a new ROM.
+
+### vendor_boot.img
+The `vendor_boot.img` is a partition image that contains the vendor boot image.
+
+## Where do I get these images?
+You can download the required images for your device from the [LineageOS downloads page](https://download.lineageos.org/devices/{self.state.config.device_code}/builds).
+If this download page does not contain the required images, you can try to find them on the [XDA developers forum](https://forum.xda-developers.com/).
+                """,
+                auto_follow_links=True,
+            ),
+            actions=[
+                TextButton(
+                    "Close", on_click=self.close_close_explain_additional_images_dlg
+                ),
+            ],
+            actions_alignment="end",
+            shape=CountinuosRectangleBorder(radius=0),
+        )
+
+        # create help/info button to show the help dialog for the image and recovery selection
+        explain_additional_images_button = OutlinedButton(
+            "Why do I need this and where do I get it?",
+            on_click=self.open_explain_additional_images_dlg,
+            expand=True,
+            icon=icons.HELP_OUTLINE_OUTLINED,
+            icon_color=colors.DEEP_ORANGE_500,
+            tooltip="Get more details on additional images and download links.",
+        )
+
         # attach the controls for uploading others partitions, like dtbo, vbmeta & super_empty
         additional_image_selection = []
         if self.state.config.metadata["additional_steps"]:
             additional_image_selection.extend(
                 [
-                    Text("Select required additional images:", style="titleSmall"),
+                    Row(
+                        [
+                            Text(
+                                "Select required additional images:", style="titleSmall"
+                            ),
+                            explain_additional_images_button,
+                        ]
+                    ),
                     Markdown(
                         """
 Your selected device and ROM requires flashing of additional partitions. Please select the required images below.
@@ -401,6 +459,17 @@ Make sure the file is for **your exact phone model!**""",
     def close_close_explain_images_dlg(self, e):
         """Close the dialog to explain OS and recovery image."""
         self.dlg_explain_images.open = False
+        self.page.update()
+
+    def open_explain_additional_images_dlg(self, e):
+        """Open the dialog to explain additional images."""
+        self.page.dialog = self.dlg_explain_additional_images
+        self.dlg_explain_additional_images.open = True
+        self.page.update()
+
+    def close_close_explain_additional_images_dlg(self, e):
+        """Close the dialog to explain additional images."""
+        self.dlg_explain_additional_images.open = False
         self.page.update()
 
     def pick_image_result(self, e: FilePickerResultEvent):
