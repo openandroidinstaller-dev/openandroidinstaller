@@ -179,21 +179,8 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.additional_image_selection = Column()
 
         # Device specific notes
-        notes = ""
-        if "brand" in self.state.config.metadata and (
-            self.state.config.metadata["brand"] == "xiaomi"
-            or self.state.config.metadata["brand"] == "poco"
-        ):
-            notes += "- If something goes wrong, you can reinstall MiUI here :\n<https://xiaomifirmwareupdater.com/miui/lavender/>\n\n"
-        if (
-            "untested" in self.state.config.metadata
-            and self.state.config.metadata["untested"] == True
-        ):
-            notes += "- **This device has never been tested with OpenAndroidInstaller.** The installation can go wrong. You may have to finish the installation process with command line. If you test, please report the result on GitHub.\n\n"
-        if "notes" in self.state.config.metadata:
-            for note in self.state.config.metadata["notes"]:
-                notes += "- " + note + "\n\n"
-        if notes != "":
+        notes = self.get_notes()
+        if notes:
             self.right_view.controls.extend(
                 [
                     Text(
@@ -202,9 +189,10 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                         color=colors.RED,
                         weight="bold",
                     ),
-                    Markdown(f"""{notes}"""),
+                    Markdown(notes),
                 ]
             )
+
         # if there is an available download, show the button to the page
         if self.download_link:
             twrp_download_link = f"https://dl.twrp.me/{self.state.config.twrp_link if self.state.config.twrp_link else self.state.config.device_code}"
@@ -299,6 +287,27 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
             ]
         )
         return self.view
+
+    def get_notes(self) -> str:
+        """Prepare and get notes for the specific device from config."""
+        notes = []
+
+        brand = self.state.config.metadata.get("brand", "")
+        if brand in ["xiaomi", "poco"]:
+            notes.append(
+                f"- If something goes wrong, you can reinstall MiUI here:\n<https://xiaomifirmwareupdater.com/miui/{self.state.config.device_code}/>\n"
+            )
+
+        # this should be used as little as possible!
+        if self.state.config.metadata.get("untested", False):
+            notes.append(
+                "- **This device has not been tested with OpenAndroidInstaller yet.** The installation can go wrong. You may have to finish the installation process with command line. If you test, please report the result on GitHub."
+            )
+
+        notes.extend(
+            f"- {note}" for note in self.state.config.metadata.get("notes", [])
+        )
+        return "\n\n".join(notes)
 
     def toggle_additional_image_selection(self):
         """Toggle the visibility of the additional image selection controls."""
