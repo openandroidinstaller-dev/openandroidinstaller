@@ -15,6 +15,7 @@
 
 from pathlib import Path
 from typing import List, Optional
+from typing_extensions import Self
 
 import schema
 import yaml
@@ -67,7 +68,7 @@ class InstallerConfig:
         self.twrp_link = metadata.get("twrp-link")
 
     @classmethod
-    def from_file(cls, path):
+    def from_file(cls, path) -> Self:
         with open(path, "r", encoding="utf-8") as stream:
             try:
                 raw_config = yaml.safe_load(stream)
