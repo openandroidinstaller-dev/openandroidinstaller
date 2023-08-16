@@ -173,7 +173,7 @@ def validate_config(config: str) -> bool:
                 schema.Optional("additional_steps"): [
                     Regex(r"dtbo|vbmeta|vendor_boot|super_empty")
                 ],
-                schema.Optional("notes"): str,
+                schema.Optional("notes"): [str],
                 schema.Optional("brand"): str,
             },
             schema.Optional("requirements"): {
