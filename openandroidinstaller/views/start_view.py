@@ -120,7 +120,6 @@ Now you are ready to continue.
         # toggleswitch to allow skipping flashing recovery
         def check_recovery_already_flashed(e):
             """Enable skipping flashing recovery if selected."""
-
             # manage the bootloader unlocking switch
             if self.bootloader_switch.value == False:
                 self.state.steps = copy.deepcopy(self.state.config.unlock_bootloader)
@@ -136,7 +135,7 @@ Now you are ready to continue.
         self.recovery_switch = Switch(
             label="Custom recovery is already flashed.",
             on_change=check_recovery_already_flashed,
-            disabled=False,
+            disabled=True,
             inactive_thumb_color=colors.YELLOW,
             active_color=colors.GREEN,
         )
@@ -206,8 +205,6 @@ If you **already unlocked the bootloader** of your device or already **flashed a
 If you don't know what this means, you most likely don't need to do anything and you can just continue.
             """
                 ),
-                Row([self.bootloader_switch, self.recovery_switch]),
-                Divider(),
                 self.device_infobox,
                 Row(
                     [
@@ -223,6 +220,8 @@ If you don't know what this means, you most likely don't need to do anything and
                     ],
                     alignment="center",
                 ),
+                Divider(),
+                Row([self.bootloader_switch, self.recovery_switch]),
             ]
         )
         return self.view
@@ -278,6 +277,7 @@ If you don't know what this means, you most likely don't need to do anything and
             if device_name:
                 self.continue_button.disabled = False
                 self.bootloader_switch.disabled = False
+                self.recovery_switch.disabled = False
                 # overwrite the text field with the real name from the config
                 self.device_name.value = (
                     f"{device_name} (code: {self.state.config.device_code})"
