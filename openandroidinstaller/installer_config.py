@@ -170,7 +170,9 @@ def validate_config(config: str) -> bool:
                 "device_code": str,
                 "supported_device_codes": [str],
                 schema.Optional("twrp-link"): str,
-                schema.Optional("additional_steps"): Regex(r"dtbo|vbmeta|vendor_boot|super_empty"),
+                schema.Optional("additional_steps"): [
+                    Regex(r"dtbo|vbmeta|vendor_boot|super_empty")
+                ],
                 schema.Optional("notes"): str,
                 schema.Optional("brand"): str,
             },
