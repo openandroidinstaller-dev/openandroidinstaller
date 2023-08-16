@@ -4,9 +4,6 @@ metadata:
   device_name: Xiaomi Redmi 7A / 8 / 8A / 8A Dual
   is_ab_device: false
   device_code: Mi439
-  supported_recovery:
-    - orangefox
-    - twrp
   additional_steps:
     - dtbo
     - vbmeta
