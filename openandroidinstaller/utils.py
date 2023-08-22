@@ -41,7 +41,15 @@ def get_download_link(devicecode: str) -> Optional[str]:
 
 
 def image_works_with_device(supported_device_codes: List[str], image_path: str) -> bool:
-    """Determine if an image works for the given device."""
+    """Determine if an image works for the given device.
+
+    Args:
+        supported_device_codes: List of supported device codes from the config file.
+        image_path: Path to the image file.
+
+    Returns:
+        True if the image works with the device, False otherwise.
+    """
     with zipfile.ZipFile(image_path) as image_zip:
         with image_zip.open(
             "META-INF/com/android/metadata", mode="r"
@@ -77,13 +85,24 @@ def image_sdk_level(image_path: str) -> int:
     return 0
 
 
-def recovery_works_with_device(device_code: str, recovery_path: str) -> bool:
+def recovery_works_with_device(
+    supported_device_codes: List[str], recovery_path: str
+) -> bool:
     """Determine if a recovery works for the given device.
 
     BEWARE: THE RECOVERY PART IS STILL VERY BASIC!
+
+    Args:
+        supported_device_codes: List of supported device codes from the config file.
+        recovery_path: Path to the recovery file.
+
+    Returns:
+        True if the recovery works with the device, False otherwise.
     """
     recovery_file_name = recovery_path.split("/")[-1]
-    if (device_code in recovery_file_name) and ("twrp" in recovery_file_name):
+    if any(code in recovery_file_name for code in supported_device_codes) and (
+        "twrp" in recovery_file_name
+    ):
         logger.success("Device supported by the selected recovery.")
         return True
     else:

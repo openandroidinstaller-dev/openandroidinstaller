@@ -10,6 +10,7 @@ metadata:
     - super_empty
   supported_device_codes:
     - Mi439
+    - mi439
     - pine
     - olive
     - olivelite

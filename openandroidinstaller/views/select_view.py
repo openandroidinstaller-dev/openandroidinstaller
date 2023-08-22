@@ -296,7 +296,11 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
         notes = []
 
         brand = self.state.config.metadata.get("brand", "")
-        if brand in ["xiaomi", "poco"]:
+        if brand in "xiaomi":
+            notes.append(
+                "- If something goes wrong, you can reinstall MiUI here:\n<https://xiaomifirmwareupdater.com/>\n"
+            )
+        elif brand in "poco":
             notes.append(
                 f"- If something goes wrong, you can reinstall MiUI here:\n<https://xiaomifirmwareupdater.com/miui/{self.state.config.device_code}/>\n"
             )
@@ -552,6 +556,7 @@ Make sure the file is for **your exact phone model!**""",
             # check if the vbmeta works with the device and show the filename in different colors accordingly
             if path == "vbmeta.img":
                 self.selected_vbmeta.color = colors.GREEN
+                self.selected_vbmeta.value = True
                 self.state.vbmeta_path = e.files[0].path
                 logger.info(f"Selected vbmeta from {self.state.vbmeta_path}")
             else:
