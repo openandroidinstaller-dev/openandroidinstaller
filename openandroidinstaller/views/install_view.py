@@ -210,6 +210,8 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
             self.error_text.value = "Installation failed! Try again or make sure everything is setup correctly."
         else:
             sleep(5)  # wait to make sure everything is fine
+            self.progress_indicator.set_progress_bar(100)
+            self.progress_indicator.update()
             logger.success("Installation process was successful. Allow to continue.")
             # enable the confirm button and disable the call button
             self.confirm_button.disabled = False
