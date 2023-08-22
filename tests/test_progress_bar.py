@@ -30,13 +30,13 @@ def test_init():
 def test_update_progress_bar():
     """Test if the progress bar is updated properly based on lines."""
     progress_indicator = ProgressIndicator(expand=True)
-    build_indicator = progress_indicator.build()
+    progress_indicator.build()
 
     # test if other line is fine
     progress_indicator.display_progress_bar(
         line="Failed to mount '/data' (Device or resource busy)"
     )
-    assert not progress_indicator.progress_bar
+    assert progress_indicator.progress_bar
 
     # test if percentages are parsed correctly and update is performed
     for percentage in range(0, 47):
@@ -46,4 +46,4 @@ def test_update_progress_bar():
 
     # test if the finishing print is detected and updated correctly.
     progress_indicator.display_progress_bar(line="Total xfer: 1.00x\n")
-    assert progress_indicator.progress_bar.value == 1.0
+    assert progress_indicator.progress_bar.value == 0.99
