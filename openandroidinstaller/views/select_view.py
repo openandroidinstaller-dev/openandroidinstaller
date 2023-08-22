@@ -555,12 +555,13 @@ Make sure the file is for **your exact phone model!**""",
         if e.files:
             # check if the vbmeta works with the device and show the filename in different colors accordingly
             if path == "vbmeta.img":
-                self.selected_vbmeta.color = colors.GREEN
+                self.selected_vbmeta.fill_color = colors.GREEN
                 self.selected_vbmeta.value = True
                 self.state.vbmeta_path = e.files[0].path
                 logger.info(f"Selected vbmeta from {self.state.vbmeta_path}")
             else:
-                self.selected_vbmeta.color = colors.RED
+                self.selected_vbmeta.fill_color = colors.RED
+                self.selected_vbmeta.value = False
         else:
             logger.info("No image selected.")
         # update
@@ -589,14 +590,14 @@ Make sure the file is for **your exact phone model!**""",
         if (".zip" in self.selected_image.value) and (
             ".img" in self.selected_recovery.value
         ):
-            device_code = self.state.config.device_code
             if not (
                 image_works_with_device(
                     supported_device_codes=self.state.config.supported_device_codes,
                     image_path=self.state.image_path,
                 )
                 and recovery_works_with_device(
-                    device_code=device_code, recovery_path=self.state.recovery_path
+                    supported_device_codes=self.state.config.supported_device_codes,
+                    recovery_path=self.state.recovery_path
                 )
             ):
                 # if image and recovery work for device allow to move on, otherwise display message
