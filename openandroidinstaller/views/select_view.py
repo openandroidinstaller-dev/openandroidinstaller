@@ -301,13 +301,9 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
         notes = []
 
         brand = self.state.config.metadata.get("brand", "")
-        if brand == "xiaomi":
+        if brand in ["xiaomi", "poco"]:
             notes.append(
                 "- If something goes wrong, you can reinstall MiUI here:\n<https://xiaomifirmwareupdater.com/>\n"
-            )
-        elif brand == "poco":
-            notes.append(
-                f"- If something goes wrong, you can reinstall MiUI here:\n<https://xiaomifirmwareupdater.com/miui/{self.state.config.device_code}/>\n"
             )
 
         # this should be used as little as possible!
