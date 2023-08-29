@@ -41,6 +41,7 @@ from tooling import (
     adb_reboot,
     adb_reboot_bootloader,
     adb_reboot_download,
+    adb_reboot_recovery,
     adb_sideload,
     adb_twrp_copy_partitions,
     fastboot_boot_recovery,
@@ -216,6 +217,7 @@ class StepView(BaseView):
             "adb_reboot": adb_reboot,
             "adb_reboot_bootloader": adb_reboot_bootloader,
             "adb_reboot_download": adb_reboot_download,
+            "adb_reboot_recovery": adb_reboot_recovery,
             "adb_sideload": partial(adb_sideload, target=self.state.image_path),
             "adb_twrp_copy_partitions": partial(
                 adb_twrp_copy_partitions, config_path=self.state.config_path

@@ -251,33 +251,38 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
                 ),
                 self.selected_image,
                 Divider(),
-                Text("Select a TWRP recovery image:", style="titleSmall"),
-                Markdown(
-                    f"""
+            ]
+        )
+        if self.state.flash_recovery:
+            self.right_view.controls.extend(
+                [
+                    Text("Select a TWRP recovery image:", style="titleSmall"),
+                    Markdown(
+                        f"""
 The recovery image should look something like `twrp-3.7.0_12-0-{self.state.config.device_code}.img`.
 
 **Note:** This tool **only supports TWRP recoveries**.""",
-                    extension_set="gitHubFlavored",
-                ),
-                Row(
-                    [
-                        FilledButton(
-                            "Pick TWRP recovery file",
-                            icon=icons.UPLOAD_FILE,
-                            on_click=lambda _: self.pick_recovery_dialog.pick_files(
-                                allow_multiple=False,
-                                file_type="custom",
-                                allowed_extensions=["img"],
+                        extension_set="gitHubFlavored",
+                    ),
+                    Row(
+                        [
+                            FilledButton(
+                                "Pick TWRP recovery file",
+                                icon=icons.UPLOAD_FILE,
+                                on_click=lambda _: self.pick_recovery_dialog.pick_files(
+                                    allow_multiple=False,
+                                    file_type="custom",
+                                    allowed_extensions=["img"],
+                                ),
+                                expand=True,
                             ),
-                            expand=True,
-                        ),
-                    ]
-                ),
-                self.selected_recovery,
-                Divider(),
-                self.additional_image_selection,
-            ]
-        )
+                        ]
+                    ),
+                    self.selected_recovery,
+                    Divider(),
+                    self.additional_image_selection,
+                ]
+            )
 
         # attach the bottom buttons
         self.right_view.controls.extend(
@@ -296,11 +301,11 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
         notes = []
 
         brand = self.state.config.metadata.get("brand", "")
-        if brand in "xiaomi":
+        if brand == "xiaomi":
             notes.append(
                 "- If something goes wrong, you can reinstall MiUI here:\n<https://xiaomifirmwareupdater.com/>\n"
             )
-        elif brand in "poco":
+        elif brand == "poco":
             notes.append(
                 f"- If something goes wrong, you can reinstall MiUI here:\n<https://xiaomifirmwareupdater.com/miui/{self.state.config.device_code}/>\n"
             )
@@ -498,14 +503,15 @@ Make sure the file is for **your exact phone model!**""",
             else:
                 self.selected_image.color = colors.RED
         # if the image works and the sdk level is 33 or higher, show the additional image selection
-        if (
-            self.selected_image.color == colors.GREEN
-            and image_sdk_level(self.state.image_path) >= 33
-        ):
-            self.toggle_additional_image_selection()
-        else:
-            self.additional_image_selection.controls = []
-            self.additional_image_selection.update()
+        if self.state.flash_recovery:
+            if (
+                self.selected_image.color == colors.GREEN
+                and image_sdk_level(self.state.image_path) >= 33
+            ):
+                self.toggle_additional_image_selection()
+            else:
+                self.additional_image_selection.controls = []
+                self.additional_image_selection.update()
         # update
         self.selected_image.update()
 
@@ -523,9 +529,9 @@ Make sure the file is for **your exact phone model!**""",
             logger.info("No image selected.")
         # check if the recovery works with the device and show the filename in different colors accordingly
         if e.files:
-            device_code = self.state.config.device_code
             if recovery_works_with_device(
-                device_code=device_code, recovery_path=self.state.recovery_path
+                supported_device_codes=self.state.config.supported_device_codes,
+                recovery_path=self.state.recovery_path,
             ):
                 self.selected_recovery.color = colors.GREEN
             else:
@@ -639,6 +645,32 @@ Make sure the file is for **your exact phone model!**""",
                 return
 
             logger.info("Image and recovery work with the device. You can continue.")
+            self.info_field.controls = []
+            self.confirm_button.disabled = False
+            self.right_view.update()
+        elif (".zip" in self.selected_image.value) and (not self.state.flash_recovery):
+            if not (
+                image_works_with_device(
+                    supported_device_codes=self.state.config.supported_device_codes,
+                    image_path=self.state.image_path,
+                )
+            ):
+                # if image works for device allow to move on, otherwise display message
+                logger.error(
+                    "Image doesn't work with the device. Please select a different one."
+                )
+                self.info_field.controls = [
+                    Text(
+                        "Image doesn't work with the device.",
+                        color=colors.RED,
+                        weight="bold",
+                    )
+                ]
+                self.confirm_button.disabled = True
+                self.right_view.update()
+                return
+
+            logger.info("Image works with the device. You can continue.")
             self.info_field.controls = []
             self.confirm_button.disabled = False
             self.right_view.update()

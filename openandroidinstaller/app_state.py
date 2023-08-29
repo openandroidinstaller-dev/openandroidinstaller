@@ -16,8 +16,9 @@
 import copy
 from pathlib import Path
 from typing import List, Optional
+from loguru import logger
 
-from installer_config import _load_config
+from installer_config import _load_config, Step
 
 
 class AppState:
@@ -36,6 +37,10 @@ class AppState:
         self.bin_path = bin_path
         self.test = test
         self.test_config = test_config
+
+        # store state
+        self.unlock_bootloader = True
+        self.flash_recovery = True
 
         # placeholders
         self.advanced = False
@@ -72,3 +77,48 @@ class AppState:
             self.steps = copy.deepcopy(self.config.unlock_bootloader) + copy.deepcopy(
                 self.config.boot_recovery
             )
+
+    def toggle_flash_unlock_bootloader(self):
+        """Toggle flashing of unlock bootloader."""
+        self.unlock_bootloader = not self.unlock_bootloader
+        if self.unlock_bootloader:
+            logger.info("Enabled unlocking the bootloader again.")
+            self.steps = copy.deepcopy(self.config.unlock_bootloader)
+        else:
+            logger.info("Skipping bootloader unlocking.")
+            self.steps = []
+        # if the recovery is already flashed, skip flashing it again
+        if self.flash_recovery:
+            self.steps += copy.deepcopy(self.config.boot_recovery)
+        else:
+            self.steps = [
+                Step(
+                    title="Boot custom recovery",
+                    type="confirm_button",
+                    content="If you already flashed TWRP, boot into it by pressing 'Confirm and run'. Otherwise restart the process. Once your phone screen looks like the picture on the left, continue.",
+                    command="adb_reboot_recovery",
+                    img="twrp-start.jpeg",
+                )
+            ]
+
+    def toggle_flash_recovery(self):
+        """Toggle flashing of recovery."""
+        self.flash_recovery = not self.flash_recovery
+        if self.unlock_bootloader:
+            self.steps = copy.deepcopy(self.config.unlock_bootloader)
+        else:
+            self.steps = []
+        if self.flash_recovery:
+            logger.info("Enabled flashing recovery again.")
+            self.steps += copy.deepcopy(self.config.boot_recovery)
+        else:
+            logger.info("Skipping flashing recovery.")
+            self.steps = [
+                Step(
+                    title="Boot custom recovery",
+                    type="confirm_button",
+                    content="If you already flashed TWRP, boot into it by pressing 'Confirm and run'. Otherwise restart the process. Once your phone screen looks like the picture on the left, continue.",
+                    command="adb_reboot_recovery",
+                    img="twrp-start.jpeg",
+                )
+            ]

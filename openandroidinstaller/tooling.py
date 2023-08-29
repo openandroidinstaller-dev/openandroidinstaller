@@ -161,6 +161,15 @@ def adb_wait_for_sideload(bin_path: Path) -> TerminalResponse:
         yield line
 
 
+@add_logging("Reboot to recovery with adb")
+def adb_reboot_recovery(bin_path: Path) -> TerminalResponse:
+    """Reboot to recovery with adb."""
+    for line in run_command("adb reboot recovery", bin_path):
+        yield line
+    for line in adb_wait_for_recovery(bin_path=bin_path):
+        yield line
+
+
 def adb_twrp_copy_partitions(bin_path: Path, config_path: Path) -> TerminalResponse:
     # some devices like one plus 6t or motorola moto g7 power need the partitions copied to prevent a hard brick
     logger.info("Sideload copy_partitions script with adb.")
