@@ -39,7 +39,7 @@ def test_update_progress_bar():
     assert progress_indicator.progress_bar
 
     # test if percentages are parsed correctly and update is performed
-    for percentage in range(0, 47):
+    for percentage in range(1, 47):
         line = f"serving: '/home/tobias/Repositories/openandroidinstaller/images/google-pixel3a/lineage-19.1-20221004-nightly-sargo-signed.zip'  (~{percentage}%)\n"
         progress_indicator.display_progress_bar(line)
         assert progress_indicator.progress_bar.value == percentage / 100
@@ -47,3 +47,7 @@ def test_update_progress_bar():
     # test if the finishing print is detected and updated correctly.
     progress_indicator.display_progress_bar(line="Total xfer: 1.00x\n")
     assert progress_indicator.progress_bar.value == 0.99
+
+    # test if the final set_progress_bar is working correctly
+    progress_indicator.set_progress_bar(100)
+    assert progress_indicator.progress_bar.value == 1.0

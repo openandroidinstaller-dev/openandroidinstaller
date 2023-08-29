@@ -597,7 +597,7 @@ Make sure the file is for **your exact phone model!**""",
                 )
                 and recovery_works_with_device(
                     supported_device_codes=self.state.config.supported_device_codes,
-                    recovery_path=self.state.recovery_path
+                    recovery_path=self.state.recovery_path,
                 )
             ):
                 # if image and recovery work for device allow to move on, otherwise display message
