@@ -116,7 +116,7 @@ class AppState:
             self.steps = [
                 Step(
                     title="Boot custom recovery",
-                    type="confirm_button",
+                    type="call_button",
                     content="If you already flashed TWRP, boot into it by pressing 'Confirm and run'. Otherwise restart the process. Once your phone screen looks like the picture on the left, continue.",
                     command="adb_reboot_recovery",
                     img="twrp-start.jpeg",

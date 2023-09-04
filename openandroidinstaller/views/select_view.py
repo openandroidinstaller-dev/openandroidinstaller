@@ -122,6 +122,10 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         # initialize and manage button state.
         self.confirm_button = confirm_button(self.on_confirm)
         self.confirm_button.disabled = True
+        self.continue_eitherway_button = confirm_button(
+            self.on_confirm, "Continue without additional images"
+        )
+        self.continue_eitherway_button.disabled = True
         self.pick_recovery_dialog.on_result = self.enable_button_if_ready
         self.pick_image_dialog.on_result = self.enable_button_if_ready
         self.pick_dtbo_dialog.on_result = self.enable_button_if_ready
@@ -288,7 +292,13 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
         self.right_view.controls.extend(
             [
                 self.info_field,
-                Row([self.back_button, self.confirm_button]),
+                Row(
+                    [
+                        self.back_button,
+                        self.continue_eitherway_button,
+                        self.confirm_button,
+                    ]
+                ),
             ]
         )
         return self.view
@@ -614,24 +624,26 @@ Make sure the file is for **your exact phone model!**""",
                     )
                 ]
                 self.confirm_button.disabled = True
+                self.continue_eitherway_button.disabled = True
                 self.right_view.update()
                 return
 
-            # check if the additional images work with the device
-            if any(
-                v == False
-                for v in [
+            self.continue_eitherway_button.disabled = False
+
+            # check if the additional images are there
+            if not all(
+                [
                     self.selected_dtbo.value,
                     self.selected_vbmeta.value,
                     self.selected_super_empty.value,
                 ]
             ):
                 logger.error(
-                    "Some additional images don't match. Please select different ones."
+                    "Some additional images don't match or are missing. Please select different ones."
                 )
                 self.info_field.controls = [
                     Text(
-                        "Some additional images don't match. Please select the right ones.",
+                        "Some additional images don't match or are missing. Please select the right ones.",
                         color=colors.RED,
                         weight="bold",
                     )
@@ -663,12 +675,15 @@ Make sure the file is for **your exact phone model!**""",
                     )
                 ]
                 self.confirm_button.disabled = True
+                self.continue_eitherway_button.disabled = True
                 self.right_view.update()
                 return
 
             logger.info("Image works with the device. You can continue.")
             self.info_field.controls = []
             self.confirm_button.disabled = False
+            self.continue_eitherway_button.disabled = False
             self.right_view.update()
         else:
             self.confirm_button.disabled = True
+            self.continue_eitherway_button.disabled = True
