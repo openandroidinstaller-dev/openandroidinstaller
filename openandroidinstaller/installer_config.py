@@ -63,7 +63,7 @@ class InstallerConfig:
         self.requirements = requirements
         self.device_code = metadata.get("device_code")
         self.is_ab = metadata.get("is_ab_device", False)
-        self.additional_steps = metadata.get("additional_steps")
+        self.additional_steps = metadata.get("additional_steps", [])
         self.supported_device_codes = metadata.get("supported_device_codes")
         self.twrp_link = metadata.get("twrp-link")
 
@@ -136,8 +136,6 @@ def _load_config(device_code: str, config_path: Path) -> Optional[InstallerConfi
             config = InstallerConfig.from_file(path)
             logger.info(f"Loaded device config from {path}.")
             if config:
-                if "additional_steps" not in config.metadata:
-                    config.metadata.update({"additional_steps": "[]"})
                 logger.info(f"Config metadata: {config.metadata}.")
             return config
         else:

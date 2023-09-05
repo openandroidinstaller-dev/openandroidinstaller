@@ -289,16 +289,19 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
             )
 
         # attach the bottom buttons
+        if self.state.config.additional_steps:
+            bottom_buttons = [
+                self.back_button,
+                self.continue_eitherway_button,
+                self.confirm_button,
+            ]
+
+        else:
+            bottom_buttons = [self.back_button, self.confirm_button]
         self.right_view.controls.extend(
             [
                 self.info_field,
-                Row(
-                    [
-                        self.back_button,
-                        self.continue_eitherway_button,
-                        self.confirm_button,
-                    ]
-                ),
+                Row(bottom_buttons),
             ]
         )
         return self.view
@@ -379,7 +382,7 @@ If this download page does not contain the required images, you can try to find 
 
         # attach the controls for uploading others partitions, like dtbo, vbmeta & super_empty
         additional_image_selection = []
-        if self.state.config.metadata["additional_steps"]:
+        if self.state.config.additional_steps:
             additional_image_selection.extend(
                 [
                     Row(
@@ -398,7 +401,7 @@ Make sure the file is for **your exact phone model!**""",
                     ),
                 ]
             )
-        if "dtbo" in self.state.config.metadata["additional_steps"]:
+        if "dtbo" in self.state.config.additional_steps:
             self.selected_dtbo.value = False
             additional_image_selection.extend(
                 [
@@ -419,7 +422,7 @@ Make sure the file is for **your exact phone model!**""",
                     ),
                 ]
             )
-        if "vbmeta" in self.state.config.metadata["additional_steps"]:
+        if "vbmeta" in self.state.config.additional_steps:
             self.selected_vbmeta.value = False
             additional_image_selection.extend(
                 [
@@ -440,7 +443,7 @@ Make sure the file is for **your exact phone model!**""",
                     ),
                 ]
             )
-        if "super_empty" in self.state.config.metadata["additional_steps"]:
+        if "super_empty" in self.state.config.additional_steps:
             self.selected_super_empty.value = False
             additional_image_selection.extend(
                 [
@@ -631,7 +634,7 @@ Make sure the file is for **your exact phone model!**""",
             self.continue_eitherway_button.disabled = False
 
             # check if the additional images are there
-            if not all(
+            if self.state.config.additional_steps and not all(
                 [
                     self.selected_dtbo.value,
                     self.selected_vbmeta.value,
@@ -686,4 +689,4 @@ Make sure the file is for **your exact phone model!**""",
             self.right_view.update()
         else:
             self.confirm_button.disabled = True
-            self.continue_eitherway_button.disabled = True
+            # self.continue_eitherway_button.disabled = True
