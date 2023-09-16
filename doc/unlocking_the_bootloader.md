@@ -5,6 +5,6 @@ Some devices with require manual steps to unlock the bootloader. In general you 
 
 Other phone vendors stops allowing to unlock the bootloader all together. There is nothing to be done if you didn't unlock your device in time. These vendors include *Huawei, LG, Asus* among others. Support for these vendors will always be very limited.
 
-You can find more info about the brands and their Bootloader policy here (in french) 
+You can find more info about the brands and their bootloader policy [here in French](https://wikilibriste.fr/fr/tutoriels-android/bootloader-unlock) 
 
-https://wikilibriste.fr/fr/tutoriels-android/bootloader-unlock
+
