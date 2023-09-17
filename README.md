@@ -27,20 +27,21 @@
   </p>
 </div>
 
-> **Warning**: This application is currently in beta state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, things might still go wrong.
+> [!WARNING]
+> This application is currently in beta state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, things might still go wrong.
 
-> **Note**: Unlocking the bootloader will erase all data on your device!
-This also includes your DRM keys, which are stored in the Trim Area partition (also called TA) in case your device is fairly recent and supports DRM L1. Those devices will be downgraded to DRM L3. Devices on DRM L3 by default will not be affected.
-Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
-If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
-
+> [!IMPORTANT]
+> Unlocking the bootloader will erase all data on your device!
+> This also includes your DRM keys, which are stored in the Trim Area partition (also called TA) in case your device is fairly recent and supports DRM L1. Those devices will be downgraded to DRM L3. Devices on DRM L3 by default will not be affected.
+> Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
+> If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
 
 ## Usage
 
 Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
 
 1. Download the [.exe or appropriate executable file for your OS](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases) from the releases or get the [official flatpak from flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller). You might need to change permissions to run the executable.
-    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
+    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
 2. Download the custom ROM image and the TWRP recovery image for your device and optionally some addons. A source for files can be found on the following websites:
     - some custom ROMs:
       - [LineageOS](https://wiki.lineageos.org/devices)
