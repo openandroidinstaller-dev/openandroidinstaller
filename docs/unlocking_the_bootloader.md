@@ -21,7 +21,7 @@ Other phone manufacturers no longer allow you to unlock the bootloader. Nothing 
 | Sony | Fastboot | [Code from manufacturer](https://developer.sony.com/open-source/aosp-on-xperia-open-devices/get-started/unlock-bootloader) | **Yes** | All **except** XQ-CT62 (1Ⅳ US) & XQ-CQ62 (5Ⅳ US) |
 | Huawei | Fastboot | No official codes since 2017/2018<br>(**Unofficial methods available**) | **Yes** | Mate 9/9Pro, P10/P10Plus |
 | Honor | Fastboot | No official codes since 2017/2018<br>(**Unofficial methods available**) | **Yes** | Honor 8 |
-| LG | --- | Impossible since December 2021 | **Yes** |  |
+| LG | Fastboot | Impossible since December 2021 | **Yes** |  |
 | ASUS | Fastboot | Impossible since May 2023 (ASUS unlocking App) | **Yes** |  |
 
 **\*** In the EU you won't loose your standard 2 years of the warranty when you unlock your bootloader, flash your device or root it. ([source](https://forum.xda-developers.com/t/info-eu-rooting-and-flashing-dont-void-the-warranty.1998801/))
