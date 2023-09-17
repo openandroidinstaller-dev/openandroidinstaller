@@ -29,4 +29,4 @@ Other phone manufacturers no longer allow you to unlock the bootloader. Nothing 
 </details>
 <br>
 
-You can find more information about the brands and their bootloader policies [here](https://wikilibriste.fr/fr/tutoriels-android/bootloader-unlock). (in French)
+You can find more information about the brands and their bootloader policies [here](https://wikilibriste.fr/fr/tutoriels-android/bootloader-unlock) (in French).
