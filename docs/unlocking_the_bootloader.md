@@ -1,4 +1,7 @@
 #### On unlocking the bootloader
+
+First of all, this tool will not help you bypass any vender locked bootloaders in non-official ways.
+
 Devices by *Samsung, Google, OnePlus, Fairphone* and others make it relatively easy to unlock the bootloader and get good support in the installer.
 
 For some devices, it is necessary to unlock the bootloader manually. You usually need to create an account on the manufacturer's website, wait for a certain time and obtain a code from there. OpenAndroidInstaller will try to guide you as far as possible. These vendors include *Sony, Motorola and Xiaomi* amongst others.
