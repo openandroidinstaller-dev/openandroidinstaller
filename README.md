@@ -171,6 +171,13 @@ OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | | tested
 OnePlus | 9 | lemonade | | under development
 </details>
 
+<details><summary><b>Xiaomi</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Xiaomi | Redmi 7A / 8 / 8A / 8A Dual | [Mi439](https://wiki.lineageos.org/devices/Mi439) : pine / olive / olivelite / olivewood | | tested
+</details>
+
 And more to come!
 
 
@@ -195,7 +202,6 @@ More details on how to contribute can be found [here](https://github.com/openand
 Please have a look before opening an issue or starting to contribute.
 
 A detailed list can be found [here](https://openandroidinstaller.org/#contribute).
-
 
 
 ## Tools

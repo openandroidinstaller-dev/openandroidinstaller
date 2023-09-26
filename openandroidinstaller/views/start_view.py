@@ -13,7 +13,6 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-import copy
 import webbrowser
 from loguru import logger
 from typing import Callable
@@ -99,15 +98,7 @@ Now you are ready to continue.
         # toggleswitch to allow skipping unlocking the bootloader
         def check_bootloader_unlocked(e):
             """Enable skipping unlocking the bootloader if selected."""
-            if self.bootloader_switch.value:
-                logger.info("Skipping bootloader unlocking.")
-                self.state.steps = []
-            else:
-                logger.info("Enabled unlocking the bootloader again.")
-                self.state.steps = copy.deepcopy(self.state.config.unlock_bootloader)
-            # if the recovery is already flashed, skip flashing it again
-            if self.recovery_switch.value == False:
-                self.state.steps += copy.deepcopy(self.state.config.boot_recovery)
+            self.state.toggle_flash_unlock_bootloader()
 
         self.bootloader_switch = Switch(
             label="Bootloader is already unlocked.",
@@ -120,18 +111,7 @@ Now you are ready to continue.
         # toggleswitch to allow skipping flashing recovery
         def check_recovery_already_flashed(e):
             """Enable skipping flashing recovery if selected."""
-
-            # manage the bootloader unlocking switch
-            if self.bootloader_switch.value == False:
-                self.state.steps = copy.deepcopy(self.state.config.unlock_bootloader)
-            else:
-                self.state.steps = []
-
-            if self.recovery_switch.value:
-                logger.info("Skipping flashing recovery.")
-            else:
-                logger.info("Enabled flashing recovery again.")
-                self.state.steps += copy.deepcopy(self.state.config.boot_recovery)
+            self.state.toggle_flash_recovery()
 
         self.recovery_switch = Switch(
             label="Custom recovery is already flashed.",
@@ -206,9 +186,6 @@ If you **already unlocked the bootloader** of your device or already **flashed a
 If you don't know what this means, you most likely don't need to do anything and you can just continue.
             """
                 ),
-                Row([self.bootloader_switch]),
-                Row([self.recovery_switch]),
-                Divider(),
                 self.device_infobox,
                 Row(
                     [
@@ -224,6 +201,8 @@ If you don't know what this means, you most likely don't need to do anything and
                     ],
                     alignment="center",
                 ),
+                Divider(),
+                Row([self.bootloader_switch, self.recovery_switch]),
             ]
         )
         return self.view
