@@ -161,6 +161,15 @@ def adb_wait_for_sideload(bin_path: Path) -> TerminalResponse:
         yield line
 
 
+@add_logging("Reboot to recovery with adb")
+def adb_reboot_recovery(bin_path: Path) -> TerminalResponse:
+    """Reboot to recovery with adb."""
+    for line in run_command("adb reboot recovery", bin_path):
+        yield line
+    for line in adb_wait_for_recovery(bin_path=bin_path):
+        yield line
+
+
 def adb_twrp_copy_partitions(bin_path: Path, config_path: Path) -> TerminalResponse:
     # some devices like one plus 6t or motorola moto g7 power need the partitions copied to prevent a hard brick
     logger.info("Sideload copy_partitions script with adb.")
@@ -416,7 +425,7 @@ def fastboot_boot_recovery(
 
 
 def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
-    """Temporarily, flash custom recovery with fastboot to boot partition."""
+    """Flash custom recovery with fastboot to boot partition."""
     logger.info("Flash custom recovery with fastboot.")
     for line in run_command(
         "fastboot flash boot", target=f"{recovery}", bin_path=bin_path
@@ -438,6 +447,85 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
         yield False
     else:
         yield True
+
+
+@add_logging("Flash custom recovery with fastboot.")
+def fastboot_flash_recovery(
+    bin_path: Path, recovery: str, is_ab: bool = True
+) -> TerminalResponse:
+    """Flash custom recovery with fastboot."""
+    for line in run_command(
+        "fastboot flash recovery ", target=f"{recovery}", bin_path=bin_path
+    ):
+        yield line
+    if not is_ab:
+        if (type(line) == bool) and not line:
+            logger.error("Flashing recovery failed.")
+            yield False
+        else:
+            yield True
+
+
+@add_logging("Rebooting device to recovery.")
+def fastboot_reboot_recovery(bin_path: Path) -> TerminalResponse:
+    """Reboot to recovery with fastboot.
+
+    WARNING: On some devices, users need to press a specific key combo to make it work.
+    """
+    for line in run_command("fastboot reboot recovery", bin_path):
+        yield line
+
+
+@add_logging("Flash additional partitions with fastboot")
+def fastboot_flash_additional_partitions(
+    bin_path: Path,
+    dtbo: Optional[str],
+    vbmeta: Optional[str],
+    super_empty: Optional[str],
+    is_ab: bool = True,
+) -> TerminalResponse:
+    """Flash additional partitions (dtbo, vbmeta, super_empty) with fastboot."""
+    logger.info("Flash additional partitions with fastboot.")
+    if dtbo:
+        logger.info("dtbo selected. Flashing dtbo partition.")
+        for line in run_command(
+            "fastboot flash dtbo ", target=f"{dtbo}", bin_path=bin_path
+        ):
+            yield line
+        if not is_ab:
+            if (type(line) == bool) and not line:
+                logger.error("Flashing dtbo failed.")
+                yield False
+            else:
+                yield True
+    else:
+        yield True
+
+    if vbmeta:
+        logger.info("vbmeta selected. Flashing vbmeta partition.")
+        for line in run_command(
+            "fastboot flash vbmeta ", target=f"{vbmeta}", bin_path=bin_path
+        ):
+            yield line
+        if not is_ab:
+            if (type(line) == bool) and not line:
+                logger.error("Flashing vbmeta failed.")
+                yield False
+            else:
+                yield True
+
+    if super_empty:
+        logger.info("super_empty selected. Wiping super partition.")
+        for line in run_command(
+            "fastboot wipe-super ", target=f"{super_empty}", bin_path=bin_path
+        ):
+            yield line
+        if not is_ab:
+            if (type(line) == bool) and not line:
+                logger.error("Wiping super failed.")
+                yield False
+            else:
+                yield True
 
 
 def heimdall_wait_for_download_available(bin_path: Path) -> bool:
