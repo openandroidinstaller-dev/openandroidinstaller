@@ -903,7 +903,7 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "<3.11,>=3.9"
-content-hash = "f5462dcfd8695f093ffdc7e70d7a90909ab0982f96c3de1564b831223221faeb"
+content-hash = "5eb8a128bbc3eb03bb8dd70b45c9e546d7ef88c16b9b562e9c769d1ccc7c0f52"
 
 [metadata.files]
 altgraph = [
