@@ -175,6 +175,7 @@ OnePlus | 9 | lemonade | | under development
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
+Xiaomi | Redmi Note 7 | [lavender](https://wiki.lineageos.org/devices/lavender) |  | tested
 Xiaomi | Redmi 7A / 8 / 8A / 8A Dual | [Mi439](https://wiki.lineageos.org/devices/Mi439) : pine / olive / olivelite / olivewood | | tested
 </details>
 
