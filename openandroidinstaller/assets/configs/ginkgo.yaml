@@ -7,7 +7,6 @@ metadata:
   supported_device_codes:
     - ginkgo
     - willow
-  untested: true
   notes:
     - You should install Android 10 or newer ROM.
 requirements:

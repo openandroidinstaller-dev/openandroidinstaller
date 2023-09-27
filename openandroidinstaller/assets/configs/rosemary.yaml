@@ -9,7 +9,6 @@ metadata:
     - secret
     - maltose
     - rosemary_p
-  untested: true
   notes:
     - Please respect the requested by the ROM developers version for MIUI and Android.
 steps:
