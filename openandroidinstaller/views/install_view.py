@@ -54,7 +54,7 @@ class InstallView(BaseView):
     def build(self):
         """Create the content of the view."""
         # error text
-        self.error_text = Text("", color=colors.RED)
+        self.error_text = Text("", color=colors.GREEN)
 
         # switch to enable advanced output - here it means show terminal input/output in tool
         def check_advanced_switch(e):
@@ -178,7 +178,8 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
         # disable the call button while the command is running
         self.install_button.disabled = True
         self.install_addons_switch.disabled = True
-        self.error_text.value = ""
+        self.error_text.value = "Please be patient, it may take a few minutes."
+        self.error_text.color = colors.GREEN
         # reset the progress indicators
         self.progress_indicator.clear()
         # reset terminal output
@@ -208,8 +209,11 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
             self.install_button.disabled = False
             # also remove the last error text if it happened
             self.error_text.value = "Installation failed! Try again or make sure everything is setup correctly."
+            self.error_text.color = colors.RED
         else:
             sleep(5)  # wait to make sure everything is fine
+            self.progress_indicator.set_progress_bar(100)
+            self.progress_indicator.update()
             logger.success("Installation process was successful. Allow to continue.")
             # enable the confirm button and disable the call button
             self.confirm_button.disabled = False
