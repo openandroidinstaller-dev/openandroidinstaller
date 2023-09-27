@@ -636,9 +636,12 @@ Make sure the file is for **your exact phone model!**""",
             # check if the additional images are there
             if self.state.config.additional_steps and not all(
                 [
-                    self.selected_dtbo.value or "dtbo" not in self.state.config.additional_steps,
-                    self.selected_vbmeta.value or "vbmeta" not in self.state.config.additional_steps,
-                    self.selected_super_empty.value or "super_empty" not in self.state.config.additional_steps,
+                    self.selected_dtbo.value
+                    or "dtbo" not in self.state.config.additional_steps,
+                    self.selected_vbmeta.value
+                    or "vbmeta" not in self.state.config.additional_steps,
+                    self.selected_super_empty.value
+                    or "super_empty" not in self.state.config.additional_steps,
                 ]
             ):
                 logger.error(
@@ -658,7 +661,7 @@ Make sure the file is for **your exact phone model!**""",
             logger.info("Image and recovery work with the device. You can continue.")
             self.info_field.controls = []
             self.confirm_button.disabled = False
-            self.continue_eitherway_button.disabled = True 
+            self.continue_eitherway_button.disabled = True
             self.right_view.update()
         elif (".zip" in self.selected_image.value) and (not self.state.flash_recovery):
             if not (
