@@ -4,9 +4,6 @@ metadata:
   device_name: Xiaomi Redmi 9A / 9C / 9AT / 9i / 9A Sport / 10A / 10A Sport
   is_ab_device: false
   device_code: garden
-  supported_recovery:
-    - orangefox
-    - twrp
   supported_device_codes:
     - dandelion
     - garden
@@ -14,7 +11,6 @@ metadata:
     - angelican
   notes:
     - OAI don't support ROM that requires permissiver.
-    - Be careful when choosing OrangeFox version, Android 12 & 13 ROM needs OrangeFox version code with `A12`, for example `R11.1_5_A12`. Android 10 & 11 ROM needs OrangeFox version code without `A12` (bellow on the page)
 requirements:
   firmware: MiUI 12.5 (Q)
 steps:
