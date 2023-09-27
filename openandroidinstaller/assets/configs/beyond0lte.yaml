@@ -4,7 +4,8 @@ metadata:
   is_ab_device: false
   device_code: beyond0lte 
   supported_device_codes:
-    - beyond0lte 
+    - beyond0lte
+    - beyond0
 requirements:
   android: 12
 steps:
