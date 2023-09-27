@@ -1,29 +1,29 @@
-<br />
 <div align="center">
-  <h1>OpenAndroidInstaller</h1>
-
-  [![License](https://img.shields.io/github/license/openandroidinstaller-dev/openandroidinstaller?color=green&style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/LICENSE)
-  [![Release](https://img.shields.io/github/v/release/openandroidinstaller-dev/openandroidinstaller?include_prereleases&style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
-  [![Downloads](https://img.shields.io/github/downloads/openandroidinstaller-dev/openandroidinstaller/total?style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
-  [![Flathub](https://img.shields.io/flathub/downloads/org.openandroidinstaller.OpenAndroidInstaller?label=flathub%20installs&style=flat-square)](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller)
-  [![Twitter](https://img.shields.io/twitter/follow/oainstaller?style=social)](https://twitter.com/OAInstaller)
-  [![Mastodon](https://img.shields.io/mastodon/follow/109341220262803943?domain=https%3A%2F%2Ffosstodon.org&style=social)](https://fosstodon.org/@openandroidinstaller)
-  <p>Makes installing alternative Android distributions nice and easy.</p>
   <a href="https://github.com/openandroidinstaller-dev/openandroidinstaller">
-    <img src="openandroidinstaller/assets/logo-192x192.png" alt="OpenAndroidInstaller" height="80">
+    <img src="openandroidinstaller/assets/logo-192x192.png" alt="OpenAndroidInstaller" width="80" height="80">
   </a>
 
+  <h1>OpenAndroidInstaller</h1>
+
+  [![License](https://img.shields.io/github/license/openandroidinstaller-dev/openandroidinstaller?color=green)](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/LICENSE)
+  [![Release](https://img.shields.io/github/v/release/openandroidinstaller-dev/openandroidinstaller?include_prereleases)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
+  [![Downloads](https://img.shields.io/github/downloads/openandroidinstaller-dev/openandroidinstaller/total)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
+  [![Flathub](https://img.shields.io/flathub/downloads/org.openandroidinstaller.OpenAndroidInstaller?label=flathub%20installs)](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller)
+  [![Twitter](https://img.shields.io/twitter/follow/oainstaller?style=social)](https://twitter.com/OAInstaller)
+  [![Mastodon](https://img.shields.io/mastodon/follow/109341220262803943?domain=https%3A%2F%2Ffosstodon.org&style=social)](https://fosstodon.org/@openandroidinstaller)
+
+  <p>Makes installing alternative Android distributions nice and easy.</p>
+
   <p align="center">
-    <br />
     The OpenAndroidInstaller project helps Android users to keep their smartphone's operating system up to date with free software and to continue using the device even though the manufacturer no longer offers updates. With a graphical installation software, users are easily guided through the installation process of free Android operating systems like <a href="https://lineageos.org">LineageOS</a>.
-    <br />
-    <br />
-    <a href="https://github.com/openandroidinstaller-dev/openandroidinstaller/issues">Report Bug</a>
-    ·
-    <a href="https://openandroidinstaller.org">Website</a>
-    ·
-    <a href="mailto: hello@openandroidinstaller.org">Request Feature</a>
-    <br />
+    <br><br>
+    <strong>
+      <a href="https://openandroidinstaller.org">Website</a>
+      ·
+      <a href="https://github.com/openandroidinstaller-dev/openandroidinstaller/issues">Report Bugs</a>
+      ·
+      <a href="mailto: hello@openandroidinstaller.org">Request Feature</a>
+    </strong>
   </p>
 </div>
 
