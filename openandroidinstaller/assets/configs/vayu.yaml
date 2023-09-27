@@ -4,9 +4,6 @@ metadata:
   device_name: Poco X3 Pro
   is_ab_device: false
   device_code: vayu
-  supported_recovery:
-    - orangefox
-    - twrp
   supported_device_codes:
     - vayu
     - bhima

@@ -4,9 +4,6 @@ metadata:
   device_name: Xiaomi 12
   is_ab_device: false
   device_code: cupid
-  supported_recovery:
-    - orangefox
-    - twrp
   additional_steps:
     - dtbo
     - vbmeta
