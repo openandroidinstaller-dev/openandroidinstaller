@@ -1,11 +1,11 @@
 metadata:
   maintainer: MagicLike
-  device_name: Samsung Galaxy Tab S6 Lite WIFI
+  device_name: Samsung Galaxy Tab S6 Lite LTE
   is_ab_device: false
-  device_code: gta4xlwifi
+  device_code: gta4xl
   supported_device_codes:
-    - gta4xlwifi
-  twrp-link: gta4xlwifi
+    - gta4xl
+  twrp-link: gta4xl
 requirements:
   android: 12
 steps:
