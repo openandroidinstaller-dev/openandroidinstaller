@@ -66,6 +66,7 @@ class InstallerConfig:
         self.additional_steps = metadata.get("additional_steps", [])
         self.supported_device_codes = metadata.get("supported_device_codes")
         self.twrp_link = metadata.get("twrp-link")
+        self.untested = metadata.get("untested", False)
 
     @classmethod
     def from_file(cls, path) -> Self:
@@ -166,6 +167,7 @@ def validate_config(config: str) -> bool:
                 "maintainer": str,
                 "device_name": str,
                 "is_ab_device": bool,
+                schema.Optional("untested"): bool,
                 "device_code": str,
                 "supported_device_codes": [str],
                 schema.Optional("twrp-link"): str,

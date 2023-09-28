@@ -10,6 +10,7 @@ metadata:
     - curtana
     - excalibur
     - joyeuse
+  untested: true
 requirements:
   android: 12
 steps:

@@ -9,6 +9,7 @@ metadata:
   supported_device_codes:
     - raphael
     - raphaelin
+  untested: true
 steps:
   unlock_bootloader:
     - type: confirm_button
