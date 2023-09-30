@@ -204,7 +204,9 @@ A detailed list can be found [here](https://openandroidinstaller.org/#contribute
 
 ## Acknowledgements
 
-* Funded from September 2022 until February 2023 by ![logos of the "Bundesministerium für Bildung und Forschung", Prodotype Fund and OKFN-Deutschland](resources/pf_funding_logos.svg)
+* Funded from September 2022 until February 2023 by:
+
+![logos of the "Bundesministerium für Bildung und Forschung", Prodotype Fund and OKFN-Deutschland](resources/pf_funding_logos.svg)
 
 ## License
 
