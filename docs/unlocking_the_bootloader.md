@@ -1,6 +1,7 @@
 # On unlocking the bootloader
 
-[!IMPORTANT] First of all, this tool will not help you bypass any vender locked bootloaders in non-official ways.
+> [!IMPORTANT]
+> First of all, this tool will not help you bypass any vender locked bootloaders in non-official ways.
 
 Devices by *Samsung, Google, OnePlus, Fairphone* and others make it relatively easy to unlock the bootloader and get good support in the installer.
 
