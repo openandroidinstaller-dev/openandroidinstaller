@@ -1,6 +1,6 @@
-#### On unlocking the bootloader
+# On unlocking the bootloader
 
-First of all, this tool will not help you bypass any vender locked bootloaders in non-official ways.
+[!IMPORTANT] First of all, this tool will not help you bypass any vender locked bootloaders in non-official ways.
 
 Devices by *Samsung, Google, OnePlus, Fairphone* and others make it relatively easy to unlock the bootloader and get good support in the installer.
 
@@ -8,10 +8,7 @@ For some devices, it is necessary to unlock the bootloader manually. You usually
 
 Other phone manufacturers no longer allow you to unlock the bootloader. Nothing can be done if you have not unlocked your device in time. These manufacturers include *Huawei, Honor, LG and ASUS*. Support for these manufacturers will always be very limited.
 
-<details>
-    <summary>
-        <b>Here is a brief overview of the bootloader policies of some of the most popular brands (may be incomplete/inaccurate)</b>
-    </summary>
+## Here is a brief overview of the bootloader policies of some of the most popular brands (may be incomplete/inaccurate)
 
 | Brand | Flashing tool | Unlocking Method | Loss of guarantee\* | Supported models |
 |---|---|---|---|---|
@@ -28,8 +25,5 @@ Other phone manufacturers no longer allow you to unlock the bootloader. Nothing 
 | ASUS | Fastboot | Impossible since May 2023 (ASUS unlocking App) | **Yes** |  |
 
 **\*** In the EU you won't loose your standard 2 years of the warranty when you unlock your bootloader, flash your device or root it. ([source](https://forum.xda-developers.com/t/info-eu-rooting-and-flashing-dont-void-the-warranty.1998801/))
-
-</details>
-<br>
 
 You can find more information about the brands and their bootloader policies [here](https://wikilibriste.fr/fr/tutoriels-android/bootloader-unlock) (in French).
