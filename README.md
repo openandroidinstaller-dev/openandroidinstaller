@@ -27,20 +27,21 @@
   </p>
 </div>
 
-> **Warning**: This application is currently in beta state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, things might still go wrong.
+> [!WARNING]
+> This application is currently in beta state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, things might still go wrong.
 
-> **Note**: Unlocking the bootloader will erase all data on your device!
-This also includes your DRM keys, which are stored in the Trim Area partition (also called TA) in case your device is fairly recent and supports DRM L1. Those devices will be downgraded to DRM L3. Devices on DRM L3 by default will not be affected.
-Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
-If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
-
+> [!IMPORTANT]
+> Unlocking the bootloader will erase all data on your device!
+> This also includes your DRM keys, which are stored in the Trim Area partition (also called TA) in case your device is fairly recent and supports DRM L1. Those devices will be downgraded to DRM L3. Devices on DRM L3 by default will not be affected.
+> Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
+> If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
 
 ## Usage
 
 Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
 
 1. Download the [.exe or appropriate executable file for your OS](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases) from the releases or get the [official flatpak from flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller). You might need to change permissions to run the executable.
-    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com/) and other potentially drivers needed for your device.
+    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
 2. Download the custom ROM image and the TWRP recovery image for your device and optionally some addons. A source for files can be found on the following websites:
     - some custom ROMs:
       - [LineageOS](https://wiki.lineageos.org/devices)
@@ -63,7 +64,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 ## Officially supported devices
 
-Currently, the **we support 62 devices** by various vendors and working on adding more soon!
+Currently, the **we support 73 devices** by various vendors and working on adding more soon!
 
 
 Support for these devices is provided as best effort, but things might still go wrong.
@@ -82,11 +83,12 @@ Samsung | Galaxy Grand Prime VE | grandprimevelte | SM-G531F | tested
 Samsung | Galaxy S III Neo | s3ve3g | GT-I9301I | tested
 Samsung | Galaxy Tab S2 | [gts210vewifi](https://wiki.lineageos.org/devices/gts210vewifi/) | T813 | tested
 Samsung | Galaxy S4 Mini LTE| [serranoltexx](https://wiki.lineageos.org/devices/serranoltexx) | | tested
+Samsung | Galaxy S5 | [klte](https://wiki.lineageos.org/devices/klte) | G900F/M/R4/R7/T/V/W8 | tested
 Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx) | | tested
 Samsung | Galaxy S6 Edge | [zeroltexx](https://wiki.lineageos.org/devices/zeroltexx) | | tested
 Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte) | SM-G930F | tested
 Samsung | Galaxy S7 Edge | [hero2lte](https://wiki.lineageos.org/devices/hero2lte) | | tested
-Samsung | Galaxy S8 | [dreamlte](https://wiki.lineageos.org/devices/dreamlte) | | tested
+Samsung | Galaxy S8 | dreamlte | | tested
 Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte) | | tested
 Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte) | | tested
 Samsung | Galaxy S10e | [beyond0lte](https://wiki.lineageos.org/devices/beyond0lte) | | tested
@@ -169,6 +171,23 @@ OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | | tested
 OnePlus | 9 | lemonade | | under development
 </details>
 
+<details><summary><b>Xiaomi</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Xiaomi | Redmi Note 7 | [lavender](https://wiki.lineageos.org/devices/lavender) |  | tested
+Xiaomi | Redmi 7A / 8 / 8A / 8A Dual | [Mi439](https://wiki.lineageos.org/devices/Mi439) : pine / olive / olivelite / olivewood | | tested
+Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo) / willow |  | untested
+Xiaomi | Redmi 9A / 9C / 9AT / 9i / 9A Sport / 10A / 10A Sport | garden / dandelion / blossom / angelican | | tested
+Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinci) / davinciin |  | untested
+Xiaomi | Redmi K20 Pro / Mi 9T Pro | raphael / raphaelin | | untested
+Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
+Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
+Xiaomi | Poco X3 Pro | [vayu](https://wiki.lineageos.org/devices/vayu) |  | untested
+Xiaomi | 12 | cupid | | untested
+</details>
+
+
 And more to come!
 
 
@@ -183,17 +202,16 @@ All kinds of contributions are welcome. These include:
 - Add features and/or improve the code base.
 - Report bugs.
 
-[How to contribute your own installation configurations](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/doc/how_to_contribute_your_own_installation_configurations.md)
+[How to contribute your own installation configurations](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/docs/how_to_contribute_your_own_installation_configurations.md)
 
-[How to build the application for your platform](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/doc/building_the_application_for_your_platform.md)
+[How to build the application for your platform](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/docs/building_the_application_for_your_platform.md)
 
-[On unlocking the bootloader](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/doc/unlocking_the_bootloader.md)
+[On unlocking the bootloader](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/docs/unlocking_the_bootloader.md)
 
 More details on how to contribute can be found [here](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/CONTRIBUTING.md).
 Please have a look before opening an issue or starting to contribute.
 
 A detailed list can be found [here](https://openandroidinstaller.org/#contribute).
-
 
 
 ## Tools

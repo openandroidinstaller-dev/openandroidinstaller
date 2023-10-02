@@ -41,13 +41,18 @@ from tooling import (
     adb_reboot,
     adb_reboot_bootloader,
     adb_reboot_download,
+    adb_reboot_recovery,
     adb_sideload,
     adb_twrp_copy_partitions,
     fastboot_boot_recovery,
     fastboot_flash_boot,
+    fastboot_flash_recovery,
+    fastboot_reboot_recovery,
+    fastboot_flash_additional_partitions,
     fastboot_oem_unlock,
     fastboot_reboot,
     fastboot_unlock,
+    fastboot_unlock_critical,
     fastboot_unlock_with_code,
     fastboot_get_unlock_data,
     heimdall_flash_recovery,
@@ -212,11 +217,13 @@ class StepView(BaseView):
             "adb_reboot": adb_reboot,
             "adb_reboot_bootloader": adb_reboot_bootloader,
             "adb_reboot_download": adb_reboot_download,
+            "adb_reboot_recovery": adb_reboot_recovery,
             "adb_sideload": partial(adb_sideload, target=self.state.image_path),
             "adb_twrp_copy_partitions": partial(
                 adb_twrp_copy_partitions, config_path=self.state.config_path
             ),
             "fastboot_unlock": fastboot_unlock,
+            "fastboot_unlock_critical": fastboot_unlock_critical,
             "fastboot_unlock_with_code": partial(
                 fastboot_unlock_with_code, unlock_code=self.inputtext.value
             ),
@@ -230,6 +237,19 @@ class StepView(BaseView):
             "fastboot_flash_boot": partial(
                 fastboot_flash_boot,
                 recovery=self.state.recovery_path,
+            ),
+            "fastboot_flash_recovery": partial(
+                fastboot_flash_recovery,
+                recovery=self.state.recovery_path,
+                is_ab=self.state.config.is_ab,
+            ),
+            "fastboot_reboot_recovery": fastboot_reboot_recovery,
+            "fastboot_flash_additional_partitions": partial(
+                fastboot_flash_additional_partitions,
+                dtbo=self.state.dtbo_path,
+                vbmeta=self.state.vbmeta_path,
+                super_empty=self.state.super_empty_path,
+                is_ab=self.state.config.is_ab,
             ),
             "fastboot_reboot": fastboot_reboot,
             "heimdall_flash_recovery": partial(
