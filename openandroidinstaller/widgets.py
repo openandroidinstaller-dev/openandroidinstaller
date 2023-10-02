@@ -114,6 +114,20 @@ class ProgressIndicator(UserControl):
         """Display and update the progress bar for the given line."""
         percentage_done = None
         result = None
+        # create the progress bar
+        if self.progress_bar == None:
+            self.progress_bar = ProgressBar(
+                value=1 / 100,
+                width=500,
+                bar_height=32,
+                color="#00d886",
+                bgcolor="#eeeeee",
+            )
+            # text to display the percentage
+            self.percentage_text = Text("1%")
+            self._container.content.controls.append(
+                Row([self.percentage_text, self.progress_bar])
+            )
         # get the progress numbers from the output lines
         if (type(line) == str) and line.strip():
             result = re.search(
@@ -122,23 +136,29 @@ class ProgressIndicator(UserControl):
             )
         if result:
             if result.group(2):
-                percentage_done = 100
+                percentage_done = 99
             elif result.group(1):
                 percentage_done = int(result.group(1))
+                if percentage_done == 0:
+                    percentage_done = 1
+                elif percentage_done == 100:
+                    percentage_done = 99
 
-            # create the progress bar on first occurrence
-            if percentage_done == 0:
-                self.progress_bar = ProgressBar(
-                    width=500, bar_height=32, color="#00d886", bgcolor="#eeeeee"
-                )
-                self.percentage_text = Text(f"{percentage_done}%")
-                self._container.content.controls.append(
-                    Row([self.percentage_text, self.progress_bar])
-                )
             # update the progress bar
-            if self.progress_bar:
-                self.progress_bar.value = percentage_done / 100
-                self.percentage_text.value = f"{percentage_done}%"
+            self.set_progress_bar(percentage_done)
+
+    def set_progress_bar(self, percentage_done: int):
+        """Set the progress bar to the given percentage.
+
+        Args:
+            percentage_done (int): Percentage of the progress bar to be filled.
+        """
+        assert (
+            percentage_done >= 0 and percentage_done <= 100
+        ), "Percentage must be between 0 and 100"
+        if self.progress_bar:
+            self.progress_bar.value = percentage_done / 100
+            self.percentage_text.value = f"{percentage_done}%"
 
     def display_progress_ring(
         self,
