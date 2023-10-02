@@ -115,6 +115,7 @@ Google | Pixel 4 XL | [coral](https://wiki.lineageos.org/devices/coral) | coral 
 Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish) | sunfish | tested 
 Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin) | redfin | tested
 Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet) | barbet | tested
+Google | Pixel 6a | [bluejay](https://wiki.lineageos.org/devices/bluejay) | bluejay | tested
 </details>
 
 <details><summary><b>Sony</b></summary>
