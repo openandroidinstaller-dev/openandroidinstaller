@@ -1,29 +1,28 @@
-<br />
 <div align="center">
-  <h1>OpenAndroidInstaller</h1>
-
-  [![License](https://img.shields.io/github/license/openandroidinstaller-dev/openandroidinstaller?color=green&style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/LICENSE)
-  [![Release](https://img.shields.io/github/v/release/openandroidinstaller-dev/openandroidinstaller?include_prereleases&style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
-  [![Downloads](https://img.shields.io/github/downloads/openandroidinstaller-dev/openandroidinstaller/total?style=flat-square)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
-  [![Flathub](https://img.shields.io/flathub/downloads/org.openandroidinstaller.OpenAndroidInstaller?label=flathub%20installs&style=flat-square)](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller)
-  [![Twitter](https://img.shields.io/twitter/follow/oainstaller?style=social)](https://twitter.com/OAInstaller)
-  [![Mastodon](https://img.shields.io/mastodon/follow/109341220262803943?domain=https%3A%2F%2Ffosstodon.org&style=social)](https://fosstodon.org/@openandroidinstaller)
-  <p>Makes installing alternative Android distributions nice and easy.</p>
   <a href="https://github.com/openandroidinstaller-dev/openandroidinstaller">
-    <img src="openandroidinstaller/assets/logo-192x192.png" alt="OpenAndroidInstaller" height="80">
+    <img src="openandroidinstaller/assets/logo-192x192.png" alt="OpenAndroidInstaller" width="80" height="80">
   </a>
 
-  <p align="center">
-    <br />
+  <h1>OpenAndroidInstaller</h1>
+  <p>Makes installing alternative Android distributions nice and easy!</p>
+
+  [![License](https://img.shields.io/github/license/openandroidinstaller-dev/openandroidinstaller?color=green)](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/LICENSE)
+  [![Release](https://img.shields.io/github/v/release/openandroidinstaller-dev/openandroidinstaller?include_prereleases)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
+  [![Downloads](https://img.shields.io/github/downloads/openandroidinstaller-dev/openandroidinstaller/total)](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases)
+  [![Flathub](https://img.shields.io/flathub/downloads/org.openandroidinstaller.OpenAndroidInstaller?label=flathub%20installs)](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller)
+  [![Twitter](https://img.shields.io/twitter/follow/oainstaller?style=social)](https://twitter.com/OAInstaller)
+  [![Mastodon](https://img.shields.io/mastodon/follow/109341220262803943?domain=https%3A%2F%2Ffosstodon.org&style=social)](https://fosstodon.org/@openandroidinstaller)
+
+  <p>
     The OpenAndroidInstaller project helps Android users to keep their smartphone's operating system up to date with free software and to continue using the device even though the manufacturer no longer offers updates. With a graphical installation software, users are easily guided through the installation process of free Android operating systems like <a href="https://lineageos.org">LineageOS</a>.
-    <br />
-    <br />
-    <a href="https://github.com/openandroidinstaller-dev/openandroidinstaller/issues">Report Bug</a>
-    ·
-    <a href="https://openandroidinstaller.org">Website</a>
-    ·
-    <a href="mailto: hello@openandroidinstaller.org">Request Feature</a>
-    <br />
+    <br><br>
+    <strong>
+      <a href="https://openandroidinstaller.org">Website</a>
+      ·
+      <a href="https://github.com/openandroidinstaller-dev/openandroidinstaller/issues">Report Bugs</a>
+      ·
+      <a href="mailto: hello@openandroidinstaller.org">Request Feature</a>
+    </strong>
   </p>
 </div>
 
@@ -38,7 +37,7 @@
 
 ## Usage
 
-Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and MacOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
+Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and macOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
 
 1. Download the [.exe or appropriate executable file for your OS](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases) from the releases or get the [official flatpak from flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller). You might need to change permissions to run the executable.
     - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
@@ -61,11 +60,9 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
     - or you can just search the web or the [xda-developers forum](https://forum.xda-developers.com) for an appropriate version for your device.
 3. Start the desktop app and follow the instructions.
 
-
 ## Officially supported devices
 
 Currently, the **we support 73 devices** by various vendors and working on adding more soon!
-
 
 Support for these devices is provided as best effort, but things might still go wrong.
 Help to improve the tool by reporting any issues you might face.
@@ -98,6 +95,7 @@ Samsung | Galaxy Note 8 | greatlte | SM-N950F | tested
 Samsung | Galaxy Note 9 | [crownlte](https://wiki.lineageos.org/devices/crownlte) | | tested
 Samsung | Galaxy Note 10 | [d1](https://wiki.lineageos.org/devices/d1) | | tested
 Samsung | Galaxy Note 10+ | [d2s](https://wiki.lineageos.org/devices/d2s) | | tested
+
 </details>
 
 <details><summary><b>Google</b></summary>
@@ -115,6 +113,7 @@ Google | Pixel 4 XL | [coral](https://wiki.lineageos.org/devices/coral) | coral 
 Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish) | sunfish | tested 
 Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin) | redfin | tested
 Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet) | barbet | tested
+
 </details>
 
 <details><summary><b>Sony</b></summary>
@@ -129,6 +128,7 @@ Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer) | | te
 Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari) | | tested
 Sony | Xperia XZ3 | [akatsuki](https://wiki.lineageos.org/devices/akatsuki) | | tested
 Sony | Xperia ZX | kagura | | planned
+
 </details>
 
 <details><summary><b>Fairphone</b></summary>
@@ -138,6 +138,7 @@ Vendor | Device Name | CodeName | Models | Status
 Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2) | | tested
 Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3) | | tested
 Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4) | | tested
+
 </details>
 
 <details><summary><b>Motorola</b></summary>
@@ -151,6 +152,7 @@ Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/
 Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | | tested
 Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | | tested
 Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | | tested
+
 </details>
 
 <details><summary><b>OnePlus</b></summary>
@@ -169,6 +171,7 @@ OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog) | | teste
 OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii) | | tested
 OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | | tested
 OnePlus | 9 | lemonade | | under development
+
 </details>
 
 <details><summary><b>Xiaomi</b></summary>
@@ -189,7 +192,6 @@ Xiaomi | 12 | cupid | | untested
 
 
 And more to come!
-
 
 ## Contributing
 
@@ -213,7 +215,6 @@ Please have a look before opening an issue or starting to contribute.
 
 A detailed list can be found [here](https://openandroidinstaller.org/#contribute).
 
-
 ## Tools
 
 - The [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools) (such as adb and fastboot) are [Apache](https://android.googlesource.com/platform/system/adb/+/refs/heads/master/NOTICE)-licensed universal Android utilities
@@ -221,13 +222,14 @@ A detailed list can be found [here](https://openandroidinstaller.org/#contribute
 - [libusb-1.0](https://github.com/libusb/libusb) is a [LGPL-2.1](https://github.com/libusb/libusb/blob/master/COPYING)-licensed library for USB device access from Linux, macOS, Windows and others.
 - [copy-partitions-20220613-signed.zip](https://mirrorbits.lineageos.org/tools/copy-partitions-20220613-signed.zip) The copy-partitions script was created by LineageOS developer erfanoabdi and filipepferraz and released under LGPL. It is used when the partitions need to be copied before flashing.
 
-
 ## Acknowledgements
 
-* Funded from September 2022 until February 2023 by ![logos of the "Bundesministerium für Bildung und Forschung", Prodotype Fund and OKFN-Deutschland](resources/pf_funding_logos.svg)
+* Funded from September 2022 until February 2023 by:
 
+![logos of the "Bundesministerium für Bildung und Forschung", Prodotype Fund and OKFN-Deutschland](resources/pf_funding_logos.svg)
 
 ## License
+
 Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022-2023.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
