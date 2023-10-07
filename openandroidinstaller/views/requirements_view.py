@@ -214,6 +214,10 @@ If the device is not on the specified version, please follow the instructions be
             self.checkboxes.append(battery_checkbox)
             self.checkbox_cards.append(battery_check_card)
 
+            boot_stock_checkbox, boot_stock_check_card = self.get_boot_stock_check()
+            self.checkboxes.append(boot_stock_checkbox)
+            self.checkbox_cards.append(boot_stock_check_card)
+
             lock_checkbox, lock_check_card = self.get_lock_check()
             self.checkboxes.append(lock_checkbox)
             self.checkbox_cards.append(lock_check_card)
@@ -250,6 +254,30 @@ Before continuing make sure your device battery level is above 80%.
             ),
         )
         return battery_checkbox, battery_check_card
+
+    def get_boot_stock_check(self):
+        """Get checkbox and card for default requirements: boot stock once."""
+        boot_stock_checkbox = Checkbox(
+            label="Booted the stock OS at least once.",
+            on_change=self.enable_continue_button,
+        )
+        boot_stock_check_card = Card(
+            Container(
+                content=Column(
+                    [
+                        Markdown(
+                            """
+#### Boot your device with the stock OS at least once and check every functionality.
+Make sure that you can send and receive SMS and place and receive calls (also via WiFi and LTE, if available), otherwise it won\'t work on LineageOS either! Additionally, some devices require that VoLTE/VoWiFi be utilized once on stock to provision IMS.
+            """
+                        ),
+                        boot_stock_checkbox,
+                    ]
+                ),
+                padding=10,
+            ),
+        )
+        return boot_stock_checkbox, boot_stock_check_card
 
     def get_lock_check(self):
         """Get the checkbox and card for the default requirement: disable lock code and fingerprint."""
