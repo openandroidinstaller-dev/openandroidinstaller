@@ -6,6 +6,9 @@ metadata:
   supported_device_codes:
     - avicii
     - Nord
+  additional_steps:
+    - dtbo
+    - vbmeta
 requirements:
   android: 12
 steps:
