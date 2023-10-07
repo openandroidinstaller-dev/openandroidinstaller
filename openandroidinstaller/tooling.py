@@ -505,7 +505,7 @@ def fastboot_flash_additional_partitions(
     if vbmeta:
         logger.info("vbmeta selected. Flashing vbmeta partition.")
         for line in run_command(
-            "fastboot flash vbmeta ", target=f"{vbmeta}", bin_path=bin_path
+            "fastboot --disable-verity --disable-verification flash vbmeta ", target=f"{vbmeta}", bin_path=bin_path
         ):
             yield line
         if not is_ab:
