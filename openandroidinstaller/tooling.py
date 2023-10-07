@@ -482,6 +482,7 @@ def fastboot_flash_additional_partitions(
     dtbo: Optional[str],
     vbmeta: Optional[str],
     super_empty: Optional[str],
+    vendor_boot: Optional[str],
     is_ab: bool = True,
 ) -> TerminalResponse:
     """Flash additional partitions (dtbo, vbmeta, super_empty) with fastboot."""
@@ -523,6 +524,19 @@ def fastboot_flash_additional_partitions(
         if not is_ab:
             if (type(line) == bool) and not line:
                 logger.error("Wiping super failed.")
+                yield False
+            else:
+                yield True
+
+    if vendor_boot:
+        logger.info("vendor_boot selected. Flashing vendor_boot partition.")
+        for line in run_command(
+            "fastboot flash vendor_boot ", target=f"{vendor_boot}", bin_path=bin_path
+        ):
+            yield line
+        if not is_ab:
+            if (type(line) == bool) and not line:
+                logger.error("Flashing vendor_boot failed.")
                 yield False
             else:
                 yield True

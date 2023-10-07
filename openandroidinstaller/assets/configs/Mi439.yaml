@@ -53,7 +53,7 @@ steps:
       content: >
         Install additional partitions selected before by pressing 'Confirm and run'. Once it's done continue.
         
-        Note : If you have not selected this partition, it will do nothing.
+        Note : If you have not selected additional partitions it will do nothing and is save to continue.
       command: fastboot_flash_additional_partitions
     - type: call_button
       content: >
