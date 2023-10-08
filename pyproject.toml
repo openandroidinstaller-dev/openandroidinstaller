@@ -29,6 +29,7 @@ pytest-mock = "^3.10.0"
 bandit = "^1.7.4"
 pytest-subprocess = "^1.5.0"
 mypy = "^1.0.0"
+typing-extensions = "^4.7.1"
 
 [tool.poetry.dev-dependencies]
 

@@ -1,0 +1,89 @@
+name: Device support request
+description: Request support for a new device
+title: Add support for <DEVICE>
+labels: ["device"]
+body:
+  - type: markdown
+    attributes:
+      value: "Thank you for your interest in OpenAndroidInstaller!"
+  - type: markdown
+    attributes:
+      value: "To get your device supported, please take the time to fill out this form."
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: checkboxes
+    attributes:
+      label: Is your device already requested?
+      description: Please search to see if an issue for your device already exists.
+      options:
+      - label: I have searched the existing issues
+        required: true
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: markdown
+    attributes:
+      value: "**Please input your device's details below:**"
+  - type: input
+    attributes:
+      label: Brand
+      description: The brand / manufacturer of your device
+      placeholder: Google
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Name
+      description: The name of your device
+      placeholder: Pixel 3a
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Device code
+      description: The device code OAI gave you in the error message
+      placeholder: sargo
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Model
+      description: The model name of your device (only required, if there are several models)
+      placeholder: G020F
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: textarea
+    attributes:
+      label: Device images
+      description: "Please provide links to any available images for the device, such as official stock firmware, Custom ROMs and Recoveries you would like to install."
+      placeholder: |
+        - Custom ROM: https://wiki.lineageos.org/devices/sargo
+        - Recovery: https://twrp.me/google/googlepixel3a.html
+      #value: |
+      #  - Custom ROM:
+      #  - Recovery:
+      #  - Stock firmware (if needed & existing):
+      render: Markdown
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: checkboxes
+    attributes:
+      label: Do you own the device and would be willing to test the installer?
+      options:
+      - label: I own the device and am willing to test the installer on it.
+        required: true
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Please provide any additional context or information that might be helpful in adding support for this device. 
+      render: Markdown

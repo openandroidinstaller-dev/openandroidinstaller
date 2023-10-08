@@ -5,6 +5,7 @@ metadata:
   device_code: a5y17lte
   supported_device_codes:
     - a5y17lte
+    - a5y17ltecan
 steps:
   unlock_bootloader:
   boot_recovery:
