@@ -8,6 +8,7 @@ metadata:
     - jflte
     - jfltetmo
   twrp-link: jflte
+  untested: true
 requirements:
   android: 5.0.1
 steps:
