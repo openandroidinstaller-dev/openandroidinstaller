@@ -13,7 +13,6 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-import copy
 import webbrowser
 from loguru import logger
 from typing import Callable
@@ -99,20 +98,24 @@ Now you are ready to continue.
         # toggleswitch to allow skipping unlocking the bootloader
         def check_bootloader_unlocked(e):
             """Enable skipping unlocking the bootloader if selected."""
-            if self.bootloader_switch.value:
-                logger.info("Skipping bootloader unlocking.")
-                self.state.steps = copy.deepcopy(self.state.config.boot_recovery)
-                self.state.num_total_steps = len(self.state.steps)
-            else:
-                logger.info("Enabled unlocking the bootloader again.")
-                self.state.steps = copy.deepcopy(
-                    self.state.config.unlock_bootloader
-                ) + copy.deepcopy(self.state.config.boot_recovery)
-                self.state.num_total_steps = len(self.state.steps)
+            self.state.toggle_flash_unlock_bootloader()
 
         self.bootloader_switch = Switch(
             label="Bootloader is already unlocked.",
             on_change=check_bootloader_unlocked,
+            disabled=True,
+            inactive_thumb_color=colors.YELLOW,
+            active_color=colors.GREEN,
+        )
+
+        # toggleswitch to allow skipping flashing recovery
+        def check_recovery_already_flashed(e):
+            """Enable skipping flashing recovery if selected."""
+            self.state.toggle_flash_recovery()
+
+        self.recovery_switch = Switch(
+            label="Custom recovery is already flashed.",
+            on_change=check_recovery_already_flashed,
             disabled=True,
             inactive_thumb_color=colors.YELLOW,
             active_color=colors.GREEN,
@@ -179,12 +182,10 @@ When everything works correctly you should see your device name here and you can
                 Divider(),
                 Markdown(
                     """
-If you **already unlocked the bootloader** of your device, please toggle the switch below, to skip the procedure.
+If you **already unlocked the bootloader** of your device or already **flashed a custom recovery**, please toggle the respective switch below, to skip the procedure.
 If you don't know what this means, you most likely don't need to do anything and you can just continue.
             """
                 ),
-                Row([self.bootloader_switch]),
-                Divider(),
                 self.device_infobox,
                 Row(
                     [
@@ -200,6 +201,8 @@ If you don't know what this means, you most likely don't need to do anything and
                     ],
                     alignment="center",
                 ),
+                Divider(),
+                Row([self.bootloader_switch, self.recovery_switch]),
             ]
         )
         return self.view
@@ -255,6 +258,7 @@ If you don't know what this means, you most likely don't need to do anything and
             if device_name:
                 self.continue_button.disabled = False
                 self.bootloader_switch.disabled = False
+                self.recovery_switch.disabled = False
                 # overwrite the text field with the real name from the config
                 self.device_name.value = (
                     f"{device_name} (code: {self.state.config.device_code})"
@@ -272,7 +276,7 @@ If you don't know what this means, you most likely don't need to do anything and
                     f"Device with code '{device_code}' is not supported yet."
                 )
                 # add request support for device button
-                request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?assignees=&labels=device&projects=&template=device-support-request.md&title=Add support for {device_code}"
+                request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?labels=device&template=device-support-request.yaml&title=Add support for `{device_code}`"
                 self.device_request_row.controls.append(
                     ElevatedButton(
                         "Request support for this device",
