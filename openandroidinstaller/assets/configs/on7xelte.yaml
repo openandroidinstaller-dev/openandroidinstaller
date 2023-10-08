@@ -5,6 +5,7 @@ metadata:
   device_code: on7xelte 
   supported_device_codes:
     - on7xelte
+  untested: true
 steps:
   unlock_bootloader:
   boot_recovery:
