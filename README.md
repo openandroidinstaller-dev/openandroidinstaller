@@ -72,6 +72,7 @@ Help to improve the tool by reporting any issues you might face.
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Samsung | Galaxy J7 2015 | j7elte | | tested
+Samsung | Galaxy J7 Prime | on7xelte | | untested
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte) | SM-A510F | tested
 Samsung | Galaxy A5 2017 | [a5y17lte](https://wiki.lineageos.org/devices/a5y17lte) | | tested
