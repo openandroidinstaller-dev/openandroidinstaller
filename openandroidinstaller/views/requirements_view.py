@@ -268,7 +268,8 @@ Before continuing make sure your device battery level is above 80%.
                         Markdown(
                             """
 #### Boot your device with the stock OS at least once and check every functionality.
-Make sure that you can send and receive SMS and place and receive calls (also via WiFi and LTE, if available), otherwise it won\'t work on LineageOS either! Additionally, some devices require that VoLTE/VoWiFi be utilized once on stock to provision IMS.
+Make sure that you can send and receive SMS and place and receive calls (also via WiFi and LTE, if available),
+otherwise it won\'t work on your custom ROM either! Additionally, some devices require that VoLTE/VoWiFi be utilized once on stock to provision IMS.
             """
                         ),
                         boot_stock_checkbox,
