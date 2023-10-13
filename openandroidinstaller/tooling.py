@@ -451,9 +451,29 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
 
 @add_logging("Flash custom recovery with fastboot.")
 def fastboot_flash_recovery(
-    bin_path: Path, recovery: str, is_ab: bool = True
+    bin_path: Path,
+    recovery: str,
+    is_ab: bool = True,
+    vendor_boot: Optional[str] = None,
+    dtbo: Optional[str] = None,
+    vbmeta: Optional[str] = None,
+    super_empty: Optional[str] = None,
 ) -> TerminalResponse:
-    """Flash custom recovery with fastboot."""
+    """Flash custom recovery with fastboot.
+
+    If necessary, flash additional partitions (dtbo, vbmeta, super_empty) with fastboot before.
+    """
+    if any([dtbo, vbmeta, super_empty, vendor_boot]):
+        for line in fastboot_flash_additional_partitions(
+            bin_path=bin_path,
+            dtbo=dtbo,
+            vbmeta=vbmeta,
+            super_empty=super_empty,
+            vendor_boot=vendor_boot,
+            is_ab=is_ab,
+        ):
+            yield line
+
     for line in run_command(
         "fastboot flash recovery ", target=f"{recovery}", bin_path=bin_path
     ):
@@ -505,7 +525,9 @@ def fastboot_flash_additional_partitions(
     if vbmeta:
         logger.info("vbmeta selected. Flashing vbmeta partition.")
         for line in run_command(
-            "fastboot --disable-verity --disable-verification flash vbmeta ", target=f"{vbmeta}", bin_path=bin_path
+            "fastboot --disable-verity --disable-verification flash vbmeta ",
+            target=f"{vbmeta}",
+            bin_path=bin_path,
         ):
             yield line
         if not is_ab:

@@ -242,6 +242,10 @@ class StepView(BaseView):
                 fastboot_flash_recovery,
                 recovery=self.state.recovery_path,
                 is_ab=self.state.config.is_ab,
+                dtbo=self.state.dtbo_path,
+                vbmeta=self.state.vbmeta_path,
+                super_empty=self.state.super_empty_path,
+                vendor_boot=self.state.vendor_boot_path,
             ),
             "fastboot_reboot_recovery": fastboot_reboot_recovery,
             "fastboot_flash_additional_partitions": partial(
