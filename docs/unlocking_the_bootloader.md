@@ -25,6 +25,6 @@ Other phone manufacturers no longer allow you to unlock the bootloader. Nothing 
 | LG | Fastboot | Impossible since December 2021 | **Yes** |  |
 | ASUS | Fastboot | Impossible since May 2023 (ASUS unlocking App) | **Yes** |  |
 
-**\*** In the EU you won't loose your standard 2 years of the warranty when you unlock your bootloader, flash your device or root it. ([source](https://forum.xda-developers.com/t/info-eu-rooting-and-flashing-dont-void-the-warranty.1998801/))
+**\*** In the EU you won't loose your standard 2 years of the warranty when you unlock your bootloader, flash your device or root it. ([source](https://xdaforums.com/t/info-eu-rooting-and-flashing-dont-void-the-warranty.1998801))
 
 You can find more information about the brands and their bootloader policies [here](https://wikilibriste.fr/fr/tutoriels-android/bootloader-unlock) (in French).
