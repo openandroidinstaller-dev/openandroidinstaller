@@ -57,12 +57,12 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
       - [MicroG](https://microg.org)
         - The recommended way to install MicroG is to use the zip file provided here: [https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases).
       - [F-Droid App-Store](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
-    - or you can just search the web or the [xda-developers forum](https://forum.xda-developers.com) for an appropriate version for your device.
+    - or you can just search the web or the [xda-developers forum](https://xdaforums.com) for an appropriate version for your device.
 3. Start the desktop app and follow the instructions.
 
 ## Officially supported devices
 
-Currently, the **we support 73 devices** by various vendors and working on adding more soon!
+Currently, the **we support 74 devices** by various vendors and working on adding more soon!
 
 Support for these devices is provided as best effort, but things might still go wrong.
 Help to improve the tool by reporting any issues you might face.
@@ -77,6 +77,7 @@ Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte) | SM-A510F | tested
 Samsung | Galaxy A5 2017 | [a5y17lte](https://wiki.lineageos.org/devices/a5y17lte) | | tested
 Samsung | Galaxy A7 2016 | a7xelte | | tested
+Samsung | Galaxy A7 2017 | [a7y17lte](https://wiki.lineageos.org/devices/a7y17lte) | | untested
 Samsung | Galaxy Grand Prime VE | grandprimevelte | SM-G531F | tested
 Samsung | Galaxy S III Neo | s3ve3g | GT-I9301I | tested
 Samsung | Galaxy Tab S2 | [gts210vewifi](https://wiki.lineageos.org/devices/gts210vewifi/) | T813 | tested
