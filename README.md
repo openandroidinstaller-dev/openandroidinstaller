@@ -80,7 +80,8 @@ Samsung | Galaxy A7 2016 | a7xelte | | tested
 Samsung | Galaxy A7 2017 | [a7y17lte](https://wiki.lineageos.org/devices/a7y17lte) | | untested
 Samsung | Galaxy Grand Prime VE | grandprimevelte | SM-G531F | tested
 Samsung | Galaxy S III Neo | s3ve3g | GT-I9301I | tested
-Samsung | Galaxy Tab S2 | [gts210vewifi](https://wiki.lineageos.org/devices/gts210vewifi/) | T813 | tested
+Samsung | Galaxy Tab S2 | [gts210vewifi](https://wiki.lineageos.org/devices/gts210vewifi) | T813 | tested
+Samsung | Galaxy S4 | [jfltexx](https://wiki.lineageos.org/devices/jfltexx) | | untested
 Samsung | Galaxy S4 Mini LTE| [serranoltexx](https://wiki.lineageos.org/devices/serranoltexx) | | tested
 Samsung | Galaxy S5 | [klte](https://wiki.lineageos.org/devices/klte) | G900F/M/R4/R7/T/V/W8 | tested
 Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx) | | tested
