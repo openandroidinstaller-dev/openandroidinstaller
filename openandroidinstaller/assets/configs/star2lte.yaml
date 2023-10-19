@@ -1,10 +1,11 @@
 metadata:
-  maintainer: Tobias Sterbak (tsterbak)
-  device_name: Samsung Galaxy S9
+  maintainer: Tobias Sterbak (tsterbak)/SirRGB
+  device_name: Samsung Galaxy S9+
   is_ab_device: false
   device_code: starlte
   supported_device_codes:
-    - starlte
+    - star2lte
+  untested: true
 requirements:
   android: 10
 steps:
