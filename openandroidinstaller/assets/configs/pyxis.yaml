@@ -44,10 +44,9 @@ steps:
       content: >
         Install the recovery you chosen before by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_flash_recovery
-    - type: call_button
+    - type: confirm_button
       img: twrp-start.jpeg
       content: >
-        Reboot to recovery by pressing 'Confirm and run', and hold the Vol+ button of your phone UNTIL you see the recovery.
+        Reboot to recovery by holding the Vol+ button of your phone UNTIL you see the Mi logo and then release it. Now wait until you see TWRP, then continue.
         If MiUI starts, you have to start the process again, since MiUI delete the recovery you just flashed.
         Once it's done continue.
-      command: fastboot_reboot_recovery

@@ -544,7 +544,7 @@ Make sure the file is for **your exact phone model!**""",
         if self.state.flash_recovery:
             if (
                 self.selected_image.color == colors.GREEN
-                and image_sdk_level(self.state.image_path) >= 33
+                # and image_sdk_level(self.state.image_path) >= 33
             ):
                 self.toggle_additional_image_selection()
             else:
