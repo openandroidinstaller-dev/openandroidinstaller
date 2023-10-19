@@ -7,7 +7,6 @@ metadata:
   supported_device_codes:
     - vayu
     - bhima
-  untested: true
 requirements:
   android: 12 (S)
 steps:
