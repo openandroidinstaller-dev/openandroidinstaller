@@ -4,7 +4,9 @@ metadata:
   is_ab_device: false
   device_code: j7elte 
   supported_device_codes:
-    - j7elte 
+    - j7elte
+    - j7eltetmo
+  twrp-link: j7elte
 steps:
   unlock_bootloader:
   boot_recovery:

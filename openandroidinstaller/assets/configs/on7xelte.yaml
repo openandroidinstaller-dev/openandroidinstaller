@@ -1,13 +1,11 @@
 metadata:
   maintainer: MagicLike
-  device_name: Samsung Galaxy Grand Prime VE
+  device_name: Samsung Galaxy J7 Prime
   is_ab_device: false
-  device_code: grandprimevelte
+  device_code: on7xelte 
   supported_device_codes:
-    - grandprimevelte
-  twrp-link: grandprimevelte
-requirements:
-  android: 5.1.1
+    - on7xelte
+  untested: true
 steps:
   unlock_bootloader:
   boot_recovery:
