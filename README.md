@@ -30,35 +30,47 @@
 > This application is currently in beta state, so use at your own risk! While many people tested the application so far and we heard of no bricked devices, things might still go wrong.
 
 > [!IMPORTANT]
-> Unlocking the bootloader will erase all data on your device!
+> **Unlocking the bootloader will erase all data on your device!**
 > This also includes your DRM keys, which are stored in the Trim Area partition (also called TA) in case your device is fairly recent and supports DRM L1. Those devices will be downgraded to DRM L3. Devices on DRM L3 by default will not be affected.
 > Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
 > If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
 
 ## Usage
 
-Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and macOS are also supported but you might experience more issues. So far there is no support for ARM-based systems.
+Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and macOS are also supported, but you might experience more issues.<br />
+So far there is no support for ARM-based systems.
 
-1. Download the [.exe or appropriate executable file for your OS](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases) from the releases or get the [official flatpak from flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller). You might need to change permissions to run the executable.
-    - On Windows also [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
-2. Download the custom ROM image and the TWRP recovery image for your device and optionally some addons. A source for files can be found on the following websites:
-    - some custom ROMs:
-      - [LineageOS](https://wiki.lineageos.org/devices)
-      - [/e/OS](https://doc.e.foundation/devices)
-      - [LineageOS for microg](https://download.lineage.microg.org)
-      - [BlissRoms](https://blissroms.org)
-      - [PixelExperience](https://download.pixelexperience.org)
-    - TWRP Recovery:
-      - [TWRP recovery](https://twrp.me/Devices)
-    - Optional Addons:
-      - There are different packages of *Google Apps* available.
-        - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)
-        - [NikGApps](https://nikgapps.com)
-      - [MicroG](https://microg.org)
-        - The recommended way to install MicroG is to use the zip file provided here: [https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases).
-      - [F-Droid App-Store](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
-    - or you can just search the web or the [xda-developers forum](https://forum.xda-developers.com) for an appropriate version for your device.
-3. Start the desktop app and follow the instructions.
+### 1. Download OpenAndroidInstaller
+
+Download the correct version for your OS [from the Releases](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases).
+
+For Linux users, you can get the [official Flatpak version from Flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller). (You might need to change permissions to run the executable)
+
+For Windows users, you might need to [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
+
+### 2. Download the custom ROM image and the TWRP recovery image (& optionally addons)
+
+Here are the official links for: 
+  - some custom ROMs:
+    - [LineageOS](https://wiki.lineageos.org/devices)
+    - [/e/OS](https://doc.e.foundation/devices)
+    - [LineageOS for MicroG](https://download.lineage.microg.org)
+    - [BlissRoms](https://blissroms.org)
+    - [PixelExperience](https://download.pixelexperience.org)
+  - TWRP Recovery:
+    - [TWRP recovery](https://twrp.me/Devices)
+  - Optional Addons:
+    - There are different packages of *Google Apps* available:
+      - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)
+      - [NikGApps](https://nikgapps.com)
+    - [MicroG](https://microg.org)
+      - The recommended way to install MicroG is to use the zip file provided here: [https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases).
+    - [F-Droid App-Store](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
+  - or you can just search the web or the [XDA Developers forum](https://forum.xda-developers.com) for an appropriate version for your device.
+
+### 3. Start the desktop app
+
+There, you will be prompted to plug your device to your computer and you will be given a step-by-step tutorial on how to install the ROM, TWRP and the addons for your specific model.
 
 ## Officially supported devices
 
@@ -67,7 +79,8 @@ Currently, the **we support 73 devices** by various vendors and working on addin
 Support for these devices is provided as best effort, but things might still go wrong.
 Help to improve the tool by reporting any issues you might face.
 
-<details><summary><b>Samsung</b></summary>
+<details>
+    <summary><b>Samsung</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
@@ -98,7 +111,8 @@ Samsung | Galaxy Note 10+ | [d2s](https://wiki.lineageos.org/devices/d2s) | | te
 
 </details>
 
-<details><summary><b>Google</b></summary>
+<details>
+  <summary><b>Google</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
@@ -116,7 +130,8 @@ Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet) | barbet
 
 </details>
 
-<details><summary><b>Sony</b></summary>
+<details>
+  <summary><b>Sony</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
@@ -131,7 +146,8 @@ Sony | Xperia ZX | kagura | | planned
 
 </details>
 
-<details><summary><b>Fairphone</b></summary>
+<details>
+  <summary><b>Fairphone</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
@@ -141,7 +157,8 @@ Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4) | | test
 
 </details>
 
-<details><summary><b>Motorola</b></summary>
+<details>
+  <summary><b>Motorola</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
@@ -155,7 +172,8 @@ Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | | te
 
 </details>
 
-<details><summary><b>OnePlus</b></summary>
+<details>
+  <summary><b>OnePlus</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
@@ -174,7 +192,8 @@ OnePlus | 9 | lemonade | | under development
 
 </details>
 
-<details><summary><b>Xiaomi</b></summary>
+<details>
+  <summary><b>Xiaomi</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
@@ -188,52 +207,57 @@ Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](h
 Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
 Xiaomi | Poco X3 Pro | [vayu](https://wiki.lineageos.org/devices/vayu) |  | tested
 Xiaomi | 12 | cupid | | untested
+
 </details>
 
+... and more to come!
 
-And more to come!
+## Tutorials
+
+- Unlocking the bootloader: [`docs/unlocking_the_bootloader.md`](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/docs/unlocking_the_bootloader.md)
+
+- Building the application for your platform: [`docs/building_the_application_for_your_platform.md`](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/docs/building_the_application_for_your_platform.md)
+
+- Contributing your own installation configurations: [`docs/how_to_contribute_your_own_installation_configurations.md`](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/docs/how_to_contribute_your_own_installation_configurations.md)
 
 ## Contributing
 
-All kinds of contributions are welcome. These include:
-- Fix and improve texts in configs and in the application.
-- Test the tool for a supported device.
-- Create a config for a new device.
-- Test the application on your computer and/or device.
-- Contribute an application build for a new platform.
-- Add features and/or improve the code base.
-- Report bugs.
+All kinds of contributions are welcome. These include and are not limited to:
 
-[How to contribute your own installation configurations](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/docs/how_to_contribute_your_own_installation_configurations.md)
+- Fixing and improving texts in configs and in the application
+- Testing the tool for a supported device
+- Creating a config for a new device
+- Testing the application on your computer and/or device
+- Contributing an application build for a new platform
+- Adding features and/or improving the codebase
+- Reporting bugs
 
-[How to build the application for your platform](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/docs/building_the_application_for_your_platform.md)
+Make sure to check if your issue or PR has already been fixed or implemented!
 
-[On unlocking the bootloader](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/docs/unlocking_the_bootloader.md)
+### More sources:
 
-More details on how to contribute can be found [here](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/CONTRIBUTING.md).
-Please have a look before opening an issue or starting to contribute.
-
-A detailed list can be found [here](https://openandroidinstaller.org/#contribute).
-
-## Tools
-
-- The [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools) (such as adb and fastboot) are [Apache](https://android.googlesource.com/platform/system/adb/+/refs/heads/master/NOTICE)-licensed universal Android utilities
-- [Heimdall](https://gitlab.com/BenjaminDobell/Heimdall) is an [MIT](https://gitlab.com/BenjaminDobell/Heimdall/-/blob/master/LICENSE)-licensed replacement for the leaked ODIN tool to flash Samsung devices.
-- [libusb-1.0](https://github.com/libusb/libusb) is a [LGPL-2.1](https://github.com/libusb/libusb/blob/master/COPYING)-licensed library for USB device access from Linux, macOS, Windows and others.
-- [copy-partitions-20220613-signed.zip](https://mirrorbits.lineageos.org/tools/copy-partitions-20220613-signed.zip) The copy-partitions script was created by LineageOS developer erfanoabdi and filipepferraz and released under LGPL. It is used when the partitions need to be copied before flashing.
+- Details on how to contribute: [`CONTRIBUTING.md`](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/CONTRIBUTING.md)
+- More ways to contribute: [openandroidinstaller.org/#contribute](https://openandroidinstaller.org/#contribute)
 
 ## Acknowledgements
 
-* Funded from September 2022 until February 2023 by:
+- Funded from September 2022 until February 2023 by:
 
 ![logos of the "Bundesministerium für Bildung und Forschung", Prodotype Fund and OKFN-Deutschland](resources/pf_funding_logos.svg)
 
+## Credits
+
+- The [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools) (such as adb and fastboot) are [Apache](https://android.googlesource.com/platform/system/adb/+/refs/heads/master/NOTICE)-licensed universal Android utilities
+- [Heimdall](https://gitlab.com/BenjaminDobell/Heimdall) is an [MIT](https://gitlab.com/BenjaminDobell/Heimdall/-/blob/master/LICENSE)-licensed replacement for the leaked ODIN tool to flash Samsung devices.
+- [`libusb-1.0`](https://github.com/libusb/libusb) is a [LGPL-2.1](https://github.com/libusb/libusb/blob/master/COPYING)-licensed library for USB device access from Linux, macOS, Windows and others.
+- [`copy-partitions-20220613-signed.zip`](https://mirrorbits.lineageos.org/tools/copy-partitions-20220613-signed.zip) The copy-partitions script was created by LineageOS developer erfanoabdi and filipepferraz and released under LGPL. (It's used when the partitions need to be copied before flashing)
+
 ## License
 
-Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022-2023.
+Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright © 2022-2023.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see [http://www.gnu.org/licenses](http://www.gnu.org/licenses).
+You should have received a copy of the GNU General Public License along with this program. If not, see [gnu.org/licenses](http://www.gnu.org/licenses).
