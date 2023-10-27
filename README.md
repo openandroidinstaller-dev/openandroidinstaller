@@ -48,9 +48,10 @@ For Linux users, you can get the [official Flatpak version from Flathub](https:/
 
 For Windows users, you might need to [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
 
-### 2. Download the custom ROM image and the TWRP recovery image (& optionally addons)
+### 2. Download the custom ROM image & the TWRP recovery image (& optionally addons)
 
-Here are the official links for: 
+Here are the official links for:
+
   - some custom ROMs:
     - [LineageOS](https://wiki.lineageos.org/devices)
     - [/e/OS](https://doc.e.foundation/devices)
