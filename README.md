@@ -187,6 +187,7 @@ Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinc
 Xiaomi | Redmi K20 Pro / Mi 9T Pro | raphael / raphaelin | | untested
 Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
 Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
+Xiaomi | Redmi K40 / Mi 11X / Poco F3 | [alioth](https://wiki.lineageos.org/devices/alioth) / aliothin |  | untested
 Xiaomi | Poco X3 Pro | [vayu](https://wiki.lineageos.org/devices/vayu) |  | untested
 Xiaomi | 12 | cupid | | untested
 </details>
