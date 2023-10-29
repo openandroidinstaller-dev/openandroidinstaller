@@ -44,7 +44,7 @@ So far there is no support for ARM-based systems.
 
 Download the correct version for your OS [from the Releases](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases).
 
-For Linux users, you can get the [official Flatpak version from Flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller). (You might need to change permissions to run the executable)
+For Linux users, you can also get the [official Flatpak version from Flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller).
 
 For Windows users, you might need to [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
 
