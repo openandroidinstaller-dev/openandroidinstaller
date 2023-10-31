@@ -365,7 +365,7 @@ The `vendor_boot.img` is a partition image that contains the vendor boot image.
 
 ## Where do I get these images?
 You can download the required images for your device from the [LineageOS downloads page](https://download.lineageos.org/devices/{self.state.config.device_code}/builds).
-If this download page does not contain the required images, you can try to find them on the [XDA developers forum](https://forum.xda-developers.com/).
+If this download page does not contain the required images, you can try to find them on the [XDA developers forum](https://xdaforums.com).
                 """,
                 auto_follow_links=True,
             ),
