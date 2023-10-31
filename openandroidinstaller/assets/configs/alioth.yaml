@@ -1,15 +1,17 @@
 metadata:
   maintainer: A non (anon)
   brand: xiaomi
-  device_name: Xiaomi Redmi Note 7
+  device_name: Xiaomi Redmi K40 / Mi 11X / POCO F3
   is_ab_device: false
-  device_code: lavender
+  device_code: alioth
+  untested: true
+  additional_steps:
+    - vbmeta
   supported_device_codes:
-    - lavender
+    - alioth
+    - aliothin
   notes:
-    - You should install Android 10 or newer ROM.
-requirements:
-  android: 10 (Q)
+    - Be careful when choosing OrangeFox version, Android 12 & 13 ROM needs OrangeFox version code with `A12`, for example `R11.1_5_A12`. Android 10 & 11 ROM needs OrangeFox version code without `A12` (bellow on the page)
 steps:
   unlock_bootloader:
     - type: confirm_button
@@ -33,12 +35,11 @@ steps:
         - Since the device resets completely, you will need to re-enable USB debugging to continue : `Settings` > `Additional settings` > `Developer options` > `USB debugging`
       link: https://en.miui.com/unlock/download_en.html
   boot_recovery:
-    - type: confirm_button
-      content: >
-        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
-        adapting and repairing of the operating system.
     - type: call_button
       content: >
+        Now you need to install a custom recovery system on the phone. A recovery is a small subsystem on your phone,
+        that manages updating, adapting and repairing of the operating system.
+        
         Once the device is fully booted, you need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
