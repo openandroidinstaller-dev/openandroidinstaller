@@ -6,6 +6,7 @@ metadata:
   supported_device_codes:
     - a7y17lte
     - a7y17ltexx
+  untested: true
 steps:
   unlock_bootloader:
   boot_recovery:

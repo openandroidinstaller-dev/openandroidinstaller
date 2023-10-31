@@ -32,8 +32,8 @@
 > [!IMPORTANT]
 > Unlocking the bootloader will erase all data on your device!
 > This also includes your DRM keys, which are stored in the Trim Area partition (also called TA) in case your device is fairly recent and supports DRM L1. Those devices will be downgraded to DRM L3. Devices on DRM L3 by default will not be affected.
+> Depending on your device you might be able to back up the TA partition using exploits and gaining temporary root access. On Sony Xperia 1/5 series phones DRM L1 will return once the bootloader is relocked.
 > Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
-> If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
 
 ## Usage
 
@@ -130,7 +130,7 @@ Sony | Xperia 10 Plus | [mermaid](https://wiki.lineageos.org/devices/mermaid) | 
 Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer) | | tested
 Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari) | | tested
 Sony | Xperia XZ3 | [akatsuki](https://wiki.lineageos.org/devices/akatsuki) | | tested
-Sony | Xperia ZX | kagura | | planned
+Sony | Xperia XZ | kagura | | planned
 
 </details>
 
@@ -148,12 +148,12 @@ Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4) | | test
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
+Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | | tested
 Motorola | moto g5 | [cedric](https://wiki.lineageos.org/devices/cedric) | | tested
 Motorola | moto g6 plus | [evert](https://wiki.lineageos.org/devices/evert) | | tested
 Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean) | | tested
 Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo) | | tested
 Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | | tested
-Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | | tested
 Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | | tested
 
 </details>
@@ -203,13 +203,13 @@ And more to come!
 ## Contributing
 
 All kinds of contributions are welcome. These include:
-- Fix and improve texts in configs and in the application.
-- Test the tool for a supported device.
-- Create a config for a new device.
-- Test the application on your computer and/or device.
-- Contribute an application build for a new platform.
-- Add features and/or improve the code base.
-- Report bugs.
+- Fixes and improvements to the texts in configs and in the application.
+- Testing the tool for a supported device.
+- Creating a config for a new device.
+- Testing the application on your computer and/or device.
+- Contributing an application build for a new platform.
+- Adding features and/or improve the code base.
+- Reporting bugs.
 
 [How to contribute your own installation configurations](https://github.com/openandroidinstaller-dev/openandroidinstaller/blob/main/docs/how_to_contribute_your_own_installation_configurations.md)
 
