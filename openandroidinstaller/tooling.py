@@ -87,7 +87,7 @@ def add_logging(step_desc: str, return_if_fail: bool = False) -> Callable:
         def logging(*args, **kwargs) -> TerminalResponse:
             logger.info(f"{step_desc} - Parameters: {kwargs}")
             for line in func(*args, **kwargs):
-                if (type(line) == bool) and not line:
+                if isinstance(line, bool) and not line:
                     logger.error(f"{step_desc} Failed!")
                     if return_if_fail:
                         yield False
@@ -199,7 +199,7 @@ def adb_twrp_format_data(bin_path: Path) -> TerminalResponse:
     """
     unknown_command = False
     for line in run_command("adb shell twrp format data", bin_path):
-        if (type(line) == str) and ("Unrecognized script command" in line):
+        if isinstance(line, str) and ("Unrecognized script command" in line):
             unknown_command = True
         yield line
 
@@ -261,7 +261,7 @@ def adb_twrp_wipe_and_install(
         for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
             yield line
         sleep(3)
-        if (type(line) == bool) and not line:
+        if isinstance(line, bool) and not line:
             logger.error(f"Wiping {partition} failed.")
             # TODO: if this fails, a fix can be to just sideload something and then adb reboot
             for line in adb_sideload(
@@ -270,7 +270,7 @@ def adb_twrp_wipe_and_install(
             ):
                 yield line
             sleep(1)
-            if (type(line) == bool) and not line:
+            if isinstance(line, bool) and not line:
                 yield False
             break
         sleep(2)
@@ -415,7 +415,7 @@ def fastboot_boot_recovery(
     for line in run_command("fastboot boot", target=f"{recovery}", bin_path=bin_path):
         yield line
     if not is_ab:
-        if (type(line) == bool) and not line:
+        if isinstance(line, bool) and not line:
             logger.error("Booting recovery failed.")
             yield False
         else:
@@ -431,7 +431,7 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
         "fastboot flash boot", target=f"{recovery}", bin_path=bin_path
     ):
         yield line
-    if (type(line) == bool) and not line:
+    if isinstance(line, bool) and not line:
         logger.error("Flashing recovery failed.")
         yield False
     else:
@@ -442,7 +442,7 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
         yield line
     for line in adb_wait_for_recovery(bin_path=bin_path):
         yield line
-    if (type(line) == bool) and not line:
+    if isinstance(line, bool) and not line:
         logger.error("Booting recovery failed.")
         yield False
     else:
@@ -479,7 +479,7 @@ def fastboot_flash_recovery(
     ):
         yield line
     if not is_ab:
-        if (type(line) == bool) and not line:
+        if isinstance(line, bool) and not line:
             logger.error("Flashing recovery failed.")
             yield False
         else:
@@ -490,9 +490,10 @@ def fastboot_flash_recovery(
 def fastboot_reboot_recovery(bin_path: Path) -> TerminalResponse:
     """Reboot to recovery with fastboot.
 
+    Currently, it should only be used with Xiaomi devices.
     WARNING: On some devices, users need to press a specific key combo to make it work.
     """
-    for line in run_command("fastboot reboot recovery", bin_path):
+    for line in run_command("fastboot reboot-recovery", bin_path):
         yield line
 
 
@@ -514,7 +515,7 @@ def fastboot_flash_additional_partitions(
         ):
             yield line
         if not is_ab:
-            if (type(line) == bool) and not line:
+            if isinstance(line, bool) and not line:
                 logger.error("Flashing dtbo failed.")
                 yield False
             else:
@@ -531,7 +532,7 @@ def fastboot_flash_additional_partitions(
         ):
             yield line
         if not is_ab:
-            if (type(line) == bool) and not line:
+            if isinstance(line, bool) and not line:
                 logger.error("Flashing vbmeta failed.")
                 yield False
             else:
@@ -544,7 +545,7 @@ def fastboot_flash_additional_partitions(
         ):
             yield line
         if not is_ab:
-            if (type(line) == bool) and not line:
+            if isinstance(line, bool) and not line:
                 logger.error("Wiping super failed.")
                 yield False
             else:
@@ -557,7 +558,7 @@ def fastboot_flash_additional_partitions(
         ):
             yield line
         if not is_ab:
-            if (type(line) == bool) and not line:
+            if isinstance(line, bool) and not line:
                 logger.error("Flashing vendor_boot failed.")
                 yield False
             else:
@@ -570,7 +571,7 @@ def heimdall_wait_for_download_available(bin_path: Path) -> bool:
     while True:
         sleep(1)
         for line in run_command("heimdall detect", bin_path=bin_path):
-            if (type(line) == bool) and line:
+            if isinstance(line, bool) and line:
                 return True
 
 
