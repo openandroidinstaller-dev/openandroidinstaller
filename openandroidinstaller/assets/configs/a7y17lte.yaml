@@ -1,12 +1,11 @@
 metadata:
-  maintainer: Tobias Sterbak (tsterbak)
-  device_name: Samsung Galaxy A5 (2017)
+  maintainer: Tobias Sterbak (tsterbak)/SirRGB
+  device_name: Samsung Galaxy A7 (2017)
   is_ab_device: false
-  device_code: a5y17lte
+  device_code: a7y17lte
   supported_device_codes:
-    - a5y17lte
-    - a5y17ltecan
-    - a5y17ltexx
+    - a7y17lte
+    - a7y17ltexx
 steps:
   unlock_bootloader:
   boot_recovery:

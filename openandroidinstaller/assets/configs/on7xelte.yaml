@@ -1,12 +1,11 @@
 metadata:
-  maintainer: Tobias Sterbak (tsterbak)
-  device_name: Samsung Galaxy J7 (2015)
+  maintainer: MagicLike
+  device_name: Samsung Galaxy J7 Prime
   is_ab_device: false
-  device_code: j7elte 
+  device_code: on7xelte 
   supported_device_codes:
-    - j7elte
-    - j7eltetmo
-  twrp-link: j7elte
+    - on7xelte
+  untested: true
 steps:
   unlock_bootloader:
   boot_recovery:
