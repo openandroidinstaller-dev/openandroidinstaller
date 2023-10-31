@@ -52,6 +52,7 @@ class AppState:
         self.dtbo_path = None
         self.vbmeta_path = None
         self.super_empty_path = None
+        self.vendor_boot_path = None
 
         # store views
         self.default_views: List = []

@@ -5,7 +5,10 @@ metadata:
   device_code: guacamoleb
   supported_device_codes:
     - guacamoleb
-    - OnePlus7
+    - OnePlus7  
+  additional_steps:
+    - dtbo
+    - vbmeta
 requirements:
   android: 12
 steps:

@@ -451,9 +451,29 @@ def fastboot_flash_boot(bin_path: Path, recovery: str) -> TerminalResponse:
 
 @add_logging("Flash custom recovery with fastboot.")
 def fastboot_flash_recovery(
-    bin_path: Path, recovery: str, is_ab: bool = True
+    bin_path: Path,
+    recovery: str,
+    is_ab: bool = True,
+    vendor_boot: Optional[str] = None,
+    dtbo: Optional[str] = None,
+    vbmeta: Optional[str] = None,
+    super_empty: Optional[str] = None,
 ) -> TerminalResponse:
-    """Flash custom recovery with fastboot."""
+    """Flash custom recovery with fastboot.
+
+    If necessary, flash additional partitions (dtbo, vbmeta, super_empty) with fastboot before.
+    """
+    if any([dtbo, vbmeta, super_empty, vendor_boot]):
+        for line in fastboot_flash_additional_partitions(
+            bin_path=bin_path,
+            dtbo=dtbo,
+            vbmeta=vbmeta,
+            super_empty=super_empty,
+            vendor_boot=vendor_boot,
+            is_ab=is_ab,
+        ):
+            yield line
+
     for line in run_command(
         "fastboot flash recovery ", target=f"{recovery}", bin_path=bin_path
     ):
@@ -482,6 +502,7 @@ def fastboot_flash_additional_partitions(
     dtbo: Optional[str],
     vbmeta: Optional[str],
     super_empty: Optional[str],
+    vendor_boot: Optional[str],
     is_ab: bool = True,
 ) -> TerminalResponse:
     """Flash additional partitions (dtbo, vbmeta, super_empty) with fastboot."""
@@ -504,7 +525,9 @@ def fastboot_flash_additional_partitions(
     if vbmeta:
         logger.info("vbmeta selected. Flashing vbmeta partition.")
         for line in run_command(
-            "fastboot flash vbmeta ", target=f"{vbmeta}", bin_path=bin_path
+            "fastboot --disable-verity --disable-verification flash vbmeta ",
+            target=f"{vbmeta}",
+            bin_path=bin_path,
         ):
             yield line
         if not is_ab:
@@ -523,6 +546,19 @@ def fastboot_flash_additional_partitions(
         if not is_ab:
             if (type(line) == bool) and not line:
                 logger.error("Wiping super failed.")
+                yield False
+            else:
+                yield True
+
+    if vendor_boot:
+        logger.info("vendor_boot selected. Flashing vendor_boot partition.")
+        for line in run_command(
+            "fastboot flash vendor_boot ", target=f"{vendor_boot}", bin_path=bin_path
+        ):
+            yield line
+        if not is_ab:
+            if (type(line) == bool) and not line:
+                logger.error("Flashing vendor_boot failed.")
                 yield False
             else:
                 yield True
