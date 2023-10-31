@@ -42,12 +42,6 @@ steps:
       command: fastboot_boot_recovery
     - type: call_button
       content: >
-        Install additional partitions selected before by pressing 'Confirm and run'. Once it's done continue.
-        
-        Note : If you have not selected additional partitions it will do nothing and is save to continue.
-      command: fastboot_flash_additional_partitions
-    - type: call_button
-      content: >
         In some cases, the inactive slot can be unpopulated or contain much older firmware than the active slot, leading to various issues including a potential hard-brick.
         We can ensure none of that will happen by copying the contents of the active slot to the inactive slot. Press 'confirm and run' to to this. Once you are in the bootloader again, continue.
       command: adb_twrp_copy_partitions

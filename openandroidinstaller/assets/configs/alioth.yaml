@@ -6,8 +6,7 @@ metadata:
   device_code: alioth
   untested: true
   additional_steps:
-    - vendor_boot
-    - boot
+    - vbmeta
   supported_device_codes:
     - alioth
     - aliothin
