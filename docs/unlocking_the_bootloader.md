@@ -10,6 +10,7 @@ For some devices, it is necessary to unlock the bootloader manually. You usually
 Other phone manufacturers no longer allow you to unlock the bootloader. Nothing can be done if you have not unlocked your device in time. These manufacturers include *Huawei, Honor, LG and ASUS*. Support for these manufacturers will always be very limited.
 
 ## Here is a brief overview of the bootloader policies of some of the most popular brands (may be incomplete/inaccurate)
+## Note: Some oems on the list may offer carrier locked or region specific models, which also affect the unlock ability (Sony, Google, Motorola, etc.)
 
 | Brand | Flashing tool | Unlocking Method | Loss of guarantee\* | Supported models |
 |---|---|---|---|---|

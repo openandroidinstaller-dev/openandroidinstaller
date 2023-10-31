@@ -2,7 +2,7 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: OnePlus 7 Pro
   is_ab_device: true
-  device_code: guacamole 
+  device_code: guacamole
   supported_device_codes:
     - guacamole
     - OnePlus7Pro
@@ -25,7 +25,7 @@ steps:
         Once it's done, press continue here.
       command: fastboot_oem_unlock
     - type: confirm_button
-      content: > 
+      content: >
         The bootloader is now unlocked. Since the device resets completely, you will need to re-enable Developer Options and USB debugging to continue.
   boot_recovery:
     - type: call_button
