@@ -3,6 +3,7 @@ metadata:
   brand: xiaomi
   device_name: Xiaomi Mi 8
   is_ab_device: false
+  untested: true
   device_code: dipper
   supported_device_codes:
     - dipper
@@ -10,7 +11,6 @@ metadata:
     - You should install Android 10 or newer ROM.
 requirements:
   android: 10 (MiUI 12)
-untested: true
 steps:
   unlock_bootloader:
     - type: confirm_button
