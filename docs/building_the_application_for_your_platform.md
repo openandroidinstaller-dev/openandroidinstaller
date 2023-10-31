@@ -6,7 +6,7 @@ If you build the application for your platform and want to contribute the build,
 
 ## Run OpenAndroidInstaller for development
 
-Currently development is only supported on Ubuntu Linux. MacOS, Windows as well as other Linux distributions supporting flatpak should also work fine. You might need to install additional USB-drivers on Windows.
+Currently development is mainly done on Ubuntu Linux. MacOS, Windows, as well as other Linux distributions like Fedora should also work well. You might need to install additional USB-drivers on Windows.
 
 1. Clone the main branch of this repository
 2. Run `make poetry` and `make install` to install poetry to manage python and install the required dependencies like adb, fastboot and heimdall.
