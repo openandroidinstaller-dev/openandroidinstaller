@@ -41,7 +41,7 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 ### 1. Download OpenAndroidInstaller
 
-> ![WARNING]
+> [!WARNING]
 > ARM-based systems are **unsupported**.
 
 Follow the instructions for your desktop OS. The executables are compressed inside `.zip` files, so you'll have to extract them first (make sure you have extracting software installed). If you get prompted to, you'll have to adjust the permission of the executable to ensure its proper functionality. 
@@ -80,7 +80,7 @@ Here are the official links for:
       - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)
       - [NikGApps](https://nikgapps.com)
     - [MicroG](https://microg.org)
-      - The recommended way to install MicroG is to use the zip file provided here: [https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases).
+      - The recommended way to install MicroG is from the `.zip` file provided here: [`MinMicroG-abuse-CI/releases`](https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases).
     - [F-Droid App-Store](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
   - or you can just search the web or the [XDA Developers forum](https://xdaforums.com) to find an appropriate version for your device.
 
