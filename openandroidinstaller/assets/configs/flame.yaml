@@ -5,6 +5,8 @@ metadata:
   device_code: flame 
   supported_device_codes:
     - flame 
+  additional_steps:
+    - dtbo
 requirements:
   android: 13
 steps:

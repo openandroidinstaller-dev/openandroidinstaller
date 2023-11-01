@@ -10,6 +10,7 @@ For some devices, it is necessary to unlock the bootloader manually. You usually
 Other phone manufacturers no longer allow you to unlock the bootloader. Nothing can be done if you have not unlocked your device in time. These manufacturers include *Huawei, Honor, LG and ASUS*. Support for these manufacturers will always be very limited.
 
 ## Here is a brief overview of the bootloader policies of some of the most popular brands (may be incomplete/inaccurate)
+## Note: Some oems on the list may offer carrier locked or region specific models, which also affect the unlock ability (Sony, Google, Motorola, etc.)
 
 | Brand | Flashing tool | Unlocking Method | Loss of guarantee\* | Supported models |
 |---|---|---|---|---|
@@ -25,6 +26,6 @@ Other phone manufacturers no longer allow you to unlock the bootloader. Nothing 
 | LG | Fastboot | Impossible since December 2021 | **Yes** |  |
 | ASUS | Fastboot | Impossible since May 2023 (ASUS unlocking App) | **Yes** |  |
 
-**\*** In the EU you won't loose your standard 2 years of the warranty when you unlock your bootloader, flash your device or root it. ([source](https://forum.xda-developers.com/t/info-eu-rooting-and-flashing-dont-void-the-warranty.1998801/))
+**\*** In the EU you won't loose your standard 2 years of the warranty when you unlock your bootloader, flash your device or root it. ([source](https://xdaforums.com/t/info-eu-rooting-and-flashing-dont-void-the-warranty.1998801))
 
 You can find more information about the brands and their bootloader policies [here](https://wikilibriste.fr/fr/tutoriels-android/bootloader-unlock) (in French).

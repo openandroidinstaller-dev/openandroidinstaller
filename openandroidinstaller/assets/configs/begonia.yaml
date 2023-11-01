@@ -1,17 +1,17 @@
 metadata:
   maintainer: A non (anon)
   brand: xiaomi
-  device_name: Xiaomi Redmi Note 8 / 8T
+  device_name: Xiaomi Redmi Note 8 Pro
   is_ab_device: false
-  device_code: ginkgo
+  device_code: begonia
   supported_device_codes:
-    - ginkgo
-    - willow
+    - begonia
+    - begoniain
   untested: true
   notes:
     - You should install Android 10 or newer ROM.
 requirements:
-  android: 10 (Q)
+  android: 11 (MiUI 12.5)
 steps:
   unlock_bootloader:
     - type: confirm_button

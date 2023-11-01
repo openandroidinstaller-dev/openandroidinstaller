@@ -40,4 +40,3 @@ Every step in the config file corresponds to one view in the application. These 
 - `allow_skip`: [OPTIONAL] boolean; If a skip button should be displayed to allow skipping this step. Can be useful when the bootloader is already unlocked.
 
 **Please try to retain this order of these fields in your config to ensure consistency.**
-

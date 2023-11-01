@@ -6,6 +6,10 @@ metadata:
   supported_device_codes:
     - dre
     - NordN200
+  additional_steps:
+    - dtbo
+    - vbmeta
+    - vendor_boot
 requirements:
   android: 11
 steps:

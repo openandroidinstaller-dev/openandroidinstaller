@@ -106,6 +106,9 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.pick_super_empty_dialog = FilePicker(
             on_result=self.pick_super_empty_result
         )
+        self.pick_vendor_boot_dialog = FilePicker(
+            on_result=self.pick_vendor_boot_result
+        )
 
         self.selected_image = Text("Selected image: ")
         self.selected_recovery = Text("Selected recovery: ")
@@ -116,6 +119,9 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             fill_color=colors.RED, value=None, disabled=True, tristate=True
         )
         self.selected_super_empty = Checkbox(
+            fill_color=colors.RED, value=None, disabled=True, tristate=True
+        )
+        self.selected_vendor_boot = Checkbox(
             fill_color=colors.RED, value=None, disabled=True, tristate=True
         )
 
@@ -131,6 +137,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.pick_dtbo_dialog.on_result = self.enable_button_if_ready
         self.pick_vbmeta_dialog.on_result = self.enable_button_if_ready
         self.pick_super_empty_dialog.on_result = self.enable_button_if_ready
+        self.pick_vendor_boot_dialog.on_result = self.enable_button_if_ready
         # back button
         self.back_button = ElevatedButton(
             "Back",
@@ -155,6 +162,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 self.pick_dtbo_dialog,
                 self.pick_vbmeta_dialog,
                 self.pick_super_empty_dialog,
+                self.pick_vendor_boot_dialog,
             ]
         )
 
@@ -357,7 +365,7 @@ The `vendor_boot.img` is a partition image that contains the vendor boot image.
 
 ## Where do I get these images?
 You can download the required images for your device from the [LineageOS downloads page](https://download.lineageos.org/devices/{self.state.config.device_code}/builds).
-If this download page does not contain the required images, you can try to find them on the [XDA developers forum](https://forum.xda-developers.com/).
+If this download page does not contain the required images, you can try to find them on the [XDA developers forum](https://xdaforums.com).
                 """,
                 auto_follow_links=True,
             ),
@@ -460,6 +468,27 @@ Make sure the file is for **your exact phone model!**""",
                                 expand=True,
                             ),
                             self.selected_super_empty,
+                        ]
+                    ),
+                ]
+            )
+        if "vendor_boot" in self.state.config.additional_steps:
+            self.selected_vendor_boot.value = False
+            additional_image_selection.extend(
+                [
+                    Row(
+                        [
+                            FilledButton(
+                                "Pick `vendor_boot.img` image",
+                                icon=icons.UPLOAD_FILE,
+                                on_click=lambda _: self.pick_vendor_boot_dialog.pick_files(
+                                    allow_multiple=False,
+                                    file_type="custom",
+                                    allowed_extensions=["img"],
+                                ),
+                                expand=True,
+                            ),
+                            self.selected_vendor_boot,
                         ]
                     ),
                     Divider(),
@@ -600,6 +629,26 @@ Make sure the file is for **your exact phone model!**""",
         # update
         self.selected_super_empty.update()
 
+    def pick_vendor_boot_result(self, e: FilePickerResultEvent):
+        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        # update the textfield with the name of the file
+        if e.files:
+            # check if the super_empty works with the device and show the filename in different colors accordingly
+            if path == "vendor_boot.img":
+                self.selected_vendor_boot.fill_color = colors.GREEN
+                self.selected_vendor_boot.value = True
+                self.state.vendor_boot_path = e.files[0].path
+                logger.info(
+                    f"Selected vendor_boot.img from {self.state.vendor_boot_path}"
+                )
+            else:
+                self.selected_vendor_boot.fill_color = colors.RED
+                self.selected_vendor_boot.value = False
+        else:
+            logger.info("No image selected.")
+        # update
+        self.selected_vendor_boot.update()
+
     def enable_button_if_ready(self, e):
         """Enable the confirm button if both files have been selected."""
         if (".zip" in self.selected_image.value) and (
@@ -642,6 +691,8 @@ Make sure the file is for **your exact phone model!**""",
                     or "vbmeta" not in self.state.config.additional_steps,
                     self.selected_super_empty.value
                     or "super_empty" not in self.state.config.additional_steps,
+                    self.selected_vendor_boot.value
+                    or "vendor_boot" not in self.state.config.additional_steps,
                 ]
             ):
                 logger.error(
@@ -693,4 +744,3 @@ Make sure the file is for **your exact phone model!**""",
             self.right_view.update()
         else:
             self.confirm_button.disabled = True
-            # self.continue_eitherway_button.disabled = True
