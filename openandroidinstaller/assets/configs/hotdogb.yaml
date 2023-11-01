@@ -6,6 +6,9 @@ metadata:
   supported_device_codes:
     - hotdogb
     - OnePlus7T
+  additional_steps:
+    - dtbo
+    - vbmeta
 requirements:
   android: 12
 steps:
