@@ -37,16 +37,31 @@
 
 ## Usage
 
-Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and macOS are also supported, but you might experience more issues.<br />
-So far there is no support for ARM-based systems.
+Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 LTS). Windows and macOS are also supported, but you might experience more issues.
 
 ### 1. Download OpenAndroidInstaller
 
-Download the correct version for your OS [from the Releases](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases).
+> ![WARNING]
+> ARM-based systems are **unsupported**.
 
-For Linux users, you can also get the [official Flatpak version from Flathub](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller).
+Follow the instructions for your desktop OS. The executables are compressed inside `.zip` files, so you'll have to extract them first (make sure you have extracting software installed). If you get prompted to, you'll have to adjust the permission of the executable to ensure its proper functionality. 
 
-For Windows users, you might need to [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
+#### Linux
+
+You can download OAI from either:
+
+1. From Flathub: [`org.openandroidinstaller.OpenAndroidInstaller`](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller) (recommended)
+2. GitHub Releases: [`openandroidinstaller-ubuntu-latest.zip`](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/download/latest/openandroidinstaller-ubuntu-latest.zip)
+
+#### Windows
+
+You can download OAI for Windows from the GitHub Releases: [`openandroidinstaller-windows.zip`](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/download/latest/openandroidinstaller-windows.zip)
+
+You might also need to [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
+
+#### macOS
+
+For macOS, you can get OpenAndroidInstaller from the GitHub Releases: [`openandroidinstaller-macos.zip`](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/download/latest/openandroidinstaller-macos.zip)
 
 ### 2. Download the custom ROM image & the TWRP recovery image (& optionally addons)
 
@@ -67,7 +82,7 @@ Here are the official links for:
     - [MicroG](https://microg.org)
       - The recommended way to install MicroG is to use the zip file provided here: [https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases](https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases).
     - [F-Droid App-Store](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
-  - or you can just search the web or the [XDA Developers forum](https://xdaforums.com) for an appropriate version for your device.
+  - or you can just search the web or the [XDA Developers forum](https://xdaforums.com) to find an appropriate version for your device.
 
 ### 3. Start the desktop app
 
