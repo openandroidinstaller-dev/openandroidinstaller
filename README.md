@@ -32,8 +32,8 @@
 > [!IMPORTANT]
 > **Unlocking the bootloader will erase all data on your device!**
 > This also includes your DRM keys, which are stored in the Trim Area partition (also called TA) in case your device is fairly recent and supports DRM L1. Those devices will be downgraded to DRM L3. Devices on DRM L3 by default will not be affected.
+> Depending on your device you might be able to back up the TA partition using exploits and gaining temporary root access. On Sony Xperia 1/5 series phones DRM L1 will return once the bootloader is relocked.
 > Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
-> If you wish to backup the TA partition first, you can find tutorials related to your device on the internet.
 
 ## Usage
 
@@ -93,7 +93,7 @@ After starting the app you will be prompted to plug your device into your comput
 
 ## Officially supported devices
 
-Currently, the **we support 73 devices** by various vendors and working on adding more soon!
+Currently, the **we support 81 devices** by various vendors and working on adding more soon!
 
 Support for these devices is provided as best effort, but things might still go wrong.
 Help to improve the tool by reporting any issues you might face.
@@ -104,13 +104,16 @@ Help to improve the tool by reporting any issues you might face.
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Samsung | Galaxy J7 2015 | j7elte | | tested
+Samsung | Galaxy J7 Prime | on7xelte | | untested
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte) | SM-A510F | tested
 Samsung | Galaxy A5 2017 | [a5y17lte](https://wiki.lineageos.org/devices/a5y17lte) | | tested
 Samsung | Galaxy A7 2016 | a7xelte | | tested
+Samsung | Galaxy A7 2017 | [a7y17lte](https://wiki.lineageos.org/devices/a7y17lte) | | untested
 Samsung | Galaxy Grand Prime VE | grandprimevelte | SM-G531F | tested
 Samsung | Galaxy S III Neo | s3ve3g | GT-I9301I | tested
-Samsung | Galaxy Tab S2 | [gts210vewifi](https://wiki.lineageos.org/devices/gts210vewifi/) | T813 | tested
+Samsung | Galaxy Tab S2 | [gts210vewifi](https://wiki.lineageos.org/devices/gts210vewifi) | T813 | tested
+Samsung | Galaxy S4 | [jfltexx](https://wiki.lineageos.org/devices/jfltexx) | | untested
 Samsung | Galaxy S4 Mini LTE| [serranoltexx](https://wiki.lineageos.org/devices/serranoltexx) | | tested
 Samsung | Galaxy S5 | [klte](https://wiki.lineageos.org/devices/klte) | G900F/M/R4/R7/T/V/W8 | tested
 Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx) | | tested
@@ -161,7 +164,7 @@ Sony | Xperia 10 Plus | [mermaid](https://wiki.lineageos.org/devices/mermaid) | 
 Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer) | | tested
 Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari) | | tested
 Sony | Xperia XZ3 | [akatsuki](https://wiki.lineageos.org/devices/akatsuki) | | tested
-Sony | Xperia ZX | kagura | | planned
+Sony | Xperia XZ | kagura | | planned
 
 </details>
 
@@ -181,12 +184,12 @@ Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4) | | test
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
+Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | | tested
 Motorola | moto g5 | [cedric](https://wiki.lineageos.org/devices/cedric) | | tested
 Motorola | moto g6 plus | [evert](https://wiki.lineageos.org/devices/evert) | | tested
 Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean) | | tested
 Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo) | | tested
 Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | | tested
-Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | | tested
 Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | | tested
 
 </details>
@@ -219,11 +222,15 @@ Vendor | Device Name | CodeName | Models | Status
 Xiaomi | Redmi Note 7 | [lavender](https://wiki.lineageos.org/devices/lavender) |  | tested
 Xiaomi | Redmi 7A / 8 / 8A / 8A Dual | [Mi439](https://wiki.lineageos.org/devices/Mi439) : pine / olive / olivelite / olivewood | | tested
 Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo) / willow |  | untested
+Xiaomi | Redmi Note 8 Pro | begonia |  | untested
+Xiaomi | Mi 8 | [dipper](https://wiki.lineageos.org/devices/dipper) |  | untested
 Xiaomi | Redmi 9A / 9C / 9AT / 9i / 9A Sport / 10A / 10A Sport | garden / dandelion / blossom / angelican | | tested
 Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinci) / davinciin |  | untested
 Xiaomi | Redmi K20 Pro / Mi 9T Pro | raphael / raphaelin | | untested
 Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
 Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
+Xiaomi | Redmi K40 / Mi 11X / Poco F3 | [alioth](https://wiki.lineageos.org/devices/alioth) / aliothin |  | untested                                            
+Xiaomi | Poco X3 / X3 NFC | [surya](https://wiki.lineageos.org/devices/surya) / karna |  | untested
 Xiaomi | Poco X3 Pro | [vayu](https://wiki.lineageos.org/devices/vayu) |  | tested
 Xiaomi | 12 | cupid | | untested
 

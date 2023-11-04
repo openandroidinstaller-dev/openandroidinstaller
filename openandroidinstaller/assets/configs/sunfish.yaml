@@ -5,6 +5,8 @@ metadata:
   device_code: sunfish 
   supported_device_codes:
     - sunfish 
+  additional_steps:
+    - dtbo
 requirements:
   android: 12.1.0
 steps:
