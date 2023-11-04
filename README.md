@@ -42,16 +42,16 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 ### 1. Download OpenAndroidInstaller
 
 > [!WARNING]
-> ARM-based systems are **unsupported**.
+> ARM-based systems are **not supported**.
 
-Follow the instructions for your desktop OS. The executables are compressed inside `.zip` files, so you'll have to extract them first (make sure you have extracting software installed). If you get prompted to, you'll have to adjust the permission of the executable to ensure its proper functionality. 
+Follow the instructions for your OS. The executables are compressed inside `.zip` files, so you'll have to extract them first (make sure you have extracting software installed). If you get prompted to, you'll have to adjust the permission of the executable to ensure its proper functionality. 
 
 #### Linux
 
-You can download OAI from either:
+You can download OAI from:
 
-1. From Flathub: [`org.openandroidinstaller.OpenAndroidInstaller`](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller) (recommended)
-2. GitHub Releases: [`openandroidinstaller-ubuntu-latest.zip`](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/download/latest/openandroidinstaller-ubuntu-latest.zip)
+- Flathub: [`org.openandroidinstaller.OpenAndroidInstaller`](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller) (recommended)
+- GitHub Releases: [`openandroidinstaller-ubuntu-latest.zip`](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/download/latest/openandroidinstaller-ubuntu-latest.zip)
 
 #### Windows
 
@@ -63,19 +63,22 @@ You might also need to [install the Universal USB Drivers](https://adb.clockwork
 
 For macOS, you can get OpenAndroidInstaller from the GitHub Releases: [`openandroidinstaller-macos.zip`](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/download/latest/openandroidinstaller-macos.zip)
 
-### 2. Download the custom ROM image & the TWRP recovery image (& optionally addons)
+### 2. Download the custom ROM, recovery image & optional add-ons
 
 Here are the official links for:
 
   - some custom ROMs:
-    - [LineageOS](https://wiki.lineageos.org/devices)
-    - [/e/OS](https://doc.e.foundation/devices)
-    - [LineageOS for MicroG](https://download.lineage.microg.org)
     - [BlissRoms](https://blissroms.org)
+    - [CalyxOS](https://calyxos.org)
+    - [DivestOS](https://divestos.org)
+    - [/e/OS](https://doc.e.foundation/devices)
+    - [GrapheneOS](https://grapheneos.org)
+    - [LineageOS](https://wiki.lineageos.org/devices)
+    - [LineageOS for MicroG](https://download.lineage.microg.org)
     - [PixelExperience](https://download.pixelexperience.org)
-  - TWRP Recovery:
+  - Recovery:
     - [TWRP recovery](https://twrp.me/Devices)
-  - Optional Addons:
+  - Optional Add-ons:
     - There are different packages of *Google Apps* available:
       - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads)
       - [NikGApps](https://nikgapps.com)
@@ -84,9 +87,9 @@ Here are the official links for:
     - [F-Droid App-Store](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
   - or you can just search the web or the [XDA Developers forum](https://xdaforums.com) to find an appropriate version for your device.
 
-### 3. Start the desktop app
+### 3. Start OpenAndroidInstaller
 
-There, you will be prompted to plug your device to your computer and you will be given a step-by-step tutorial on how to install the ROM, TWRP and the addons for your specific model.
+After starting the app you will be prompted to plug your device into your computer and you will be given a step-by-step tutorial on how to install your new OS for your specific device.
 
 ## Officially supported devices
 
@@ -209,7 +212,7 @@ OnePlus | 9 | lemonade | | under development
 </details>
 
 <details>
-  <summary><b>Xiaomi</b></summary>
+  <summary><b>Xiaomi / Poco</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
@@ -248,7 +251,7 @@ All kinds of contributions are welcome. These include and are not limited to:
 - Adding features and/or improving the codebase
 - Reporting bugs
 
-Make sure to check if your issue or PR has already been fixed or implemented!
+Make sure to check if your issue or PR has already been fixed or implemented **before** opening a new one!
 
 ### More sources:
 
