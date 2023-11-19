@@ -111,9 +111,9 @@ Google | Pixel 3 | [blueline](https://wiki.lineageos.org/devices/blueline) | blu
 Google | Pixel 3 XL | [crosshatch](https://wiki.lineageos.org/devices/crosshatch) | crosshatch | tested
 Google | Pixel 3a | [sargo](https://wiki.lineageos.org/devices/sargo) | sargo | tested
 Google | Pixel 3a XL | [bonito](https://wiki.lineageos.org/devices/bonito) | bonito | tested
-Google | Pixel 4 | [flame](https://wiki.lineageos.org/devices/flame) | flame | tested 
-Google | Pixel 4 XL | [coral](https://wiki.lineageos.org/devices/coral) | coral | tested 
-Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish) | sunfish | tested 
+Google | Pixel 4 | [flame](https://wiki.lineageos.org/devices/flame) | flame | tested
+Google | Pixel 4 XL | [coral](https://wiki.lineageos.org/devices/coral) | coral | tested
+Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish) | sunfish | tested
 Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin) | redfin | tested
 Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet) | barbet | tested
 
@@ -163,17 +163,17 @@ Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | | te
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 OnePlus | One | [bacon](https://wiki.lineageos.org/devices/bacon) | A0001 | tested
-OnePlus | 5 | [cheeseburger](https://wiki.lineageos.org/devices/cheeseburger) | | tested
-OnePlus | 5T | [dumpling](https://wiki.lineageos.org/devices/dumpling) | | tested
-OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada) | | tested
-OnePlus | 6T | [fajita](https://wiki.lineageos.org/devices/fajita) | | tested
-OnePlus | 7 | [guacamoleb](https://wiki.lineageos.org/devices/guacamoleb) | | tested
-OnePlus | 7 Pro | [guacamole](https://wiki.lineageos.org/devices/guacamole) | | tested
-OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb) | | tested
-OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog) | | tested
-OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii) | | tested
-OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | | tested
-OnePlus | 9 | lemonade | | under development
+OnePlus | 5 | [cheeseburger](https://wiki.lineageos.org/devices/cheeseburger) | A5000 | tested
+OnePlus | 5T | [dumpling](https://wiki.lineageos.org/devices/dumpling) | A5010 | tested
+OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada) | A6000, A6003 | tested
+OnePlus | 6T | [fajita](https://wiki.lineageos.org/devices/fajita) | A6010, A6013 | tested
+OnePlus | 7 | [guacamoleb](https://wiki.lineageos.org/devices/guacamoleb) | GM1900, GM1901, GM1903, GM1905 | tested
+OnePlus | 7 Pro | [guacamole](https://wiki.lineageos.org/devices/guacamole) | GM1910, GM1911, GM1913, GM1917 | tested
+OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb) | HD1900, HD1901, HD1903, HD1905 | tested
+OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog) | HD1910, HD1911, HD1913, HD1917 | tested
+OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii) | AC2001, AC2003 | tested
+OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | DE2117 | tested
+OnePlus | 9 | lemonade | LE2110, LE2111, LE2113, LE2115 | under development
 
 </details>
 
@@ -191,7 +191,7 @@ Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinc
 Xiaomi | Redmi K20 Pro / Mi 9T Pro | raphael / raphaelin | | untested
 Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
 Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
-Xiaomi | Redmi K40 / Mi 11X / Poco F3 | [alioth](https://wiki.lineageos.org/devices/alioth) / aliothin |  | untested                                            
+Xiaomi | Redmi K40 / Mi 11X / Poco F3 | [alioth](https://wiki.lineageos.org/devices/alioth) / aliothin |  | untested
 Xiaomi | Poco X3 / X3 NFC | [surya](https://wiki.lineageos.org/devices/surya) / karna |  | untested
 Xiaomi | Poco X3 Pro | [vayu](https://wiki.lineageos.org/devices/vayu) |  | tested
 Xiaomi | 12 | cupid | | untested
@@ -224,7 +224,7 @@ A detailed list can be found [here](https://openandroidinstaller.org/#contribute
 
 ## Tools
 
-- The [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools) (such as adb and fastboot) are [Apache](https://android.googlesource.com/platform/system/adb/+/refs/heads/master/NOTICE)-licensed universal Android utilities
+- The [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools) (such as adb and fastboot) are [Apache](https://android.googlesource.com/platform/system/adb/+/refs/heads/master/NOTICE)-licensed universal Android utilities.
 - [Heimdall](https://gitlab.com/BenjaminDobell/Heimdall) is an [MIT](https://gitlab.com/BenjaminDobell/Heimdall/-/blob/master/LICENSE)-licensed replacement for the leaked ODIN tool to flash Samsung devices.
 - [libusb-1.0](https://github.com/libusb/libusb) is a [LGPL-2.1](https://github.com/libusb/libusb/blob/master/COPYING)-licensed library for USB device access from Linux, macOS, Windows and others.
 - [copy-partitions-20220613-signed.zip](https://mirrorbits.lineageos.org/tools/copy-partitions-20220613-signed.zip) The copy-partitions script was created by LineageOS developer erfanoabdi and filipepferraz and released under LGPL. It is used when the partitions need to be copied before flashing.
