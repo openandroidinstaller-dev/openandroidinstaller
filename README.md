@@ -202,6 +202,8 @@ Sony | Xperia 10 | [kirin](https://wiki.lineageos.org/devices/kirin) | | tested
 Sony | Xperia 10 Plus | [mermaid](https://wiki.lineageos.org/devices/mermaid) | | tested
 Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer) | | tested
 Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari) | | tested
+Sony | Xperia XZ2 Compact | [xz2c](https://wiki.lineageos.org/devices/xz2c) | | untested
+Sony | Xperia XZ2 Premium | [aurora](https://wiki.lineageos.org/devices/aurora) | | untested
 Sony | Xperia XZ3 | [akatsuki](https://wiki.lineageos.org/devices/akatsuki) | | tested
 Sony | Xperia XZ | kagura | | planned
 
