@@ -201,6 +201,13 @@ Sony | Xperia Z3 | [z3](https://wiki.lineageos.org/devices/z3) | | tested
 Sony | Xperia 10 | [kirin](https://wiki.lineageos.org/devices/kirin) | | tested
 Sony | Xperia 10 Plus | [mermaid](https://wiki.lineageos.org/devices/mermaid) | | tested
 Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer) | | tested
+Sony | Xperia XZ Premium | maple | G8141 | untested
+Sony | Xperia XZ Premium Dual Sim | maple_dsds | G8142 | untested
+Sony | Xperia XZ1 | poplar | G8341 | tested
+Sony | Xperia XZ1 Dual Sim | poplar_dsds | G8342 | untested
+Sony | Xperia XZ1 Canada | poplar_canada | G8343 | untested
+Sony | Xperia XZ1 KDDI | poplar_kddi | SOV36 | untested
+Sony | Xperia XZ1 Compact | lilac | G8441, G8442 | untested
 Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari) | | tested
 Sony | Xperia XZ2 Compact | [xz2c](https://wiki.lineageos.org/devices/xz2c) | | untested
 Sony | Xperia XZ2 Premium | [aurora](https://wiki.lineageos.org/devices/aurora) | | untested
