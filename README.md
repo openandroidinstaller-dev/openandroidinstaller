@@ -163,6 +163,7 @@ Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | XT16
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 OnePlus | One | [bacon](https://wiki.lineageos.org/devices/bacon) | A0001 | tested
+OnePlus | 3/3T | [oneplus3](https://wiki.lineageos.org/devices/oneplus3) | A3003, A3000, A3010 | untested
 OnePlus | 5 | [cheeseburger](https://wiki.lineageos.org/devices/cheeseburger) | A5000 | tested
 OnePlus | 5T | [dumpling](https://wiki.lineageos.org/devices/dumpling) | A5010 | tested
 OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada) | A6000, A6003 | tested
