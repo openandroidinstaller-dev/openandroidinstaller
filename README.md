@@ -148,13 +148,13 @@ Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4) | | test
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
-Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | | tested
-Motorola | moto g5 | [cedric](https://wiki.lineageos.org/devices/cedric) | | tested
-Motorola | moto g6 plus | [evert](https://wiki.lineageos.org/devices/evert) | | tested
-Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean) | | tested
-Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo) | | tested
-Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | | tested
-Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | | tested
+Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | XT2063-2, XT2063-3 | tested
+Motorola | moto g5 | [cedric](https://wiki.lineageos.org/devices/cedric) | XT1670, XT1671, XT1672, XT1675, XT1676, XT1677 | tested
+Motorola | moto g6 plus | [evert](https://wiki.lineageos.org/devices/evert) | XT1926-2, XT1926-3, XT1926-5, XT1926-6, XT1926-7, XT1926-8, XT1926-9 | tested
+Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean) | XT1955-1, XT1955-2, XT1955-4, XT1955-5, XT1955-7 | tested
+Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo) | XT2075-3, XT2075-5 | tested
+Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | XT2113-2, XT2113-3 | tested
+Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | XT1650-3, XT1650-05 | tested
 
 </details>
 
