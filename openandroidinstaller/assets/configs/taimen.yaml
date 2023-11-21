@@ -2,9 +2,9 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Google Pixel 2 XL
   is_ab_device: true
-  device_code: taimen 
+  device_code: taimen
   supported_device_codes:
-    - taimen 
+    - taimen
 requirements:
   android: 11
 steps:

@@ -12,8 +12,8 @@ steps:
   boot_recovery:
     - type: call_button
       content: >
-        As a first step, you need to boot into the bootloader. A bootloader is the piece of software, 
-        that tells your phone how to start and run an operating system (like Android). Your device should be turned on. 
+        As a first step, you need to boot into the bootloader. A bootloader is the piece of software,
+        that tells your phone how to start and run an operating system (like Android). Your device should be turned on.
         Then press 'Confirm and run' to reboot into the bootloader. Continue once it's done.
       command: adb_reboot_download
     - type: call_button
@@ -23,6 +23,6 @@ steps:
       command: heimdall_flash_recovery
     - type: confirm_button
       content: >
-        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the Volume Down + Power buttons for 8~10 seconds 
-        until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
+        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the Volume Down + Power buttons for 8~10 seconds
+        until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off,
         hold Volume Up + Bixby + Power.
