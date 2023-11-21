@@ -198,6 +198,7 @@ Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Sony | Xperia Z | [yuga](https://wiki.lineageos.org/devices/yuga) | C6603 | tested
 Sony | Xperia Z3 | [z3](https://wiki.lineageos.org/devices/z3) | | tested
+Sony | Xperia Z3 Compact | [z3c](https://wiki.lineageos.org/devices/z3c) | | untested
 Sony | Xperia 10 | [kirin](https://wiki.lineageos.org/devices/kirin) | | tested
 Sony | Xperia 10 Plus | [mermaid](https://wiki.lineageos.org/devices/mermaid) | | tested
 Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer) | | tested
