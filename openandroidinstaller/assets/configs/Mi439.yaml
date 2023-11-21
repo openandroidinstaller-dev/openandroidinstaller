@@ -15,6 +15,7 @@ metadata:
     - olive
     - olivelite
     - olivewood
+    - olives
   twrp-link: mi439
 requirements:
   firmware: MiUI 12.5 (Q)
