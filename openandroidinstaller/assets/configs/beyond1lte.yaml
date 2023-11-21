@@ -1,8 +1,8 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Samsung Galaxy S10
-  is_ab_device: false 
-  device_code: beyond1lte 
+  is_ab_device: false
+  device_code: beyond1lte
   supported_device_codes:
     - beyond1lte
     - beyond1
@@ -28,7 +28,7 @@ steps:
   boot_recovery:
     - type: call_button
       content: >
-        Now plug the USB-cable to your device. As a first step, you need to boot into download mode. Your device should be turned on. 
+        Now plug the USB-cable to your device. As a first step, you need to boot into download mode. Your device should be turned on.
         Then press 'Confirm and run' to reboot into download mode. Continue once it's done.
       command: adb_reboot_download
     - type: call_button
@@ -39,6 +39,6 @@ steps:
     - type: confirm_button
       img: samsung-buttons-bixby.png
       content: >
-        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Bixby* for 8~10 seconds 
-        until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
+        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Bixby* for 8~10 seconds
+        until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off,
         hold *Volume Up* + *Bixby* + *Power button*.
