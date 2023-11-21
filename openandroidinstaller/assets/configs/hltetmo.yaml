@@ -2,9 +2,13 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Samsung Galaxy Note 3 LTE (N900T/V/W8)
   is_ab_device: false
-  device_code: hltetmo 
+  device_code: hltetmo
   supported_device_codes:
-    - hltetmo 
+    - hltetmo
+    - hlte
+    - hltecan
+    - hlteusc
+    - hltevzw
 steps:
   unlock_bootloader:
   boot_recovery:
@@ -22,6 +26,6 @@ steps:
     - type: confirm_button
       img: samsung-buttons.png
       content: >
-        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for 
-        8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
+        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for
+        8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off,
         hold *Volume Up* + *Home* + *Power*. Confirm when the recovery screen appears.
