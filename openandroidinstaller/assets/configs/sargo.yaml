@@ -1,7 +1,7 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Pixel 3a
-  is_ab_device: true 
+  is_ab_device: true
   device_code: sargo
   supported_device_codes:
     - sargo
