@@ -1,10 +1,13 @@
 metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Samsung Galaxy A3 (2017)
-  is_ab_device: false 
+  is_ab_device: false
   device_code: a3y17lte
   supported_device_codes:
     - a3y17lte
+    - a3y17ltexc
+    - a3y17ltexx
+    - a3y17ltelk
 steps:
   unlock_bootloader:
   boot_recovery:
@@ -22,6 +25,6 @@ steps:
     - type: confirm_button
       img: samsung-buttons.png
       content: >
-        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for 
-        8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
+        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for
+        8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off,
         hold *Volume Up* + *Home* + *Power*. Confirm when the recovery screen appears.
