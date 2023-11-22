@@ -155,6 +155,7 @@ Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean) | |
 Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo) | | tested
 Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | | tested
 Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | | tested
+Motorola | Moto G8 Power | sofiar | XT2041-3 | untested
 
 </details>
 
