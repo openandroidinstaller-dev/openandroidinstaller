@@ -39,7 +39,7 @@ steps:
       content: >
         The bootloader is now unlocked. Since the device resets completely, you will need to re-enable USB debugging to continue.
   boot_recovery:
-    - type: confirm_button 
+    - type: confirm_button
       content: >
         Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
         adapting and repairing of the operating system.
@@ -53,7 +53,7 @@ steps:
     - type: call_button
       content: >
         When you are in the bootloder, install additional partitions selected before by pressing 'Confirm and run'. Once it's done continue.
-        
+
         Note : If you have not selected additional partitions it will do nothing and is save to continue.
       command: fastboot_flash_additional_partitions
     - type: call_button

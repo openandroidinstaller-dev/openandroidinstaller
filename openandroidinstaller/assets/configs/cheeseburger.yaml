@@ -6,6 +6,7 @@ metadata:
   supported_device_codes:
     - cheeseburger
     - OnePlus5
+    - oneplus5
   twrp-link: cheeseburger_dumpling
 requirements:
   android: 10

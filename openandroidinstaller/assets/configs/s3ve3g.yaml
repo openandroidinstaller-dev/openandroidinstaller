@@ -2,16 +2,16 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Samsung Galaxy S III Neo
   is_ab_device: false
-  device_code: s3ve3g 
+  device_code: s3ve3g
   supported_device_codes:
-    - s3ve3g 
+    - s3ve3g
 steps:
   unlock_bootloader:
   boot_recovery:
     - type: confirm_button
       content: >
         There are two possible hardware configurations of this phone regardless of model number. Some phones were released with a Sony IMX 175 rear camera sensor, while others with a Samsung s5k4h5yb rear camera sensor. As such, we’ve separated this devices builds into two separate builds. The procedure to distinguish which to use is as follows:
-        
+
         - Make sure to be on the latest stock firmware of your variant (you can check updates with Settings, Updates);
 
         - Make sure the rear camera is working on the stock ROM;
@@ -35,6 +35,6 @@ steps:
     - type: confirm_button
       img: samsung-buttons.png
       content: >
-        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for 
-        8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off, 
+        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Power buttons* for
+        8~10 seconds until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off,
         hold *Volume Up* + *Home* + *Power*. Confirm when the recovery screen appears.

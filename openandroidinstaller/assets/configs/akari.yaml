@@ -2,9 +2,9 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Sony Xperia XZ2
   is_ab_device: true
-  device_code: akari 
+  device_code: akari
   supported_device_codes:
-    - akari 
+    - akari
 requirements:
   android: 10
 steps:
@@ -21,7 +21,7 @@ steps:
     - type: link_button_with_confirm
       content: >
         Click on the button to open the instructions on Sonys official unlocking website to generate an unlock code for your bootloader.
-        Once you got the code write it down somewhere and continue to input the code. 
+        Once you got the code write it down somewhere and continue to input the code.
       link: https://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/
     - type: confirm_button
       content: >
@@ -37,7 +37,7 @@ steps:
       command: fastboot_unlock_with_code
     - type: call_button
       content: >
-        Press the button to reboot. Since the device resets completely, you will need to re-enable USB debugging to continue. 
+        Press the button to reboot. Since the device resets completely, you will need to re-enable USB debugging to continue.
         Connect your device to your PC via USB. Then confirm here to continue.
       command: fastboot_reboot
   boot_recovery:
