@@ -40,6 +40,34 @@ def get_download_link(devicecode: str) -> Optional[str]:
         return None
 
 
+def retrieve_image_metadata(image_path: str) -> dict:
+    """Retrieve metadata from the selected image.
+
+    Args:
+        image_path: Path to the image file.
+
+    Returns:
+        Dictionary containing the metadata.
+    """
+    metapath = "META-INF/com/android/metadata"
+    try:
+        with zipfile.ZipFile(image_path) as image_zip:
+            with image_zip.open(metapath, mode="r") as image_metadata:
+                metadata = image_metadata.readlines()
+            metadata_dict = {}
+            for line in metadata:
+                metadata_dict[line[: line.find(b"=")].decode("utf-8")] = line[
+                    line.find(b"=") + 1 : -1
+                ].decode("utf-8")
+            logger.info(f"Metadata retrieved from image {image_path.split('/')[-1]}.")
+            return metadata_dict
+    except FileNotFoundError:
+        logger.error(
+            f"Metadata file {metapath} not found in {image_path.split('/')[-1]}."
+        )
+        return dict()
+
+
 def image_works_with_device(supported_device_codes: List[str], image_path: str) -> bool:
     """Determine if an image works for the given device.
 
@@ -50,22 +78,21 @@ def image_works_with_device(supported_device_codes: List[str], image_path: str) 
     Returns:
         True if the image works with the device, False otherwise.
     """
-    with zipfile.ZipFile(image_path) as image_zip:
-        with image_zip.open(
-            "META-INF/com/android/metadata", mode="r"
-        ) as image_metadata:
-            metadata = image_metadata.readlines()
-            supported_devices = str(metadata[-1]).split("=")[-1][:-3].split(",")
-            logger.info(f"Image works with device: {supported_devices}")
-
-            if any(code in supported_devices for code in supported_device_codes):
-                logger.success("Device supported by the selected image.")
-                return True
-            else:
-                logger.error(
-                    f"Image file {image_path.split('/')[-1]} is not supported."
-                )
-                return False
+    metadata = retrieve_image_metadata(image_path)
+    try:
+        supported_devices = metadata["pre-device"].split(",")
+        logger.info(f"Image works with the following device(s): {supported_devices}")
+        if any(code in supported_devices for code in supported_device_codes):
+            logger.success("Device supported by the selected image.")
+            return True
+        else:
+            logger.error(f"Image file {image_path.split('/')[-1]} is not supported.")
+            return False
+    except KeyError:
+        logger.error(
+            f"Could not determine supported devices for {image_path.split('/')[-1]}."
+        )
+        return False
 
 
 def image_sdk_level(image_path: str) -> int:
@@ -73,16 +100,21 @@ def image_sdk_level(image_path: str) -> int:
 
     Example:
         Android 13: 33
+
+    Args:
+        image_path: Path to the image file.
+
+    Returns:
+        Android version as integer.
     """
-    with zipfile.ZipFile(image_path) as image_zip:
-        with image_zip.open(
-            "META-INF/com/android/metadata", mode="r"
-        ) as image_metadata:
-            metadata = image_metadata.readlines()
-            for line in metadata:
-                if b"sdk-level" in line:
-                    return int(line[line.find(b"=") + 1 : -1].decode("utf-8"))
-    return 0
+    metadata = retrieve_image_metadata(image_path)
+    try:
+        sdk_level = metadata["post-sdk-level"]
+        logger.info(f"Android version of {image_path}: {sdk_level}")
+        return int(sdk_level)
+    except (ValueError, TypeError, KeyError) as e:
+        logger.error(f"Could not determine Android version of {image_path}. Error: {e}")
+        return 0
 
 
 def recovery_works_with_device(
