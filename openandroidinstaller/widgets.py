@@ -141,7 +141,7 @@ class ProgressIndicator(UserControl):
                 percentage_done = int(result.group(1))
                 if percentage_done == 0:
                     percentage_done = 1
-                elif percentage_done == 100:
+                elif percentage_done >= 100:
                     percentage_done = 99
 
             # update the progress bar
@@ -153,9 +153,10 @@ class ProgressIndicator(UserControl):
         Args:
             percentage_done (int): Percentage of the progress bar to be filled.
         """
-        assert (
-            percentage_done >= 0 and percentage_done <= 100
-        ), "Percentage must be between 0 and 100"
+        assert percentage_done >= 0, "Percentage must be non-negative."
+        # clip the percentage to 100
+        if percentage_done > 100:
+            percentage_done = 100
         if self.progress_bar:
             self.progress_bar.value = percentage_done / 100
             self.percentage_text.value = f"{percentage_done}%"
