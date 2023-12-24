@@ -14,10 +14,33 @@
 # Author: Tobias Sterbak
 
 import zipfile
+from dataclasses import dataclass
+from enum import Enum
 from typing import Optional, List
 
 import requests
 from loguru import logger
+
+
+class CompatibilityStatus(Enum):
+    """Enum for the compatibility status of a device."""
+
+    UNKNOWN = 0
+    COMPATIBLE = 1
+    INCOMPATIBLE = 2
+
+
+@dataclass
+class CheckResult:
+    """Dataclass for the result of a check.
+
+    Attributes:
+        status: Compatibility status of the device.
+        message: Message to be displayed to the user.
+    """
+
+    status: CompatibilityStatus
+    message: str
 
 
 def get_download_link(devicecode: str) -> Optional[str]:
@@ -61,44 +84,21 @@ def retrieve_image_metadata(image_path: str) -> dict:
                 ].decode("utf-8")
             logger.info(f"Metadata retrieved from image {image_path.split('/')[-1]}.")
             return metadata_dict
-    except FileNotFoundError:
+    except (FileNotFoundError, KeyError):
         logger.error(
             f"Metadata file {metapath} not found in {image_path.split('/')[-1]}."
         )
         return dict()
 
 
-def image_works_with_device(supported_device_codes: List[str], image_path: str) -> bool:
-    """Determine if an image works for the given device.
-
-    Args:
-        supported_device_codes: List of supported device codes from the config file.
-        image_path: Path to the image file.
-
-    Returns:
-        True if the image works with the device, False otherwise.
-    """
-    metadata = retrieve_image_metadata(image_path)
-    try:
-        supported_devices = metadata["pre-device"].split(",")
-        logger.info(f"Image works with the following device(s): {supported_devices}")
-        if any(code in supported_devices for code in supported_device_codes):
-            logger.success("Device supported by the selected image.")
-            return True
-        else:
-            logger.error(f"Image file {image_path.split('/')[-1]} is not supported.")
-            return False
-    except KeyError:
-        logger.error(
-            f"Could not determine supported devices for {image_path.split('/')[-1]}."
-        )
-        return False
-
-
 def image_sdk_level(image_path: str) -> int:
     """Determine Android version of the selected image.
 
-    Example:
+    Examples:
+        Android 10: 29
+        Android 11: 30
+        Android 12: 31
+        Android 12.1: 32
         Android 13: 33
 
     Args:
@@ -114,12 +114,50 @@ def image_sdk_level(image_path: str) -> int:
         return int(sdk_level)
     except (ValueError, TypeError, KeyError) as e:
         logger.error(f"Could not determine Android version of {image_path}. Error: {e}")
-        return 0
+        return -1
+
+
+def image_works_with_device(
+    supported_device_codes: List[str], image_path: str
+) -> CheckResult:
+    """Determine if an image works for the given device.
+
+    Args:
+        supported_device_codes: List of supported device codes from the config file.
+        image_path: Path to the image file.
+
+    Returns:
+        CheckResult object containing the compatibility status and a message.
+    """
+    metadata = retrieve_image_metadata(image_path)
+    try:
+        supported_devices = metadata["pre-device"].split(",")
+        logger.info(f"Image works with the following device(s): {supported_devices}")
+        if any(code in supported_devices for code in supported_device_codes):
+            logger.success("Device supported by the selected image.")
+            return CheckResult(
+                CompatibilityStatus.COMPATIBLE,
+                "Device supported by the selected image.",
+            )
+        else:
+            logger.error(f"Image file {image_path.split('/')[-1]} is not supported.")
+            return CheckResult(
+                CompatibilityStatus.INCOMPATIBLE,
+                f"Image file {image_path.split('/')[-1]} is not supported by device code.",
+            )
+    except KeyError:
+        logger.error(
+            f"Could not determine supported devices for {image_path.split('/')[-1]}."
+        )
+        return CheckResult(
+            CompatibilityStatus.UNKNOWN,
+            f"Could not determine supported devices for {image_path.split('/')[-1]}. Missing metadata file? You may try to flash the image anyway.",
+        )
 
 
 def recovery_works_with_device(
     supported_device_codes: List[str], recovery_path: str
-) -> bool:
+) -> CheckResult:
     """Determine if a recovery works for the given device.
 
     BEWARE: THE RECOVERY PART IS STILL VERY BASIC!
@@ -129,14 +167,19 @@ def recovery_works_with_device(
         recovery_path: Path to the recovery file.
 
     Returns:
-        True if the recovery works with the device, False otherwise.
+        CheckResult object containing the compatibility status and a message.
     """
     recovery_file_name = recovery_path.split("/")[-1]
     if any(code in recovery_file_name for code in supported_device_codes) and (
         "twrp" in recovery_file_name
     ):
         logger.success("Device supported by the selected recovery.")
-        return True
+        return CheckResult(
+            CompatibilityStatus.COMPATIBLE, "Device supported by the selected recovery."
+        )
     else:
         logger.error(f"Recovery file {recovery_file_name} is not supported.")
-        return False
+        return CheckResult(
+            CompatibilityStatus.INCOMPATIBLE,
+            f"Recovery file {recovery_file_name} is not supported by device code in file name.",
+        )
