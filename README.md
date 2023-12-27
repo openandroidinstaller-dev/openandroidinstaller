@@ -130,6 +130,7 @@ Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean) | X
 Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo) | XT2075-3, XT2075-5 | tested
 Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | XT2113-2, XT2113-3 | tested
 Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | XT1650-3, XT1650-05 | tested
+Motorola | moto z play | [addison](https://wiki.lineageos.org/devices/addison) | XT1635-01, XT1635-02, XT1635-03 | untested
 
 </details>
 
