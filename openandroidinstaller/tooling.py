@@ -292,6 +292,11 @@ def adb_twrp_wipe_and_install(
             # if not an a/b-device just stay in twrp
             pass
     else:
+        #recovery might not be installed yet , we reboot to fastboot to flash it
+        for line in fastboot_flash_recovery(
+                bin_path=bin_path, recovery=recovery, is_ab=is_ab
+            ):
+            yield line
         for line in adb_reboot(bin_path=bin_path):
             yield line
 
