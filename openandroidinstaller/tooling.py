@@ -297,7 +297,7 @@ def adb_twrp_wipe_and_install(
                 bin_path=bin_path, recovery=recovery, is_ab=is_ab
             ):
             yield line
-        for line in adb_reboot(bin_path=bin_path):
+        for line in fastboot_reboot(bin_path=bin_path):
             yield line
 
 
