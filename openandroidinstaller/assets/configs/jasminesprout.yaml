@@ -7,6 +7,10 @@ metadata:
   supported_device_codes:
     - jasmine_sprout
   untested: true
+  notes:
+    - Retrofit dynamic partitions ROMs are not currently supported.
+requirements:
+  android: 10 (Q)
 steps:
   unlock_bootloader:
     - type: confirm_button
