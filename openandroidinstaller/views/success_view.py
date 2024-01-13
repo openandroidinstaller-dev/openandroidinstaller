@@ -53,13 +53,13 @@ class SuccessView(BaseView):
                 style="titleSmall",
             ),
             Markdown(
-                f"""
+                _("""
 If you liked the tool, help spread the word and **share it with people** who might want to use it.
 
 Also, you can consider contributing to make it better. There are a lot of different ways how you can help!
 
 [How to contribute]({contribute_link})
-""",
+""").format(contribute_link=contribute_link),
             ),
             Row(
                 [

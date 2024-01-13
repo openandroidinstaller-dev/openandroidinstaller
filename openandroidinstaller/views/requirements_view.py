@@ -150,7 +150,7 @@ On some devices, the build version is basically the firmware version."""),
                                     Row(
                                         [
                                             Text(
-                                                f"Android Version {required_android_version}:",
+                                                _("Android Version {required_android_version}:").format(required_android_version=required_android_version),
                                                 style="titleSmall",
                                             ),
                                             info_button,
@@ -158,11 +158,11 @@ On some devices, the build version is basically the firmware version."""),
                                         alignment="spaceBetween",
                                     ),
                                     Markdown(
-                                        f"""Before following these instructions please ensure that the device is currently using Android {required_android_version} firmware.
+                                        _("""Before following these instructions please ensure that the device is currently using Android {required_android_version} firmware.
 If the vendor provided multiple updates for that version, e.g. security updates, make sure you are on the latest!
 If your current installation is newer or older than Android {required_android_version}, please upgrade or downgrade to the required
 version before proceeding (guides can be found on the internet!).
-                        """
+                        """).format(required_android_version=required_android_version)
                                     ),
                                     android_checkbox,
                                 ]
@@ -189,7 +189,7 @@ version before proceeding (guides can be found on the internet!).
                                     Row(
                                         [
                                             Text(
-                                                f"Firmware Version {required_firmware_version}:",
+                                                _("Firmware Version {required_firmware_version}:").format(required_firmware_version=required_firmware_version),
                                                 style="titleSmall",
                                             ),
                                             info_button,
@@ -197,10 +197,10 @@ version before proceeding (guides can be found on the internet!).
                                         alignment="spaceBetween",
                                     ),
                                     Markdown(
-                                        f"""Before following these instructions please ensure that the device is on firmware version {required_firmware_version}.
+                                        _("""Before following these instructions please ensure that the device is on firmware version {required_firmware_version}.
 To discern this, you can run the command `adb shell getprop ro.build.display.id` on the stock ROM.
 If the device is not on the specified version, please follow the instructions below to install it.
-                        """
+                        """).format(required_firmware_version=required_firmware_version)
                                     ),
                                     firmware_checkbox,
                                 ]

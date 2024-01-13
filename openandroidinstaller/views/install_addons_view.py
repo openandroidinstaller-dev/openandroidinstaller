@@ -167,7 +167,7 @@ This might take a while. At the end your phone will boot into the new OS.
             # reset the progress indicators
             self.progress_indicator.clear()
             # inform about the currently installed addon
-            self.addon_info_text.value = f"{addon_num + 1}/{len(self.state.addon_paths)}: Installing {Path(addon_path).name} ..."
+            self.addon_info_text.value = f"{addon_num + 1}/{len(self.state.addon_paths)}: " + _("Installing") + f"{Path(addon_path).name} ..."
             self.right_view.update()
 
             # install one addon at the time

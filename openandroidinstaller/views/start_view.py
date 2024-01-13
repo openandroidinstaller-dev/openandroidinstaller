@@ -274,7 +274,7 @@ If you don't know what this means, you most likely don't need to do anything and
                     f"Device with code '{device_code}' is not supported or the config is corrupted. Please check the logs for more information."
                 )
                 self.device_name.value = (
-                    f"Device with code '{device_code}' is not supported yet."
+                    _("Device with code '{device_code}' is not supported yet.").format(device_code=device_code)
                 )
                 # add request support for device button
                 request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?labels=device&template=device-support-request.yaml&title=Add support for `{device_code}`"

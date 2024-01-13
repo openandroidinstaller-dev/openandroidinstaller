@@ -281,7 +281,7 @@ class StepView(BaseView):
             # enable call button to retry
             self.call_button.disabled = False
             # also remove the last error text if it happened
-            self.error_text.value = f"Command {command} failed! Try again or make sure everything is setup correctly."
+            self.error_text.value = _("Command {command} failed! Try again or make sure everything is setup correctly.").format(command=command)
         else:
             sleep(5)  # wait to make sure everything is fine
             logger.success(f"Command {command} run successfully. Allow to continue.")

@@ -245,8 +245,8 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             [
                 Text(_("Select an OS image:"), style="titleSmall"),
                 Markdown(
-                    f"""
-The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.device_code}-signed.zip`."""
+                    _("""
+The image file should look something like `lineage-19.1-20221101-nightly-{device_code}-signed.zip`.""").format(device_code=self.state.config.device_code)
                 ),
                 Row(
                     [
@@ -271,10 +271,10 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
                 [
                     Text(_("Select a TWRP recovery image:"), style="titleSmall"),
                     Markdown(
-                        f"""
-The recovery image should look something like `twrp-3.7.0_12-0-{self.state.config.device_code}.img`.
+                        _("""
+The recovery image should look something like `twrp-3.7.0_12-0-{device_code}.img`.
 
-**Note:** This tool **only supports TWRP recoveries**.""",
+**Note:** This tool **only supports TWRP recoveries**.""").format(device_code=self.state.config.device_code),
                         extension_set="gitHubFlavored",
                     ),
                     Row(
@@ -346,7 +346,7 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
             modal=True,
             title=Text(_("Why do I need additional images and where do I get them?")),
             content=Markdown(
-                f"""## About additional images
+                _("""## About additional images
 Some devices require additional images to be flashed before the recovery and OS image can be flashed.
 Not all images explained below are required for all devices. The installer will tell you which images are required for your device.
 
@@ -365,9 +365,9 @@ prevent issues with the super partition when flashing a new ROM.
 The `vendor_boot.img` is a partition image that contains the vendor boot image.
 
 ## Where do I get these images?
-You can download the required images for your device from the [LineageOS downloads page](https://download.lineageos.org/devices/{self.state.config.device_code}/builds).
+You can download the required images for your device from the [LineageOS downloads page](https://download.lineageos.org/devices/{device_code}/builds).
 If this download page does not contain the required images, you can try to find them on the [XDA developers forum](https://xdaforums.com).
-                """,
+                """).format(device_code=self.state.config.device_code),
                 auto_follow_links=True,
             ),
             actions=[

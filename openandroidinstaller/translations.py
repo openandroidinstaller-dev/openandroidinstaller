@@ -19,7 +19,7 @@ import gettext
 
 # Initialize localization
 # TODO : Automaticaly check user locale and if available, use it.
-fr = gettext.translation('base', localedir='../locales', languages=['fr'])
+fr = gettext.translation('base', localedir='locales', languages=['fr'])
 fr.install()
 _ = fr.gettext # French
 #os.environ['LANGUAGE']='fr'

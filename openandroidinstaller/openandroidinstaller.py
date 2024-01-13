@@ -237,7 +237,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         toolbar_height=72,
         elevation=0,
         title=Text(
-            f"OpenAndroidInstaller version {VERSION}"
+            _("OpenAndroidInstaller version {version}").format(version=VERSION)
         ),  # , style="displaySmall"),
         center_title=False,
         bgcolor="#00d886",
