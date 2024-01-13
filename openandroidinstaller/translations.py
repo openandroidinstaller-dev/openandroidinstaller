@@ -1,4 +1,4 @@
-"""File to import to manage translations."""
+"""File that manages translations."""
 
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
@@ -13,14 +13,16 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 
-import os
+import locale
 import gettext
+from loguru import logger
 
 
-# Initialize localization
-# TODO : Automaticaly check user locale and if available, use it.
-fr = gettext.translation('base', localedir='locales', languages=['fr'])
-fr.install()
-_ = fr.gettext # French
-#os.environ['LANGUAGE']='fr'
-#_ = gettext.gettext
+# Initialize localization with user locale if available
+try:
+    lang = gettext.translation('base', localedir='locales', languages=[locale.getlocale()[0]])
+except FileNotFoundError:
+    logger.info("User locale not available, fallback to english")
+    lang = gettext.translation('base', localedir='locales', languages=['en'])
+lang.install()
+_ = lang.gettext
