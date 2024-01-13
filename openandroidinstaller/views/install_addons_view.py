@@ -41,6 +41,8 @@ from widgets import (
     TerminalBox,
     ProgressIndicator,
 )
+from translations import _
+
 
 
 class InstallAddonsView(BaseView):
@@ -73,7 +75,7 @@ class InstallAddonsView(BaseView):
             self.right_view.update()
 
         self.advanced_switch = Switch(
-            label="Advanced output",
+            label=_("Advanced output"),
             on_change=check_advanced_switch,
             disabled=False,
         )
@@ -87,18 +89,18 @@ class InstallAddonsView(BaseView):
         # main controls
         self.right_view_header.controls = [
             get_title(
-                "Install Addons",
+                _("Install Addons"),
                 step_indicator_img="steps-header-install.png",
             )
         ]
         self.right_view.controls = [
             Markdown(
-                """In the next steps, you flash the selected Addons.
+                _("""In the next steps, you flash the selected Addons.
 
 Confirm to install.
 
 This might take a while. At the end your phone will boot into the new OS.
-"""
+""")
             )
         ]
         # basic view
@@ -107,7 +109,7 @@ This might take a while. At the end your phone will boot into the new OS.
         self.confirm_button.disabled = True
         # button to run the installation process
         self.install_button = ElevatedButton(
-            "Confirm and install addons",
+            _("Confirm and install addons"),
             on_click=self.run_install_addons,
             expand=True,
             icon=icons.DIRECTIONS_RUN_OUTLINED,
@@ -133,9 +135,9 @@ This might take a while. At the end your phone will boot into the new OS.
             self.right_view.controls.append(
                 Row(
                     [
-                        Text("Do you want to skip?"),
+                        Text(_("Do you want to skip?")),
                         ElevatedButton(
-                            "Skip",
+                            _("Skip"),
                             on_click=self.on_confirm,
                             icon=icons.NEXT_PLAN_OUTLINED,
                             expand=True,
@@ -200,7 +202,7 @@ This might take a while. At the end your phone will boot into the new OS.
             # enable call button to retry
             self.install_button.disabled = False
             # also remove the last error text if it happened
-            self.error_text.value = "Installation failed! Try again or make sure everything is setup correctly."
+            self.error_text.value = _("Installation failed! Try again or make sure everything is setup correctly.")
         else:
             sleep(4)  # wait to make sure everything is fine
             self.progress_indicator.set_progress_bar(100)

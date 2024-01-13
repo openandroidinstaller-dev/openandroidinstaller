@@ -40,6 +40,7 @@ from views import BaseView
 from app_state import AppState
 from widgets import get_title
 from tooling import search_device
+from translations import _
 
 
 class StartView(BaseView):
@@ -60,14 +61,14 @@ class StartView(BaseView):
     ):
         """Initialize the stateful visual elements of the view."""
         self.continue_button = ElevatedButton(
-            "Continue",
+            _("Continue"),
             on_click=self.on_confirm,
             icon=icons.NEXT_PLAN_OUTLINED,
             disabled=True,
             expand=True,
         )
         self.back_button = ElevatedButton(
-            "Back",
+            _("Back"),
             on_click=self.on_back,
             icon=icons.ARROW_BACK,
             expand=True,
@@ -76,9 +77,9 @@ class StartView(BaseView):
         # dialog box to help with developer options
         self.dlg_help_developer_options = AlertDialog(
             modal=True,
-            title=Text("How to enable developer options and OEM unlocking"),
+            title=Text(_("How to enable developer options and OEM unlocking")),
             content=Markdown(
-                """
+                _("""
 To do this, 
 - **tap seven times on the build number** in the 'System'- or 'About the phone'-Menu in Settings. You can also use the phones own search to look for `build number`. 
 - Then go back to the main menu and look for **'developer options'**. You can also search for it in your phone.
@@ -86,7 +87,7 @@ To do this,
 - If your phone is already connected to your PC, a pop-up might appear. **Allow USB debugging in the pop-up on your phone.**
 
 Now you are ready to continue.
-"""
+""")
             ),
             actions=[
                 TextButton("Close", on_click=self.close_developer_options_dlg),
@@ -101,7 +102,7 @@ Now you are ready to continue.
             self.state.toggle_flash_unlock_bootloader()
 
         self.bootloader_switch = Switch(
-            label="Bootloader is already unlocked.",
+            label=_("Bootloader is already unlocked."),
             on_change=check_bootloader_unlocked,
             disabled=True,
             inactive_thumb_color=colors.YELLOW,
@@ -114,7 +115,7 @@ Now you are ready to continue.
             self.state.toggle_flash_recovery()
 
         self.recovery_switch = Switch(
-            label="Custom recovery is already flashed.",
+            label=_("Custom recovery is already flashed."),
             on_change=check_recovery_already_flashed,
             disabled=True,
             inactive_thumb_color=colors.YELLOW,
@@ -124,7 +125,7 @@ Now you are ready to continue.
         # inform the user about the device detection
         self.device_name = Text("", weight="bold")
         self.device_detection_infobox = Row(
-            [Text("Detected device:"), self.device_name]
+            [Text(_("Detected device:")), self.device_name]
         )
         self.device_request_row = Row([], alignment="center")
         self.device_infobox = Column(
@@ -141,7 +142,7 @@ Now you are ready to continue.
         self.right_view_header.controls.extend(
             [
                 get_title(
-                    "Get the phone ready",
+                    _("Get the phone ready"),
                     step_indicator_img="steps-header-get-ready.png",
                 )
             ]
@@ -149,27 +150,27 @@ Now you are ready to continue.
         self.right_view.controls.extend(
             [
                 Markdown(
-                    """
+                    _("""
 To get started you need to 
 - **enable developer options** on your device
 - and then **enable USB debugging** and **OEM unlocking** in the developer options.
-                """
+                """)
                 ),
                 Row(
                     [
                         OutlinedButton(
-                            "How do I enable developer options?",
+                            _("How do I enable developer options?"),
                             on_click=self.open_developer_options_dlg,
                             expand=True,
                             icon=icons.HELP_OUTLINE_OUTLINED,
                             icon_color=colors.DEEP_ORANGE_500,
-                            tooltip="Get help to enable developer options and OEM unlocking.",
+                            tooltip=_("Get help to enable developer options and OEM unlocking."),
                         )
                     ]
                 ),
                 Divider(),
                 Markdown(
-                    """
+                    _("""
 Now 
 - **connect your device to this computer via USB** and
 - **allow USB debugging in the pop-up on your phone**.
@@ -177,25 +178,25 @@ Now
 - Then **press the button 'Search device'**.
 
 When everything works correctly you should see your device name here and you can continue.
-                """
+                """)
                 ),
                 Divider(),
                 Markdown(
-                    """
+                    _("""
 If you **already unlocked the bootloader** of your device or already **flashed a custom recovery**, please toggle the respective switch below, to skip the procedure.
 If you don't know what this means, you most likely don't need to do anything and you can just continue.
-            """
+            """)
                 ),
                 self.device_infobox,
                 Row(
                     [
                         self.back_button,
                         FilledButton(
-                            "Search for device",
+                            _("Search for device"),
                             on_click=self.search_devices_clicked,
                             icon=icons.DEVICES_OTHER_OUTLINED,
                             expand=True,
-                            tooltip="Search for a connected device.",
+                            tooltip=_("Search for a connected device."),
                         ),
                         self.continue_button,
                     ],
@@ -238,7 +239,7 @@ If you don't know what this means, you most likely don't need to do anything and
             else:
                 logger.info("No device detected! Connect to USB and try again.")
                 self.device_name.value = (
-                    "No device detected! Connect to USB and try again."
+                    _("No device detected! Connect to USB and try again.")
                 )
                 self.device_name.color = colors.RED
 
@@ -279,7 +280,7 @@ If you don't know what this means, you most likely don't need to do anything and
                 request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?labels=device&template=device-support-request.yaml&title=Add support for `{device_code}`"
                 self.device_request_row.controls.append(
                     ElevatedButton(
-                        "Request support for this device",
+                        _("Request support for this device"),
                         icon=icons.PHONELINK_SETUP_OUTLINED,
                         on_click=lambda _: webbrowser.open(request_url),
                     )

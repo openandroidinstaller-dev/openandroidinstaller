@@ -30,6 +30,8 @@ from styles import (
 from views import BaseView
 from app_state import AppState
 from widgets import get_title
+from translations import _
+
 
 
 class WelcomeView(BaseView):
@@ -48,7 +50,7 @@ class WelcomeView(BaseView):
     ):
         """Initialize the stateful visual elements of the view."""
         self.continue_button = ElevatedButton(
-            "Let's start!",
+            _("Let's start!"),
             on_click=self.on_confirm,
             icon=icons.NEXT_PLAN_OUTLINED,
             disabled=False,
@@ -60,36 +62,36 @@ class WelcomeView(BaseView):
 
         # build up the main view
         self.right_view_header.controls.extend(
-            [get_title("Welcome to the OpenAndroidInstaller!")]
+            [get_title(_("Welcome to the OpenAndroidInstaller!"))]
         )
         self.right_view.controls.extend(
             [
                 Text(
-                    "Great that you want to install alternative, open source Android operating systems!"
+                    _("Great that you want to install alternative, open source Android operating systems!")
                 ),
                 Text(
-                    "We will walk you through the installation process nice and easy."
+                    _("We will walk you through the installation process nice and easy.")
                 ),
                 Markdown(
-                    """
+                    _("""
 The following steps are performed in this tool:
 - First, we help you to **get your device ready** for the installation process.
 - Next, you can **select the operating system** you want to install (with guidance).
 - Then, we guide you though the process of **unlocking the bootloader** (if necessary). If you don't know what that means, it will be explained later.
 - As a next step, the **operation system is installed**. At this point you can also **select to install additional software** ("addons") like Google Apps.
 - Finally your device starts your new operating system.
-                """
+                """)
                 ),
                 Divider(),
                 Markdown(
-                    """
+                    _("""
 Before you continue, make sure
 - your devices is on the latest system update.
 - you have a backup of all your important data, since this procedure will **erase all data from the phone**.
 - to not store the backup on the phone! 
 
 Please note, that vendor specific back-ups will most likely not work on LineageOS!
-                """
+                """)
                 ),
                 Divider(),
                 Row(

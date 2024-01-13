@@ -54,6 +54,8 @@ from views import (
     InstallAddonsView,
 )
 from tooling import run_command
+from translations import _
+
 
 # VERSION number
 VERSION = "0.5.1-beta"
@@ -249,29 +251,29 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
                     ),
                 ),
                 padding=15,
-                tooltip="Frequently asked questions and encountered issues.",
+                tooltip=_("Frequently asked questions and encountered issues."),
             ),
             Container(
                 content=ElevatedButton(
                     icon=icons.FEEDBACK_OUTLINED,
-                    text="Give feedback",
+                    text=_("Give feedback"),
                     on_click=lambda _: webbrowser.open(
                         "https://openandroidinstaller.org/feedback.html"
                     ),
                 ),
                 padding=15,
-                tooltip="Give feedback about your experience with OpenAndroidInstaller",
+                tooltip=_("Give feedback about your experience with OpenAndroidInstaller"),
             ),
             Container(
                 content=ElevatedButton(
                     icon=icons.BUG_REPORT_OUTLINED,
-                    text="Report a bug",
+                    text=_("Report a bug"),
                     on_click=lambda _: webbrowser.open(
                         "https://github.com/openandroidinstaller-dev/openandroidinstaller/issues"
                     ),
                 ),
                 padding=15,
-                tooltip="Report an issue on github",
+                tooltip=_("Report an issue on github"),
             ),
         ],
     )
@@ -285,10 +287,10 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         bgcolor=colors.AMBER_100,
         leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
         content=Text(
-            "These instructions only work if you follow every section and step precisely. Do not continue after something fails!"
+            _("These instructions only work if you follow every section and step precisely. Do not continue after something fails!")
         ),
         actions=[
-            TextButton("I understand", on_click=close_banner),
+            TextButton(_("I understand"), on_click=close_banner),
         ],
     )
     page.banner.open = True

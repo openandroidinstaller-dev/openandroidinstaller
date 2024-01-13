@@ -47,6 +47,7 @@ from utils import (
     recovery_works_with_device,
     image_sdk_level,
 )
+from translations import _
 
 
 class SelectFilesView(BaseView):
@@ -69,9 +70,9 @@ class SelectFilesView(BaseView):
         # dialog box to explain OS images and recovery
         self.dlg_explain_images = AlertDialog(
             modal=True,
-            title=Text("What is an OS image and recovery and why do I need it?"),
+            title=Text(_("What is an OS image and recovery and why do I need it?")),
             content=Markdown(
-                """## OS image or ROM
+                _("""## OS image or ROM
 An operating system (OS) is system software that manages computer hardware,
 software resources, and provides common services for computer programs. 
 Popular, custom operating systems for mobile devices based on Android are 
@@ -89,10 +90,10 @@ A custom recovery is used for installing custom software on your device.
 This custom software can include smaller modifications like rooting your device or even
 replacing the firmware of the device with a completely custom ROM.
 
-OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about).""",
+OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about)."""),
             ),
             actions=[
-                TextButton("Close", on_click=self.close_close_explain_images_dlg),
+                TextButton(_("Close"), on_click=self.close_close_explain_images_dlg),
             ],
             actions_alignment="end",
             shape=CountinuosRectangleBorder(radius=0),
@@ -110,8 +111,8 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             on_result=self.pick_vendor_boot_result
         )
 
-        self.selected_image = Text("Selected image: ")
-        self.selected_recovery = Text("Selected recovery: ")
+        self.selected_image = Text(_("Selected image: "))
+        self.selected_recovery = Text(_("Selected recovery: "))
         self.selected_dtbo = Checkbox(
             fill_color=colors.RED, value=None, disabled=True, tristate=True
         )
@@ -129,7 +130,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.confirm_button = confirm_button(self.on_confirm)
         self.confirm_button.disabled = True
         self.continue_eitherway_button = confirm_button(
-            self.on_confirm, "Continue without additional images"
+            self.on_confirm, _("Continue without additional images")
         )
         self.continue_eitherway_button.disabled = True
         self.pick_recovery_dialog.on_result = self.enable_button_if_ready
@@ -140,7 +141,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.pick_vendor_boot_dialog.on_result = self.enable_button_if_ready
         # back button
         self.back_button = ElevatedButton(
-            "Back",
+            _("Back"),
             on_click=self.on_back,
             icon=icons.ARROW_BACK,
             expand=True,
@@ -168,18 +169,18 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
 
         # create help/info button to show the help dialog for the image and recovery selection
         explain_images_button = OutlinedButton(
-            "What is this?",
+            _("What is this?"),
             on_click=self.open_explain_images_dlg,
             expand=True,
             icon=icons.HELP_OUTLINE_OUTLINED,
             icon_color=colors.DEEP_ORANGE_500,
-            tooltip="Get more details on custom operating system images and recoveries.",
+            tooltip=_("Get more details on custom operating system images and recoveries."),
         )
 
         # add title
         self.right_view_header.controls.append(
             get_title(
-                "Now pick an OS image and a recovery file:",
+                _("Now pick an OS image and a recovery file:"),
                 info_button=explain_images_button,
                 step_indicator_img="steps-header-select.png",
             )
@@ -196,7 +197,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             self.right_view.controls.extend(
                 [
                     Text(
-                        "Important notes for your device",
+                        _("Important notes for your device"),
                         style="titleSmall",
                         color=colors.RED,
                         weight="bold",
@@ -213,12 +214,12 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 Column(
                     [
                         Text(
-                            "You can bring your own image and recovery or you download the officially supported image file for your device here:"
+                            _("You can bring your own image and recovery or you download the officially supported image file for your device here:")
                         ),
                         Row(
                             [
                                 ElevatedButton(
-                                    "Download LineageOS image",
+                                    _("Download LineageOS image"),
                                     icon=icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
                                         self.download_link
@@ -226,7 +227,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                                     expand=True,
                                 ),
                                 ElevatedButton(
-                                    "Download TWRP recovery",
+                                    _("Download TWRP recovery"),
                                     icon=icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
                                         twrp_download_link
@@ -242,7 +243,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         # attach the controls for uploading image and recovery
         self.right_view.controls.extend(
             [
-                Text("Select an OS image:", style="titleSmall"),
+                Text(_("Select an OS image:"), style="titleSmall"),
                 Markdown(
                     f"""
 The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.device_code}-signed.zip`."""
@@ -250,7 +251,7 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
                 Row(
                     [
                         FilledButton(
-                            "Pick OS image",
+                            _("Pick OS image"),
                             icon=icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_image_dialog.pick_files(
                                 allow_multiple=False,
@@ -268,7 +269,7 @@ The image file should look something like `lineage-19.1-20221101-nightly-{self.s
         if self.state.flash_recovery:
             self.right_view.controls.extend(
                 [
-                    Text("Select a TWRP recovery image:", style="titleSmall"),
+                    Text(_("Select a TWRP recovery image:"), style="titleSmall"),
                     Markdown(
                         f"""
 The recovery image should look something like `twrp-3.7.0_12-0-{self.state.config.device_code}.img`.
@@ -279,7 +280,7 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
                     Row(
                         [
                             FilledButton(
-                                "Pick TWRP recovery file",
+                                _("Pick TWRP recovery file"),
                                 icon=icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_recovery_dialog.pick_files(
                                     allow_multiple=False,
@@ -324,13 +325,13 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
         brand = self.state.config.metadata.get("brand", "")
         if brand in ["xiaomi", "poco"]:
             notes.append(
-                "- If something goes wrong, you can reinstall MiUI here:\n<https://xiaomifirmwareupdater.com/>\n"
+                _("- If something goes wrong, you can reinstall MiUI here:\n<https://xiaomifirmwareupdater.com/>\n")
             )
 
         # this should be used as little as possible!
         if self.state.config.metadata.get("untested", False):
             notes.append(
-                "- **This device has not been tested with OpenAndroidInstaller yet.** The installation can go wrong. You may have to finish the installation process with command line. If you test, please report the result on GitHub."
+                _("- **This device has not been tested with OpenAndroidInstaller yet.** The installation can go wrong. You may have to finish the installation process with command line. If you test, please report the result on GitHub.")
             )
 
         notes.extend(
@@ -343,7 +344,7 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
         # dialogue box to explain additional required images
         self.dlg_explain_additional_images = AlertDialog(
             modal=True,
-            title=Text("Why do I need additional images and where do I get them?"),
+            title=Text(_("Why do I need additional images and where do I get them?")),
             content=Markdown(
                 f"""## About additional images
 Some devices require additional images to be flashed before the recovery and OS image can be flashed.
@@ -371,7 +372,7 @@ If this download page does not contain the required images, you can try to find 
             ),
             actions=[
                 TextButton(
-                    "Close", on_click=self.close_close_explain_additional_images_dlg
+                    _("Close"), on_click=self.close_close_explain_additional_images_dlg
                 ),
             ],
             actions_alignment="end",
@@ -380,12 +381,12 @@ If this download page does not contain the required images, you can try to find 
 
         # create help/info button to show the help dialog for the image and recovery selection
         explain_additional_images_button = OutlinedButton(
-            "Why do I need this and where do I get it?",
+            _("Why do I need this and where do I get it?"),
             on_click=self.open_explain_additional_images_dlg,
             expand=True,
             icon=icons.HELP_OUTLINE_OUTLINED,
             icon_color=colors.DEEP_ORANGE_500,
-            tooltip="Get more details on additional images and download links.",
+            tooltip=_("Get more details on additional images and download links."),
         )
 
         # attach the controls for uploading others partitions, like dtbo, vbmeta & super_empty
@@ -396,16 +397,16 @@ If this download page does not contain the required images, you can try to find 
                     Row(
                         [
                             Text(
-                                "Select required additional images:", style="titleSmall"
+                                _("Select required additional images:"), style="titleSmall"
                             ),
                             explain_additional_images_button,
                         ]
                     ),
                     Markdown(
-                        """
+                        _("""
 Your selected device and ROM requires flashing of additional partitions. Please select the required images below.
 
-Make sure the file is for **your exact phone model!**""",
+Make sure the file is for **your exact phone model!**"""),
                     ),
                 ]
             )
@@ -416,7 +417,7 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `dtbo.img` image",
+                                _("Pick `dtbo.img` image"),
                                 icon=icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_dtbo_dialog.pick_files(
                                     allow_multiple=False,
@@ -437,7 +438,7 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `vbmeta.img` image",
+                                _("Pick `vbmeta.img` image"),
                                 icon=icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_vbmeta_dialog.pick_files(
                                     allow_multiple=False,
@@ -458,7 +459,7 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `super_empty.img` image",
+                                _("Pick `super_empty.img` image"),
                                 icon=icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_super_empty_dialog.pick_files(
                                     allow_multiple=False,
@@ -479,7 +480,7 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `vendor_boot.img` image",
+                                _("Pick `vendor_boot.img` image"),
                                 icon=icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_vendor_boot_dialog.pick_files(
                                     allow_multiple=False,
@@ -670,7 +671,7 @@ Make sure the file is for **your exact phone model!**""",
                 )
                 self.info_field.controls = [
                     Text(
-                        "Image and/or recovery don't work with the device. Make sure you use a TWRP-based recovery.",
+                        _("Image and/or recovery don't work with the device. Make sure you use a TWRP-based recovery."),
                         color=colors.RED,
                         weight="bold",
                     )
@@ -700,7 +701,7 @@ Make sure the file is for **your exact phone model!**""",
                 )
                 self.info_field.controls = [
                     Text(
-                        "Some additional images don't match or are missing. Please select the right ones.",
+                        _("Some additional images don't match or are missing. Please select the right ones."),
                         color=colors.RED,
                         weight="bold",
                     )
@@ -727,7 +728,7 @@ Make sure the file is for **your exact phone model!**""",
                 )
                 self.info_field.controls = [
                     Text(
-                        "Image doesn't work with the device.",
+                        _("Image doesn't work with the device."),
                         color=colors.RED,
                         weight="bold",
                     )

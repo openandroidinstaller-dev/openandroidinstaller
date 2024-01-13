@@ -26,6 +26,7 @@ from styles import (
 from views import BaseView
 from app_state import AppState
 from widgets import get_title
+from translations import _
 
 
 class SuccessView(BaseView):
@@ -42,13 +43,13 @@ class SuccessView(BaseView):
 
         # right view header
         self.right_view_header.controls = [
-            get_title("Installation completed successfully!"),
+            get_title(_("Installation completed successfully!")),
         ]
         # right view main part
         contribute_link = "https://openandroidinstaller.org/#contribute"
         self.right_view.controls = [
             Text(
-                "Now your devices boots into the new OS. Have fun with it!",
+                _("Now your devices boots into the new OS. Have fun with it!"),
                 style="titleSmall",
             ),
             Markdown(
