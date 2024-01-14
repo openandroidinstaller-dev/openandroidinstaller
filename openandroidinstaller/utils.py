@@ -51,21 +51,28 @@ def image_works_with_device(supported_device_codes: List[str], image_path: str) 
         True if the image works with the device, False otherwise.
     """
     with zipfile.ZipFile(image_path) as image_zip:
-        with image_zip.open(
-            "META-INF/com/android/metadata", mode="r"
-        ) as image_metadata:
-            metadata = image_metadata.readlines()
-            supported_devices = str(metadata[-1]).split("=")[-1][:-3].split(",")
-            logger.info(f"Image works with device: {supported_devices}")
+        try:
+            with image_zip.open(
+                "META-INF/com/android/metadata", mode="r"
+            ) as image_metadata:
+                metadata = image_metadata.readlines()
+                supported_devices = str(metadata[-1]).split("=")[-1][:-3].split(",")
+                logger.info(f"Image works with device: {supported_devices}")
 
-            if any(code in supported_devices for code in supported_device_codes):
-                logger.success("Device supported by the selected image.")
-                return True
-            else:
-                logger.error(
-                    f"Image file {image_path.split('/')[-1]} is not supported."
-                )
-                return False
+                if any(code in supported_devices for code in supported_device_codes):
+                    logger.success("Device supported by the selected image.")
+                    return True
+                else:
+                    logger.error(
+                        f"Image file {image_path.split('/')[-1]} is not supported."
+                    )
+                    return False
+        except KeyError:
+            logger.error("Selected image does not contains a metadata file. Can't check compatibility with the device")
+            return False
+        except zipfile.BadZipFile:
+            logger.error("Selected image is not a zip file.")
+            return False
 
 
 def image_sdk_level(image_path: str) -> int:
