@@ -84,9 +84,9 @@ def retrieve_image_metadata(image_path: str) -> dict:
                 ].decode("utf-8")
             logger.info(f"Metadata retrieved from image {image_path.split('/')[-1]}.")
             return metadata_dict
-    except zipfile.BadZipFile:
+    except zipfile.BadZipFile as e:
         logger.error("Selected image is not a zip file.")
-        return dict
+        raise e
     except (FileNotFoundError, KeyError):
         logger.error(
             f"Metadata file {metapath} not found in {image_path.split('/')[-1]}."
@@ -132,8 +132,8 @@ def image_works_with_device(
     Returns:
         CheckResult object containing the compatibility status and a message.
     """
-    metadata = retrieve_image_metadata(image_path)
     try:
+        metadata = retrieve_image_metadata(image_path)
         supported_devices = metadata["pre-device"].split(",")
         logger.info(f"Image works with the following device(s): {supported_devices}")
         if any(code in supported_devices for code in supported_device_codes):
@@ -148,6 +148,11 @@ def image_works_with_device(
                 CompatibilityStatus.INCOMPATIBLE,
                 f"Image file {image_path.split('/')[-1]} is not supported by device code.",
             )
+    except zipfile.BadZipFile:
+        return CheckResult(
+            CompatibilityStatus.INCOMPATIBLE,
+            f"Selected image {image_path.split('/')[-1]} is not a zip file.",
+        )
     except KeyError:
         logger.error(
             f"Could not determine supported devices for {image_path.split('/')[-1]}."
