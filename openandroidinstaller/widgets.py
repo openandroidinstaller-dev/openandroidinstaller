@@ -68,7 +68,7 @@ class TerminalBox(UserControl):
 
         Ignores empty lines.
         """
-        if (type(line) == str) and line.strip():
+        if isinstance(line, str) and line.strip():
             self._box.content.controls[0].value += f"\n>{line.strip()}"
             self._box.content.controls[0].value = self._box.content.controls[
                 0
@@ -115,7 +115,7 @@ class ProgressIndicator(UserControl):
         percentage_done = None
         result = None
         # create the progress bar
-        if self.progress_bar == None:
+        if not self.progress_bar:
             self.progress_bar = ProgressBar(
                 value=1 / 100,
                 width=500,
@@ -129,7 +129,7 @@ class ProgressIndicator(UserControl):
                 Row([self.percentage_text, self.progress_bar])
             )
         # get the progress numbers from the output lines
-        if (type(line) == str) and line.strip():
+        if isinstance(line, str) and line.strip():
             result = re.search(
                 r"\(\~(\d{1,3})\%\)|(Total xfer:|adb: failed to read command: Success)",
                 line.strip(),
@@ -139,11 +139,7 @@ class ProgressIndicator(UserControl):
                 percentage_done = 99
             elif result.group(1):
                 percentage_done = int(result.group(1))
-                if percentage_done == 0:
-                    percentage_done = 1
-                elif percentage_done >= 100:
-                    percentage_done = 99
-
+                percentage_done = max(1, min(99, percentage_done))
             # update the progress bar
             self.set_progress_bar(percentage_done)
 
