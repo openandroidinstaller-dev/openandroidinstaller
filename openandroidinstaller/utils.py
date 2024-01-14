@@ -85,7 +85,6 @@ def retrieve_image_metadata(image_path: str) -> dict:
             logger.info(f"Metadata retrieved from image {image_path.split('/')[-1]}.")
             return metadata_dict
     except zipfile.BadZipFile as e:
-        logger.error("Selected image is not a zip file.")
         raise e
     except (FileNotFoundError, KeyError):
         logger.error(
@@ -110,12 +109,12 @@ def image_sdk_level(image_path: str) -> int:
     Returns:
         Android version as integer.
     """
-    metadata = retrieve_image_metadata(image_path)
     try:
+        metadata = retrieve_image_metadata(image_path)
         sdk_level = metadata["post-sdk-level"]
         logger.info(f"Android version of {image_path}: {sdk_level}")
         return int(sdk_level)
-    except (ValueError, TypeError, KeyError) as e:
+    except (ValueError, TypeError, KeyError, zipfile.BadZipFile) as e:
         logger.error(f"Could not determine Android version of {image_path}. Error: {e}")
         return -1
 
@@ -149,6 +148,7 @@ def image_works_with_device(
                 f"Image file {image_path.split('/')[-1]} is not supported by device code.",
             )
     except zipfile.BadZipFile:
+        logger.error("Selected image is not a zip file.")
         return CheckResult(
             CompatibilityStatus.INCOMPATIBLE,
             f"Selected image {image_path.split('/')[-1]} is not a zip file.",
