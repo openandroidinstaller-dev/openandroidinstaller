@@ -181,7 +181,6 @@ OnePlus | 9 | lemonade | | under development
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
-
 Xiaomi | Redmi 7A / 8 / 8A / 8A Dual | [Mi439](https://wiki.lineageos.org/devices/Mi439) : pine / olive / olivelite / olivewood | | tested
 Xiaomi | Redmi 9A / 9C / 9AT / 9i / 9A Sport / 10A / 10A Sport | garden / dandelion / blossom / angelican | | tested
 Xiaomi | Redmi 9 / Poco M2 | [lancelot](https://wiki.lineageos.org/devices/lancelot) / galahad / shivan | | untested
