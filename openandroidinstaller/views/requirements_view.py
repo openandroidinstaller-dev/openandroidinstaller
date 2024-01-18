@@ -139,7 +139,7 @@ On some devices, the build version is basically the firmware version.""",
                 required_android_version = self.state.config.requirements.get("android")
                 if required_android_version:
                     android_checkbox = Checkbox(
-                        label="The required android version is installed. (Or I know the risk of continuing)",
+                        label="The required android version is installed.\n(Or I know the risk of continuing)",
                         on_change=self.enable_continue_button,
                     )
                     android_version_check = Card(

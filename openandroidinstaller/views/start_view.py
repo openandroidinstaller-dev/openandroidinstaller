@@ -26,6 +26,7 @@ from flet import (
     OutlinedButton,
     FilledButton,
     Row,
+    ResponsiveRow,
     TextButton,
     colors,
     icons,
@@ -106,6 +107,7 @@ Now you are ready to continue.
             disabled=True,
             inactive_thumb_color=colors.YELLOW,
             active_color=colors.GREEN,
+            col={"xl": 6},
         )
 
         # toggleswitch to allow skipping flashing recovery
@@ -119,6 +121,7 @@ Now you are ready to continue.
             disabled=True,
             inactive_thumb_color=colors.YELLOW,
             active_color=colors.GREEN,
+            col={"xl": 6},
         )
 
         # inform the user about the device detection
@@ -202,7 +205,7 @@ If you don't know what this means, you most likely don't need to do anything and
                     alignment="center",
                 ),
                 Divider(),
-                Row([self.bootloader_switch, self.recovery_switch]),
+                ResponsiveRow([self.bootloader_switch, self.recovery_switch]),
             ]
         )
         return self.view
