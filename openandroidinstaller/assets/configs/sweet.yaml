@@ -7,7 +7,6 @@ metadata:
   supported_device_codes:
     - sweet
     - sweetin
-  untested: false
   notes:
     - You should install Android 10 or newer ROM.
 requirements:
