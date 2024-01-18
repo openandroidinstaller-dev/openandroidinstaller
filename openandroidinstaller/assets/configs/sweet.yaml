@@ -1,7 +1,7 @@
 metadata:
   maintainer: BjornW
-  brand: xiaomi
   device_name: Xiaomi Redmi Note 10 Pro
+  brand: xiaomi
   is_ab_device: false
   device_code: sweet
   supported_device_codes:
