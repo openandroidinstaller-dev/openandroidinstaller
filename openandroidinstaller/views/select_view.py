@@ -128,7 +128,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         )
 
         # initialize and manage button state.
-        self.confirm_button = confirm_button(self.on_confirm)
+        self.confirm_button = confirm_button(self.on_confirm, confirm_text="Let's start flashing!")
         self.confirm_button.disabled = True
         self.continue_eitherway_button = confirm_button(
             self.on_confirm, "Continue without additional images"
