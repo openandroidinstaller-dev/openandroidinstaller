@@ -201,6 +201,7 @@ Xiaomi | Mi A2 / Mi 6X | jasmine_sprout |  | untested
 Xiaomi | Mi 8 | [dipper](https://wiki.lineageos.org/devices/dipper) |  | untested
 Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinci) / davinciin |  | untested
 Xiaomi | Redmi K20 Pro / Mi 9T Pro | raphael / raphaelin | | untested
+Xiaomi | Redmi Note 10 Pro | [sweet](https://wiki.lineageos.org/devices/sweet) | M2101K6G | tested
 Xiaomi | Redmi K40 / Mi 11X / Poco F3 | [alioth](https://wiki.lineageos.org/devices/alioth) / aliothin |  | untested
 Xiaomi | Poco X3 / X3 NFC | [surya](https://wiki.lineageos.org/devices/surya) / karna |  | untested
 Xiaomi | Poco X3 Pro | [vayu](https://wiki.lineageos.org/devices/vayu) |  | tested
