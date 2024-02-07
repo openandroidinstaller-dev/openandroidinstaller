@@ -15,13 +15,7 @@
 
 from app_state import AppState
 
-from flet import (
-    Column,
-    Image,
-    Row,
-    UserControl,
-    VerticalDivider,
-)
+from flet import Column, Container, Image, Row, UserControl, VerticalDivider, margin
 
 
 class BaseView(UserControl):
@@ -30,27 +24,35 @@ class BaseView(UserControl):
         self.state = state
 
         # configs
-        self.column_width = 600
+        # self.column_width = 600
         # right part of the display, add content here.
-        self.right_view_header = Column(width=self.column_width, height=120, spacing=30)
+        self.right_view_header = Column(
+            spacing=30
+        )  # , width=self.column_width, height=120)
         self.right_view = Column(
-            alignment="center", width=self.column_width, height=650, scroll="adaptive"
+            alignment="center",
+            scroll="adaptive",  # , width=self.column_width, height=650
         )
         # left part of the display: used for displaying the images
         self.left_view = Column(
-            width=self.column_width,
+            # width=self.column_width,
             controls=[Image(src=f"/imgs/{image}", height=600)],
             expand=True,
             horizontal_alignment="center",
         )
         # main view row
-        self.view = Row(
-            [
-                self.left_view,
-                VerticalDivider(),
-                Column(expand=True, controls=[self.right_view_header, self.right_view]),
-            ],
-            alignment="spaceEvenly",
+        self.view = Container(
+            content=Row(
+                [
+                    self.left_view,
+                    VerticalDivider(),
+                    Column(
+                        expand=True, controls=[self.right_view_header, self.right_view]
+                    ),
+                ],
+                alignment="spaceEvenly",
+            ),
+            margin=margin.only(left=10, top=0, right=50, bottom=5),
         )
 
     def clear(

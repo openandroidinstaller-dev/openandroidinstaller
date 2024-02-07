@@ -2,18 +2,18 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Motorola moto g6 plus
   is_ab_device: true
-  device_code: evert 
+  device_code: evert
   supported_device_codes:
     - evert
     - evert_n
 steps:
   unlock_bootloader:
-    - type: call_button 
+    - type: call_button
       command: adb_reboot_bootloader
       content: >
         As a first step, you need to unlock the bootloader of your device. A bootloader is the piece of software, that tells your phone
         how to start and run an operating system (like Android). You need to boot into fastboot mode by pressing the 'Confirm and run' button. Then continue.
-    - type: call_button 
+    - type: call_button
       command: fastboot_get_unlock_data
       content: >
         Now you need to get your device ID to get an unlock code from Motorola. Press 'Confirm and run' to get the ID. (You need to toggle 'Advanced Output' here to see it.)
@@ -36,7 +36,7 @@ steps:
       command: fastboot_unlock_with_code
     - type: call_button
       content: >
-        Press the button to reboot. Since the device resets completely, you will need to re-enable USB debugging to continue. 
+        Press the button to reboot. Since the device resets completely, you will need to re-enable USB debugging to continue.
         Connect your device to your PC via USB. Then confirm here to continue.
       command: fastboot_reboot
   boot_recovery:

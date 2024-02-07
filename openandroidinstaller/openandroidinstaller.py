@@ -56,7 +56,7 @@ from views import (
 from tooling import run_command
 
 # VERSION number
-VERSION = "0.5.1-beta"
+VERSION = "0.5.2-beta"
 
 # detect platform
 PLATFORM = sys.platform
@@ -72,7 +72,7 @@ class MainView(UserControl):
         super().__init__()
         self.state = state
         # create the main columns
-        self.view = Column(expand=True, width=1200)
+        self.view = Column(expand=True)  # , width=1200)
 
         # create default starter views
         welcome_view = WelcomeView(
@@ -216,7 +216,7 @@ def log_version_infos(bin_path):
     ]
     try:
         logger.info(f"Heimdall version: {hdversion[1].strip()}")
-    except:
+    except IndexError:
         logger.info(f"Issue with heimdall: {hdversion}")
 
 

@@ -5,7 +5,7 @@ metadata:
   device_code: guacamoleb
   supported_device_codes:
     - guacamoleb
-    - OnePlus7  
+    - OnePlus7
   additional_steps:
     - dtbo
     - vbmeta
@@ -39,3 +39,4 @@ steps:
       content: >
         Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_boot_recovery
+

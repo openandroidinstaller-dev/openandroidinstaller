@@ -10,9 +10,9 @@ steps:
   boot_recovery:
     - type: call_button
       content: >
-        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating, 
+        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
         adapting and repairing of the operating system.
-        
+
         Make sure your device is turned on and connected to the computer. Boot into the bootloader by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
