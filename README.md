@@ -177,7 +177,6 @@ OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | DE2117 | t
 OnePlus | 9 | lemonade | LE2110, LE2111, LE2113, LE2115 | under development
 
 </details>
-
 <details><summary><b>Xiaomi & Poco</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
@@ -190,6 +189,7 @@ Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo)
 Xiaomi | Redmi Note 8 Pro | begonia |  | untested
 Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
 Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
+Xiaomi | Mi A2 / Mi 6X | jasmine_sprout |  | untested
 Xiaomi | Mi 8 | [dipper](https://wiki.lineageos.org/devices/dipper) |  | untested
 Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinci) / davinciin |  | untested
 Xiaomi | Redmi K20 Pro / Mi 9T Pro | raphael / raphaelin | | untested
