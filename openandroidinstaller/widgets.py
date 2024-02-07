@@ -1,41 +1,34 @@
 """Contains functions and classes to get different elements and widgets of the installer."""
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
 import webbrowser
-import regex as re
 from functools import partial
 from typing import Callable, Optional
 
+import regex as re
 from flet import (
-    UserControl,
-    colors,
+    Column,
     Container,
     ElevatedButton,
-    ProgressRing,
-    ProgressBar,
-    Row,
-    alignment,
-    icons,
     IconButton,
     Image,
-    Column,
+    ProgressBar,
+    ProgressRing,
+    Row,
+    UserControl,
+    alignment,
+    colors,
+    icons,
 )
-
-from styles import (
-    Text,
-)
+from styles import Text
 
 
 class TerminalBox(UserControl):
@@ -68,7 +61,7 @@ class TerminalBox(UserControl):
 
         Ignores empty lines.
         """
-        if (type(line) == str) and line.strip():
+        if isinstance(line, str) and line.strip():
             self._box.content.controls[0].value += f"\n>{line.strip()}"
             self._box.content.controls[0].value = self._box.content.controls[
                 0
@@ -115,7 +108,7 @@ class ProgressIndicator(UserControl):
         percentage_done = None
         result = None
         # create the progress bar
-        if self.progress_bar == None:
+        if not self.progress_bar:
             self.progress_bar = ProgressBar(
                 value=1 / 100,
                 width=500,
@@ -129,7 +122,7 @@ class ProgressIndicator(UserControl):
                 Row([self.percentage_text, self.progress_bar])
             )
         # get the progress numbers from the output lines
-        if (type(line) == str) and line.strip():
+        if isinstance(line, str) and line.strip():
             result = re.search(
                 r"\(\~(\d{1,3})\%\)|(Total xfer:|adb: failed to read command: Success)",
                 line.strip(),
@@ -139,11 +132,7 @@ class ProgressIndicator(UserControl):
                 percentage_done = 99
             elif result.group(1):
                 percentage_done = int(result.group(1))
-                if percentage_done == 0:
-                    percentage_done = 1
-                elif percentage_done == 100:
-                    percentage_done = 99
-
+                percentage_done = max(1, min(99, percentage_done))
             # update the progress bar
             self.set_progress_bar(percentage_done)
 
@@ -153,9 +142,10 @@ class ProgressIndicator(UserControl):
         Args:
             percentage_done (int): Percentage of the progress bar to be filled.
         """
-        assert (
-            percentage_done >= 0 and percentage_done <= 100
-        ), "Percentage must be between 0 and 100"
+        assert percentage_done >= 0, "Percentage must be non-negative."
+        # clip the percentage to 100
+        if percentage_done > 100:
+            percentage_done = 100
         if self.progress_bar:
             self.progress_bar.value = percentage_done / 100
             self.percentage_text.value = f"{percentage_done}%"

@@ -1,27 +1,24 @@
 """Main file of the OpenAndroidInstaller."""
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
+import functools
 import os
 import sys
 import webbrowser
-import click
-import functools
 from pathlib import Path
 from typing import List
 
+import click
 import flet as ft
+from app_state import AppState
 from flet import (
     AppBar,
     Banner,
@@ -37,26 +34,22 @@ from flet import (
     icons,
 )
 from loguru import logger
-
-from styles import (
-    Text,
-)
-from app_state import AppState
+from styles import Text
+from tooling import run_command
 from views import (
-    SelectFilesView,
-    StepView,
-    SuccessView,
-    StartView,
-    RequirementsView,
-    InstallView,
-    WelcomeView,
     AddonsView,
     InstallAddonsView,
+    InstallView,
+    RequirementsView,
+    SelectFilesView,
+    StartView,
+    StepView,
+    SuccessView,
+    WelcomeView,
 )
-from tooling import run_command
 
 # VERSION number
-VERSION = "0.5.1-beta"
+VERSION = "0.5.3-beta"
 
 # detect platform
 PLATFORM = sys.platform
@@ -72,7 +65,7 @@ class MainView(UserControl):
         super().__init__()
         self.state = state
         # create the main columns
-        self.view = Column(expand=True, width=1200)
+        self.view = Column(expand=True)  # , width=1200)
 
         # create default starter views
         welcome_view = WelcomeView(
@@ -216,7 +209,7 @@ def log_version_infos(bin_path):
     ]
     try:
         logger.info(f"Heimdall version: {hdversion[1].strip()}")
-    except:
+    except IndexError:
         logger.info(f"Issue with heimdall: {hdversion}")
 
 

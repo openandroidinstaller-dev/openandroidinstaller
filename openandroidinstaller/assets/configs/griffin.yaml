@@ -5,6 +5,12 @@ metadata:
   device_code: griffin
   supported_device_codes:
     - griffin
+    - griffin_cn
+    - sheridan
+    - xt1650
+    - xt1650-01
+    - xt1650-03
+    - xt1650-05
 steps:
   unlock_bootloader:
     - type: call_button

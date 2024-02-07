@@ -23,7 +23,7 @@ jobs:
     - run: black .
     - run: ruff openandroidinstaller/ --ignore E501
     - run: PYTHONPATH=openandroidinstaller:$(PYTHONPATH) pytest --cov=openandroidinstaller tests/
-    
+
   build:
     needs: ci
     runs-on: ${{ matrix.os }}
@@ -43,7 +43,7 @@ jobs:
       with:
         name: openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}
         path: dist/
-  
+
   build-windows:
     needs: ci
     runs-on: 'windows-latest'
@@ -59,7 +59,7 @@ jobs:
       with:
         name: openandroidinstaller-${{  github.ref_name }}-windows-latest
         path: dist/
-  
+
   create-release:
     needs:
       - build
