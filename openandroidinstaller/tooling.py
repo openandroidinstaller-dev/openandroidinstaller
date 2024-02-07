@@ -1,4 +1,5 @@
 """This module contains functions to deal with tools like adb, fastboot and heimdall."""
+
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
@@ -10,6 +11,7 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 import shlex
+from dataclasses import dataclass
 import subprocess
 import sys
 from pathlib import Path
@@ -574,24 +576,49 @@ def heimdall_flash_recovery(bin_path: Path, recovery: str) -> TerminalResponse:
         yield line
 
 
-def search_device(platform: str, bin_path: Path) -> Optional[str]:
+@dataclass(frozen=True)
+class SearchResult:
+    """Result of the device search.
+
+    Attributes:
+        device_code: The device code of the connected device.
+        msg: Message describing the result.
+    """
+
+    device_code: str = None
+    msg: str = None
+
+
+def search_device(platform: str, bin_path: Path) -> SearchResult:
     """Search for a connected device."""
     logger.info(f"Search devices on {platform} with {bin_path}...")
     try:
         # read device code
         if platform in ("linux", "darwin"):
+            # check if grep is installed and find the right path
+            try:
+                grep_command = check_output(["which", "grep"]).decode().strip()
+            except CalledProcessError:
+                logger.error(
+                    "Failed to detect a device. Please make sure `grep` it is installed."
+                )
+                return SearchResult(
+                    msg="Failed to detect a device. Please make sure `grep` it is installed."
+                )
+            # run the command to get the device code
             output = check_output(
                 [
                     str(bin_path.joinpath(Path("adb"))),
                     "shell",
                     "getprop",
                     "|",
-                    "grep",
+                    grep_command,
                     "ro.product.device",
                 ],
                 stderr=STDOUT,
             ).decode()
         elif platform in ("windows", "win32"):
+            # run the command to get the device code on windows
             output = check_output(
                 [
                     str(bin_path.joinpath(Path("adb.exe"))),
@@ -608,7 +635,12 @@ def search_device(platform: str, bin_path: Path) -> Optional[str]:
             raise Exception(f"Unknown platform {platform}.")
         device_code = output.split("[")[-1].strip()[:-1].strip()
         logger.info(f"Found device code '{device_code}'")
-        return device_code
+        return SearchResult(
+            device_code=device_code,
+            msg=f"Found device with device code '{device_code}'.",
+        )
     except CalledProcessError:
         logger.error("Failed to detect a device.")
-        return None
+        return SearchResult(
+            msg="Failed to detect a device. Connect to USB and try again."
+        )
