@@ -1,52 +1,46 @@
 """Contains the select files view."""
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
 import webbrowser
-from loguru import logger
 from typing import Callable
 
+from app_state import AppState
 from flet import (
+    AlertDialog,
+    Checkbox,
     Column,
     Divider,
     ElevatedButton,
-    OutlinedButton,
-    FilledButton,
-    Row,
-    colors,
-    icons,
-    TextButton,
-    AlertDialog,
     FilePicker,
     FilePickerResultEvent,
-    Checkbox,
+    FilledButton,
+    OutlinedButton,
+    Row,
+    TextButton,
+    colors,
+    icons,
 )
 from flet_core.buttons import CountinuosRectangleBorder
-
-from styles import (
-    Text,
-    Markdown,
-)
-from views import BaseView
-from app_state import AppState
-from widgets import get_title, confirm_button
+from loguru import logger
+from styles import Markdown, Text
 from utils import (
+    CheckResult,
+    CompatibilityStatus,
     get_download_link,
+    image_sdk_level,
     image_works_with_device,
     recovery_works_with_device,
-    image_sdk_level,
 )
+from views import BaseView
+from widgets import confirm_button, get_title
 from translations import _
 
 
@@ -74,8 +68,8 @@ class SelectFilesView(BaseView):
             content=Markdown(
                 _("""## OS image or ROM
 An operating system (OS) is system software that manages computer hardware,
-software resources, and provides common services for computer programs. 
-Popular, custom operating systems for mobile devices based on Android are 
+software resources, and provides common services for computer programs.
+Popular, custom operating systems for mobile devices based on Android are
 - [LineageOS](https://lineageos.org)
 - [/e/OS](https://e.foundation/e-os) or
 - [LineageOS for microG](https://lineage.microg.org)
@@ -127,7 +121,9 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         )
 
         # initialize and manage button state.
-        self.confirm_button = confirm_button(self.on_confirm)
+        self.confirm_button = confirm_button(
+            self.on_confirm, confirm_text="Let's start flashing!"
+        )
         self.confirm_button.disabled = True
         self.continue_eitherway_button = confirm_button(
             self.on_confirm, _("Continue without additional images")
@@ -146,6 +142,9 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             icon=icons.ARROW_BACK,
             expand=True,
         )
+        # store image and recovery compatibility
+        self.image_compatibility: CheckResult | None = None
+        self.recovery_compatibility: CheckResult | None = None
 
     def build(self):
         self.clear()
@@ -534,17 +533,21 @@ Make sure the file is for **your exact phone model!**"""),
             logger.info("No image selected.")
         # check if the image works with the device and show the filename in different colors accordingly
         if e.files:
-            if image_works_with_device(
+            self.image_compatibility = image_works_with_device(
                 supported_device_codes=self.state.config.supported_device_codes,
                 image_path=self.state.image_path,
-            ):
+            )
+            if self.image_compatibility.status == CompatibilityStatus.COMPATIBLE:
                 self.selected_image.color = colors.GREEN
+            elif self.image_compatibility.status == CompatibilityStatus.UNKNOWN:
+                self.selected_image.color = colors.ORANGE
             else:
                 self.selected_image.color = colors.RED
+            self.selected_image.value += f"\n> {self.image_compatibility.message}"
         # if the image works and the sdk level is 33 or higher, show the additional image selection
         if self.state.flash_recovery:
             if (
-                self.selected_image.color == colors.GREEN
+                self.image_compatibility
                 and image_sdk_level(self.state.image_path) >= 33
             ):
                 self.toggle_additional_image_selection()
@@ -568,13 +571,17 @@ Make sure the file is for **your exact phone model!**"""),
             logger.info("No image selected.")
         # check if the recovery works with the device and show the filename in different colors accordingly
         if e.files:
-            if recovery_works_with_device(
+            self.recovery_compatibility = recovery_works_with_device(
                 supported_device_codes=self.state.config.supported_device_codes,
                 recovery_path=self.state.recovery_path,
-            ):
+            )
+            if self.recovery_compatibility.status == CompatibilityStatus.COMPATIBLE:
                 self.selected_recovery.color = colors.GREEN
+            elif self.recovery_compatibility.status == CompatibilityStatus.UNKNOWN:
+                self.selected_recovery.color = colors.ORANGE
             else:
                 self.selected_recovery.color = colors.RED
+            self.selected_recovery.value += f"\n> {self.recovery_compatibility.message}"
         # update
         self.selected_recovery.update()
 
@@ -655,15 +662,10 @@ Make sure the file is for **your exact phone model!**"""),
         if (".zip" in self.selected_image.value) and (
             ".img" in self.selected_recovery.value
         ):
-            if not (
-                image_works_with_device(
-                    supported_device_codes=self.state.config.supported_device_codes,
-                    image_path=self.state.image_path,
-                )
-                and recovery_works_with_device(
-                    supported_device_codes=self.state.config.supported_device_codes,
-                    recovery_path=self.state.recovery_path,
-                )
+            if (
+                self.image_compatibility.status == CompatibilityStatus.INCOMPATIBLE
+            ) or (
+                self.recovery_compatibility.status == CompatibilityStatus.INCOMPATIBLE
             ):
                 # if image and recovery work for device allow to move on, otherwise display message
                 logger.error(
@@ -696,9 +698,7 @@ Make sure the file is for **your exact phone model!**"""),
                     or "vendor_boot" not in self.state.config.additional_steps,
                 ]
             ):
-                logger.error(
-                    "Some additional images don't match or are missing. Please select different ones."
-                )
+                logger.error("Some additional images don't match or are missing.")
                 self.info_field.controls = [
                     Text(
                         _("Some additional images don't match or are missing. Please select the right ones."),
@@ -716,16 +716,9 @@ Make sure the file is for **your exact phone model!**"""),
             self.continue_eitherway_button.disabled = True
             self.right_view.update()
         elif (".zip" in self.selected_image.value) and (not self.state.flash_recovery):
-            if not (
-                image_works_with_device(
-                    supported_device_codes=self.state.config.supported_device_codes,
-                    image_path=self.state.image_path,
-                )
-            ):
+            if self.image_compatibility.status != CompatibilityStatus.COMPATIBLE:
                 # if image works for device allow to move on, otherwise display message
-                logger.error(
-                    "Image doesn't work with the device. Please select a different one."
-                )
+                logger.error("Image doesn't work with the device.")
                 self.info_field.controls = [
                     Text(
                         _("Image doesn't work with the device."),

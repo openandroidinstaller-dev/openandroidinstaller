@@ -1,42 +1,35 @@
 """Contains the requirements view."""
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
-from loguru import logger
 from typing import Callable
+
+from app_state import AppState
 from flet import (
-    Checkbox,
+    AlertDialog,
     Card,
+    Checkbox,
     Column,
     Container,
     Divider,
     ElevatedButton,
-    Row,
-    colors,
     OutlinedButton,
-    icons,
+    Row,
     TextButton,
-    AlertDialog,
+    colors,
+    icons,
 )
 from flet_core.buttons import CountinuosRectangleBorder
-
-from styles import (
-    Text,
-    Markdown,
-)
+from loguru import logger
+from styles import Markdown, Text
 from views import BaseView
-from app_state import AppState
 from widgets import get_title
 from translations import _
 

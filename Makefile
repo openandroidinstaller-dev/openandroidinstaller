@@ -1,9 +1,24 @@
+.phoney: install export format lint typing test app test-app build-app clean-build
+
+help:
+	@echo "install - install dependencies"
+	@echo "export - export dependencies to requirements.txt"
+	@echo "format - format code with black"
+	@echo "lint - lint code with ruff"
+	@echo "typing - type check code with mypy"
+	@echo "test - run tests"
+	@echo "app - run app"
+	@echo "test-app - run app in test mode with test config for sargo"
+	@echo "build-app - build app"
+	@echo "clean-build - clean build"
+
 poetry:
 	curl -sSL https://install.python-poetry.org | python3 -
 
 install:
-	poetry install
+	poetry install --with dev
 	poetry run python scripts/download-tools.py
+	poetry run pre-commit install
 
 export:
 	poetry export -f requirements.txt --output requirements.txt
