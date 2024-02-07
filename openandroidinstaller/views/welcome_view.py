@@ -76,7 +76,7 @@ Before you continue, make sure
 - you have a backup of all your important data, since this procedure will **erase all data from the phone**.
 - to not store the backup on the phone!
 
-Please note, that vendor specific back-ups will most likely not work on LineageOS!
+Please note, that vendor specific back-ups will most likely not work on LineageOS and other custom ROMs!
                 """)
                 ),
                 Divider(),
