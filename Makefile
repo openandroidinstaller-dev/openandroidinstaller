@@ -16,7 +16,7 @@ poetry:
 	curl -sSL https://install.python-poetry.org | python3 -
 
 install:
-	poetry install
+	poetry install --with dev
 	poetry run python scripts/download-tools.py
 	poetry run pre-commit install
 

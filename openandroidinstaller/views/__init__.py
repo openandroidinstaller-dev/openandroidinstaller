@@ -1,10 +1,10 @@
+from .addon_view import AddonsView  # noqa
 from .base import BaseView  # noqa
-from .welcome_view import WelcomeView  # noqa
-from .start_view import StartView  # noqa
+from .install_addons_view import InstallAddonsView  # noqa
+from .install_view import InstallView  # noqa
 from .requirements_view import RequirementsView  # noqa
 from .select_view import SelectFilesView  # noqa
+from .start_view import StartView  # noqa
 from .step_view import StepView  # noqa
-from .install_view import InstallView  # noqa
-from .addon_view import AddonsView  # noqa
-from .install_addons_view import InstallAddonsView  # noqa
 from .success_view import SuccessView  # noqa
+from .welcome_view import WelcomeView  # noqa

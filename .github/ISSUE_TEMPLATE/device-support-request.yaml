@@ -85,5 +85,5 @@ body:
   - type: textarea
     attributes:
       label: Additional context
-      description: Please provide any additional context or information that might be helpful in adding support for this device. 
+      description: Please provide any additional context or information that might be helpful in adding support for this device.
       render: Markdown

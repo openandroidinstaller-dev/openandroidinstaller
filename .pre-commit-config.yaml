@@ -1,5 +1,6 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+fail_fast: true
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
@@ -12,11 +13,6 @@ repos:
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
 
--   repo: https://github.com/asottile/reorder_python_imports
-    rev: v3.9.0
-    hooks:
-    -   id: reorder-python-imports
-
 -   repo: https://github.com/psf/black
     rev: 22.10.0
     hooks:
@@ -28,6 +24,7 @@ repos:
     hooks:
       # Run the linter.
       - id: ruff
+        args: [ '--ignore', 'E501', '--fix' ]
       # Run the formatter.
       - id: ruff-format
 

@@ -1,20 +1,15 @@
 """Test the TerminalBox class."""
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
-import pytest
-from flet import Container, Page
+from flet import Container
 
 from openandroidinstaller.widgets import TerminalBox
 
@@ -58,15 +53,15 @@ def test_toggle_visibility(mocker):
     _ = terminal_box.build()
 
     # should be non-visible at the beginning
-    assert terminal_box._box.visible == False
+    assert terminal_box._box.visible is False
     # now toggle
     terminal_box.toggle_visibility()
     # now should be visible
-    assert terminal_box._box.visible == True
+    assert terminal_box._box.visible is True
     # now toggle again
     terminal_box.toggle_visibility()
     # now it should be non-visible again
-    assert terminal_box._box.visible == False
+    assert terminal_box._box.visible is False
 
 
 def test_clear_terminal(mocker):
