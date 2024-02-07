@@ -1,5 +1,5 @@
-from .addon_view import AddonsView  # noqa
 from .base import BaseView  # noqa
+from .addon_view import AddonsView  # noqa
 from .install_addons_view import InstallAddonsView  # noqa
 from .install_view import InstallView  # noqa
 from .requirements_view import RequirementsView  # noqa
