@@ -171,7 +171,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                 Text("Select addons:", style="titleSmall"),
                 # Markdown(
                 # f"""
-                # The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
+                # The image file should look something like `lineage-20.0-20240101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
                 #                ),
                 Row(
                     [

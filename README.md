@@ -67,6 +67,73 @@ Currently, the **we support 83 devices** by various vendors and working on addin
 Support for these devices is provided as best effort, but things might still go wrong.
 Help to improve the tool by reporting any issues you might face.
 
+
+<details><summary><b>Fairphone</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2) | | tested
+Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3) | | tested
+Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4) | | tested
+
+</details>
+
+
+<details><summary><b>Google</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Google | Pixel 2 | [walleye](https://wiki.lineageos.org/devices/walleye) | walleye | tested
+Google | Pixel 2 XL | [taimen](https://wiki.lineageos.org/devices/taimen) | taimen | tested
+Google | Pixel 3 | [blueline](https://wiki.lineageos.org/devices/blueline) | blueline | tested
+Google | Pixel 3 XL | [crosshatch](https://wiki.lineageos.org/devices/crosshatch) | crosshatch | tested
+Google | Pixel 3a | [sargo](https://wiki.lineageos.org/devices/sargo) | sargo | tested
+Google | Pixel 3a XL | [bonito](https://wiki.lineageos.org/devices/bonito) | bonito | tested
+Google | Pixel 4 | [flame](https://wiki.lineageos.org/devices/flame) | flame | tested
+Google | Pixel 4 XL | [coral](https://wiki.lineageos.org/devices/coral) | coral | tested
+Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish) | sunfish | tested
+Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin) | redfin | tested
+Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet) | barbet | tested
+
+</details>
+
+
+<details><summary><b>Motorola</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | XT2063-2, XT2063-3 | tested
+Motorola | moto g5 | [cedric](https://wiki.lineageos.org/devices/cedric) | XT1670, XT1671, XT1672, XT1675, XT1676, XT1677 | tested
+Motorola | moto g6 plus | [evert](https://wiki.lineageos.org/devices/evert) | XT1926-2, XT1926-3, XT1926-5, XT1926-6, XT1926-7, XT1926-8, XT1926-9 | tested
+Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean) | XT1955-1, XT1955-2, XT1955-4, XT1955-5, XT1955-7 | tested
+Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo) | XT2075-3, XT2075-5 | tested
+Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | XT2113-2, XT2113-3 | tested
+Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | XT1650-3, XT1650-05 | tested
+
+</details>
+
+
+<details><summary><b>OnePlus</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+OnePlus | One | [bacon](https://wiki.lineageos.org/devices/bacon) | A0001 | tested
+OnePlus | 3/3T | [oneplus3](https://wiki.lineageos.org/devices/oneplus3) | A3000, A3003, A3010 | untested
+OnePlus | 5 | [cheeseburger](https://wiki.lineageos.org/devices/cheeseburger) | A5000 | tested
+OnePlus | 5T | [dumpling](https://wiki.lineageos.org/devices/dumpling) | A5010 | tested
+OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada) | A6000, A6003 | tested
+OnePlus | 6T | [fajita](https://wiki.lineageos.org/devices/fajita) | A6010, A6013 | tested
+OnePlus | 7 | [guacamoleb](https://wiki.lineageos.org/devices/guacamoleb) | GM1900, GM1901, GM1903, GM1905 | tested
+OnePlus | 7 Pro | [guacamole](https://wiki.lineageos.org/devices/guacamole) | GM1910, GM1911, GM1913, GM1917 | tested
+OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb) | HD1900, HD1901, HD1903, HD1905 | tested
+OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog) | HD1910, HD1911, HD1913, HD1917 | tested
+OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii) | AC2001, AC2003 | tested
+OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | DE2117 | tested
+OnePlus | 9 | lemonade | LE2110, LE2111, LE2113, LE2115 | under development
+
+</details>
+
+
 <details><summary><b>Samsung</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
@@ -101,23 +168,6 @@ Samsung | Galaxy Note 10+ | [d2s](https://wiki.lineageos.org/devices/d2s) | | te
 
 </details>
 
-<details><summary><b>Google</b></summary>
-
-Vendor | Device Name | CodeName | Models | Status
----|---|---|---|---
-Google | Pixel 2 | [walleye](https://wiki.lineageos.org/devices/walleye) | walleye | tested
-Google | Pixel 2 XL | [taimen](https://wiki.lineageos.org/devices/taimen) | taimen | tested
-Google | Pixel 3 | [blueline](https://wiki.lineageos.org/devices/blueline) | blueline | tested
-Google | Pixel 3 XL | [crosshatch](https://wiki.lineageos.org/devices/crosshatch) | crosshatch | tested
-Google | Pixel 3a | [sargo](https://wiki.lineageos.org/devices/sargo) | sargo | tested
-Google | Pixel 3a XL | [bonito](https://wiki.lineageos.org/devices/bonito) | bonito | tested
-Google | Pixel 4 | [flame](https://wiki.lineageos.org/devices/flame) | flame | tested
-Google | Pixel 4 XL | [coral](https://wiki.lineageos.org/devices/coral) | coral | tested
-Google | Pixel 4a | [sunfish](https://wiki.lineageos.org/devices/sunfish) | sunfish | tested
-Google | Pixel 5 | [redfin](https://wiki.lineageos.org/devices/redfin) | redfin | tested
-Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet) | barbet | tested
-
-</details>
 
 <details><summary><b>Sony</b></summary>
 
@@ -134,49 +184,7 @@ Sony | Xperia XZ | kagura | | planned
 
 </details>
 
-<details><summary><b>Fairphone</b></summary>
 
-Vendor | Device Name | CodeName | Models | Status
----|---|---|---|---
-Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2) | | tested
-Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3) | | tested
-Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4) | | tested
-
-</details>
-
-<details><summary><b>Motorola</b></summary>
-
-Vendor | Device Name | CodeName | Models | Status
----|---|---|---|---
-Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | XT2063-2, XT2063-3 | tested
-Motorola | moto g5 | [cedric](https://wiki.lineageos.org/devices/cedric) | XT1670, XT1671, XT1672, XT1675, XT1676, XT1677 | tested
-Motorola | moto g6 plus | [evert](https://wiki.lineageos.org/devices/evert) | XT1926-2, XT1926-3, XT1926-5, XT1926-6, XT1926-7, XT1926-8, XT1926-9 | tested
-Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean) | XT1955-1, XT1955-2, XT1955-4, XT1955-5, XT1955-7 | tested
-Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo) | XT2075-3, XT2075-5 | tested
-Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | XT2113-2, XT2113-3 | tested
-Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | XT1650-3, XT1650-05 | tested
-
-</details>
-
-<details><summary><b>OnePlus</b></summary>
-
-Vendor | Device Name | CodeName | Models | Status
----|---|---|---|---
-OnePlus | One | [bacon](https://wiki.lineageos.org/devices/bacon) | A0001 | tested
-OnePlus | 3/3T | [oneplus3](https://wiki.lineageos.org/devices/oneplus3) | A3003, A3000, A3010 | untested
-OnePlus | 5 | [cheeseburger](https://wiki.lineageos.org/devices/cheeseburger) | A5000 | tested
-OnePlus | 5T | [dumpling](https://wiki.lineageos.org/devices/dumpling) | A5010 | tested
-OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada) | A6000, A6003 | tested
-OnePlus | 6T | [fajita](https://wiki.lineageos.org/devices/fajita) | A6010, A6013 | tested
-OnePlus | 7 | [guacamoleb](https://wiki.lineageos.org/devices/guacamoleb) | GM1900, GM1901, GM1903, GM1905 | tested
-OnePlus | 7 Pro | [guacamole](https://wiki.lineageos.org/devices/guacamole) | GM1910, GM1911, GM1913, GM1917 | tested
-OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb) | HD1900, HD1901, HD1903, HD1905 | tested
-OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog) | HD1910, HD1911, HD1913, HD1917 | tested
-OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii) | AC2001, AC2003 | tested
-OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | DE2117 | tested
-OnePlus | 9 | lemonade | LE2110, LE2111, LE2113, LE2115 | under development
-
-</details>
 <details><summary><b>Xiaomi & Poco</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
