@@ -600,10 +600,10 @@ def search_device(platform: str, bin_path: Path) -> SearchResult:
                 grep_command = check_output(["which", "grep"]).decode().strip()
             except CalledProcessError:
                 logger.error(
-                    "Failed to detect a device. Please make sure `grep` it is installed."
+                    "Failed to detect a device. Please make sure `grep` is installed."
                 )
                 return SearchResult(
-                    msg="Failed to detect a device. Please make sure `grep` it is installed."
+                    msg="Failed to detect a device. Please make sure `grep` is installed."
                 )
             # run the command to get the device code
             output = check_output(
