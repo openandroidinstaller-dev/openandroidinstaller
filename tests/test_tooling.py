@@ -15,7 +15,7 @@ from subprocess import CalledProcessError
 
 from openandroidinstaller.tooling import run_command
 
-from openandroidinstaller.tooling import adb_reboot
+from openandroidinstaller.tooling import adb_reboot, fastboot_flash_recovery
 from openandroidinstaller.tooling import search_device
 
 
@@ -214,3 +214,229 @@ def test_run_command_unknown_tool():
         assert False, "Exception not raised"
     except Exception as e:
         assert str(e) == "Unknown tool unknown_tool. Use adb, fastboot or heimdall."
+
+
+def test_fastboot_flash_recovery_success(fp):
+    """Test if flashing custom recovery with fastboot works fine."""
+
+    def callback_function_with_kwargs(process, return_code):
+        process.returncode = return_code
+
+    return_code = 0
+
+    with fp.context() as nested_process:
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "flash",
+                "recovery",
+                "custom_recovery.img",
+            ],
+            stdout=bytes.fromhex("00"),
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        for line in fastboot_flash_recovery(
+            bin_path=Path("test/path/to/tools"),
+            recovery="custom_recovery.img",
+            is_ab=True,
+        ):
+            print(line)
+    assert line
+
+
+def test_fastboot_flash_recovery_failure(fp):
+    """Test if a failure in flashing custom recovery with fastboot is handled properly."""
+
+    def callback_function_with_kwargs(process, return_code):
+        process.returncode = return_code
+
+    return_code = 1
+
+    with fp.context() as nested_process:
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "flash",
+                "recovery",
+                "custom_recovery.img",
+            ],
+            stdout=[
+                bytes("error: no devices/emulators found", encoding="utf-8"),
+            ],
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        for line in fastboot_flash_recovery(
+            bin_path=Path("test/path/to/tools"),
+            recovery="custom_recovery.img",
+            is_ab=True,
+        ):
+            print(line)
+    assert not line
+
+
+def test_fastboot_flash_recovery_with_additional_partitions_success(fp):
+    """Test if flashing custom recovery with additional partitions using fastboot works fine."""
+
+    def callback_function_with_kwargs(process, return_code):
+        process.returncode = return_code
+
+    return_code = 0
+
+    with fp.context() as nested_process:
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "flash",
+                "dtbo",
+                "dtbo.img",
+            ],
+            stdout=bytes.fromhex("00"),
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "--disable-verity",
+                "--disable-verification",
+                "flash",
+                "vbmeta",
+                "vbmeta.img",
+            ],
+            stdout=bytes.fromhex("00"),
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "wipe-super",
+                "super_empty.img",
+            ],
+            stdout=bytes.fromhex("00"),
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "flash",
+                "vendor_boot",
+                "vendor_boot.img",
+            ],
+            stdout=bytes.fromhex("00"),
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "flash",
+                "recovery",
+                "custom_recovery.img",
+            ],
+            stdout=bytes.fromhex("00"),
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        for line in fastboot_flash_recovery(
+            bin_path=Path("test/path/to/tools"),
+            recovery="custom_recovery.img",
+            is_ab=True,
+            vendor_boot="vendor_boot.img",
+            dtbo="dtbo.img",
+            vbmeta="vbmeta.img",
+            super_empty="super_empty.img",
+        ):
+            print(line)
+    assert line
+
+
+def test_fastboot_flash_recovery_with_additional_partitions_failure(fp):
+    """Test if a failure in flashing custom recovery with additional partitions using fastboot is handled properly."""
+
+    def callback_function_with_kwargs(process, return_code):
+        process.returncode = return_code
+
+    return_code = 1
+
+    with fp.context() as nested_process:
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "flash",
+                "dtbo",
+                "dtbo.img",
+            ],
+            stdout=[
+                bytes("error: no devices/emulators found", encoding="utf-8"),
+            ],
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "--disable-verity",
+                "--disable-verification",
+                "flash",
+                "vbmeta",
+                "vbmeta.img",
+            ],
+            stdout=[
+                bytes("error: no devices/emulators found", encoding="utf-8"),
+            ],
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "wipe-super",
+                "super_empty.img",
+            ],
+            stdout=[
+                bytes("error: no devices/emulators found", encoding="utf-8"),
+            ],
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "flash",
+                "vendor_boot",
+                "vendor_boot.img",
+            ],
+            stdout=[
+                bytes("error: no devices/emulators found", encoding="utf-8"),
+            ],
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        nested_process.register(
+            [
+                "test/path/to/tools/fastboot",
+                "flash",
+                "recovery",
+                "custom_recovery.img",
+            ],
+            stdout=[
+                bytes("error: no devices/emulators found", encoding="utf-8"),
+            ],
+            callback=callback_function_with_kwargs,
+            callback_kwargs={"return_code": return_code},
+        )
+        for line in fastboot_flash_recovery(
+            bin_path=Path("test/path/to/tools"),
+            recovery="custom_recovery.img",
+            is_ab=True,
+            vendor_boot="vendor_boot.img",
+            dtbo="dtbo.img",
+            vbmeta="vbmeta.img",
+            super_empty="super_empty.img",
+        ):
+            print(line)
+    assert not line
