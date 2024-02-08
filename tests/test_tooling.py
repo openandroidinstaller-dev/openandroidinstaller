@@ -1,4 +1,5 @@
 """Test interactions with tools like adb and fastboot"""
+
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
@@ -11,6 +12,8 @@
 # Author: Tobias Sterbak
 from pathlib import Path
 from subprocess import CalledProcessError
+
+from openandroidinstaller.tooling import run_command
 
 from openandroidinstaller.tooling import adb_reboot
 from openandroidinstaller.tooling import search_device
@@ -89,3 +92,125 @@ def test_search_device_failure(mocker):
     )
 
     assert device_code is None
+
+
+def test_run_command_success(mocker):
+    """Test if running a command with a tool works fine."""
+
+    def patched_popen(*args, **kwargs):
+        class MockProcess:
+            stdout = [
+                "Output line 1",
+                "Output line 2",
+                "Output line 3",
+            ]
+            returncode = 0
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc_val, exc_tb):
+                pass
+
+            def communicate(self):
+                return self.stdout, None
+
+        return MockProcess()
+
+    mocker.patch("openandroidinstaller.tooling.subprocess.Popen", patched_popen)
+
+    bin_path = Path("test/path/to/tools")
+    full_command = "adb reboot"
+    target = "device"
+    enable_logging = True
+
+    expected_output = [
+        "$adb reboot",
+        "Output line 1",
+        "Output line 2",
+        "Output line 3",
+        True,
+    ]
+
+    output = list(
+        run_command(
+            full_command=full_command,
+            bin_path=bin_path,
+            target=target,
+            enable_logging=enable_logging,
+        )
+    )
+
+    assert output == expected_output
+
+
+def test_run_command_failure(mocker):
+    """Test if a failure in running a command with a tool is handled properly."""
+
+    def patched_popen(*args, **kwargs):
+        class MockProcess:
+            stdout = [
+                "Error line 1",
+                "Error line 2",
+                "Error line 3",
+            ]
+            returncode = 1
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc_val, exc_tb):
+                pass
+
+            def communicate(self):
+                return self.stdout, None
+
+        return MockProcess()
+
+    mocker.patch("openandroidinstaller.tooling.subprocess.Popen", patched_popen)
+
+    bin_path = Path("test/path/to/tools")
+    full_command = "adb reboot"
+    target = "device"
+    enable_logging = True
+
+    expected_output = [
+        "$adb reboot",
+        "Error line 1",
+        "Error line 2",
+        "Error line 3",
+        False,
+    ]
+
+    output = list(
+        run_command(
+            full_command=full_command,
+            bin_path=bin_path,
+            target=target,
+            enable_logging=enable_logging,
+        )
+    )
+
+    assert output == expected_output
+
+
+def test_run_command_unknown_tool():
+    """Test if an exception is raised for an unknown tool."""
+
+    bin_path = Path("test/path/to/tools")
+    full_command = "unknown_tool command"
+    target = "device"
+    enable_logging = True
+
+    try:
+        list(
+            run_command(
+                full_command=full_command,
+                bin_path=bin_path,
+                target=target,
+                enable_logging=enable_logging,
+            )
+        )
+        assert False, "Exception not raised"
+    except Exception as e:
+        assert str(e) == "Unknown tool unknown_tool. Use adb, fastboot or heimdall."
