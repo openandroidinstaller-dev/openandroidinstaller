@@ -6,6 +6,7 @@ metadata:
   supported_device_codes:
     - kminilte
     - kminiltexx
+  twrp-link: kminilte
 steps:
   unlock_bootloader:
   boot_recovery:
