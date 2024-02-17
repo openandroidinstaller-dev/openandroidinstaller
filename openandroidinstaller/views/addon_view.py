@@ -1,45 +1,37 @@
 """Contains the select addons view."""
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
 import webbrowser
-from loguru import logger
 from typing import Callable
 
+from app_state import AppState
 from flet import (
+    AlertDialog,
     Column,
     Divider,
     ElevatedButton,
-    OutlinedButton,
-    FilledButton,
-    Row,
-    colors,
-    icons,
-    TextButton,
-    AlertDialog,
     FilePicker,
     FilePickerResultEvent,
+    FilledButton,
+    OutlinedButton,
+    Row,
+    TextButton,
+    colors,
+    icons,
 )
 from flet_core.buttons import CountinuosRectangleBorder
-
-from styles import (
-    Text,
-    Markdown,
-)
+from loguru import logger
+from styles import Markdown, Text
 from views import BaseView
-from app_state import AppState
-from widgets import get_title, confirm_button
+from widgets import confirm_button, get_title
 
 
 class AddonsView(BaseView):
@@ -59,7 +51,7 @@ class AddonsView(BaseView):
             content=Markdown(
                 """## Google Apps:
 There are different packages of Google Apps available. Most notable
-- [MindTheGapps](https://wiki.lineageos.org/gapps#downloads) and 
+- [MindTheGapps](https://wiki.lineageos.org/gapps#downloads) and
 - [NikGApps](https://nikgapps.com).
 
 These packages are only dependent on your OS version and processor architecture, which can be found on each device specific info page.
@@ -179,7 +171,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                 Text("Select addons:", style="titleSmall"),
                 # Markdown(
                 # f"""
-                # The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
+                # The image file should look something like `lineage-20.0-20240101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
                 #                ),
                 Row(
                     [

@@ -5,20 +5,16 @@ Following: https://lineageosroms.com/a3xelte/#basic-requirements
 Example usage:
     poetry run python scripts/lineageos-on-galaxy-a3.py --recovery images/samsung-galaxy-a3/twrp-3.6.2_9-0-a3y17lte.img --image images/samsung-galaxy-a3/lineage-16.0-20190908-UNOFFICIAL-a3y17lte.zip
 """
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
 from subprocess import call
 from time import sleep
 
@@ -100,7 +96,7 @@ def install_os(image: str):
     )
 
     click.echo("\nRebooting")
-    if call(f"adb reboot", shell=True) < 0:
+    if call("adb reboot", shell=True) < 0:
         return False
 
     click.echo("Flashing finished.")
@@ -129,7 +125,7 @@ def boot_recovery(recovery: str):
         err=False,
     )
     click.echo("\nBooting into download mode:")
-    if call(f"adb reboot download", shell=True) < 0:
+    if call("adb reboot download", shell=True) < 0:
         click.echo("*** Booting into download mode failed! ***")
         return False
     confirmed = click.confirm(

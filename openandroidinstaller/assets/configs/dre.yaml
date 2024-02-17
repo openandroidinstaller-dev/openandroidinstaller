@@ -6,6 +6,7 @@ metadata:
   supported_device_codes:
     - dre
     - NordN200
+    - OnePlusN200
   additional_steps:
     - dtbo
     - vbmeta
@@ -26,7 +27,7 @@ steps:
         Once it's done, press continue here.
       command: fastboot_oem_unlock
     - type: confirm_button
-      content: > 
+      content: >
         The bootloader is now unlocked. Since the device resets completely, you will need to re-enable Developer Options and USB debugging to continue.
   boot_recovery:
     - type: call_button
@@ -40,12 +41,6 @@ steps:
       content: >
         Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_boot_recovery
-    - type: call_button
-      content: >
-        Install additional partitions selected before by pressing 'Confirm and run'. Once it's done continue.
-        
-        Note : If you have not selected additional partitions it will do nothing and is save to continue.
-      command: fastboot_flash_additional_partitions
     - type: call_button
       content: >
         In some cases, the inactive slot can be unpopulated or contain much older firmware than the active slot, leading to various issues including a potential hard-brick.

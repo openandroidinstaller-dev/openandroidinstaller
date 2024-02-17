@@ -2,9 +2,9 @@ metadata:
   maintainer: Tobias Sterbak (tsterbak)
   device_name: Google Pixel 2
   is_ab_device: true
-  device_code: walleye 
+  device_code: walleye
   supported_device_codes:
-    - walleye 
+    - walleye
 requirements:
   android: 11
 steps:

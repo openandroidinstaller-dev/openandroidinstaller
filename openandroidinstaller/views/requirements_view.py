@@ -1,42 +1,35 @@
 """Contains the requirements view."""
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
-from loguru import logger
 from typing import Callable
+
+from app_state import AppState
 from flet import (
-    Checkbox,
+    AlertDialog,
     Card,
+    Checkbox,
     Column,
     Container,
     Divider,
     ElevatedButton,
-    Row,
-    colors,
     OutlinedButton,
-    icons,
+    Row,
     TextButton,
-    AlertDialog,
+    colors,
+    icons,
 )
 from flet_core.buttons import CountinuosRectangleBorder
-
-from styles import (
-    Text,
-    Markdown,
-)
+from loguru import logger
+from styles import Markdown, Text
 from views import BaseView
-from app_state import AppState
 from widgets import get_title
 
 
@@ -139,7 +132,7 @@ On some devices, the build version is basically the firmware version.""",
                 required_android_version = self.state.config.requirements.get("android")
                 if required_android_version:
                     android_checkbox = Checkbox(
-                        label="The required android version is installed. (Or I know the risk of continuing)",
+                        label="The required android version is installed.\n(Or I know the risk of continuing)",
                         on_change=self.enable_continue_button,
                     )
                     android_version_check = Card(
@@ -214,6 +207,10 @@ If the device is not on the specified version, please follow the instructions be
             self.checkboxes.append(battery_checkbox)
             self.checkbox_cards.append(battery_check_card)
 
+            boot_stock_checkbox, boot_stock_check_card = self.get_boot_stock_check()
+            self.checkboxes.append(boot_stock_checkbox)
+            self.checkbox_cards.append(boot_stock_check_card)
+
             lock_checkbox, lock_check_card = self.get_lock_check()
             self.checkboxes.append(lock_checkbox)
             self.checkbox_cards.append(lock_check_card)
@@ -250,6 +247,31 @@ Before continuing make sure your device battery level is above 80%.
             ),
         )
         return battery_checkbox, battery_check_card
+
+    def get_boot_stock_check(self):
+        """Get checkbox and card for default requirements: boot stock once."""
+        boot_stock_checkbox = Checkbox(
+            label="Booted the stock OS at least once.",
+            on_change=self.enable_continue_button,
+        )
+        boot_stock_check_card = Card(
+            Container(
+                content=Column(
+                    [
+                        Markdown(
+                            """
+#### Boot your device with the stock OS at least once and check every functionality.
+Make sure that you can send and receive SMS and place and receive calls (also via WiFi and LTE, if available),
+otherwise it won\'t work on your custom ROM either! Additionally, some devices require that VoLTE/VoWiFi be utilized once on stock to provision IMS.
+            """
+                        ),
+                        boot_stock_checkbox,
+                    ]
+                ),
+                padding=10,
+            ),
+        )
+        return boot_stock_checkbox, boot_stock_check_card
 
     def get_lock_check(self):
         """Get the checkbox and card for the default requirement: disable lock code and fingerprint."""
