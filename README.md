@@ -151,6 +151,7 @@ Samsung | Galaxy Tab S2 | [gts210vewifi](https://wiki.lineageos.org/devices/gts2
 Samsung | Galaxy S4 | [jfltexx](https://wiki.lineageos.org/devices/jfltexx) | | untested
 Samsung | Galaxy S4 Mini LTE| [serranoltexx](https://wiki.lineageos.org/devices/serranoltexx) | | tested
 Samsung | Galaxy S5 | [klte](https://wiki.lineageos.org/devices/klte) | G900F/M/R4/R7/T/V/W8 | tested
+Samsung | Galaxy S5 mini | kminilte | SM-G800F | tested
 Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx) | | tested
 Samsung | Galaxy S6 Edge | [zeroltexx](https://wiki.lineageos.org/devices/zeroltexx) | | tested
 Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte) | SM-G930F | tested
@@ -184,7 +185,7 @@ Sony | Xperia XZ | kagura | | planned
 
 </details>
 
-
+  
 <details><summary><b>Xiaomi & Poco</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
@@ -197,7 +198,6 @@ Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo)
 Xiaomi | Redmi Note 8 Pro | begonia |  | untested
 Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
 Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
-Xiaomi | Mi A2 / Mi 6X | jasmine_sprout |  | untested
 Xiaomi | Mi 8 | [dipper](https://wiki.lineageos.org/devices/dipper) |  | untested
 Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinci) / davinciin |  | untested
 Xiaomi | Redmi K20 Pro / Mi 9T Pro | raphael / raphaelin | | untested
