@@ -101,7 +101,7 @@
 	        "type": "file",
 		"path": "flatpak/org.openandroidinstaller.OpenAndroidInstaller.png"
 	    }
-	    
+
 	],
 	"build-commands": [
 	    "mkdir -p /app/{bin,share/{appdata,applications,icons/hicolor/512x512/apps}}",

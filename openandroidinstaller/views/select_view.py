@@ -1,54 +1,46 @@
 """Contains the select files view."""
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
 import webbrowser
-from loguru import logger
 from typing import Callable
 
+from app_state import AppState
 from flet import (
+    AlertDialog,
+    Checkbox,
     Column,
     Divider,
     ElevatedButton,
-    OutlinedButton,
-    FilledButton,
-    Row,
-    colors,
-    icons,
-    TextButton,
-    AlertDialog,
     FilePicker,
     FilePickerResultEvent,
-    Checkbox,
+    FilledButton,
+    OutlinedButton,
+    Row,
+    TextButton,
+    colors,
+    icons,
 )
 from flet_core.buttons import CountinuosRectangleBorder
-
-from styles import (
-    Text,
-    Markdown,
-)
-from views import BaseView
-from app_state import AppState
-from widgets import get_title, confirm_button
+from loguru import logger
+from styles import Markdown, Text
 from utils import (
-    get_download_link,
-    image_works_with_device,
-    recovery_works_with_device,
-    image_sdk_level,
     CheckResult,
     CompatibilityStatus,
+    get_download_link,
+    image_sdk_level,
+    image_works_with_device,
+    recovery_works_with_device,
 )
+from views import BaseView
+from widgets import confirm_button, get_title
 
 
 class SelectFilesView(BaseView):
@@ -75,8 +67,8 @@ class SelectFilesView(BaseView):
             content=Markdown(
                 """## OS image or ROM
 An operating system (OS) is system software that manages computer hardware,
-software resources, and provides common services for computer programs. 
-Popular, custom operating systems for mobile devices based on Android are 
+software resources, and provides common services for computer programs.
+Popular, custom operating systems for mobile devices based on Android are
 - [LineageOS](https://lineageos.org)
 - [/e/OS](https://e.foundation/e-os) or
 - [LineageOS for microG](https://lineage.microg.org)
@@ -128,7 +120,9 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         )
 
         # initialize and manage button state.
-        self.confirm_button = confirm_button(self.on_confirm, confirm_text="Let's start flashing!")
+        self.confirm_button = confirm_button(
+            self.on_confirm, confirm_text="Let's start flashing!"
+        )
         self.confirm_button.disabled = True
         self.continue_eitherway_button = confirm_button(
             self.on_confirm, "Continue without additional images"
@@ -250,7 +244,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 Text("Select an OS image:", style="titleSmall"),
                 Markdown(
                     f"""
-The image file should look something like `lineage-19.1-20221101-nightly-{self.state.config.device_code}-signed.zip`."""
+The image file should look something like `lineage-20.0-20240101-nightly-{self.state.config.device_code}-signed.zip`."""
                 ),
                 Row(
                     [

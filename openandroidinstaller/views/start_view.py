@@ -1,46 +1,38 @@
 """Contains the start view."""
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
 import webbrowser
-from loguru import logger
 from typing import Callable
 
+from app_state import AppState
 from flet import (
     AlertDialog,
-    Switch,
     Column,
     Divider,
     ElevatedButton,
-    OutlinedButton,
     FilledButton,
-    Row,
+    OutlinedButton,
     ResponsiveRow,
+    Row,
+    Switch,
     TextButton,
     colors,
     icons,
 )
 from flet_core.buttons import CountinuosRectangleBorder
-
-from styles import (
-    Text,
-    Markdown,
-)
-from views import BaseView
-from app_state import AppState
-from widgets import get_title
+from loguru import logger
+from styles import Markdown, Text
 from tooling import search_device
+from views import BaseView
+from widgets import get_title
 
 
 class StartView(BaseView):
@@ -80,8 +72,8 @@ class StartView(BaseView):
             title=Text("How to enable developer options and OEM unlocking"),
             content=Markdown(
                 """
-To do this, 
-- **tap seven times on the build number** in the 'System'- or 'About the phone'-Menu in Settings. You can also use the phones own search to look for `build number`. 
+To do this,
+- **tap seven times on the build number** in the 'System'- or 'About the phone'-Menu in Settings. You can also use the phones own search to look for `build number`.
 - Then go back to the main menu and look for **'developer options'**. You can also search for it in your phone.
 - When you are in developer options, **toggle OEM unlocking and USB-Debugging**.
 - If your phone is already connected to your PC, a pop-up might appear. **Allow USB debugging in the pop-up on your phone.**
@@ -153,7 +145,7 @@ Now you are ready to continue.
             [
                 Markdown(
                     """
-To get started you need to 
+To get started you need to
 - **enable developer options** on your device
 - and then **enable USB debugging** and **OEM unlocking** in the developer options.
                 """
@@ -173,7 +165,7 @@ To get started you need to
                 Divider(),
                 Markdown(
                     """
-Now 
+Now
 - **connect your device to this computer via USB** and
 - **allow USB debugging in the pop-up on your phone**.
 - You might also need to **activate "data transfer"** in the connection settings.

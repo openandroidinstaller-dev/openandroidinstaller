@@ -1,33 +1,23 @@
 """This module contains functions to deal with tools like adb, fastboot and heimdall."""
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
+import shlex
+import subprocess
 import sys
 from pathlib import Path
-import subprocess
-from subprocess import (
-    PIPE,
-    STDOUT,
-    CalledProcessError,
-    check_output,
-)
-import shlex
+from subprocess import PIPE, STDOUT, CalledProcessError, check_output
 from time import sleep
-from typing import Optional, Union, Generator, Callable
+from typing import Callable, Generator, Optional, Union
 
 from loguru import logger
-
 
 TerminalResponse = Generator[Union[str, bool], None, None]
 

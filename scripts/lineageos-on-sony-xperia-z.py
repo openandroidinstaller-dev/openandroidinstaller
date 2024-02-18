@@ -1,22 +1,18 @@
 """Script to flash a sony xperia z.
 
 Example usage:
-    poetry run python scripts/lineageos-on-sony-xperia-z.py --recovery images/sony-xperia-z/twrp-3.6.2_9-0-yuga.img --image images/sony-xperia-z/lineage-18.1-20220214-UNOFFICIAL-yuga.zip 
+    poetry run python scripts/lineageos-on-sony-xperia-z.py --recovery images/sony-xperia-z/twrp-3.6.2_9-0-yuga.img --image images/sony-xperia-z/lineage-18.1-20220214-UNOFFICIAL-yuga.zip
 """
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
 from subprocess import call
 
 import click

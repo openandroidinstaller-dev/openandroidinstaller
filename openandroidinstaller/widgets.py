@@ -1,41 +1,34 @@
 """Contains functions and classes to get different elements and widgets of the installer."""
-
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
 import webbrowser
-import regex as re
 from functools import partial
 from typing import Callable, Optional
 
+import regex as re
 from flet import (
-    UserControl,
-    colors,
+    Column,
     Container,
     ElevatedButton,
-    ProgressRing,
-    ProgressBar,
-    Row,
-    alignment,
-    icons,
     IconButton,
     Image,
-    Column,
+    ProgressBar,
+    ProgressRing,
+    Row,
+    UserControl,
+    alignment,
+    colors,
+    icons,
 )
-
-from styles import (
-    Text,
-)
+from styles import Text
 
 
 class TerminalBox(UserControl):

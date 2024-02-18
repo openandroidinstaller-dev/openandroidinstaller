@@ -39,4 +39,3 @@ steps:
       content: >
         Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_boot_recovery
-
