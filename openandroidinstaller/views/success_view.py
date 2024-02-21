@@ -15,6 +15,7 @@ from loguru import logger
 from styles import Markdown, Text
 from views import BaseView
 from widgets import get_title
+from translations import _
 
 
 class SuccessView(BaseView):
@@ -31,23 +32,23 @@ class SuccessView(BaseView):
 
         # right view header
         self.right_view_header.controls = [
-            get_title("Installation completed successfully!"),
+            get_title(_("Installation completed successfully!")),
         ]
         # right view main part
         contribute_link = "https://openandroidinstaller.org/#contribute"
         self.right_view.controls = [
             Text(
-                "Now your devices boots into the new OS. Have fun with it!",
+                _("Now your devices boots into the new OS. Have fun with it!"),
                 style="titleSmall",
             ),
             Markdown(
-                f"""
+                _("""
 If you liked the tool, help spread the word and **share it with people** who might want to use it.
 
 Also, you can consider contributing to make it better. There are a lot of different ways how you can help!
 
 [How to contribute]({contribute_link})
-""",
+""").format(contribute_link=contribute_link),
             ),
             Row(
                 [

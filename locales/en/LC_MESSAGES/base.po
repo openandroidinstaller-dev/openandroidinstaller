@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-12 21:05+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: openandroidinstaller.py:258
+msgid "Frequently asked questions and encountered issues."
+msgstr ""
+
+#: openandroidinstaller.py:263
+msgid "Give feedback"
+msgstr ""
+
+#: openandroidinstaller.py:269
+msgid "Give feedback about your experience with OpenAndroidInstaller"
+msgstr ""
+
+#: openandroidinstaller.py:274
+msgid "Report a bug"
+msgstr ""
+
+#: openandroidinstaller.py:280
+msgid "Report an issue on github"
+msgstr ""
+
+#: openandroidinstaller.py:294
+msgid ""
+"These instructions only work if you follow every section and step precisely. "
+"Do not continue after something fails!"
+msgstr ""
+
+#: openandroidinstaller.py:297
+msgid "I understand"
+msgstr ""

@@ -1,0 +1,1057 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-13 15:00+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: Francais\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: openandroidinstaller/app_state.py:98 openandroidinstaller/app_state.py:120
+#: openandroidinstaller/views/step_view.py:120
+msgid "Boot custom recovery"
+msgstr "Démarrer le recovery"
+
+#: openandroidinstaller/app_state.py:100 openandroidinstaller/app_state.py:122
+msgid ""
+"If you already flashed TWRP, boot into it by pressing 'Confirm and run'. "
+"Otherwise restart the process. Once your phone screen looks like the picture "
+"on the left, continue."
+msgstr ""
+"Si vous avez déjà flashé TWRP, pressez 'Confirmer et exécuter' pour le lancer"
+"Sinon, recommencez le processus. Une fois que l'écran du téléphone ressemble à "
+"l'image à gauche, continuez."
+
+#: openandroidinstaller/openandroidinstaller.py:240
+#, python-brace-format
+msgid "OpenAndroidInstaller version {version}"
+msgstr "OpenAndroidInstaller version {version}"
+
+#: openandroidinstaller/openandroidinstaller.py:254
+msgid "Frequently asked questions and encountered issues."
+msgstr "Questions fréquemment posées et problèmes rencontrés"
+
+#: openandroidinstaller/openandroidinstaller.py:259
+msgid "Give feedback"
+msgstr "Donnez votre avis"
+
+#: openandroidinstaller/openandroidinstaller.py:265
+msgid "Give feedback about your experience with OpenAndroidInstaller"
+msgstr "Donnez votre avis à propos de votre expérience avec OpenAndroidInstaller"
+
+#: openandroidinstaller/openandroidinstaller.py:270
+msgid "Report a bug"
+msgstr "Rapporter un problème"
+
+#: openandroidinstaller/openandroidinstaller.py:276
+msgid "Report an issue on github"
+msgstr "Rapporter un problème sur GitHub"
+
+#: openandroidinstaller/openandroidinstaller.py:290
+msgid ""
+"These instructions only work if you follow every section and step precisely. "
+"Do not continue after something fails!"
+msgstr ""
+"Ces instructions ne fonctionnent que si vous suivez précisément chaque étape. "
+"Ne continuez pas si quelque chose n'a pas marché !"
+
+#: openandroidinstaller/openandroidinstaller.py:293
+msgid "I understand"
+msgstr "Je comprends"
+
+#: openandroidinstaller/widgets.py:198
+#, python-brace-format
+msgid "Current step: {title}"
+msgstr "Étape actuelle : {title}"
+
+#: openandroidinstaller/widgets.py:216
+#: openandroidinstaller/views/requirements_view.py:68
+#: openandroidinstaller/views/start_view.py:64
+msgid "Continue"
+msgstr "Continuer"
+
+#: openandroidinstaller/widgets.py:228
+msgid "Confirm and run"
+msgstr "Confirmer et exécuter"
+
+#: openandroidinstaller/views/addon_view.py:59
+msgid "What kind of addons are supported?"
+msgstr "Quels types d'extensions sont supportés ?"
+
+#: openandroidinstaller/views/addon_view.py:61
+msgid ""
+"## Google Apps:\n"
+"There are different packages of Google Apps available. Most notable\n"
+"- [MindTheGapps](https://wiki.lineageos.org/gapps#downloads) and \n"
+"- [NikGApps](https://nikgapps.com).\n"
+"\n"
+"These packages are only dependent on your OS version and processor "
+"architecture, which can be found on each device specific info page.\n"
+"Filenames on MindTheGApps are of the format `MindTheGapps-<AndroidVersion>-"
+"<architecture>-<date>_<time>.zip` (with Android 12L being 12.1)\n"
+"and NikGApps are of the format `NikGapps-<flavour>-<architecture>-"
+"<AndroidVersion>-<date>-signed.zip`.\n"
+"\n"
+"NikGApps come in different flavours ranging from minimal Google support "
+"(core) to the full experience (full).\n"
+"\n"
+"## MicroG\n"
+"\n"
+"The [MicroG](https://microg.org) project offers a free-as-in-freedom re-"
+"implementation of Google's proprietary Android user space apps and "
+"libraries.\n"
+"\n"
+"The recommended way to install MicroG is to use the zip file provided here:\n"
+"- [https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases]"
+"(https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases).\n"
+"\n"
+"## F-Droid Appstore\n"
+"\n"
+"F-Droid is an installable catalogue of libre software apps for Android. The "
+"F-Droid client app makes it easy to browse, install, and keep track of "
+"updates on your device.\n"
+"You can get the zip file to install this addon here: [https://f-droid.org/en/"
+"packages/org.fdroid.fdroid.privileged.ota](https://f-droid.org/en/packages/"
+"org.fdroid.fdroid.privileged.ota).\n"
+msgstr ""
+"## Les applications Google :\n"
+"Il y a plusieurs paquets contenant les applications Google. Les principaux sont :\n"
+"- [MindTheGapps](https://wiki.lineageos.org/gapps#downloads) et \n"
+"- [NikGApps](https://nikgapps.com).\n"
+"\n"
+"Ces paquets sont seulement dépendants de votre système d'exploitation et de l'architecture "
+"du processeur, qui peut être trouvée dans les paramètres de l'appareil.\n"
+"Le nom des fichiers de MindTheGApps sont du type `MindTheGapps-<VersionAndroid>-"
+"<architecture>-<date>_<heure>.zip` (sachant que Android 12L est 12.1)\n"
+"et les fichiers NikGApps sont du type `NikGapps-<saveur>-<architecture>-"
+"<VersionAndroid>-<date>-signed.zip`.\n"
+"\n"
+"NikGApps est disponible avec différentes saveurs, allant d'un support minimal (core) "
+"à l'expérience complète (full).\n"
+"\n"
+"## MicroG\n"
+"\n"
+"Le projet [MicroG](https://microg.org) offre une implémentation libre "
+"des librairies propriétaires de Google.\n"
+"\n"
+"La manière recommandée d'installer MicroG est d'utiliser le zip fourni ici :\n"
+"- [https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases]"
+"(https://github.com/FriendlyNeighborhoodShane/MinMicroG_releases/releases).\n"
+"\n"
+"## Magasin d'applications F-Droid\n"
+"\n"
+"F-Droid est un magasin d'applications libres pour Android. Le client "
+"F-Droid rend facile la recherche, installation et mise à jour des applications libres "
+"de votre appareil.\n"
+"Pour des mises à jour automatiques, vous pouvez installer ce fichier zip : [https://f-droid.org/fr/"
+"packages/org.fdroid.fdroid.privileged.ota](https://f-droid.org/fr/packages/"
+"org.fdroid.fdroid.privileged.ota).\n"
+
+#: openandroidinstaller/views/addon_view.py:86
+#: openandroidinstaller/views/requirements_view.py:101
+#: openandroidinstaller/views/select_view.py:96
+#: openandroidinstaller/views/select_view.py:375
+msgid "Close"
+msgstr "Fermer"
+
+#: openandroidinstaller/views/addon_view.py:94
+msgid "Selected addons: "
+msgstr "Extensions sélectionnées : "
+
+#: openandroidinstaller/views/addon_view.py:108
+msgid "What kind of addons?"
+msgstr "Quel type d'extensions ?"
+
+#: openandroidinstaller/views/addon_view.py:113
+msgid "Get more details on what addons are supported."
+msgstr "Obtenir plus de détails sur les types d'extensions supportées."
+
+#: openandroidinstaller/views/addon_view.py:119
+msgid "You can select additional addons to install."
+msgstr "Vous pouvez sélectionner des extensions supplémentaires à installer."
+
+#: openandroidinstaller/views/addon_view.py:132
+msgid "Here you can download the F-Droid App-Store:"
+msgstr "Vous pouvez télécharger le magasin d'application F-Droid ici : "
+
+#: openandroidinstaller/views/addon_view.py:136
+msgid "Download F-Droid App-Store"
+msgstr "Télécharger le magasin d'applications F-Droid"
+
+#: openandroidinstaller/views/addon_view.py:146
+msgid ""
+"Here you can find instructions on how to download the right Google apps for "
+"your device."
+msgstr ""
+"Vous trouverez ici les instructions permettant de télécharger le bon paquet "
+"d'applications Google pour votre appareil."
+
+#: openandroidinstaller/views/addon_view.py:151
+msgid "Download Google Apps"
+msgstr "Télécharger les applications Google"
+
+#: openandroidinstaller/views/addon_view.py:160
+msgid "Here you can download MicroG:"
+msgstr "Vous pouvez télécharger MicroG ici : "
+
+#: openandroidinstaller/views/addon_view.py:164
+msgid "Download MicroG"
+msgstr "Télécharger MicroG"
+
+#: openandroidinstaller/views/addon_view.py:180
+msgid "Select addons:"
+msgstr "Extensions sélectionnées : "
+
+#: openandroidinstaller/views/addon_view.py:188
+msgid "Pick the addons you want to install"
+msgstr "Sélectionnez les extensions que vous voulez installer"
+
+#: openandroidinstaller/views/addon_view.py:229
+msgid "No addons selected."
+msgstr "Aucune extension sélectionnée."
+
+#: openandroidinstaller/views/install_addons_view.py:78
+#: openandroidinstaller/views/install_view.py:74
+#: openandroidinstaller/views/step_view.py:106
+msgid "Advanced output"
+msgstr "Journaux détaillés"
+
+#: openandroidinstaller/views/install_addons_view.py:92
+msgid "Install Addons"
+msgstr "Installer des extensions"
+
+#: openandroidinstaller/views/install_addons_view.py:98
+msgid ""
+"In the next steps, you flash the selected Addons.\n"
+"\n"
+"Confirm to install.\n"
+"\n"
+"This might take a while. At the end your phone will boot into the new OS.\n"
+msgstr ""
+"Dans les étapes suivantes, vous allez flasher les extensions sélectionnées.\n"
+"\n"
+"Confirmez pour installer.\n"
+"\n"
+"Cela peut prendre du temps. À la fin du processus, votre téléphone va démarrer sur le nouveau système.\n"
+
+#: openandroidinstaller/views/install_addons_view.py:112
+msgid "Confirm and install addons"
+msgstr "Confirmer et installer les extensions"
+
+#: openandroidinstaller/views/install_addons_view.py:138
+#: openandroidinstaller/views/install_view.py:161
+#: openandroidinstaller/views/step_view.py:187
+msgid "Do you want to skip?"
+msgstr "Voulez-vous ignorer ?"
+
+#: openandroidinstaller/views/install_addons_view.py:140
+#: openandroidinstaller/views/install_view.py:163
+#: openandroidinstaller/views/step_view.py:189
+msgid "Skip"
+msgstr "Ignorer"
+
+#: openandroidinstaller/views/install_addons_view.py:170
+msgid "Installing"
+msgstr "Installation"
+
+#: openandroidinstaller/views/install_addons_view.py:205
+#: openandroidinstaller/views/install_view.py:212
+msgid ""
+"Installation failed! Try again or make sure everything is setup correctly."
+msgstr ""
+"L'installation a échouée ! Essayez à nouveau ou soyez sûr que tout est paramétré correctement."
+
+#: openandroidinstaller/views/install_view.py:92
+msgid "Install addons"
+msgstr "Installer les extensions"
+
+#: openandroidinstaller/views/install_view.py:105
+msgid "Install OS"
+msgstr "Installer le système"
+
+#: openandroidinstaller/views/install_view.py:111
+msgid ""
+"In the next steps, you finally flash the selected OS image.\n"
+"            \n"
+"Connect your device with your computer with the USB-Cable. This step will "
+"format your phone and wipe all the data.\n"
+"It will also remove encryption and delete all files stored in the internal "
+"storage.\n"
+"Then the OS image will be installed. Confirm to install.\n"
+"\n"
+"This might take a while. At the end your phone will boot into the new OS.\n"
+"    \n"
+"#### **Install addons:**\n"
+"If you want to install any addons like Google Apps, microG or F-droid, use "
+"the toggle below **before** starting the install process!\n"
+"After the installation you'll be taken through the process. Note, that this "
+"process is still somewhat experimental and using ROMs with\n"
+"included Google Apps (like PixelExperience) or microG (lineageOS for microG) "
+"is recommended.\n"
+"\n"
+"#### **Warning:**\n"
+"Don't try to add addons like Google Apps if your OS ROM already has Google "
+"Apps or microG included! Otherwise your system will break!\n"
+msgstr ""
+"Dans les étapes suivantes, vous allez enfin installer le système sélectionné.\n"
+"            \n"
+"Connctez votre appareil à votre ordinateur avec un cable USB. Cette étape va "
+"formater votre téléphone et supprimer toutes vos données.\n"
+"Cela va également désactiver le chiffrement et supprimer tous les fichiers "
+"sauvegardés dans le stockage interne.\n"
+"Ensuite, le système va être installé. Confirmez pour installer.\n"
+"\n"
+"Cela peut prendre du temps. À la fin, votre téléphone va démarrer sur le nouveau système.\n"
+"    \n"
+"#### **Installation des extensions :**\n"
+"Si vous voulez installer des extensions comme les Google Play Services, microG ou F-Droid, "
+"utilisez le bouton ci-dessous **avant** de commencer le processus d'installation !\n"
+"Le processus d'installation des extensions a lieu après l'installation du système. "
+"Notez que ce processus est encore expérimental, et utiliser des ROM possèdant déjà \n"
+"les applications Google (comme PixelExperience) ou microG (comme lineageOS for microG) "
+"est recommandé.\n"
+"\n"
+"#### **Attention:**\n"
+"Ne tentez pas d'installer des extensions comme les applications Google si la ROM "
+"les contient déjà, ou microG ! Sinon, le système va casser !\n"
+
+#: openandroidinstaller/views/install_view.py:135
+msgid "Confirm and install"
+msgstr "Confirmer et installer"
+
+#: openandroidinstaller/views/install_view.py:182
+msgid "Please be patient, it may take a few minutes."
+msgstr "Merci de patienter, cela peut prendre quelques minutes."
+
+#: openandroidinstaller/views/requirements_view.py:76
+#: openandroidinstaller/views/select_view.py:144
+#: openandroidinstaller/views/start_view.py:71
+msgid "Back"
+msgstr "Retour"
+
+#: openandroidinstaller/views/requirements_view.py:85
+msgid "Where to find the current Android and/or firmware version?"
+msgstr "Où trouver la version d'Android actuelle et/ou la version du firmware ?"
+
+#: openandroidinstaller/views/requirements_view.py:87
+msgid ""
+"\n"
+"## Find your current Android Version\n"
+"Scroll down on the Settings screen and look for an \"About phone\", \"About "
+"tablet\", or \"System\" option.\n"
+"You'll usually find this at the very bottom of the main Settings screen, "
+"under System, but depending\n"
+"on your phone it could be different. If you do find a specific option for "
+"System, you can usually\n"
+"find the \"About Phone\" underneath that.\n"
+"\n"
+"On the resulting screen, look for \"Android version\" to find the version of "
+"Android installed on your device.\n"
+"\n"
+"## Find your current device firmware version\n"
+"On the same screen you find the \"Android version\" you can also find the "
+"Firmware Version.\n"
+"On some devices, the build version is basically the firmware version."
+msgstr ""
+"\n"
+"## Trouver votre version d'Android actuelle\n"
+"Allez dans les paramètres de votre téléphone et cherchez l'option"
+"\"À propos\" ou \"Système\".\n"
+"Vous trouvez généralement cette option tout en haut ou tout en bas, mais cela dépend "
+"des marques. Une fois que vous l'avez trouvé, cliquer dessus et cherchez "
+"la section \"Version d'Android\".\n"
+"\n"
+"## Trouver la version du firmware actuel\n"
+"Sur la même page où vous avez trouvé la version d'Android, "
+"vous trouverez également la version du firmware / micrologiciel.\n"
+"Sur certain modèles, la version du firmware est la version de build / base."
+
+#: openandroidinstaller/views/requirements_view.py:112
+msgid "How to Find the version"
+msgstr "Comment trouver la version"
+
+#: openandroidinstaller/views/requirements_view.py:117
+msgid "How to find the firmware and android version of your device."
+msgstr "Comment trouver la version d'Android et di firmware de votre appareil."
+
+#: openandroidinstaller/views/requirements_view.py:123
+msgid "Check the Requirements"
+msgstr "Vérifier les conditions"
+
+#: openandroidinstaller/views/requirements_view.py:130
+msgid ""
+"Before continuing you need to check some requirements to progress. Please "
+"read the instructions and check the boxes if everything is fine."
+msgstr ""
+"Avant de continuer, vous devez vérifier quelques conditions. Merci "
+"de lire les instructions et cocher les cases si tout est bon."
+
+#: openandroidinstaller/views/requirements_view.py:143
+msgid ""
+"The required android version is installed. (Or I know the risk of continuing)"
+msgstr ""
+"La version d'Android requise est installée. (Ou vous connaissez le risque encouru)"
+
+#: openandroidinstaller/views/requirements_view.py:153
+#, python-brace-format
+msgid "Android Version {required_android_version}:"
+msgstr "Version d'Android {required_android_version}"
+
+#: openandroidinstaller/views/requirements_view.py:161
+#, python-brace-format
+msgid ""
+"Before following these instructions please ensure that the device is "
+"currently using Android {required_android_version} firmware.\n"
+"If the vendor provided multiple updates for that version, e.g. security "
+"updates, make sure you are on the latest!\n"
+"If your current installation is newer or older than Android "
+"{required_android_version}, please upgrade or downgrade to the required\n"
+"version before proceeding (guides can be found on the internet!).\n"
+"                        "
+msgstr ""
+"Avant de suivre ces instructions, soyez sur que votre appareil est actuellement "
+"sous Android {required_android_version}.\n"
+"Si le fournisseur a proposé des mises à jour, soyez sur la plus récente !\n"
+"Si votre installation est plus vieille ou plus récente que "
+"Android {required_android_version}, installez la version requise avant de continuer (des tutoriels "
+"peuvent être trouvés sur internet).\n"
+"                        "
+
+#: openandroidinstaller/views/requirements_view.py:182
+msgid ""
+"The required firmware version is installed. (Or I know the risk of "
+"continuing)"
+msgstr ""
+"La version du firmware requise est installée. (Ou vousconnaissez le risque encouru)"
+
+#: openandroidinstaller/views/requirements_view.py:192
+#, python-brace-format
+msgid "Firmware Version {required_firmware_version}:"
+msgstr "Firmware en version {required_firmware_version}"
+
+#: openandroidinstaller/views/requirements_view.py:200
+#, python-brace-format
+msgid ""
+"Before following these instructions please ensure that the device is on "
+"firmware version {required_firmware_version}.\n"
+"To discern this, you can run the command `adb shell getprop ro.build.display."
+"id` on the stock ROM.\n"
+"If the device is not on the specified version, please follow the "
+"instructions below to install it.\n"
+"                        "
+msgstr ""
+"Avant de continuer ces instructions, soyez sûr que votre appareil a "
+"un firmware sous la version {required_firmware_version}.\n"
+"Pour être sûr, lancez la commande `adb shell getprop ro.build.display."
+"id` sur votre téléphone sous le système du fabricant.\n"
+"Si l'appareil n'est pas sur la version spécifiée, "
+"merci de suivre les instructions ci-dessous pour l'installer.\n"
+"                        "
+
+#: openandroidinstaller/views/requirements_view.py:238
+msgid "The battery level is over 80%."
+msgstr "Le niveau de batterie est supérieur à 80%."
+
+#: openandroidinstaller/views/requirements_view.py:246
+msgid ""
+"\n"
+"#### Battery level over 80%\n"
+"Before continuing make sure your device battery level is above 80%.\n"
+"            "
+msgstr ""
+"\n"
+"#### Niveau de batterie supérieur à 80%\n"
+"avant de continuer, soyez sûr que la batterie de l'appareil a "
+"un niveau supérieur à 80%.\n"
+"            "
+
+#: openandroidinstaller/views/requirements_view.py:262
+msgid "Booted the stock OS at least once."
+msgstr "Le système d'origine a été démarré au moins une fois."
+
+#: openandroidinstaller/views/requirements_view.py:270
+msgid ""
+"\n"
+"#### Boot your device with the stock OS at least once and check every "
+"functionality.\n"
+"Make sure that you can send and receive SMS and place and receive calls "
+"(also via WiFi and LTE, if available),\n"
+"otherwise it won't work on your custom ROM either! Additionally, some "
+"devices require that VoLTE/VoWiFi be utilized once on stock to provision "
+"IMS.\n"
+"            "
+msgstr ""
+"\n"
+"#### Démarrez votre appareil sur le système d'origine au moins une fois et vérifiez que "
+"toutes les fonctionnalités fonctionnent.\n"
+"Vérifiez que vous pouvez envoyer et recevoir des SMS et passer des appels "
+"(aussi en VoLTE et VoWiFi si disponible),\n"
+"sinon, cela ne fonctionnera pas non plus sur le nouveau système ! Aussi, "
+"certains appareils nécessitent que VoLTE/VoWiFi soient utilisés au moins une fois sur le système d'origine "
+"pour l'approvisionnement IMS.\n"
+"            "
+
+#: openandroidinstaller/views/requirements_view.py:287
+msgid "No lock code or fingerprint lock enabled."
+msgstr "Aucun code de déverouillage ou empreinte digitale activée"
+
+#: openandroidinstaller/views/requirements_view.py:295
+msgid ""
+"\n"
+"#### Disable all device lock codes and fingerprint locks.\n"
+"            "
+msgstr ""
+"\n"
+"#### Désactiver tous les codes de dévérouillage et empreinte digitale.\n"
+"            "
+
+#: openandroidinstaller/views/select_view.py:73
+msgid "What is an OS image and recovery and why do I need it?"
+msgstr "Qu'est-ce qu'une image système, un recovery et à quoi ça sert ?"
+
+#: openandroidinstaller/views/select_view.py:75
+msgid ""
+"## OS image or ROM\n"
+"An operating system (OS) is system software that manages computer hardware,\n"
+"software resources, and provides common services for computer programs. \n"
+"Popular, custom operating systems for mobile devices based on Android are \n"
+"- [LineageOS](https://lineageos.org)\n"
+"- [/e/OS](https://e.foundation/e-os) or\n"
+"- [LineageOS for microG](https://lineage.microg.org)\n"
+"- and many others.\n"
+"\n"
+"Often, the related OS images are called 'ROM'. 'ROM' stands for *R*ead-"
+"*o*nly *m*emory,\n"
+"which is a type of non-volatile memory used in computers for storing "
+"software that is\n"
+"rarely changed during the life of the system, also known as firmware.\n"
+"\n"
+"## Recovery Image\n"
+"A custom recovery is used for installing custom software on your device.\n"
+"This custom software can include smaller modifications like rooting your "
+"device or even\n"
+"replacing the firmware of the device with a completely custom ROM.\n"
+"\n"
+"OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/"
+"about)."
+msgstr ""
+"## Image système ou ROM\n"
+"Un système d'exploitation (OS en anglais) est un logiciel qui gère le matériel de l'appareil,"
+"les ressources, et fournis les logiciels de base.\n"
+"Parmi les ROM les plus populaires basées sur Android, citons \n"
+"- [LineageOS](https://lineageos.org)\n"
+"- [/e/OS](https://e.foundation/e-os) or\n"
+"- [LineageOS for microG](https://lineage.microg.org)\n"
+"- et bien d'autres.\n"
+"\n"
+"Souvent, les images système associées sont appelées 'ROM', pour *R*ead-"
+"*o*nly *m*emory, qui est un type de mémoire non volatile utilisée en informatique "
+"pour stocker les logiciels qui ne sont pas souvent changés durant la vie "
+"de l'appareil, aussi appelé firmware.\n"
+"\n"
+"## Image recovery\n"
+"Un recovery personnalisé est utilisé pour installer des systèmes altrnatifs sur "
+"votre appareil. Ce logiciel permet de rooter l'appareil et remplacer le firmware "
+"avec un système complètement nouveau.\n"
+"\n"
+"OpenAndroidInstaller fonctionne avec le recovery [TWRP](https://twrp.me/"
+"about)."
+
+#: openandroidinstaller/views/select_view.py:114
+msgid "Selected image: "
+msgstr "Image sélectionnée : "
+
+#: openandroidinstaller/views/select_view.py:115
+msgid "Selected recovery: "
+msgstr "Recovery sélectionné : "
+
+#: openandroidinstaller/views/select_view.py:133
+msgid "Continue without additional images"
+msgstr "Continuer sans images additionnelles"
+
+#: openandroidinstaller/views/select_view.py:172
+msgid "What is this?"
+msgstr "Qu'est-ce que c'est ?"
+
+#: openandroidinstaller/views/select_view.py:177
+msgid "Get more details on custom operating system images and recoveries."
+msgstr "Obtenir plus de détails sur les images système et les recoveries"
+
+#: openandroidinstaller/views/select_view.py:183
+msgid "Now pick an OS image and a recovery file:"
+msgstr "Sélectionnez maintenant une image système et un recovery : "
+
+#: openandroidinstaller/views/select_view.py:200
+msgid "Important notes for your device"
+msgstr "Notes importantes pour votre appreil"
+
+#: openandroidinstaller/views/select_view.py:217
+msgid ""
+"You can bring your own image and recovery or you download the officially "
+"supported image file for your device here:"
+msgstr ""
+"Vous pouvez utiliser votre propre image système et recovery, ou vous pouvez "
+"télécharger l'image officiellement supportée pour votre appareil ici : "
+
+#: openandroidinstaller/views/select_view.py:222
+msgid "Download LineageOS image"
+msgstr "Télécharger l'image de LineageOS"
+
+#: openandroidinstaller/views/select_view.py:230
+msgid "Download TWRP recovery"
+msgstr "Télécharger le recovery TWRP"
+
+#: openandroidinstaller/views/select_view.py:246
+msgid "Select an OS image:"
+msgstr "Sélectionnez une image système : "
+
+#: openandroidinstaller/views/select_view.py:248
+#, python-brace-format
+msgid ""
+"\n"
+"The image file should look something like `lineage-19.1-20221101-nightly-"
+"{device_code}-signed.zip`."
+msgstr ""
+"\n"
+"Le nom de l'image doit ressembler à `lineage-19.1-20221101-nightly-"
+"{device_code}-signed.zip`."
+
+#: openandroidinstaller/views/select_view.py:254
+msgid "Pick OS image"
+msgstr "Sélectionner l'image système"
+
+#: openandroidinstaller/views/select_view.py:272
+msgid "Select a TWRP recovery image:"
+msgstr "Sélectionner un recovery"
+
+#: openandroidinstaller/views/select_view.py:274
+#, python-brace-format
+msgid ""
+"\n"
+"The recovery image should look something like `twrp-3.7.0_12-0-{device_code}."
+"img`.\n"
+"\n"
+"**Note:** This tool **only supports TWRP recoveries**."
+msgstr ""
+"\n"
+"Le nom du recovery doit ressembler à `twrp-3.7.0_12-0-{device_code}."
+"img`.\n"
+"\n"
+"**Note : ** OpenAndroidInstaller ne supporte **que le recovery TWRP**."
+
+#: openandroidinstaller/views/select_view.py:283
+msgid "Pick TWRP recovery file"
+msgstr "Sélectionner le fichier de TWRP"
+
+#: openandroidinstaller/views/select_view.py:328
+msgid ""
+"- If something goes wrong, you can reinstall MiUI here:\n"
+"<https://xiaomifirmwareupdater.com/>\n"
+msgstr ""
+"- Si quelque chose se passe mal, vous pouvez réinstaller MiUI ici :\n"
+"<https://xiaomifirmwareupdater.com/>\n"
+
+#: openandroidinstaller/views/select_view.py:334
+msgid ""
+"- **This device has not been tested with OpenAndroidInstaller yet.** The "
+"installation can go wrong. You may have to finish the installation process "
+"with command line. If you test, please report the result on GitHub."
+msgstr ""
+"- **Cet appareil n'a pas encore été testé avec OpenAndroidInstaller.** "
+"L'installation peut échouer, et vous devrez peut être terminer l'installation "
+"en lignes de commandes. Si vous testez, merci de le signaler sur GitHub."
+
+#: openandroidinstaller/views/select_view.py:347
+msgid "Why do I need additional images and where do I get them?"
+msgstr "Pourquoi des images additionnelles et comment les obtenir ?"
+
+#: openandroidinstaller/views/select_view.py:349
+#, python-brace-format
+msgid ""
+"## About additional images\n"
+"Some devices require additional images to be flashed before the recovery and "
+"OS image can be flashed.\n"
+"Not all images explained below are required for all devices. The installer "
+"will tell you which images are required for your device.\n"
+"\n"
+"### dtbo.img\n"
+"The `dtbo.img` is a partition image that contains the device tree overlay.\n"
+"\n"
+"### vbmeta.img\n"
+"The `vbmeta.img` is a partition image that contains the verified boot "
+"metadata.\n"
+"This is required to prevent issues with the verified boot process.\n"
+"\n"
+"### super_empty.img\n"
+"The `super_empty.img` is used to wipe the super partition. This is required "
+"to\n"
+"prevent issues with the super partition when flashing a new ROM.\n"
+"\n"
+"### vendor_boot.img\n"
+"The `vendor_boot.img` is a partition image that contains the vendor boot "
+"image.\n"
+"\n"
+"## Where do I get these images?\n"
+"You can download the required images for your device from the [LineageOS "
+"downloads page](https://download.lineageos.org/devices/{device_code}/"
+"builds).\n"
+"If this download page does not contain the required images, you can try to "
+"find them on the [XDA developers forum](https://xdaforums.com).\n"
+"                "
+msgstr ""
+"## À propis des images additionnelles \n"
+"Certains appareils nécessitent des images additionnelles devant être flashées avant "
+"le recovery et le système. Elles ne sont pas toutes requises pour tous les appareils, "
+"l'installateur ne va demander que celles requises par votre appareil.\n"
+"\n"
+"### dtbo.img\n"
+"La partition `dtbo.img` contient l'arborescence de l'appareil.\n"
+"\n"
+"### vbmeta.img\n"
+"La partition `vbmeta.img` contient les métadonnées associées au dispositif verified boot.\n"
+"Cela est requis pour éviter les problèmes avec le dispositif verified boot.\n"
+"\n"
+"### super_empty.img\n"
+"Le fichier `super_empty.img` est utilisé pour vider la partition `super`. "
+"Cela est nécessaire pour éviter les problèmes avec la partition `super` lors de l'installation "
+"d'un nouveau système.\n"
+"\n"
+"### vendor_boot.img\n"
+"La partition `vendor_boot.img` contient l'image vendor boot.\n"
+"\n"
+"## Où trouver ces images ?\n"
+"Vous pouvez trouver les images requises pour votre appareil sur le site de "
+"[LineageOS](https://download.lineageos.org/devices/{device_code}/"
+"builds).\n"
+"Si cette page ne les contient pas, cherchez sur le forum de développeurs "
+"[XDA developers forum](https://xdaforums.com).\n"
+"                "
+
+#: openandroidinstaller/views/select_view.py:384
+msgid "Why do I need this and where do I get it?"
+msgstr "Pourquoi avoir besoin de cela et comment l'obtenir ?"
+
+#: openandroidinstaller/views/select_view.py:389
+msgid "Get more details on additional images and download links."
+msgstr "Obtenir plus de détails sur les images additionnelles et les liens de téléchargement."
+
+#: openandroidinstaller/views/select_view.py:400
+msgid "Select required additional images:"
+msgstr "Sélectionnez les images additionnelles requises : "
+
+#: openandroidinstaller/views/select_view.py:406
+msgid ""
+"\n"
+"Your selected device and ROM requires flashing of additional partitions. "
+"Please select the required images below.\n"
+"\n"
+"Make sure the file is for **your exact phone model!**"
+msgstr ""
+"\n"
+"Le système sélectionné requiert des partitions additionnelles. "
+"Merci de sélectionner les images ci-dessous.\n"
+"\n"
+"Soyez sûr que les fichiers sont pour **votre modèle exact !**"
+
+#: openandroidinstaller/views/select_view.py:420
+msgid "Pick `dtbo.img` image"
+msgstr "Sélectionner l'image `dtbo.img`"
+
+#: openandroidinstaller/views/select_view.py:441
+msgid "Pick `vbmeta.img` image"
+msgstr "Sélectionner l'image `vbmeta.img`"
+
+#: openandroidinstaller/views/select_view.py:462
+msgid "Pick `super_empty.img` image"
+msgstr "Sélectionner l'image `super_empty.img`"
+
+#: openandroidinstaller/views/select_view.py:483
+msgid "Pick `vendor_boot.img` image"
+msgstr "Sélectionner l'image `vendor_boot.img`"
+
+#: openandroidinstaller/views/select_view.py:674
+msgid ""
+"Image and/or recovery don't work with the device. Make sure you use a TWRP-"
+"based recovery."
+msgstr ""
+"L'image système et/ou le recovery ne fonctionnent pas pour votre appareil. "
+"Soyez sûr que le recovery est basé sur TWRP."
+
+
+#: openandroidinstaller/views/select_view.py:704
+msgid ""
+"Some additional images don't match or are missing. Please select the right "
+"ones."
+msgstr ""
+"Au moins une image additionnelle ne correspond pas ou est manquante. Merci "
+"de sélectionner les bonnes."
+
+#: openandroidinstaller/views/select_view.py:731
+msgid "Image doesn't work with the device."
+msgstr "L'image ne correspond pas avec l'appareil."
+
+#: openandroidinstaller/views/start_view.py:80
+msgid "How to enable developer options and OEM unlocking"
+msgstr "Comment activer les options développeur et le déverouillage OEM ?"
+
+#: openandroidinstaller/views/start_view.py:82
+msgid ""
+"\n"
+"To do this, \n"
+"- **tap seven times on the build number** in the 'System'- or 'About the "
+"phone'-Menu in Settings. You can also use the phones own search to look for "
+"`build number`. \n"
+"- Then go back to the main menu and look for **'developer options'**. You "
+"can also search for it in your phone.\n"
+"- When you are in developer options, **toggle OEM unlocking and USB-"
+"Debugging**.\n"
+"- If your phone is already connected to your PC, a pop-up might appear. "
+"**Allow USB debugging in the pop-up on your phone.**\n"
+"\n"
+"Now you are ready to continue.\n"
+msgstr ""
+"\n"
+"Pour faire cela, \n"
+"- **tappez sept fois sur le numéro de build** dans le menu 'Système' ou 'À propos' "
+"dans les paramètres. Vous pouvez également chercher 'numéro de build' dans les paramètres.\n"
+"- Ensuite, retournez sur le menu précédent et cherchez **options développeurs**. "
+"Vous pouvez également utiliser la fonctionnalité recherche.\n"
+"- Lorsque vous êtes dans les options développeurs, sélectionnez **déverouillage OEM** et **Débogage USB**.\n"
+"- Si l'appareil est déjà branché au PC, une fenêtre peut apparaitre. "
+"**Autorisez le débogage USB.**\n"
+"\n"
+"Vous pouvez maintenant continuer.\n"
+
+#: openandroidinstaller/views/start_view.py:105
+msgid "Bootloader is already unlocked."
+msgstr "Le bootloader est déjà dévérouillé."
+
+#: openandroidinstaller/views/start_view.py:118
+msgid "Custom recovery is already flashed."
+msgstr "Un recovery alternatif est déjà flashé."
+
+#: openandroidinstaller/views/start_view.py:128
+msgid "Detected device:"
+msgstr "Appareil détecté : "
+
+#: openandroidinstaller/views/start_view.py:145
+msgid "Get the phone ready"
+msgstr "Préparer l'appareil"
+
+#: openandroidinstaller/views/start_view.py:153
+msgid ""
+"\n"
+"To get started you need to \n"
+"- **enable developer options** on your device\n"
+"- and then **enable USB debugging** and **OEM unlocking** in the developer "
+"options.\n"
+"                "
+msgstr ""
+"\n"
+"Pour commencer vous devez : \n"
+"- **activer les options développeur** sur votre appareil\n"
+"- puis activer le **débogage USB** et le **déverouillage OEM** dans les options développeur.\n"
+"                "
+
+#: openandroidinstaller/views/start_view.py:162
+msgid "How do I enable developer options?"
+msgstr "Comment activer les options développeur ?"
+
+#: openandroidinstaller/views/start_view.py:167
+msgid "Get help to enable developer options and OEM unlocking."
+msgstr "Obtenir de l'aide pour activer les options développeur et le débogage USB."
+
+#: openandroidinstaller/views/start_view.py:173
+msgid ""
+"\n"
+"Now \n"
+"- **connect your device to this computer via USB** and\n"
+"- **allow USB debugging in the pop-up on your phone**.\n"
+"- You might also need to **activate \"data transfer\"** in the connection "
+"settings.\n"
+"- Then **press the button 'Search device'**.\n"
+"\n"
+"When everything works correctly you should see your device name here and you "
+"can continue.\n"
+"                "
+msgstr ""
+"\n"
+"Maintenant : \n"
+"- **connectez votre appareil à ce PC via USB** et\n"
+"- **activez le débogage USB sur votre appareil** (une fenêtre doit apparaitre).\n"
+"- Vous pouvez également avoir besoin d'**activer le transfert de données** dans les paramètres de connection USB.\n"
+"- Ensuite, **cliquez sur le bouton 'Chercher l'appareil'**.\n"
+"\n"
+"Lorsque tout fonctionne correctement, vous devez voir le nom de votre appareil, "
+"puis vous pouvez continuer.\n"
+"                "
+
+#: openandroidinstaller/views/start_view.py:185
+msgid ""
+"\n"
+"If you **already unlocked the bootloader** of your device or already "
+"**flashed a custom recovery**, please toggle the respective switch below, to "
+"skip the procedure.\n"
+"If you don't know what this means, you most likely don't need to do anything "
+"and you can just continue.\n"
+"            "
+msgstr ""
+"\n"
+"Si vous avez **déjà dévérouillé le bootloader** de l'appareil ou "
+"**déjà flashé un recovery**, sélectionnez les options ci-dessous pour "
+"sauter ces étapes.\n"
+"Si vous ne savez pas ce que cela veut dire, nous ne devez probablement pas "
+"cocher ces options et pouvez juste continuer.\n"
+"            "
+
+#: openandroidinstaller/views/start_view.py:195
+msgid "Search for device"
+msgstr "Chercher l'appareil"
+
+#: openandroidinstaller/views/start_view.py:199
+msgid "Search for a connected device."
+msgstr "Chercher un appareil connecté"
+
+#: openandroidinstaller/views/start_view.py:242
+msgid "No device detected! Connect to USB and try again."
+msgstr "Aucun appareil détecté ! Connectez-le en USB et essayez à nouveau."
+
+#: openandroidinstaller/views/start_view.py:277
+#, python-brace-format
+msgid "Device with code '{device_code}' is not supported yet."
+msgstr "L'appareil '{device_code}' n'est pas encore supporté."
+
+#: openandroidinstaller/views/start_view.py:283
+msgid "Request support for this device"
+msgstr "Demander le support pour cet appareil"
+
+#: openandroidinstaller/views/step_view.py:84
+msgid "your unlock code"
+msgstr "Votre code de dévérouillage"
+
+#: openandroidinstaller/views/step_view.py:119
+msgid "Unlock the bootloader"
+msgstr "Dévérouiller le bootloader"
+
+#: openandroidinstaller/views/step_view.py:175
+msgid "Open Link"
+msgstr "Ouvrir le lien"
+
+#: openandroidinstaller/views/step_view.py:284
+#, python-brace-format
+msgid ""
+"Command {command} failed! Try again or make sure everything is setup "
+"correctly."
+msgstr ""
+"La commande {command} a échouée ! Essayez à nouveau et vérifiez que tout "
+"est configuré correctement."
+
+#: openandroidinstaller/views/success_view.py:46
+msgid "Installation completed successfully!"
+msgstr "L'installation a réussi !"
+
+#: openandroidinstaller/views/success_view.py:52
+msgid "Now your devices boots into the new OS. Have fun with it!"
+msgstr "Votre appareil démarre maintenant sur le nouveau système. Amusez-vous bien !"
+
+#: openandroidinstaller/views/success_view.py:56
+#, python-brace-format
+msgid ""
+"\n"
+"If you liked the tool, help spread the word and **share it with people** who "
+"might want to use it.\n"
+"\n"
+"Also, you can consider contributing to make it better. There are a lot of "
+"different ways how you can help!\n"
+"\n"
+"[How to contribute]({contribute_link})\n"
+msgstr ""
+"\n"
+"Si vous avez aimé OpenAndroidInstaller, aidez-nous à le diffuser "
+"et **partagez-le** à  des gens qui pourraient l'utiliser.\n"
+"\n"
+"Aussi, vous pouvez contribuer pour le rendre meilleur. Il y a de nombreuses "
+"façons d'aider !\n"
+"\n"
+"[Comment contribuer]({contribute_link})\n"
+
+#: openandroidinstaller/views/welcome_view.py:53
+msgid "Let's start!"
+msgstr "C'est parti !"
+
+#: openandroidinstaller/views/welcome_view.py:65
+msgid "Welcome to the OpenAndroidInstaller!"
+msgstr "Bienvenue sur OpenAndroidInstaller !"
+
+#: openandroidinstaller/views/welcome_view.py:70
+msgid ""
+"Great that you want to install alternative, open source Android operating "
+"systems!"
+msgstr ""
+"C'est très bien que vous vouliez installer un système alternatif Android "
+"open source sur votre appareil !"
+
+#: openandroidinstaller/views/welcome_view.py:73
+msgid "We will walk you through the installation process nice and easy."
+msgstr "Nous vous accompagnons tout au long du processus d'installation."
+
+#: openandroidinstaller/views/welcome_view.py:76
+msgid ""
+"\n"
+"The following steps are performed in this tool:\n"
+"- First, we help you to **get your device ready** for the installation "
+"process.\n"
+"- Next, you can **select the operating system** you want to install (with "
+"guidance).\n"
+"- Then, we guide you though the process of **unlocking the bootloader** (if "
+"necessary). If you don't know what that means, it will be explained later.\n"
+"- As a next step, the **operation system is installed**. At this point you "
+"can also **select to install additional software** (\"addons\") like Google "
+"Apps.\n"
+"- Finally your device starts your new operating system.\n"
+"                "
+msgstr ""
+"\n"
+"Les étapes suivantes sont effectées par cet outil :\n"
+"- Premièrement, nous vous aidons à **préparer votre appareil** pour l'installation.\n"
+"- Ensuite, vous pouvez **sélectionner le système** que vous voulez installer (avec de l'aide).\n"
+"- Puis, nous vous guidons pour le processus de **dévérouillage du bootloader** (si nécessaire). "
+"Si vous ne comprennez pas de quoi il s'agit, nous vous l'expliquerons plus tard.\n"
+"- Enfin, le **système d'exploitation est installé**. Vous pourrez également "
+"**installer des extensions** (addons) comme les Google Play Services.\n"
+"- Pour finir, votre appareil démarre sur le nouveau système.\n"
+"                "
+
+#: openandroidinstaller/views/welcome_view.py:87
+msgid ""
+"\n"
+"Before you continue, make sure\n"
+"- your devices is on the latest system update.\n"
+"- you have a backup of all your important data, since this procedure will "
+"**erase all data from the phone**.\n"
+"- to not store the backup on the phone! \n"
+"\n"
+"Please note, that vendor specific back-ups will most likely not work on "
+"LineageOS!\n"
+"                "
+msgstr ""
+"\n"
+"Avant de continuer, soyez sûr que :\n"
+"- votre appareil est sur la dernière mise à jour système.\n"
+"- vous avez une sauvegarde de toutes les données importantes, puisque "
+"la procédure va **supprimer toutes les données du téléphone**.\n"
+"- vous n'avez pas enregistré la sauvegarde sur votre téléphone !\n"
+"\n"
+"Notez que les sauvegardes spécifiques au fabriquant ne vont très certainement "
+"pas fonctionner sur LineageOS.\n"
+"                "

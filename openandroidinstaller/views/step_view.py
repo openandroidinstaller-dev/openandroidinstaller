@@ -47,6 +47,7 @@ from widgets import (
     get_title,
     link_button,
 )
+from translations import _
 
 
 class StepView(BaseView):
@@ -62,7 +63,7 @@ class StepView(BaseView):
 
         # text input
         self.inputtext = TextField(
-            hint_text="your unlock code", expand=False
+            hint_text=_("your unlock code"), expand=False
         )  # textfield for the unlock code
 
     def build(self):
@@ -84,7 +85,7 @@ class StepView(BaseView):
             self.right_view.update()
 
         self.advanced_switch = Switch(
-            label="Advanced output",
+            label=_("Advanced output"),
             on_change=check_advanced_switch,
             disabled=False,
             value=self.state.advanced,
@@ -97,8 +98,8 @@ class StepView(BaseView):
 
         # main controls
         steps_indicator_img_lookup = {
-            "Unlock the bootloader": "steps-header-unlock.png",
-            "Boot custom recovery": "steps-header-recovery.png",
+            _("Unlock the bootloader"): "steps-header-unlock.png",
+            _("Boot custom recovery"): "steps-header-recovery.png",
         }
         self.right_view_header.controls = [
             get_title(
@@ -153,7 +154,7 @@ class StepView(BaseView):
             )
         elif self.step.type == "link_button_with_confirm":
             self.right_view.controls.extend(
-                [Row([link_button(self.step.link, "Open Link"), self.confirm_button])]
+                [Row([link_button(self.step.link, _("Open Link")), self.confirm_button])]
             )
 
         elif self.step.type != "text":
@@ -165,9 +166,9 @@ class StepView(BaseView):
             self.right_view.controls.append(
                 Row(
                     [
-                        Text("Do you want to skip?"),
+                        Text(_("Do you want to skip?")),
                         ElevatedButton(
-                            "Skip",
+                            _("Skip"),
                             on_click=self.on_confirm,
                             icon=icons.NEXT_PLAN_OUTLINED,
                             expand=True,
@@ -262,7 +263,7 @@ class StepView(BaseView):
             # enable call button to retry
             self.call_button.disabled = False
             # also remove the last error text if it happened
-            self.error_text.value = f"Command {command} failed! Try again or make sure everything is setup correctly."
+            self.error_text.value = _("Command {command} failed! Try again or make sure everything is setup correctly.").format(command=command)
         else:
             sleep(5)  # wait to make sure everything is fine
             logger.success(f"Command {command} run successfully. Allow to continue.")

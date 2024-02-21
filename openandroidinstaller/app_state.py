@@ -13,6 +13,8 @@ import copy
 from pathlib import Path
 from typing import List, Optional
 
+from installer_config import _load_config, Step
+from translations import _
 from installer_config import Step, _load_config
 from loguru import logger
 
@@ -90,9 +92,9 @@ class AppState:
         else:
             self.steps = [
                 Step(
-                    title="Boot custom recovery",
+                    title=_("Boot custom recovery"),
                     type="confirm_button",
-                    content="If you already flashed TWRP, boot into it by pressing 'Confirm and run'. Otherwise restart the process. Once your phone screen looks like the picture on the left, continue.",
+                    content=_("If you already flashed TWRP, boot into it by pressing 'Confirm and run'. Otherwise restart the process. Once your phone screen looks like the picture on the left, continue."),
                     command="adb_reboot_recovery",
                     img="twrp-start.jpeg",
                 )
@@ -112,9 +114,9 @@ class AppState:
             logger.info("Skipping flashing recovery.")
             self.steps = [
                 Step(
-                    title="Boot custom recovery",
+                    title=_("Boot custom recovery"),
                     type="call_button",
-                    content="If you already flashed TWRP, boot into it by pressing 'Confirm and run'. Otherwise restart the process. Once your phone screen looks like the picture on the left, continue.",
+                    content=_("If you already flashed TWRP, boot into it by pressing 'Confirm and run'. Otherwise restart the process. Once your phone screen looks like the picture on the left, continue."),
                     command="adb_reboot_recovery",
                     img="twrp-start.jpeg",
                 )

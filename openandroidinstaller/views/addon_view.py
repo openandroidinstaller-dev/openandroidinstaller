@@ -31,6 +31,7 @@ from flet_core.buttons import CountinuosRectangleBorder
 from loguru import logger
 from styles import Markdown, Text
 from views import BaseView
+from translations import _
 from widgets import confirm_button, get_title
 
 
@@ -47,8 +48,8 @@ class AddonsView(BaseView):
         # dialog box to explain OS images and recovery
         self.dlg_explain_addons = AlertDialog(
             modal=True,
-            title=Text("What kind of addons are supported?"),
-            content=Markdown(
+            title=Text(_("What kind of addons are supported?")),
+            content=Markdown(_(
                 """## Google Apps:
 There are different packages of Google Apps available. Most notable
 - [MindTheGapps](https://wiki.lineageos.org/gapps#downloads) and
@@ -71,10 +72,10 @@ The recommended way to install MicroG is to use the zip file provided here:
 
 F-Droid is an installable catalogue of libre software apps for Android. The F-Droid client app makes it easy to browse, install, and keep track of updates on your device.
 You can get the zip file to install this addon here: [https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota](https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota).
-""",
+"""),
             ),
             actions=[
-                TextButton("Close", on_click=self.close_close_explain_addons_dlg),
+                TextButton(_("Close"), on_click=self.close_close_explain_addons_dlg),
             ],
             actions_alignment="end",
             shape=CountinuosRectangleBorder(radius=0),
@@ -82,7 +83,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
 
         # initialize file pickers
         self.pick_addons_dialog = FilePicker(on_result=self.pick_addons_result)
-        self.selected_addons = Text("Selected addons: ")
+        self.selected_addons = Text(_("Selected addons: "))
 
         # initialize and manage button state.
         # wrap the call to the next step in a call to boot fastboot
@@ -96,18 +97,18 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
 
         # create help/info button to show the help dialog
         info_button = OutlinedButton(
-            "What kind of addons?",
+            _("What kind of addons?"),
             on_click=self.open_explain_addons_dlg,
             expand=True,
             icon=icons.HELP_OUTLINE_OUTLINED,
             icon_color=colors.DEEP_ORANGE_500,
-            tooltip="Get more details on what addons are supported.",
+            tooltip=_("Get more details on what addons are supported."),
         )
 
         # add title
         self.right_view_header.controls.append(
             get_title(
-                "You can select additional addons to install.",
+                _("You can select additional addons to install."),
                 info_button=info_button,
                 step_indicator_img="steps-header-select.png",
             )
@@ -120,11 +121,11 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
         self.right_view.controls.append(
             Column(
                 [
-                    Text("Here you can download the F-Droid App-Store:"),
+                    Text(_("Here you can download the F-Droid App-Store:")),
                     Row(
                         [
                             ElevatedButton(
-                                "Download F-Droid App-Store",
+                                _("Download F-Droid App-Store"),
                                 icon=icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
                                     "https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/"
@@ -134,12 +135,12 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                         ]
                     ),
                     Text(
-                        "Here you can find instructions on how to download the right Google apps for your device."
+                        _("Here you can find instructions on how to download the right Google apps for your device.")
                     ),
                     Row(
                         [
                             ElevatedButton(
-                                "Download Google Apps",
+                                _("Download Google Apps"),
                                 icon=icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
                                     "https://wiki.lineageos.org/gapps#downloads"
@@ -148,11 +149,11 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                             ),
                         ]
                     ),
-                    Text("Here you can download MicroG:"),
+                    Text(_("Here you can download MicroG:")),
                     Row(
                         [
                             ElevatedButton(
-                                "Download MicroG",
+                                _("Download MicroG"),
                                 icon=icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
                                     "https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases"
@@ -168,7 +169,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
         # attach the controls for uploading addons
         self.right_view.controls.extend(
             [
-                Text("Select addons:", style="titleSmall"),
+                Text(_("Select addons:"), style="titleSmall"),
                 # Markdown(
                 # f"""
                 # The image file should look something like `lineage-20.0-20240101-nightly-{self.state.config.metadata.get('devicecode')}-signed.zip`."""
@@ -176,7 +177,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                 Row(
                     [
                         FilledButton(
-                            "Pick the addons you want to install",
+                            _("Pick the addons you want to install"),
                             icon=icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_addons_dialog.pick_files(
                                 allow_multiple=True,
@@ -217,7 +218,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
             self.state.addon_paths = self.addon_paths
             logger.info(f"Selected addons: {self.addon_paths}")
         else:
-            logger.info("No addons selected.")
+            logger.info(_("No addons selected."))
         # check if the addons works with the device and show the filename in different colors accordingly
         # update
         self.selected_addons.update()
