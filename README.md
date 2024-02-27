@@ -239,7 +239,7 @@ A detailed list can be found [here](https://openandroidinstaller.org/#contribute
 
 ## License
 
-Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022-2023.
+Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022-2024.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
