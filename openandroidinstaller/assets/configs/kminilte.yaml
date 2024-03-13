@@ -5,6 +5,8 @@ metadata:
   device_code: kminilte
   supported_device_codes:
     - kminilte
+    - kminiltedv
+    - kminilteub
     - kminiltexx
   twrp-link: kminilte
 steps:
