@@ -1,4 +1,5 @@
 """Contains the start view."""
+
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
@@ -30,7 +31,7 @@ from flet import (
 from flet_core.buttons import CountinuosRectangleBorder
 from loguru import logger
 from styles import Markdown, Text
-from tooling import search_device
+from tooling import search_device, SearchResult
 from views import BaseView
 from widgets import get_title
 
@@ -219,29 +220,30 @@ If you don't know what this means, you most likely don't need to do anything and
         # search the device
         if self.state.test:
             # this only happens for testing
-            device_code = self.state.test_config
+            result = SearchResult(
+                device_code=self.state.test_config,
+                msg=f"Found device with device code '{self.state.test_config}'.",
+            )
             logger.info(
-                f"Running search in development mode and loading config {device_code}.yaml."
+                f"Running search in development mode and loading config {result.device_code}.yaml."
             )
         else:
-            device_code = search_device(
+            result = search_device(
                 platform=self.state.platform, bin_path=self.state.bin_path
             )
-            if device_code:
-                self.device_name.value = device_code
+            if result.device_code:
+                self.device_name.value = result.device_code
                 self.device_name.color = colors.BLACK
             else:
                 logger.info("No device detected! Connect to USB and try again.")
-                self.device_name.value = (
-                    "No device detected! Connect to USB and try again."
-                )
+                self.device_name.value = result.msg
                 self.device_name.color = colors.RED
 
         # load the config, if a device is detected
-        if device_code:
-            self.device_name.value = device_code
+        if result.device_code:
+            self.device_name.value = result.device_code
             # load config from file
-            self.state.load_config(device_code)
+            self.state.load_config(result.device_code)
             if self.state.config:
                 device_name = self.state.config.metadata.get(
                     "device_name", "No device name in config."
@@ -265,13 +267,13 @@ If you don't know what this means, you most likely don't need to do anything and
             else:
                 # failed to load config or device is not supported
                 logger.error(
-                    f"Device with code '{device_code}' is not supported or the config is corrupted. Please check the logs for more information."
+                    f"Device with code '{result.device_code}' is not supported or the config is corrupted. Please check the logs for more information."
                 )
                 self.device_name.value = (
-                    f"Device with code '{device_code}' is not supported yet."
+                    f"Device with code '{result.device_code}' is not supported yet."
                 )
                 # add request support for device button
-                request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?labels=device&template=device-support-request.yaml&title=Add support for `{device_code}`"
+                request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?labels=device&template=device-support-request.yaml&title=Add support for `{result.device_code}`"
                 self.device_request_row.controls.append(
                     ElevatedButton(
                         "Request support for this device",
