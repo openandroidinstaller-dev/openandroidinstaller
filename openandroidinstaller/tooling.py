@@ -126,8 +126,15 @@ def adb_sideload(bin_path: Path, target: str) -> TerminalResponse:
 @add_logging("Activate sideloading in TWRP.", return_if_fail=True)
 def activate_sideload(bin_path: Path) -> TerminalResponse:
     """Activate sideload with adb shell in twrp."""
+    # try to activate sideload (should work for TWRP)
     for line in run_command("adb shell twrp sideload", bin_path):
         yield line
+    # if it fails, try to activate sideload with a hack for OrangeFox recovery
+    if isinstance(line, bool) and not line:
+        # unclear why this works, but it does
+        for line in run_command("adb shell twrp sideload help", bin_path):
+            yield line
+    # wait for the sideload to become available
     for line in adb_wait_for_sideload(bin_path=bin_path):
         yield line
 
