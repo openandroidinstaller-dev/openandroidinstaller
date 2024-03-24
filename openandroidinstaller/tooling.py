@@ -604,7 +604,6 @@ def search_device(platform: str, bin_path: Path) -> SearchResult:
                 # "grep",
                 # "ro.product.device",
             ]
-            logger.info(f"Run command: {command}")
             device_prop = check_output(
                 command,
                 stderr=STDOUT,

@@ -62,18 +62,18 @@ def test_search_device_success(mocker):
     )
 
     # test linux
-    device_code = search_device(
+    search_result = search_device(
         platform="linux", bin_path=Path("openandroidinstaller/bin/")
     )
 
-    assert device_code == "sargo"
+    assert search_result.device_code == "sargo"
 
     # test windows
-    device_code = search_device(
+    search_result = search_device(
         platform="windows", bin_path=Path("openandroidinstaller/bin/")
     )
 
-    assert device_code == "sargo"
+    assert search_result.device_code == "sargo"
 
 
 def test_search_device_failure(mocker):
@@ -87,11 +87,11 @@ def test_search_device_failure(mocker):
         patched_check_output,
     )
 
-    device_code = search_device(
+    search_result = search_device(
         platform="linux", bin_path=Path("openandroidinstaller/bin/")
     )
 
-    assert device_code is None
+    assert search_result.device_code is None
 
 
 def test_run_command_success(mocker):
