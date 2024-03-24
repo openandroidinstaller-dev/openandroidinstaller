@@ -185,7 +185,7 @@ Sony | Xperia XZ | kagura | | planned
 
 </details>
 
-  
+
 <details><summary><b>Xiaomi & Poco</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
@@ -242,7 +242,7 @@ A detailed list can be found [here](https://openandroidinstaller.org/#contribute
 
 ## Acknowledgements
 
-* Funded from September 2022 until February 2023 by:
+* The project received financial support from the German Federal Ministry for Education and Research under the grant identifier 01IS22S26 from September 2022 until February 2023.
 
 ![logos of the "Bundesministerium für Bildung und Forschung", Prodotype Fund and OKFN-Deutschland](resources/pf_funding_logos.svg)
 
