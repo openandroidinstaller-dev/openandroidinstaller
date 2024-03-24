@@ -24,7 +24,7 @@ def test_adb_reboot_success(fp):
 
     with fp.context() as nested_process:
         nested_process.register(
-            ["test/path/to/tools/adb", "reboot"], stdout=bytes.fromhex("00")
+            ["test/path/to/tools/adb", "-d", "reboot"], stdout=bytes.fromhex("00")
         )
         for line in adb_reboot(bin_path=Path("test/path/to/tools")):
             print(line)
@@ -42,7 +42,7 @@ def test_adb_reboot_failure(fp):
 
     with fp.context() as nested_process:
         nested_process.register(
-            ["test/path/to/tools/adb", "reboot"],
+            ["test/path/to/tools/adb", "-d", "reboot"],
             stdout=[
                 bytes("error: no devices/emulators found", encoding="utf-8"),
             ],
