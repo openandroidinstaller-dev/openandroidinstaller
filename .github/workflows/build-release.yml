@@ -17,9 +17,10 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: 3.11
     - run: pip install -r requirements.txt
     - run: python scripts/download-tools.py
+    - run: pip install black ruff pytest pytest-cov pytest-mock pytest-subprocess
     - run: black .
     - run: ruff openandroidinstaller/ --ignore E501
     - run: PYTHONPATH=openandroidinstaller:$(PYTHONPATH) pytest --cov=openandroidinstaller tests/
@@ -35,7 +36,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: 3.11
     - run: pip install -r requirements.txt
     - run: python scripts/download-tools.py
     - run: python scripts/build.py
@@ -51,7 +52,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: 3.11
     - run: pip install -r requirements.txt
     - run: python scripts/download-tools.py
     - run: python scripts/build.py
