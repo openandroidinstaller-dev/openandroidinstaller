@@ -23,7 +23,7 @@ py7zr = "^0.20.0"
 typing-extensions = "^4.7.1"
 
 [tool.poetry.group.dev.dependencies]
-black = "^22.8.0"
+black = ">=24.3.0"
 ruff = "^0.2.1"
 isort = "^5.10.1"
 pre-commit = "^3.6.0"
