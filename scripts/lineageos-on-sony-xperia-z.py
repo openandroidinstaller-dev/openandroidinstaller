@@ -3,6 +3,7 @@
 Example usage:
     poetry run python scripts/lineageos-on-sony-xperia-z.py --recovery images/sony-xperia-z/twrp-3.6.2_9-0-yuga.img --image images/sony-xperia-z/lineage-18.1-20220214-UNOFFICIAL-yuga.zip
 """
+
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,

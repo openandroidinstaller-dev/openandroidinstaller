@@ -3,6 +3,7 @@
 Example usage:
     poetry run python scripts/lineageos-on-pixel3a.py --recovery images/google-pixel3a/lineage-19.1-20220830-recovery-sargo.img --image images/google-pixel3a/lineage-19.1-20220830-nightly-sargo-signed.zip
 """
+
 # This file is part of OpenAndroidInstaller.
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,

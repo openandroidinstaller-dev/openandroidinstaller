@@ -595,28 +595,23 @@ def search_device(platform: str, bin_path: Path) -> SearchResult:
     try:
         # read device code
         if platform in ("linux", "darwin"):
-            # check if grep is installed and find the right path
-            try:
-                grep_command = check_output(["which", "grep"]).decode().strip()
-            except CalledProcessError:
-                logger.error(
-                    "Failed to detect a device. Please make sure `grep` is installed."
-                )
-                return SearchResult(
-                    msg="Failed to detect a device. Please make sure `grep` is installed."
-                )
             # run the command to get the device code
-            output = check_output(
-                [
-                    str(bin_path.joinpath(Path("adb"))),
-                    "shell",
-                    "getprop",
-                    "|",
-                    grep_command,
-                    "ro.product.device",
-                ],
+            command = [
+                str(bin_path.joinpath(Path("adb"))),
+                "shell",
+                "getprop",
+                # "|",
+                # "grep",
+                # "ro.product.device",
+            ]
+            logger.info(f"Run command: {command}")
+            device_prop = check_output(
+                command,
                 stderr=STDOUT,
             ).decode()
+            output = [
+                line for line in device_prop.split("\n") if "ro.product.device" in line
+            ][0]
         elif platform in ("windows", "win32"):
             # run the command to get the device code on windows
             output = check_output(
@@ -639,8 +634,8 @@ def search_device(platform: str, bin_path: Path) -> SearchResult:
             device_code=device_code,
             msg=f"Found device with device code '{device_code}'.",
         )
-    except CalledProcessError:
-        logger.error("Failed to detect a device.")
+    except CalledProcessError as e:
+        logger.error(f"Failed to detect a device. {e}")
         return SearchResult(
             msg="Failed to detect a device. Connect to USB and try again."
         )
