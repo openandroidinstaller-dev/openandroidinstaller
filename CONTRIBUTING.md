@@ -1,4 +1,4 @@
-# Contributing to the OpenAndroidInstaller project 
+# Contributing to the OpenAndroidInstaller project
 
 💖 First of all: thank you for contributing to the OpenAndroidInstaller! Great that you are here!
 

@@ -4,43 +4,23 @@
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
-from loguru import logger
+from pathlib import Path
 from time import sleep
 from typing import Callable
-from pathlib import Path
 
-from flet import (
-    Column,
-    ElevatedButton,
-    Row,
-    icons,
-    Switch,
-    colors,
-)
-
-from styles import (
-    Text,
-    Markdown,
-)
-
-from views import BaseView
 from app_state import AppState
-from tooling import adb_twrp_install_addon, adb_twrp_finish_install_addons, adb_reboot
-from widgets import (
-    confirm_button,
-    get_title,
-    TerminalBox,
-    ProgressIndicator,
-)
+from flet import Column, ElevatedButton, Row, Switch, colors, icons
+from loguru import logger
+from styles import Markdown, Text
+from tooling import adb_reboot, adb_twrp_finish_install_addons, adb_twrp_install_addon
+from views import BaseView
+from widgets import ProgressIndicator, TerminalBox, confirm_button, get_title
 
 
 class InstallAddonsView(BaseView):

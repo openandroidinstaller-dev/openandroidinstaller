@@ -62,44 +62,22 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 
 ## Officially supported devices
 
-Currently, the **we support 83 devices** by various vendors and working on adding more soon!
+Currently, the **we support 86 devices** by various vendors and working on adding more soon!
 
 Support for these devices is provided as best effort, but things might still go wrong.
 Help to improve the tool by reporting any issues you might face.
 
-<details><summary><b>Samsung</b></summary>
+
+<details><summary><b>Fairphone</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
-Samsung | Galaxy J7 2015 | j7elte | | tested
-Samsung | Galaxy J7 Prime | on7xelte | | untested
-Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
-Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte) | SM-A510F | tested
-Samsung | Galaxy A5 2017 | [a5y17lte](https://wiki.lineageos.org/devices/a5y17lte) | | tested
-Samsung | Galaxy A7 2016 | a7xelte | | tested
-Samsung | Galaxy A7 2017 | [a7y17lte](https://wiki.lineageos.org/devices/a7y17lte) | | untested
-Samsung | Galaxy Grand Prime VE | grandprimevelte | SM-G531F | tested
-Samsung | Galaxy S III Neo | s3ve3g | GT-I9301I | tested
-Samsung | Galaxy Tab S2 | [gts210vewifi](https://wiki.lineageos.org/devices/gts210vewifi) | T813 | tested
-Samsung | Galaxy S4 | [jfltexx](https://wiki.lineageos.org/devices/jfltexx) | | untested
-Samsung | Galaxy S4 Mini LTE| [serranoltexx](https://wiki.lineageos.org/devices/serranoltexx) | | tested
-Samsung | Galaxy S5 | [klte](https://wiki.lineageos.org/devices/klte) | G900F/M/R4/R7/T/V/W8 | tested
-Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx) | | tested
-Samsung | Galaxy S6 Edge | [zeroltexx](https://wiki.lineageos.org/devices/zeroltexx) | | tested
-Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte) | SM-G930F | tested
-Samsung | Galaxy S7 Edge | [hero2lte](https://wiki.lineageos.org/devices/hero2lte) | | tested
-Samsung | Galaxy S8 | dreamlte | | tested
-Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte) | | tested
-Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte) | | tested
-Samsung | Galaxy S10e | [beyond0lte](https://wiki.lineageos.org/devices/beyond0lte) | | tested
-Samsung | Galaxy S10+ | [beyond2lte](https://wiki.lineageos.org/devices/beyond2lte) | | tested
-Samsung | Galaxy Note 3 LTE | [hltetmo](https://wiki.lineageos.org/devices/hltetmo) | N900T/V/W8 | tested
-Samsung | Galaxy Note 8 | greatlte | SM-N950F | tested
-Samsung | Galaxy Note 9 | [crownlte](https://wiki.lineageos.org/devices/crownlte) | | tested
-Samsung | Galaxy Note 10 | [d1](https://wiki.lineageos.org/devices/d1) | | tested
-Samsung | Galaxy Note 10+ | [d2s](https://wiki.lineageos.org/devices/d2s) | | tested
+Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2) | | tested
+Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3) | | tested
+Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4) | | tested
 
 </details>
+
 
 <details><summary><b>Google</b></summary>
 
@@ -119,30 +97,6 @@ Google | Pixel 5a | [barbet](https://wiki.lineageos.org/devices/barbet) | barbet
 
 </details>
 
-<details><summary><b>Sony</b></summary>
-
-Vendor | Device Name | CodeName | Models | Status
----|---|---|---|---
-Sony | Xperia Z | [yuga](https://wiki.lineageos.org/devices/yuga) | C6603 | tested
-Sony | Xperia Z3 | [z3](https://wiki.lineageos.org/devices/z3) | | tested
-Sony | Xperia 10 | [kirin](https://wiki.lineageos.org/devices/kirin) | | tested
-Sony | Xperia 10 Plus | [mermaid](https://wiki.lineageos.org/devices/mermaid) | | tested
-Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer) | | tested
-Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari) | | tested
-Sony | Xperia XZ3 | [akatsuki](https://wiki.lineageos.org/devices/akatsuki) | | tested
-Sony | Xperia XZ | kagura | | planned
-
-</details>
-
-<details><summary><b>Fairphone</b></summary>
-
-Vendor | Device Name | CodeName | Models | Status
----|---|---|---|---
-Fairphone | Fairphone 2 | [FP2](https://wiki.lineageos.org/devices/FP2) | | tested
-Fairphone | Fairphone 3 | [FP3](https://wiki.lineageos.org/devices/FP3) | | tested
-Fairphone | Fairphone 4 | [FP4](https://wiki.lineageos.org/devices/FP4) | | tested
-
-</details>
 
 <details><summary><b>Motorola</b></summary>
 
@@ -158,12 +112,13 @@ Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | XT16
 
 </details>
 
+
 <details><summary><b>OnePlus</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 OnePlus | One | [bacon](https://wiki.lineageos.org/devices/bacon) | A0001 | tested
-OnePlus | 3/3T | [oneplus3](https://wiki.lineageos.org/devices/oneplus3) | A3003, A3000, A3010 | untested
+OnePlus | 3/3T | [oneplus3](https://wiki.lineageos.org/devices/oneplus3) | A3000, A3003, A3010 | untested
 OnePlus | 5 | [cheeseburger](https://wiki.lineageos.org/devices/cheeseburger) | A5000 | tested
 OnePlus | 5T | [dumpling](https://wiki.lineageos.org/devices/dumpling) | A5010 | tested
 OnePlus | 6 | [enchilada](https://wiki.lineageos.org/devices/enchilada) | A6000, A6003 | tested
@@ -178,6 +133,59 @@ OnePlus | 9 | lemonade | LE2110, LE2111, LE2113, LE2115 | under development
 
 </details>
 
+
+<details><summary><b>Samsung</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Samsung | Galaxy J7 2015 | j7elte | | tested
+Samsung | Galaxy J7 Prime | on7xelte | | untested
+Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
+Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte) | SM-A510F | tested
+Samsung | Galaxy A5 2017 | [a5y17lte](https://wiki.lineageos.org/devices/a5y17lte) | | tested
+Samsung | Galaxy A7 2016 | a7xelte | | tested
+Samsung | Galaxy A7 2017 | [a7y17lte](https://wiki.lineageos.org/devices/a7y17lte) | | untested
+Samsung | Galaxy Grand Prime VE | grandprimevelte | SM-G531F | tested
+Samsung | Galaxy S III Neo | s3ve3g | GT-I9301I | tested
+Samsung | Galaxy Tab S2 | [gts210vewifi](https://wiki.lineageos.org/devices/gts210vewifi) | T813 | tested
+Samsung | Galaxy S4 | [jfltexx](https://wiki.lineageos.org/devices/jfltexx) | | untested
+Samsung | Galaxy S4 Mini LTE| [serranoltexx](https://wiki.lineageos.org/devices/serranoltexx) | | tested
+Samsung | Galaxy S5 | [klte](https://wiki.lineageos.org/devices/klte) | G900F/M/R4/R7/T/V/W8 | tested
+Samsung | Galaxy S5 mini | kminilte | SM-G800F/M/Y | tested
+Samsung | Galaxy S6 | [zerofltexx](https://wiki.lineageos.org/devices/zerofltexx) | | tested
+Samsung | Galaxy S6 Edge | [zeroltexx](https://wiki.lineageos.org/devices/zeroltexx) | | tested
+Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte) | SM-G930F | tested
+Samsung | Galaxy S7 Edge | [hero2lte](https://wiki.lineageos.org/devices/hero2lte) | | tested
+Samsung | Galaxy S8 | dreamlte | | tested
+Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte) | | tested
+Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte) | | tested
+Samsung | Galaxy S10e | [beyond0lte](https://wiki.lineageos.org/devices/beyond0lte) | | tested
+Samsung | Galaxy S10+ | [beyond2lte](https://wiki.lineageos.org/devices/beyond2lte) | | tested
+Samsung | Galaxy Note 3 LTE | [hltetmo](https://wiki.lineageos.org/devices/hltetmo) | N900T/V/W8 | tested
+Samsung | Galaxy Note 8 | greatlte | SM-N950F | tested
+Samsung | Galaxy Note 9 | [crownlte](https://wiki.lineageos.org/devices/crownlte) | | tested
+Samsung | Galaxy Note 10 | [d1](https://wiki.lineageos.org/devices/d1) | | tested
+Samsung | Galaxy Note 10+ | [d2s](https://wiki.lineageos.org/devices/d2s) | | tested
+
+</details>
+
+
+<details><summary><b>Sony</b></summary>
+
+Vendor | Device Name | CodeName | Models | Status
+---|---|---|---|---
+Sony | Xperia Z | [yuga](https://wiki.lineageos.org/devices/yuga) | C6603 | tested
+Sony | Xperia Z3 | [z3](https://wiki.lineageos.org/devices/z3) | | tested
+Sony | Xperia 10 | [kirin](https://wiki.lineageos.org/devices/kirin) | | tested
+Sony | Xperia 10 Plus | [mermaid](https://wiki.lineageos.org/devices/mermaid) | | tested
+Sony | Xperia XA2 | [pioneer](https://wiki.lineageos.org/devices/pioneer) | | tested
+Sony | Xperia XZ2 | [akari](https://wiki.lineageos.org/devices/akari) | | tested
+Sony | Xperia XZ3 | [akatsuki](https://wiki.lineageos.org/devices/akatsuki) | | tested
+Sony | Xperia XZ | kagura | | planned
+
+</details>
+
+
 <details><summary><b>Xiaomi & Poco</b></summary>
 
 Vendor | Device Name | CodeName | Models | Status
@@ -190,9 +198,11 @@ Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo)
 Xiaomi | Redmi Note 8 Pro | begonia |  | untested
 Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
 Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
+Xiaomi | Mi A2 / Mi 6X | jasmine_sprout |  | untested
 Xiaomi | Mi 8 | [dipper](https://wiki.lineageos.org/devices/dipper) |  | untested
 Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinci) / davinciin |  | untested
 Xiaomi | Redmi K20 Pro / Mi 9T Pro | raphael / raphaelin | | untested
+Xiaomi | Redmi Note 10 Pro | [sweet](https://wiki.lineageos.org/devices/sweet) | M2101K6G | tested
 Xiaomi | Redmi K40 / Mi 11X / Poco F3 | [alioth](https://wiki.lineageos.org/devices/alioth) / aliothin |  | untested
 Xiaomi | Poco X3 / X3 NFC | [surya](https://wiki.lineageos.org/devices/surya) / karna |  | untested
 Xiaomi | Poco X3 Pro | [vayu](https://wiki.lineageos.org/devices/vayu) |  | tested
@@ -233,7 +243,7 @@ A detailed list can be found [here](https://openandroidinstaller.org/#contribute
 
 ## Acknowledgements
 
-* Funded from September 2022 until February 2023 by:
+* The project received financial support from the German Federal Ministry for Education and Research under the grant identifier 01IS22S26 from September 2022 until February 2023.
 
 ![logos of the "Bundesministerium für Bildung und Forschung", Prodotype Fund and OKFN-Deutschland](resources/pf_funding_logos.svg)
 

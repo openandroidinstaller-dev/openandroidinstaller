@@ -4,23 +4,20 @@
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
 from pathlib import Path
 from typing import List, Optional
-from typing_extensions import Self
 
 import schema
 import yaml
 from loguru import logger
 from schema import Regex, Schema, SchemaError
+from typing_extensions import Self
 
 
 class Step:
@@ -112,7 +109,8 @@ def _find_config_file(device_code: str, config_path: Path) -> Optional[Path]:
                         f"Device code '{device_code}' is supported by config '{path}'."
                     )
                     return path
-            except:
+            except Exception:
+                # this is a very broad exception, but we want to catch all errors here and handle them downstream
                 pass
     return None
 
