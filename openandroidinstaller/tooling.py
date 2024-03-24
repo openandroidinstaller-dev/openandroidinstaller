@@ -73,6 +73,10 @@ def add_logging(step_desc: str, return_if_fail: bool = False) -> Callable:
     """Logging decorator to wrap functions that yield lines.
 
     Logs the `step_desc`.
+
+    Args:
+        step_desc: Description of the step.
+        return_if_fail: If True, return False if the function fails.
     """
 
     def logging_decorator(func) -> Callable:
@@ -94,14 +98,14 @@ def add_logging(step_desc: str, return_if_fail: bool = False) -> Callable:
 @add_logging("Rebooting device with adb.")
 def adb_reboot(bin_path: Path) -> TerminalResponse:
     """Run adb reboot on the device and return success."""
-    for line in run_command("adb reboot", bin_path):
+    for line in run_command("adb -d reboot", bin_path):
         yield line
 
 
 @add_logging("Rebooting device into bootloader with adb.", return_if_fail=True)
 def adb_reboot_bootloader(bin_path: Path) -> TerminalResponse:
     """Reboot the device into bootloader and return success."""
-    for line in run_command("adb reboot bootloader", bin_path):
+    for line in run_command("adb -d reboot bootloader", bin_path):
         yield line
     # wait for the bootloader to become available
     for line in fastboot_wait_for_bootloader(bin_path=bin_path):
@@ -111,7 +115,7 @@ def adb_reboot_bootloader(bin_path: Path) -> TerminalResponse:
 @add_logging("Rebooting device into download mode with adb.")
 def adb_reboot_download(bin_path: Path) -> TerminalResponse:
     """Reboot the device into download mode of samsung devices and return success."""
-    for line in run_command("adb reboot download", bin_path):
+    for line in run_command("adb -d reboot download", bin_path):
         yield line
     yield heimdall_wait_for_download_available(bin_path=bin_path)
 
@@ -119,14 +123,14 @@ def adb_reboot_download(bin_path: Path) -> TerminalResponse:
 @add_logging("Sideload the target to device with adb.")
 def adb_sideload(bin_path: Path, target: str) -> TerminalResponse:
     """Sideload the target to device and return success."""
-    for line in run_command("adb sideload", target=target, bin_path=bin_path):
+    for line in run_command("adb -d sideload", target=target, bin_path=bin_path):
         yield line
 
 
-@add_logging("Activate sideloading in TWRP.", return_if_fail=True)
+@add_logging("Activate sideloading in TWRP.", return_if_fail=False)
 def activate_sideload(bin_path: Path) -> TerminalResponse:
     """Activate sideload with adb shell in twrp."""
-    for line in run_command("adb shell twrp sideload", bin_path):
+    for line in run_command("adb -d shell twrp sideload", bin_path):
         yield line
     for line in adb_wait_for_sideload(bin_path=bin_path):
         yield line
@@ -135,28 +139,28 @@ def activate_sideload(bin_path: Path) -> TerminalResponse:
 @add_logging("Wait for device")
 def adb_wait_for_device(bin_path: Path) -> TerminalResponse:
     """Use adb to wait for the device to become available."""
-    for line in run_command("adb wait-for-device", bin_path):
+    for line in run_command("adb -d wait-for-device", bin_path):
         yield line
 
 
 @add_logging("Wait for recovery")
 def adb_wait_for_recovery(bin_path: Path) -> TerminalResponse:
     """Use adb to wait for the recovery to become available."""
-    for line in run_command("adb wait-for-recovery", bin_path):
+    for line in run_command("adb -d wait-for-recovery", bin_path):
         yield line
 
 
 @add_logging("Wait for sideload")
 def adb_wait_for_sideload(bin_path: Path) -> TerminalResponse:
     """Use adb to wait for the sideload to become available."""
-    for line in run_command("adb wait-for-sideload", bin_path):
+    for line in run_command("adb -d wait-for-sideload", bin_path):
         yield line
 
 
 @add_logging("Reboot to recovery with adb")
 def adb_reboot_recovery(bin_path: Path) -> TerminalResponse:
     """Reboot to recovery with adb."""
-    for line in run_command("adb reboot recovery", bin_path):
+    for line in run_command("adb -d reboot recovery", bin_path):
         yield line
     for line in adb_wait_for_recovery(bin_path=bin_path):
         yield line
@@ -190,7 +194,7 @@ def adb_twrp_format_data(bin_path: Path) -> TerminalResponse:
     If `format data` fails (for example because of old TWRP versions) we fall back to `wipe data`.
     """
     unknown_command = False
-    for line in run_command("adb shell twrp format data", bin_path):
+    for line in run_command("adb -d shell twrp format data", bin_path):
         if isinstance(line, str) and ("Unrecognized script command" in line):
             unknown_command = True
         yield line
@@ -208,7 +212,7 @@ def adb_twrp_format_data(bin_path: Path) -> TerminalResponse:
 @add_logging("Wipe the selected partition with adb and twrp.", return_if_fail=True)
 def adb_twrp_wipe_partition(bin_path: Path, partition: str) -> TerminalResponse:
     """Perform a factory reset with twrp and adb."""
-    for line in run_command(f"adb shell twrp wipe {partition}", bin_path):
+    for line in run_command(f"adb -d shell twrp wipe {partition}", bin_path):
         yield line
 
 
@@ -633,8 +637,8 @@ def search_device(platform: str, bin_path: Path) -> SearchResult:
             device_code=device_code,
             msg=f"Found device with device code '{device_code}'.",
         )
-    except CalledProcessError as e:
-        logger.error(f"Failed to detect a device. {e}")
+    except CalledProcessError:
+        logger.error("Failed to detect a device")
         return SearchResult(
             msg="Failed to detect a device. Connect to USB and try again."
         )
