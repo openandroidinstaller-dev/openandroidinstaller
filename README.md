@@ -44,24 +44,15 @@ Linux is currently the best supported platform (tested with Ubuntu 20.04/22.04 L
 > [!WARNING]
 > ARM-based systems are **not supported**.
 
-Follow the instructions for your OS. The executables are compressed inside `.zip` files, so you'll have to extract them first (make sure you have extracting software installed). If you get prompted to, you'll have to adjust the permission of the executable to ensure its proper functionality. 
+OpenAndroidInstaller support all three major operating systems, namely Linux, macOS and Windows.
+You can download the correct version for you system from the [GitHub Releases](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/latest).
 
-#### Linux
+For Linux, a Flatpak version is available in Flathub, [`org.openandroidinstaller.OpenAndroidInstaller`](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller).
 
-You can download OAI from:
+The executables are compressed inside `.zip` files, so you'll have to extract them first (make sure you have extracting software installed).
+If you get prompted to, you'll have to adjust the permission of the executable to ensure its proper functionality. 
 
-- Flathub: [`org.openandroidinstaller.OpenAndroidInstaller`](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller) (recommended)
-- GitHub Releases: [`openandroidinstaller-ubuntu-latest.zip`](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/download/latest/openandroidinstaller-ubuntu-latest.zip)
-
-#### Windows
-
-You can download OAI for Windows from the GitHub Releases: [`openandroidinstaller-windows.zip`](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/download/latest/openandroidinstaller-windows.zip)
-
-You might also need to [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
-
-#### macOS
-
-For macOS, you can get OpenAndroidInstaller from the GitHub Releases: [`openandroidinstaller-macos.zip`](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/download/latest/openandroidinstaller-macos.zip)
+If you run Windows, you might also need to [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
 
 ### 2. Download the custom ROM, recovery image & optional add-ons
 
