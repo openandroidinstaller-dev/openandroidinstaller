@@ -45,9 +45,9 @@ steps:
       content: >
         The bootloader is now unlocked. Since the device resets completely, you will need to re-enable USB debugging to continue.
   boot_recovery:
-    - type: confirm_button 
+    - type: confirm_button
       content: >
-        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating, 
+        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
         adapting and repairing of the operating system.
     - type: call_button
       content: >

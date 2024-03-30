@@ -4,42 +4,22 @@
 # OpenAndroidInstaller is free software: you can redistribute it and/or modify it under the terms of
 # the GNU General Public License as published by the Free Software Foundation,
 # either version 3 of the License, or (at your option) any later version.
-
 # OpenAndroidInstaller is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
-
-from loguru import logger
 from time import sleep
 from typing import Callable
 
-from flet import (
-    Column,
-    ElevatedButton,
-    Row,
-    icons,
-    Switch,
-    colors,
-)
-
-from styles import (
-    Text,
-    Markdown,
-)
-
-from views import BaseView
 from app_state import AppState
+from flet import Column, ElevatedButton, Row, Switch, colors, icons
+from loguru import logger
+from styles import Markdown, Text
 from tooling import adb_twrp_wipe_and_install
-from widgets import (
-    confirm_button,
-    get_title,
-    TerminalBox,
-    ProgressIndicator,
-)
+from views import BaseView
+from widgets import ProgressIndicator, TerminalBox, confirm_button, get_title
 
 
 class InstallView(BaseView):
@@ -74,6 +54,7 @@ class InstallView(BaseView):
             on_change=check_advanced_switch,
             disabled=False,
         )
+
         # switch for installing addons
         def check_addons_switch(e):
             """Check the switch to enable the addons installation process."""
@@ -108,13 +89,13 @@ class InstallView(BaseView):
         self.right_view.controls = [
             Markdown(
                 """In the next steps, you finally flash the selected OS image.
-            
+
 Connect your device with your computer with the USB-Cable. This step will format your phone and wipe all the data.
 It will also remove encryption and delete all files stored in the internal storage.
 Then the OS image will be installed. Confirm to install.
 
 This might take a while. At the end your phone will boot into the new OS.
-    
+
 #### **Install addons:**
 If you want to install any addons like Google Apps, microG or F-droid, use the toggle below **before** starting the install process!
 After the installation you'll be taken through the process. Note, that this process is still somewhat experimental and using ROMs with

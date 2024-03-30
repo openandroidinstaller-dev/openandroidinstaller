@@ -1,24 +1,14 @@
 metadata:
   maintainer: A non (anon)
   brand: xiaomi
-  device_name: Xiaomi Redmi 7A / 8 / 8A / 8A Dual
+  device_name: Xiaomi Redmi 9 / Poco M2
   is_ab_device: false
-  device_code: Mi439
-  additional_steps:
-    - dtbo
-    - vbmeta
-    - super_empty
+  device_code: lancelot
   supported_device_codes:
-    - Mi439
-    - mi439
-    - pine
-    - olive
-    - olivelite
-    - olivewood
-    - olives
-  twrp-link: mi439
-requirements:
-  firmware: MiUI 12.5 (Q)
+    - lancelot
+    - galahad
+    - shiva
+  untested: true
 steps:
   unlock_bootloader:
     - type: confirm_button
@@ -42,11 +32,12 @@ steps:
         - Since the device resets completely, you will need to re-enable USB debugging to continue : `Settings` > `Additional settings` > `Developer options` > `USB debugging`
       link: https://en.miui.com/unlock/download_en.html
   boot_recovery:
+    - type: confirm_button
+      content: >
+        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
+        adapting and repairing of the operating system.
     - type: call_button
       content: >
-        Now you need to install a custom recovery system on the phone. A recovery is a small subsystem on your phone,
-        that manages updating, adapting and repairing of the operating system.
-
         Once the device is fully booted, you need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
