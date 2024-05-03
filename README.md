@@ -216,7 +216,6 @@ Xiaomi | Redmi 7A / 8 / 8A / 8A Dual | [Mi439](https://wiki.lineageos.org/device
 Xiaomi | Redmi 9A / 9C / 9AT / 9i / 9A Sport / 10A / 10A Sport | garden / dandelion / blossom / angelican | | tested
 Xiaomi | Redmi 9 / Poco M2 | [lancelot](https://wiki.lineageos.org/devices/lancelot) / galahad / shivan | | untested
 Xiaomi | Redmi Note 7 | [lavender](https://wiki.lineageos.org/devices/lavender) |  | tested
-Xiaomi | Redmi Note 7 Pro | [violet](https://wiki.lineageos.org/devices/violet) |  | untested
 Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo) / willow |  | untested
 Xiaomi | Redmi Note 8 Pro | begonia |  | untested
 Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
