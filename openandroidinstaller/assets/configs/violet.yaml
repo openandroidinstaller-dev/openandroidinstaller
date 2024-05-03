@@ -7,6 +7,8 @@ metadata:
   supported_device_codes:
     - violet
   untested: true
+  additional_steps:
+    - super_empty
   notes:
     - You should install Android 10 or newer ROM.
 requirements:
