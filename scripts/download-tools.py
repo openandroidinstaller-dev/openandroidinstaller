@@ -29,9 +29,7 @@ def download_adb_fastboot(platform: str):
     if platform == "win32":
         platform = "windows"
     logger.info(f"Download adb and fastboot for {platform}...")
-    url = (
-        f"https://dl.google.com/android/repository/platform-tools-latest-{platform}.zip"
-    )
+    url = f"https://dl.google.com/android/repository/platform-tools_r35.0.1-{platform}.zip"
     # Downloading the file by sending the request to the URL
     response = requests.get(url, allow_redirects=True)
 
