@@ -218,6 +218,7 @@ Xiaomi | Redmi 9 / Poco M2 | [lancelot](https://wiki.lineageos.org/devices/lance
 Xiaomi | Redmi Note 7 | [lavender](https://wiki.lineageos.org/devices/lavender) |  | tested
 Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo) / willow |  | untested
 Xiaomi | Redmi Note 8 Pro | begonia |  | untested
+Xiaomi | Redmi Note 9 4G / Redmi 9T / Redmi 9 Power / POCO M3 | chime : citrus / lime / lemon / pomelo / juice |  | untested
 Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
 Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
 Xiaomi | Mi A2 / Mi 6X | jasmine_sprout |  | untested
