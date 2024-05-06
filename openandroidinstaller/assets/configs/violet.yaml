@@ -6,7 +6,6 @@ metadata:
   device_code: violet
   supported_device_codes:
     - violet
-  untested: true
   additional_steps:
     - super_empty
   notes:
