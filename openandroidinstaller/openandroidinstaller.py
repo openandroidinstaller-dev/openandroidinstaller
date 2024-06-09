@@ -50,7 +50,7 @@ from views import (
 )
 
 # VERSION number
-VERSION = "0.5.3-beta"
+VERSION = "0.5.4-beta"
 
 # detect platform
 PLATFORM = sys.platform
