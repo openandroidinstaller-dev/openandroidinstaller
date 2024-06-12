@@ -45,10 +45,6 @@ coverage.xml
 *.cover
 .hypothesis/
 
-# Translations
-*.mo
-*.pot
-
 # PyBuilder
 target/
 

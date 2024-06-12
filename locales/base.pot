@@ -1,0 +1,544 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-12 13:16+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: openandroidinstaller/app_state.py:95
+msgid "toggle_flash_unlock_bootloader_title"
+msgstr ""
+
+#: openandroidinstaller/app_state.py:97
+msgid "toggle_flash_unlock_bootloader_info"
+msgstr ""
+
+#: openandroidinstaller/app_state.py:117
+msgid "toggle_flash_recovery_title"
+msgstr ""
+
+#: openandroidinstaller/app_state.py:119
+msgid "toggle_flash_recovery_info"
+msgstr ""
+
+#: openandroidinstaller/openandroidinstaller.py:233
+#, python-brace-format
+msgid "oai_version {version}"
+msgstr ""
+
+#: openandroidinstaller/openandroidinstaller.py:247
+msgid "faq_tooltip"
+msgstr ""
+
+#: openandroidinstaller/openandroidinstaller.py:252
+msgid "give_feedback"
+msgstr ""
+
+#: openandroidinstaller/openandroidinstaller.py:258
+msgid "give_feedback_tooltip"
+msgstr ""
+
+#: openandroidinstaller/openandroidinstaller.py:263
+msgid "report_bug"
+msgstr ""
+
+#: openandroidinstaller/openandroidinstaller.py:269
+msgid "report_issue_github"
+msgstr ""
+
+#: openandroidinstaller/openandroidinstaller.py:283
+msgid "warning_banner_follow_instructions"
+msgstr ""
+
+#: openandroidinstaller/openandroidinstaller.py:286
+msgid "i_understand"
+msgstr ""
+
+#: openandroidinstaller/openandroidinstaller.py:309
+msgid "testing_mode_flag"
+msgstr ""
+
+#: openandroidinstaller/openandroidinstaller.py:312
+msgid "test_config_flag"
+msgstr ""
+
+#: openandroidinstaller/openandroidinstaller.py:319
+msgid "logs_flag"
+msgstr ""
+
+#: openandroidinstaller/widgets.py:189
+#, python-brace-format
+msgid "current_step {title}"
+msgstr ""
+
+#: openandroidinstaller/widgets.py:207
+#: openandroidinstaller/views/requirements_view.py:62
+#: openandroidinstaller/views/start_view.py:58
+msgid "continue"
+msgstr ""
+
+#: openandroidinstaller/widgets.py:219
+msgid "confirm_run"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:52
+#: openandroidinstaller/views/addon_view.py:79
+msgid "supported_addons_title"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:54
+msgid "supported_addons_text"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:57
+#: openandroidinstaller/views/requirements_view.py:84
+#: openandroidinstaller/views/select_view.py:73
+#: openandroidinstaller/views/select_view.py:324
+#: openandroidinstaller/views/start_view.py:79
+msgid "close"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:65
+msgid "selected_addons"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:84
+msgid "supported_addons_tooltip"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:90
+msgid "select_additional_addons"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:103
+msgid "download_fdroid_text"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:107
+msgid "download_fdroid"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:116
+msgid "download_gapps_text"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:120
+msgid "download_gapps"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:129
+msgid "download_microg_text"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:133
+msgid "download_microg"
+msgstr ""
+
+#: openandroidinstaller/views/addon_view.py:157
+msgid "pick_addons"
+msgstr ""
+
+#: openandroidinstaller/views/install_addons_view.py:57
+#: openandroidinstaller/views/install_view.py:54
+#: openandroidinstaller/views/step_view.py:89
+msgid "advanced_output"
+msgstr ""
+
+#: openandroidinstaller/views/install_addons_view.py:71
+#: openandroidinstaller/views/install_view.py:73
+msgid "install_addons"
+msgstr ""
+
+#: openandroidinstaller/views/install_addons_view.py:76
+msgid "install_addons_text"
+msgstr ""
+
+#: openandroidinstaller/views/install_addons_view.py:84
+msgid "confirm_install_addons"
+msgstr ""
+
+#: openandroidinstaller/views/install_addons_view.py:110
+#: openandroidinstaller/views/install_view.py:127
+#: openandroidinstaller/views/step_view.py:170
+msgid "skip_question"
+msgstr ""
+
+#: openandroidinstaller/views/install_addons_view.py:112
+#: openandroidinstaller/views/install_view.py:129
+#: openandroidinstaller/views/step_view.py:172
+msgid "skip"
+msgstr ""
+
+#: openandroidinstaller/views/install_addons_view.py:177
+msgid "addons_install_fail"
+msgstr ""
+
+#: openandroidinstaller/views/install_view.py:86
+msgid "install_os"
+msgstr ""
+
+#: openandroidinstaller/views/install_view.py:92
+msgid "install_view_text"
+msgstr ""
+
+#: openandroidinstaller/views/install_view.py:101
+msgid "confirm_install"
+msgstr ""
+
+#: openandroidinstaller/views/install_view.py:148
+msgid "run_install_wait"
+msgstr ""
+
+#: openandroidinstaller/views/install_view.py:178
+msgid "run_install_fail"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:70
+#: openandroidinstaller/views/select_view.py:123
+#: openandroidinstaller/views/start_view.py:65
+msgid "back"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:79
+msgid "how_to_find_android_version_title"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:81
+msgid "how_to_find_android_version_text"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:95
+msgid "how_to_find_version_title"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:100
+msgid "how_to_find_version_tooltip"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:106
+msgid "check_requirements_title"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:113
+msgid "check_requirements_text"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:126
+msgid "checkbox_android_requirement"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:136
+#, python-brace-format
+msgid "android_version {version}"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:144
+msgid "checkbox_android_requirement_text"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:161
+msgid "checkbox_firmware_requirement"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:171
+#, python-brace-format
+msgid "firmware_version {required_firmware_version}:"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:179
+#, python-brace-format
+msgid "checkbox_firmware_requirement_text {version}"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:214
+msgid "battery_checkbox_title"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:222
+msgid "battery_checkbox_text"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:235
+msgid "checkbox_boot_stock_title"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:243
+msgid "checkbox_boot_stock_text"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:256
+msgid "checkbox_lock_title"
+msgstr ""
+
+#: openandroidinstaller/views/requirements_view.py:264
+msgid "checkbox_lock_text"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:68
+msgid "what_is_os_recovery_title"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:70
+msgid "what_is_os_recovery_text"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:91
+msgid "selected_image"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:92
+msgid "selected_recovery"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:108
+msgid "start_flashing"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:112
+msgid "continue_without_additionnal"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:154
+msgid "what_is_this"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:159
+msgid "info_os_recovery_tooltip"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:165
+msgid "select_os_recovery"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:182
+msgid "device_notes"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:198
+msgid "download_official_recovery"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:202
+msgid "download_lineageos"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:210
+msgid "download_twrp"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:226
+msgid "select_os_image"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:227
+#: openandroidinstaller/views/select_view.py:251
+#, python-brace-format
+msgid "select_os_image_example {codename}"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:231
+msgid "pick_os_image"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:249
+msgid "select_recovery_image"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:257
+msgid "pick_recovery_image"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:301
+msgid "notes_brand_xiaomi_poco"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:305
+msgid "notes_untested"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:317
+msgid "why_additional_title"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:319
+msgid "why_additional_text"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:333
+msgid "why_where_additional"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:338
+msgid "why_where_additional_tooltip"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:349
+msgid "select_required_additional"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:355
+msgid "select_additional_text"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:366
+msgid "pick_dtbo"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:387
+msgid "pick_vbmeta"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:408
+msgid "pick_super_empty"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:429
+msgid "pick_vendor_boot"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:623
+msgid "something_wrong_with_files"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:651
+msgid "additional_images_dont_match_missing"
+msgstr ""
+
+#: openandroidinstaller/views/select_view.py:671
+msgid "image_doesnt_work_device"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:74
+msgid "how_to_developer_oem_title"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:76
+msgid "how_to_developer_oem_text"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:91
+msgid "bootloader_already_unlock"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:105
+msgid "recovery_already_flashed"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:116
+msgid "detected_device"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:133
+msgid "get_phone_ready_title"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:140
+msgid "get_phone_ready_text"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:144
+msgid "how_to_developer"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:149
+msgid "how_to_developer_oem_tooltip"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:154
+msgid "how_to_developer_text"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:157
+msgid "toggle_already_bootloader_recovery_text"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:164
+msgid "search_device"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:168
+msgid "search_device_tooltip"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:199
+#, python-brace-format
+msgid "device_found {code}"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:247
+#, python-brace-format
+msgid "device_unsupported {device}"
+msgstr ""
+
+#: openandroidinstaller/views/start_view.py:253
+msgid "request_support"
+msgstr ""
+
+#: openandroidinstaller/views/step_view.py:67
+msgid "unlock_code"
+msgstr ""
+
+#: openandroidinstaller/views/step_view.py:102
+msgid "unlock_bootloader_title"
+msgstr ""
+
+#: openandroidinstaller/views/step_view.py:103
+msgid "boot_recovery_title"
+msgstr ""
+
+#: openandroidinstaller/views/step_view.py:158
+msgid "open_link"
+msgstr ""
+
+#: openandroidinstaller/views/success_view.py:36
+msgid "installation_complete_title"
+msgstr ""
+
+#: openandroidinstaller/views/success_view.py:42
+msgid "device_boot_have_fun"
+msgstr ""
+
+#: openandroidinstaller/views/success_view.py:46
+#, python-brace-format
+msgid "spread_the_word {link}"
+msgstr ""
+
+#: openandroidinstaller/views/success_view.py:51
+msgid "finish_close"
+msgstr ""
+
+#: openandroidinstaller/views/welcome_view.py:39
+msgid "lets_start"
+msgstr ""
+
+#: openandroidinstaller/views/welcome_view.py:51
+msgid "welcome_title"
+msgstr ""
+
+#: openandroidinstaller/views/welcome_view.py:56
+msgid "great_install_alternative"
+msgstr ""
+
+#: openandroidinstaller/views/welcome_view.py:59
+msgid "nice_and_easy"
+msgstr ""
+
+#: openandroidinstaller/views/welcome_view.py:62
+msgid "what_will_be_done_text"
+msgstr ""
+
+#: openandroidinstaller/views/welcome_view.py:66
+msgid "prerequisites_text"
+msgstr ""
