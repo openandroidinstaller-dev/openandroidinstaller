@@ -29,7 +29,7 @@ from flet import (
     colors,
     icons,
 )
-from flet_core.buttons import CountinuosRectangleBorder
+from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
 from styles import Markdown, Text
 from utils import (
@@ -90,7 +90,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 TextButton("Close", on_click=self.close_close_explain_images_dlg),
             ],
             actions_alignment="end",
-            shape=CountinuosRectangleBorder(radius=0),
+            shape=ContinuousRectangleBorder(radius=0),
         )
 
         # initialize file pickers
@@ -375,7 +375,7 @@ If this download page does not contain the required images, you can try to find 
                 ),
             ],
             actions_alignment="end",
-            shape=CountinuosRectangleBorder(radius=0),
+            shape=ContinuousRectangleBorder(radius=0),
         )
 
         # create help/info button to show the help dialog for the image and recovery selection

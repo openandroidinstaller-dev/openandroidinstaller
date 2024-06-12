@@ -28,7 +28,7 @@ from flet import (
     colors,
     icons,
 )
-from flet_core.buttons import CountinuosRectangleBorder
+from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
 from styles import Markdown, Text
 from views import BaseView
@@ -78,7 +78,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                 TextButton("Close", on_click=self.close_close_explain_addons_dlg),
             ],
             actions_alignment="end",
-            shape=CountinuosRectangleBorder(radius=0),
+            shape=ContinuousRectangleBorder(radius=0),
         )
 
         # initialize file pickers

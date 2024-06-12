@@ -27,7 +27,7 @@ from flet import (
     colors,
     icons,
 )
-from flet_core.buttons import CountinuosRectangleBorder
+from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
 from styles import Markdown, Text
 from views import BaseView
@@ -94,7 +94,7 @@ On some devices, the build version is basically the firmware version.""",
                 TextButton("Close", on_click=self.close_find_version_dlg),
             ],
             actions_alignment="end",
-            shape=CountinuosRectangleBorder(radius=0),
+            shape=ContinuousRectangleBorder(radius=0),
         )
 
     def build(self):
