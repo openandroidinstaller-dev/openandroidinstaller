@@ -34,6 +34,7 @@ from flet import (
     colors,
     icons,
 )
+from translations import _
 from loguru import logger
 from styles import Text
 from tooling import run_command
@@ -229,7 +230,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         toolbar_height=72,
         elevation=0,
         title=Text(
-            f"OpenAndroidInstaller version {VERSION}"
+            _("oai_version {version}").format(version=VERSION)
         ),  # , style="displaySmall"),
         center_title=False,
         bgcolor="#00d886",
@@ -243,29 +244,29 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
                     ),
                 ),
                 padding=15,
-                tooltip="Frequently asked questions and encountered issues.",
+                tooltip=_("faq_tooltip"),
             ),
             Container(
                 content=ElevatedButton(
                     icon=icons.FEEDBACK_OUTLINED,
-                    text="Give feedback",
+                    text=_("give_feedback"),
                     on_click=lambda _: webbrowser.open(
                         "https://openandroidinstaller.org/feedback.html"
                     ),
                 ),
                 padding=15,
-                tooltip="Give feedback about your experience with OpenAndroidInstaller",
+                tooltip=_("give_feedback_tooltip"),
             ),
             Container(
                 content=ElevatedButton(
                     icon=icons.BUG_REPORT_OUTLINED,
-                    text="Report a bug",
+                    text=_("report_bug"),
                     on_click=lambda _: webbrowser.open(
                         "https://github.com/openandroidinstaller-dev/openandroidinstaller/issues"
                     ),
                 ),
                 padding=15,
-                tooltip="Report an issue on github",
+                tooltip=_("report_issue_github"),
             ),
         ],
     )
@@ -279,10 +280,10 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         bgcolor=colors.AMBER_100,
         leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
         content=Text(
-            "These instructions only work if you follow every section and step precisely. Do not continue after something fails!"
+            _("warning_banner_follow_instructions")
         ),
         actions=[
-            TextButton("I understand", on_click=close_banner),
+            TextButton(_("i_understand"), on_click=close_banner),
         ],
     )
     page.banner.open = True
@@ -305,17 +306,17 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
 
 @click.command()
 @click.option(
-    "--test", is_flag=True, default=False, help="Start the application in testing mode."
+    "--test", is_flag=True, default=False, help=_("testing_mode_flag")
 )
 @click.option(
-    "--test_config", default="sargo", type=str, help="Config to use for testing"
+    "--test_config", default="sargo", type=str, help=_("test_config_flag")
 )
 @click.option(
     "-l",
     "--logging_path",
     type=str,
     default=".",
-    help="Path where to store the log file.",
+    help=_("logs_flag"),
 )
 def startup(test: bool, test_config: str, logging_path: str):
     "Main entrypoint to the app."

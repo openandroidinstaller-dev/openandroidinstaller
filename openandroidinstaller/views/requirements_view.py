@@ -29,6 +29,7 @@ from flet import (
 )
 from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
+from translations import _
 from styles import Markdown, Text
 from views import BaseView
 from widgets import get_title
@@ -58,7 +59,7 @@ class RequirementsView(BaseView):
         self.checkbox_cards = []
         # continue button
         self.continue_button = ElevatedButton(
-            "Continue",
+            _("continue"),
             on_click=self.on_confirm,
             icon=icons.NEXT_PLAN_OUTLINED,
             disabled=True,
@@ -66,7 +67,7 @@ class RequirementsView(BaseView):
         )
         # back button
         self.back_button = ElevatedButton(
-            "Back",
+            _("back"),
             on_click=self.on_back,
             icon=icons.ARROW_BACK,
             expand=True,
@@ -75,23 +76,12 @@ class RequirementsView(BaseView):
         # dialog to explain howto find the android and firmware version
         self.dlg_howto_find_versions = AlertDialog(
             modal=True,
-            title=Text("Where to find the current Android and/or firmware version?"),
+            title=Text(_("how_to_find_android_version_title")),
             content=Markdown(
-                """
-## Find your current Android Version
-Scroll down on the Settings screen and look for an "About phone", "About tablet", or "System" option.
-You'll usually find this at the very bottom of the main Settings screen, under System, but depending
-on your phone it could be different. If you do find a specific option for System, you can usually
-find the "About Phone" underneath that.
-
-On the resulting screen, look for "Android version" to find the version of Android installed on your device.
-
-## Find your current device firmware version
-On the same screen you find the "Android version" you can also find the Firmware Version.
-On some devices, the build version is basically the firmware version.""",
+                _("how_to_find_android_version_text"),
             ),
             actions=[
-                TextButton("Close", on_click=self.close_find_version_dlg),
+                TextButton(_("close"), on_click=self.close_find_version_dlg),
             ],
             actions_alignment="end",
             shape=ContinuousRectangleBorder(radius=0),
@@ -102,25 +92,25 @@ On some devices, the build version is basically the firmware version.""",
 
         # create help/info button to show the help dialog
         info_button = OutlinedButton(
-            "How to Find the version",
+            _("how_to_find_version_title"),
             on_click=self.open_find_version_dlg,
             expand=False,
             icon=icons.HELP_OUTLINE_OUTLINED,
             icon_color=colors.DEEP_ORANGE_500,
-            tooltip="How to find the firmware and android version of your device.",
+            tooltip=_("how_to_find_version_tooltip"),
         )
 
         # build up the main view
         self.right_view_header.controls = [
             get_title(
-                "Check the Requirements",
+                _("check_requirements_title"),
                 step_indicator_img="steps-header-requirements.png",
             ),
         ]
         self.right_view.controls.extend(
             [
                 Text(
-                    "Before continuing you need to check some requirements to progress. Please read the instructions and check the boxes if everything is fine."
+                    _("check_requirements_text")
                 ),
                 Divider(),
             ]
@@ -133,7 +123,7 @@ On some devices, the build version is basically the firmware version.""",
                 required_android_version = self.state.config.requirements.get("android")
                 if required_android_version:
                     android_checkbox = Checkbox(
-                        label="The required android version is installed.\n(Or I know the risk of continuing)",
+                        label=_("checkbox_android_requirement"),
                         on_change=self.enable_continue_button,
                     )
                     android_version_check = Card(
@@ -143,7 +133,7 @@ On some devices, the build version is basically the firmware version.""",
                                     Row(
                                         [
                                             Text(
-                                                f"Android Version {required_android_version}:",
+                                                _("android_version {version}").format(version=required_android_version),
                                                 style="titleSmall",
                                             ),
                                             info_button,
@@ -151,11 +141,7 @@ On some devices, the build version is basically the firmware version.""",
                                         alignment="spaceBetween",
                                     ),
                                     Markdown(
-                                        f"""Before following these instructions please ensure that the device is currently using Android {required_android_version} firmware.
-If the vendor provided multiple updates for that version, e.g. security updates, make sure you are on the latest!
-If your current installation is newer or older than Android {required_android_version}, please upgrade or downgrade to the required
-version before proceeding (guides can be found on the internet!).
-                        """
+                                        _("checkbox_android_requirement_text {version}").format(version=required_android_version)
                                     ),
                                     android_checkbox,
                                 ]
@@ -172,7 +158,7 @@ version before proceeding (guides can be found on the internet!).
                 )
                 if required_firmware_version:
                     firmware_checkbox = Checkbox(
-                        label="The required firmware version is installed. (Or I know the risk of continuing)",
+                        label=_("checkbox_firmware_requirement"),
                         on_change=self.enable_continue_button,
                     )
                     firmware_version_check = Card(
@@ -182,7 +168,7 @@ version before proceeding (guides can be found on the internet!).
                                     Row(
                                         [
                                             Text(
-                                                f"Firmware Version {required_firmware_version}:",
+                                                _("firmware_version {required_firmware_version}:").format(required_firmware_version=required_firmware_version),
                                                 style="titleSmall",
                                             ),
                                             info_button,
@@ -190,10 +176,7 @@ version before proceeding (guides can be found on the internet!).
                                         alignment="spaceBetween",
                                     ),
                                     Markdown(
-                                        f"""Before following these instructions please ensure that the device is on firmware version {required_firmware_version}.
-To discern this, you can run the command `adb shell getprop ro.build.display.id` on the stock ROM.
-If the device is not on the specified version, please follow the instructions below to install it.
-                        """
+                                        _("checkbox_firmware_requirement_text {version}").format(version=required_firmware_version)
                                     ),
                                     firmware_checkbox,
                                 ]
@@ -228,7 +211,7 @@ If the device is not on the specified version, please follow the instructions be
     def get_battery_check(self):
         """Get checkbox and card for default requirements: battery level."""
         battery_checkbox = Checkbox(
-            label="The battery level is over 80%.",
+            label=_("battery_checkbox_title"),
             on_change=self.enable_continue_button,
         )
         battery_check_card = Card(
@@ -236,10 +219,7 @@ If the device is not on the specified version, please follow the instructions be
                 content=Column(
                     [
                         Markdown(
-                            """
-#### Battery level over 80%
-Before continuing make sure your device battery level is above 80%.
-            """
+                            _("battery_checkbox_text")
                         ),
                         battery_checkbox,
                     ]
@@ -252,7 +232,7 @@ Before continuing make sure your device battery level is above 80%.
     def get_boot_stock_check(self):
         """Get checkbox and card for default requirements: boot stock once."""
         boot_stock_checkbox = Checkbox(
-            label="Booted the stock OS at least once.",
+            label=_("checkbox_boot_stock_title"),
             on_change=self.enable_continue_button,
         )
         boot_stock_check_card = Card(
@@ -260,11 +240,7 @@ Before continuing make sure your device battery level is above 80%.
                 content=Column(
                     [
                         Markdown(
-                            """
-#### Boot your device with the stock OS at least once and check every functionality.
-Make sure that you can send and receive SMS and place and receive calls (also via WiFi and LTE, if available),
-otherwise it won\'t work on your custom ROM either! Additionally, some devices require that VoLTE/VoWiFi be utilized once on stock to provision IMS.
-            """
+                            _("checkbox_boot_stock_text")
                         ),
                         boot_stock_checkbox,
                     ]
@@ -277,7 +253,7 @@ otherwise it won\'t work on your custom ROM either! Additionally, some devices r
     def get_lock_check(self):
         """Get the checkbox and card for the default requirement: disable lock code and fingerprint."""
         lock_checkbox = Checkbox(
-            label="No lock code or fingerprint lock enabled.",
+            label=_("checkbox_lock_title"),
             on_change=self.enable_continue_button,
         )
         lock_check_card = Card(
@@ -285,9 +261,7 @@ otherwise it won\'t work on your custom ROM either! Additionally, some devices r
                 content=Column(
                     [
                         Markdown(
-                            """
-#### Disable all device lock codes and fingerprint locks.
-            """
+                            _("checkbox_lock_text")
                         ),
                         lock_checkbox,
                     ]

@@ -31,6 +31,7 @@ from flet import (
 )
 from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
+from translations import _
 from styles import Markdown, Text
 from utils import (
     CheckResult,
@@ -64,30 +65,12 @@ class SelectFilesView(BaseView):
         # dialog box to explain OS images and recovery
         self.dlg_explain_images = AlertDialog(
             modal=True,
-            title=Text("What is an OS image and recovery and why do I need it?"),
+            title=Text(_("what_is_os_recovery_title")),
             content=Markdown(
-                """## OS image or ROM
-An operating system (OS) is system software that manages computer hardware,
-software resources, and provides common services for computer programs.
-Popular, custom operating systems for mobile devices based on Android are
-- [LineageOS](https://lineageos.org)
-- [/e/OS](https://e.foundation/e-os) or
-- [LineageOS for microG](https://lineage.microg.org)
-- and many others.
-
-Often, the related OS images are called 'ROM'. 'ROM' stands for *R*ead-*o*nly *m*emory,
-which is a type of non-volatile memory used in computers for storing software that is
-rarely changed during the life of the system, also known as firmware.
-
-## Recovery Image
-A custom recovery is used for installing custom software on your device.
-This custom software can include smaller modifications like rooting your device or even
-replacing the firmware of the device with a completely custom ROM.
-
-OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about).""",
+                _("what_is_os_recovery_text"),
             ),
             actions=[
-                TextButton("Close", on_click=self.close_close_explain_images_dlg),
+                TextButton(_("close"), on_click=self.close_close_explain_images_dlg),
             ],
             actions_alignment="end",
             shape=ContinuousRectangleBorder(radius=0),
@@ -105,8 +88,8 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             on_result=self.pick_vendor_boot_result
         )
 
-        self.selected_image = Text("Selected image: ")
-        self.selected_recovery = Text("Selected recovery: ")
+        self.selected_image = Text(_("selected_image"))
+        self.selected_recovery = Text(_("selected_recovery"))
         self.selected_dtbo = Checkbox(
             fill_color=colors.RED, value=None, disabled=True, tristate=True
         )
@@ -122,11 +105,11 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
 
         # initialize and manage button state.
         self.confirm_button = confirm_button(
-            self.on_confirm, confirm_text="Let's start flashing!"
+            self.on_confirm, confirm_text=_("start_flashing")
         )
         self.confirm_button.disabled = True
         self.continue_eitherway_button = confirm_button(
-            self.on_confirm, "Continue without additional images"
+            self.on_confirm, _("continue_without_additionnal")
         )
         self.continue_eitherway_button.disabled = True
         self.pick_recovery_dialog.on_result = self.enable_button_if_ready
@@ -137,7 +120,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.pick_vendor_boot_dialog.on_result = self.enable_button_if_ready
         # back button
         self.back_button = ElevatedButton(
-            "Back",
+            _("back"),
             on_click=self.on_back,
             icon=icons.ARROW_BACK,
             expand=True,
@@ -168,18 +151,18 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
 
         # create help/info button to show the help dialog for the image and recovery selection
         explain_images_button = OutlinedButton(
-            "What is this?",
+            _("what_is_this"),
             on_click=self.open_explain_images_dlg,
             expand=True,
             icon=icons.HELP_OUTLINE_OUTLINED,
             icon_color=colors.DEEP_ORANGE_500,
-            tooltip="Get more details on custom operating system images and recoveries.",
+            tooltip=_("info_os_recovery_tooltip"),
         )
 
         # add title
         self.right_view_header.controls.append(
             get_title(
-                "Now pick an OS image and a recovery file:",
+                _("select_os_recovery"),
                 info_button=explain_images_button,
                 step_indicator_img="steps-header-select.png",
             )
@@ -196,7 +179,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             self.right_view.controls.extend(
                 [
                     Text(
-                        "Important notes for your device",
+                        _("device_notes"),
                         style="titleSmall",
                         color=colors.RED,
                         weight="bold",
@@ -212,13 +195,11 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             self.right_view.controls.append(
                 Column(
                     [
-                        Text(
-                            "You can bring your own image and recovery or you download the officially supported image file for your device here:"
-                        ),
+                        Text(_("download_official_recovery")),
                         Row(
                             [
                                 ElevatedButton(
-                                    "Download LineageOS image",
+                                    _("download_lineageos"),
                                     icon=icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
                                         self.download_link
@@ -226,7 +207,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                                     expand=True,
                                 ),
                                 ElevatedButton(
-                                    "Download TWRP recovery",
+                                    _("download_twrp"),
                                     icon=icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
                                         twrp_download_link
@@ -242,15 +223,12 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         # attach the controls for uploading image and recovery
         self.right_view.controls.extend(
             [
-                Text("Select an OS image:", style="titleSmall"),
-                Markdown(
-                    f"""
-The image file should look something like `lineage-20.0-20240101-nightly-{self.state.config.device_code}-signed.zip`."""
-                ),
+                Text(_("select_os_image"), style="titleSmall"),
+                Markdown(_("select_os_image_example {codename}").format(codename=self.state.config.device_code)),
                 Row(
                     [
                         FilledButton(
-                            "Pick OS image",
+                            _("pick_os_image"),
                             icon=icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_image_dialog.pick_files(
                                 allow_multiple=False,
@@ -268,18 +246,15 @@ The image file should look something like `lineage-20.0-20240101-nightly-{self.s
         if self.state.flash_recovery:
             self.right_view.controls.extend(
                 [
-                    Text("Select a TWRP recovery image:", style="titleSmall"),
+                    Text(_("select_recovery_image"), style="titleSmall"),
                     Markdown(
-                        f"""
-The recovery image should look something like `twrp-3.7.0_12-0-{self.state.config.device_code}.img`.
-
-**Note:** This tool **only supports TWRP recoveries**.""",
+                        _("select_os_image_example {codename}").format(codename=self.state.config.device_code),
                         extension_set="gitHubFlavored",
                     ),
                     Row(
                         [
                             FilledButton(
-                                "Pick TWRP recovery file",
+                                _("pick_recovery_image"),
                                 icon=icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_recovery_dialog.pick_files(
                                     allow_multiple=False,
@@ -323,15 +298,11 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
 
         brand = self.state.config.metadata.get("brand", "")
         if brand in ["xiaomi", "poco"]:
-            notes.append(
-                "- If something goes wrong, you can reinstall MiUI here:\n<https://xiaomifirmwareupdater.com/>\n"
-            )
+            notes.append(_("notes_brand_xiaomi_poco"))
 
         # this should be used as little as possible!
         if self.state.config.metadata.get("untested", False):
-            notes.append(
-                "- **This device has not been tested with OpenAndroidInstaller yet.** The installation can go wrong. You may have to finish the installation process with command line. If you test, please report the result on GitHub."
-            )
+            notes.append(_("notes_untested"))
 
         notes.extend(
             f"- {note}" for note in self.state.config.metadata.get("notes", [])
@@ -343,35 +314,14 @@ The recovery image should look something like `twrp-3.7.0_12-0-{self.state.confi
         # dialogue box to explain additional required images
         self.dlg_explain_additional_images = AlertDialog(
             modal=True,
-            title=Text("Why do I need additional images and where do I get them?"),
+            title=Text(_("why_additional_title")),
             content=Markdown(
-                f"""## About additional images
-Some devices require additional images to be flashed before the recovery and OS image can be flashed.
-Not all images explained below are required for all devices. The installer will tell you which images are required for your device.
-
-### dtbo.img
-The `dtbo.img` is a partition image that contains the device tree overlay.
-
-### vbmeta.img
-The `vbmeta.img` is a partition image that contains the verified boot metadata.
-This is required to prevent issues with the verified boot process.
-
-### super_empty.img
-The `super_empty.img` is used to wipe the super partition. This is required to
-prevent issues with the super partition when flashing a new ROM.
-
-### vendor_boot.img
-The `vendor_boot.img` is a partition image that contains the vendor boot image.
-
-## Where do I get these images?
-You can download the required images for your device from the [LineageOS downloads page](https://download.lineageos.org/devices/{self.state.config.device_code}/builds).
-If this download page does not contain the required images, you can try to find them on the [XDA developers forum](https://xdaforums.com).
-                """,
+                _("why_additional_text {device_code}").format(device_code=self.state.config.device_code),
                 auto_follow_links=True,
             ),
             actions=[
                 TextButton(
-                    "Close", on_click=self.close_close_explain_additional_images_dlg
+                    _("close"), on_click=self.close_close_explain_additional_images_dlg
                 ),
             ],
             actions_alignment="end",
@@ -380,12 +330,12 @@ If this download page does not contain the required images, you can try to find 
 
         # create help/info button to show the help dialog for the image and recovery selection
         explain_additional_images_button = OutlinedButton(
-            "Why do I need this and where do I get it?",
+            _("why_where_additional"),
             on_click=self.open_explain_additional_images_dlg,
             expand=True,
             icon=icons.HELP_OUTLINE_OUTLINED,
             icon_color=colors.DEEP_ORANGE_500,
-            tooltip="Get more details on additional images and download links.",
+            tooltip=_("why_where_additional_tooltip"),
         )
 
         # attach the controls for uploading others partitions, like dtbo, vbmeta & super_empty
@@ -396,16 +346,13 @@ If this download page does not contain the required images, you can try to find 
                     Row(
                         [
                             Text(
-                                "Select required additional images:", style="titleSmall"
+                                _("select_required_additional"), style="titleSmall"
                             ),
                             explain_additional_images_button,
                         ]
                     ),
                     Markdown(
-                        """
-Your selected device and ROM requires flashing of additional partitions. Please select the required images below.
-
-Make sure the file is for **your exact phone model!**""",
+                        _("select_additional_text"),
                     ),
                 ]
             )
@@ -416,7 +363,7 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `dtbo.img` image",
+                                _("pick_dtbo"),
                                 icon=icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_dtbo_dialog.pick_files(
                                     allow_multiple=False,
@@ -437,7 +384,7 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `vbmeta.img` image",
+                                _("pick_vbmeta"),
                                 icon=icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_vbmeta_dialog.pick_files(
                                     allow_multiple=False,
@@ -458,7 +405,7 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `super_empty.img` image",
+                                _("pick_super_empty"),
                                 icon=icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_super_empty_dialog.pick_files(
                                     allow_multiple=False,
@@ -479,7 +426,7 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `vendor_boot.img` image",
+                                _("pick_vendor_boot"),
                                 icon=icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_vendor_boot_dialog.pick_files(
                                     allow_multiple=False,
@@ -673,7 +620,7 @@ Make sure the file is for **your exact phone model!**""",
                 )
                 self.info_field.controls = [
                     Text(
-                        "Something is wrong with the selected files.",
+                        _("something_wrong_with_files"),
                         color=colors.RED,
                         weight="bold",
                     )
@@ -701,7 +648,7 @@ Make sure the file is for **your exact phone model!**""",
                 logger.error("Some additional images don't match or are missing.")
                 self.info_field.controls = [
                     Text(
-                        "Some additional images don't match or are missing.",
+                        _("additional_images_dont_match_missing"),
                         color=colors.RED,
                         weight="bold",
                     )
@@ -721,7 +668,7 @@ Make sure the file is for **your exact phone model!**""",
                 logger.error("Image doesn't work with the device.")
                 self.info_field.controls = [
                     Text(
-                        "Image doesn't work with the device.",
+                        _("image_doesnt_work_device"),
                         color=colors.RED,
                         weight="bold",
                     )

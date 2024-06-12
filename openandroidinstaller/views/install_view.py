@@ -16,6 +16,7 @@ from typing import Callable
 from app_state import AppState
 from flet import Column, ElevatedButton, Row, Switch, colors, icons
 from loguru import logger
+from translations import _
 from styles import Markdown, Text
 from tooling import adb_twrp_wipe_and_install
 from views import BaseView
@@ -50,7 +51,7 @@ class InstallView(BaseView):
             self.right_view.update()
 
         self.advanced_switch = Switch(
-            label="Advanced output",
+            label=_("advanced_output"),
             on_change=check_advanced_switch,
             disabled=False,
         )
@@ -69,7 +70,7 @@ class InstallView(BaseView):
                 self.state.install_addons = False
 
         self.install_addons_switch = Switch(
-            label="Install addons",
+            label=_("install_addons"),
             on_change=check_addons_switch,
             disabled=False,
         )
@@ -82,28 +83,13 @@ class InstallView(BaseView):
         # main controls
         self.right_view_header.controls = [
             get_title(
-                "Install OS",
+                _("install_os"),
                 step_indicator_img="steps-header-install.png",
             )
         ]
         self.right_view.controls = [
             Markdown(
-                """In the next steps, you finally flash the selected OS image.
-
-Connect your device with your computer with the USB-Cable. This step will format your phone and wipe all the data.
-It will also remove encryption and delete all files stored in the internal storage.
-Then the OS image will be installed. Confirm to install.
-
-This might take a while. At the end your phone will boot into the new OS.
-
-#### **Install addons:**
-If you want to install any addons like Google Apps, microG or F-droid, use the toggle below **before** starting the install process!
-After the installation you'll be taken through the process. Note, that this process is still somewhat experimental and using ROMs with
-included Google Apps (like PixelExperience) or microG (lineageOS for microG) is recommended.
-
-#### **Warning:**
-Don't try to add addons like Google Apps if your OS ROM already has Google Apps or microG included! Otherwise your system will break!
-"""
+                _("install_view_text")
             )
         ]
         # basic view
@@ -112,7 +98,7 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
         self.confirm_button.disabled = True
         # button to run the installation process
         self.install_button = ElevatedButton(
-            "Confirm and install",
+            _("confirm_install"),
             on_click=self.run_install,
             expand=True,
             icon=icons.DIRECTIONS_RUN_OUTLINED,
@@ -138,9 +124,9 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
             self.right_view.controls.append(
                 Row(
                     [
-                        Text("Do you want to skip?"),
+                        Text(_("skip_question")),
                         ElevatedButton(
-                            "Skip",
+                            _("skip"),
                             on_click=self.on_confirm,
                             icon=icons.NEXT_PLAN_OUTLINED,
                             expand=True,
@@ -159,7 +145,7 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
         # disable the call button while the command is running
         self.install_button.disabled = True
         self.install_addons_switch.disabled = True
-        self.error_text.value = "Please be patient, it may take a few minutes."
+        self.error_text.value = _("run_install_wait")
         self.error_text.color = colors.GREEN
         # reset the progress indicators
         self.progress_indicator.clear()
@@ -189,7 +175,7 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
             # enable call button to retry
             self.install_button.disabled = False
             # also remove the last error text if it happened
-            self.error_text.value = "Installation failed! Try again or make sure everything is setup correctly."
+            self.error_text.value = _("run_install_fail")
             self.error_text.color = colors.RED
         else:
             sleep(5)  # wait to make sure everything is fine

@@ -186,7 +186,7 @@ def get_title(
                 Image(
                     src=f"/imgs/{step_indicator_img}",
                     fit="fitWidth",
-                    tooltip=f"Current step: {title}",
+                    tooltip=_("current_step {title}").format(title=title),
                     width=600,
                 ),
                 content,
@@ -204,7 +204,7 @@ def get_title(
 
 
 def confirm_button(
-    confirm_func: Callable, confirm_text: str = "Continue"
+    confirm_func: Callable, confirm_text: str = _("continue")
 ) -> ElevatedButton:
     """Get a button, that calls a given function when clicked."""
     return ElevatedButton(
@@ -216,7 +216,7 @@ def confirm_button(
 
 
 def call_button(
-    call_func: Callable, command: str, confirm_text: str = "Confirm and run"
+    call_func: Callable, command: str, confirm_text: str = _("confirm_run")
 ) -> ElevatedButton:
     """Get a button, that calls a given function with given command when clicked."""
     return ElevatedButton(

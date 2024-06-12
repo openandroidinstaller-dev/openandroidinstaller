@@ -13,6 +13,7 @@
 from app_state import AppState
 from flet import ElevatedButton, Row
 from loguru import logger
+from translations import _
 from styles import Markdown, Text
 from views import BaseView
 from widgets import get_title
@@ -32,28 +33,22 @@ class SuccessView(BaseView):
 
         # right view header
         self.right_view_header.controls = [
-            get_title("Installation completed successfully!"),
+            get_title(_("installation_complete_title")),
         ]
         # right view main part
         contribute_link = "https://openandroidinstaller.org/#contribute"
         self.right_view.controls = [
             Text(
-                "Now your devices boots into the new OS. Have fun with it!",
+                _("device_boot_have_fun"),
                 style="titleSmall",
             ),
             Markdown(
-                f"""
-If you liked the tool, help spread the word and **share it with people** who might want to use it.
-
-Also, you can consider contributing to make it better. There are a lot of different ways how you can help!
-
-[How to contribute]({contribute_link})
-""",
+                _("spread_the_word {link}").format(link=contribute_link),
             ),
             Row(
                 [
                     ElevatedButton(
-                        "Finish and close",
+                        _("finish_close"),
                         expand=True,
                         on_click=close_window,
                     )
