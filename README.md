@@ -181,6 +181,7 @@ Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte) | SM
 Samsung | Galaxy S7 Edge | [hero2lte](https://wiki.lineageos.org/devices/hero2lte) | | tested
 Samsung | Galaxy S8 | dreamlte | | tested
 Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte) | | tested
+Samsung | Galaxy S9+ | [star2lte](https://wiki.lineageos.org/devices/star2lte) | | untested
 Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte) | | tested
 Samsung | Galaxy S10e | [beyond0lte](https://wiki.lineageos.org/devices/beyond0lte) | | tested
 Samsung | Galaxy S10+ | [beyond2lte](https://wiki.lineageos.org/devices/beyond2lte) | | tested
