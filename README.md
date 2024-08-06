@@ -189,6 +189,7 @@ Samsung | Galaxy Note 8 | greatlte | SM-N950F | tested
 Samsung | Galaxy Note 9 | [crownlte](https://wiki.lineageos.org/devices/crownlte) | | tested
 Samsung | Galaxy Note 10 | [d1](https://wiki.lineageos.org/devices/d1) | | tested
 Samsung | Galaxy Note 10+ | [d2s](https://wiki.lineageos.org/devices/d2s) | | tested
+Samsung | Galaxy Tab S6 Lite | [gta4xlwifi](https://wiki.lineageos.org/devices/gta4xlwifi) | SM-P610 | untested
 
 </details>
 
