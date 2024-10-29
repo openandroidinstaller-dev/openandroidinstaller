@@ -48,7 +48,7 @@ OpenAndroidInstaller support all three major operating systems, namely Linux, ma
 You can download the correct version for you system from the [GitHub Releases](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/latest).
 
 The executables are compressed inside `.zip` files, so you'll have to extract them first (make sure you have extracting software installed).
-If you get prompted to, you'll have to adjust the permission of the executable to ensure its proper functionality. 
+If you get prompted to, you'll have to adjust the permission of the executable to ensure its proper functionality.
 
 If you run Windows, you might also need to [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
 
@@ -263,9 +263,15 @@ Make sure to check if your issue or PR has already been fixed or implemented **b
 
 ## Acknowledgements
 
-* The project received financial support from the German Federal Ministry for Education and Research under the grant identifier 01IS22S26 from September 2022 until February 2023.
+The project is supported by the following organizations and companies:
 
-![logos of the "Bundesministerium für Bildung und Forschung", Prodotype Fund and OKFN-Deutschland](resources/pf_funding_logos.svg)
+* We received financial support from the German Federal Ministry for Education and Research under the grant identifier 01IS22S26 from September 2022 until February 2023.
+
+[![logos of the "Bundesministerium für Bildung und Forschung", Prodotype Fund and OKFN-Deutschland](resources/pf_funding_logos.svg)](https://prototypefund.de/project/open-android-installer/)
+
+* The company [ekimia.fr](https://ekimia.fr) donated devices for testing and development purposes.
+
+[![logo of ekimia.fr](resources/ekimia_logo.jpg)](https://ekimia.fr/)
 
 ## Credits
 
