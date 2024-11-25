@@ -66,7 +66,6 @@ Here are the official links for:
     - [GrapheneOS](https://grapheneos.org)
     - [LineageOS](https://wiki.lineageos.org/devices)
     - [LineageOS for MicroG](https://download.lineage.microg.org)
-    - [PixelExperience](https://download.pixelexperience.org)
   - Recovery:
     - [TWRP recovery](https://twrp.me/Devices)
   - Optional Add-ons:
