@@ -271,7 +271,7 @@ The image file should look something like `lineage-21.0-20241101-nightly-{self.s
                     Text("Select a TWRP recovery image:", style="titleSmall"),
                     Markdown(
                         f"""
-The recovery image should look something like `twrp-3.7.0_12-0-{self.state.config.device_code}.img`.
+The recovery image should look something like `twrp-3.7.1_12-0-{self.state.config.device_code}.img`.
 
 **Note:** This tool **only supports TWRP recoveries**.""",
                         extension_set="gitHubFlavored",
