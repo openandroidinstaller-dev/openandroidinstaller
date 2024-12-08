@@ -7,7 +7,6 @@ metadata:
   additional_steps:
     - dtbo
     - vbmeta
-    - super_empty
   supported_device_codes:
     - Mi439
     - mi439

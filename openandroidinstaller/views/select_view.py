@@ -29,7 +29,7 @@ from flet import (
     colors,
     icons,
 )
-from flet_core.buttons import CountinuosRectangleBorder
+from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
 from styles import Markdown, Text
 from utils import (
@@ -90,7 +90,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 TextButton("Close", on_click=self.close_close_explain_images_dlg),
             ],
             actions_alignment="end",
-            shape=CountinuosRectangleBorder(radius=0),
+            shape=ContinuousRectangleBorder(radius=0),
         )
 
         # initialize file pickers
@@ -245,7 +245,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 Text("Select an OS image:", style="titleSmall"),
                 Markdown(
                     f"""
-The image file should look something like `lineage-20.0-20240101-nightly-{self.state.config.device_code}-signed.zip`."""
+The image file should look something like `lineage-21.0-20241101-nightly-{self.state.config.device_code}-signed.zip`."""
                 ),
                 Row(
                     [
@@ -271,7 +271,7 @@ The image file should look something like `lineage-20.0-20240101-nightly-{self.s
                     Text("Select a TWRP recovery image:", style="titleSmall"),
                     Markdown(
                         f"""
-The recovery image should look something like `twrp-3.7.0_12-0-{self.state.config.device_code}.img`.
+The recovery image should look something like `twrp-3.7.1_12-0-{self.state.config.device_code}.img`.
 
 **Note:** This tool **only supports TWRP recoveries**.""",
                         extension_set="gitHubFlavored",
@@ -375,7 +375,7 @@ If this download page does not contain the required images, you can try to find 
                 ),
             ],
             actions_alignment="end",
-            shape=CountinuosRectangleBorder(radius=0),
+            shape=ContinuousRectangleBorder(radius=0),
         )
 
         # create help/info button to show the help dialog for the image and recovery selection

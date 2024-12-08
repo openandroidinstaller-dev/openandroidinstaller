@@ -28,7 +28,7 @@ from flet import (
     colors,
     icons,
 )
-from flet_core.buttons import CountinuosRectangleBorder
+from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
 from styles import Markdown, Text
 from tooling import search_device, SearchResult
@@ -86,7 +86,7 @@ Now you are ready to continue.
                 TextButton("Close", on_click=self.close_developer_options_dlg),
             ],
             actions_alignment="end",
-            shape=CountinuosRectangleBorder(radius=0),
+            shape=ContinuousRectangleBorder(radius=0),
         )
 
         # toggleswitch to allow skipping unlocking the bootloader

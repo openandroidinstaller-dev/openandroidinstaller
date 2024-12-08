@@ -32,7 +32,7 @@ class MockConn:
 
 
 def test_app_sargo():
-    page = ft.Page(conn=MockConn(), session_id=1)
+    page = ft.Page(conn=MockConn(), session_id=1, loop=1)
     # test if it would start up
     main(page=page, test=True, test_config="sargo")
 
@@ -52,7 +52,7 @@ def test_app_sargo():
 
 
 def test_app_beyond2lte():
-    page = ft.Page(conn=MockConn(), session_id=1)
+    page = ft.Page(conn=MockConn(), session_id=1, loop=1)
     # test if it would start up
     main(page=page, test=True, test_config="beyond2lte")
 
