@@ -5,6 +5,7 @@ metadata:
   device_code: dreamlte
   supported_device_codes:
     - dreamlte
+    - dreamltecan
   twrp-link: dreamlte
 requirements:
   android: 9
