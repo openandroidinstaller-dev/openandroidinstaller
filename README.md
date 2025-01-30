@@ -85,7 +85,7 @@ After starting the app you will be prompted to plug your device into your comput
 
 ## Officially supported devices
 
-Currently, the **we support 88 devices** by various vendors and working on adding more soon!
+Currently, the **we support 89 devices** by various vendors and working on adding more soon!
 
 Support for these devices is provided as best effort, but things might still go wrong.
 Help to improve the tool by reporting any issues you might face.
@@ -221,8 +221,9 @@ Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo)
 Xiaomi | Redmi Note 8 Pro | begonia |  | untested
 Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
 Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
+Xiaomi | Mi A2 | [jasmine_sprout](https://wiki.lineageos.org/devices/jasmine_sprout) |  | untested
+Xiaomi | Mi 6X | [wayne](https://wiki.lineageos.org/devices/wayne) |  | untested
 Xiaomi | Redmi Note 10 Pro | [sweet](https://wiki.lineageos.org/devices/sweet) | M2101K6G | tested
-Xiaomi | Mi A2 / Mi 6X | jasmine_sprout |  | untested
 Xiaomi | Mi 8 | [dipper](https://wiki.lineageos.org/devices/dipper) |  | untested
 Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinci) / davinciin |  | untested
 Xiaomi | Redmi K20 Pro / Mi 9T Pro | raphael / raphaelin | | untested
