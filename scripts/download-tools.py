@@ -29,7 +29,7 @@ def download_adb_fastboot(platform: str):
     if platform == "win32":
         platform = "windows"
     logger.info(f"Download adb and fastboot for {platform}...")
-    url = f"https://dl.google.com/android/repository/platform-tools_r35.0.1-{platform}.zip"
+    url = f"https://dl.google.com/android/repository/platform-tools_r35.0.2-{platform}.zip"
     # Downloading the file by sending the request to the URL
     response = requests.get(url, allow_redirects=True)
 
@@ -59,7 +59,7 @@ def download_heimdall(platform: str):
 def download_libusb(platform: str):
     """Download libusb-1.0, extract the 7z and save to file."""
     logger.info(f"Download libusb-1.0 for {platform}...")
-    url = "https://github.com/libusb/libusb/releases/download/v1.0.24/libusb-1.0.24.7z"
+    url = "https://github.com/libusb/libusb/releases/download/v1.0.27/libusb-1.0.27.7z"
     # Downloading the file by sending the request to the URL
     response = requests.get(url, allow_redirects=True)
 
