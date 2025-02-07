@@ -66,7 +66,6 @@ Here are the official links for:
     - [GrapheneOS](https://grapheneos.org)
     - [LineageOS](https://wiki.lineageos.org/devices)
     - [LineageOS for MicroG](https://download.lineage.microg.org)
-    - [PixelExperience](https://download.pixelexperience.org)
   - Recovery:
     - [TWRP recovery](https://twrp.me/Devices)
   - Optional Add-ons:
@@ -275,7 +274,7 @@ Make sure to check if your issue or PR has already been fixed or implemented **b
 
 ## License
 
-Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022-2024.
+Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022-2025.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

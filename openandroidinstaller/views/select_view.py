@@ -29,7 +29,7 @@ from flet import (
     colors,
     icons,
 )
-from flet_core.buttons import CountinuosRectangleBorder
+from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
 from styles import Markdown, Text
 from utils import (
@@ -90,7 +90,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 TextButton("Close", on_click=self.close_close_explain_images_dlg),
             ],
             actions_alignment="end",
-            shape=CountinuosRectangleBorder(radius=0),
+            shape=ContinuousRectangleBorder(radius=0),
         )
 
         # initialize file pickers
@@ -129,12 +129,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             self.on_confirm, "Continue without additional images"
         )
         self.continue_eitherway_button.disabled = True
-        self.pick_recovery_dialog.on_result = self.enable_button_if_ready
-        self.pick_image_dialog.on_result = self.enable_button_if_ready
-        self.pick_dtbo_dialog.on_result = self.enable_button_if_ready
-        self.pick_vbmeta_dialog.on_result = self.enable_button_if_ready
-        self.pick_super_empty_dialog.on_result = self.enable_button_if_ready
-        self.pick_vendor_boot_dialog.on_result = self.enable_button_if_ready
+
         # back button
         self.back_button = ElevatedButton(
             "Back",
@@ -245,7 +240,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 Text("Select an OS image:", style="titleSmall"),
                 Markdown(
                     f"""
-The image file should look something like `lineage-20.0-20240101-nightly-{self.state.config.device_code}-signed.zip`."""
+The image file should look something like `lineage-22.1-20241101-nightly-{self.state.config.device_code}-signed.zip`."""
                 ),
                 Row(
                     [
@@ -271,7 +266,7 @@ The image file should look something like `lineage-20.0-20240101-nightly-{self.s
                     Text("Select a TWRP recovery image:", style="titleSmall"),
                     Markdown(
                         f"""
-The recovery image should look something like `twrp-3.7.0_12-0-{self.state.config.device_code}.img`.
+The recovery image should look something like `twrp-3.7.1_12-0-{self.state.config.device_code}.img`.
 
 **Note:** This tool **only supports TWRP recoveries**.""",
                         extension_set="gitHubFlavored",
@@ -375,7 +370,7 @@ If this download page does not contain the required images, you can try to find 
                 ),
             ],
             actions_alignment="end",
-            shape=CountinuosRectangleBorder(radius=0),
+            shape=ContinuousRectangleBorder(radius=0),
         )
 
         # create help/info button to show the help dialog for the image and recovery selection
@@ -520,6 +515,7 @@ Make sure the file is for **your exact phone model!**""",
         self.page.update()
 
     def pick_image_result(self, e: FilePickerResultEvent):
+        logger.info(f"Selected image: {e.files}")
         path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
         # update the textfield with the name of the file
         self.selected_image.value = (
@@ -555,6 +551,7 @@ Make sure the file is for **your exact phone model!**""",
                 self.additional_image_selection.controls = []
                 self.additional_image_selection.update()
         # update
+        self.enable_button_if_ready(None)
         self.selected_image.update()
 
     def pick_recovery_result(self, e: FilePickerResultEvent):
@@ -583,6 +580,7 @@ Make sure the file is for **your exact phone model!**""",
                 self.selected_recovery.color = colors.RED
             self.selected_recovery.value += f"\n> {self.recovery_compatibility.message}"
         # update
+        self.enable_button_if_ready(None)
         self.selected_recovery.update()
 
     def pick_dtbo_result(self, e: FilePickerResultEvent):
@@ -600,6 +598,7 @@ Make sure the file is for **your exact phone model!**""",
         else:
             logger.info("No image selected.")
         # update
+        self.enable_button_if_ready(None)
         self.selected_dtbo.update()
 
     def pick_vbmeta_result(self, e: FilePickerResultEvent):
@@ -617,6 +616,7 @@ Make sure the file is for **your exact phone model!**""",
         else:
             logger.info("No image selected.")
         # update
+        self.enable_button_if_ready(None)
         self.selected_vbmeta.update()
 
     def pick_super_empty_result(self, e: FilePickerResultEvent):
@@ -635,6 +635,7 @@ Make sure the file is for **your exact phone model!**""",
         else:
             logger.info("No image selected.")
         # update
+        self.enable_button_if_ready(None)
         self.selected_super_empty.update()
 
     def pick_vendor_boot_result(self, e: FilePickerResultEvent):
@@ -655,6 +656,7 @@ Make sure the file is for **your exact phone model!**""",
         else:
             logger.info("No image selected.")
         # update
+        self.enable_button_if_ready(None)
         self.selected_vendor_boot.update()
 
     def enable_button_if_ready(self, e):
