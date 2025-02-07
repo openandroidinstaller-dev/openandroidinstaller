@@ -1,0 +1,44 @@
+metadata:
+  maintainer: Tobias Sterbak (tsterbak)
+  device_name: Samsung Galaxy S10
+  is_ab_device: false
+  device_code: beyond1lte
+  supported_device_codes:
+    - beyond1lte
+    - beyond1
+requirements:
+  android: 12
+steps:
+  unlock_bootloader:
+    - type: call_button
+      content: >
+        As a first step, you need to unlock the bootloader. A bootloader is the piece of software, that tells your phone
+        how to start and run an operating system (like Android). Your device should be turned on.
+        Press 'Confirm and run' to reboot into download mode. Then continue.
+      command: adb_reboot_download
+    - type: confirm_button
+      content: >
+        Now, click the button that the onscreen instructions correlate to “Continue” and/or “Unlock Bootloader”.
+        Your device will reboot, you may now unplug the USB cable from your device.
+        The device will demand you format userdata, please follow the onscreen instructions to do so.
+    - type: confirm_button
+      content: >
+        The bootloader is now unlocked. Go through Android Setup skipping everything you can, then connect the device to a Wi-Fi network.
+        Since the device resets completely, you will need to re-enable Developer Options and USB debugging to continue.
+  boot_recovery:
+    - type: call_button
+      content: >
+        Now plug the USB-cable to your device. As a first step, you need to boot into download mode. Your device should be turned on.
+        Then press 'Confirm and run' to reboot into download mode. Continue once it's done.
+      command: adb_reboot_download
+    - type: call_button
+      content: >
+        In this step, you need to flash a custom recovery on your device.
+        Press 'Confirm and run' to start the process. Confirm afterwards to continue.
+      command: heimdall_flash_recovery
+    - type: confirm_button
+      img: samsung-buttons-bixby.png
+      content: >
+        Unplug the USB cable from your device. Then manually reboot into recovery by pressing the *Volume Down* + *Bixby* for 8~10 seconds
+        until the screen turns black & release the buttons immediately when it does, then boot to recovery with the device powered off,
+        hold *Volume Up* + *Bixby* + *Power button*.
