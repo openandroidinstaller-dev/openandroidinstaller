@@ -48,7 +48,7 @@ OpenAndroidInstaller support all three major operating systems, namely Linux, ma
 You can download the correct version for you system from the [GitHub Releases](https://github.com/openandroidinstaller-dev/openandroidinstaller/releases/latest).
 
 The executables are compressed inside `.zip` files, so you'll have to extract them first (make sure you have extracting software installed).
-If you get prompted to, you'll have to adjust the permission of the executable to ensure its proper functionality. 
+If you get prompted to, you'll have to adjust the permission of the executable to ensure its proper functionality.
 
 If you run Windows, you might also need to [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
 
@@ -85,7 +85,7 @@ After starting the app you will be prompted to plug your device into your comput
 
 ## Officially supported devices
 
-Currently, the **we support 88 devices** by various vendors and working on adding more soon!
+Currently, the **we support 85 devices** by various vendors and working on adding more soon!
 
 Support for these devices is provided as best effort, but things might still go wrong.
 Help to improve the tool by reporting any issues you might face.
@@ -181,9 +181,6 @@ Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte) | SM
 Samsung | Galaxy S7 Edge | [hero2lte](https://wiki.lineageos.org/devices/hero2lte) | | tested
 Samsung | Galaxy S8 | dreamlte | | tested
 Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte) | | tested
-Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte) | | tested
-Samsung | Galaxy S10e | [beyond0lte](https://wiki.lineageos.org/devices/beyond0lte) | | tested
-Samsung | Galaxy S10+ | [beyond2lte](https://wiki.lineageos.org/devices/beyond2lte) | | tested
 Samsung | Galaxy Note 3 LTE | [hltetmo](https://wiki.lineageos.org/devices/hltetmo) | N900T/V/W8 | tested
 Samsung | Galaxy Note 8 | greatlte | SM-N950F | tested
 Samsung | Galaxy Note 9 | [crownlte](https://wiki.lineageos.org/devices/crownlte) | | tested
