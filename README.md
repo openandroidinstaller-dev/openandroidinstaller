@@ -61,7 +61,6 @@ Here are the official links for:
   - some custom ROMs:
     - [BlissRoms](https://blissroms.org)
     - [CalyxOS](https://calyxos.org)
-    - [DivestOS](https://divestos.org)
     - [/e/OS](https://doc.e.foundation/devices)
     - [GrapheneOS](https://grapheneos.org)
     - [LineageOS](https://wiki.lineageos.org/devices)
