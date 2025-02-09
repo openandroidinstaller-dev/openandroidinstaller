@@ -261,9 +261,15 @@ Make sure to check if your issue or PR has already been fixed or implemented **b
 
 ## Acknowledgements
 
-* The project received financial support from the German Federal Ministry for Education and Research under the grant identifier 01IS22S26 from September 2022 until February 2023.
+The project is supported by the following organizations and companies:
 
-![logos of the "Bundesministerium für Bildung und Forschung", Prodotype Fund and OKFN-Deutschland](resources/pf_funding_logos.svg)
+* We received financial support from the German Federal Ministry for Education and Research under the grant identifier 01IS22S26 from September 2022 until February 2023.
+
+[![logos of the "Bundesministerium für Bildung und Forschung", Prodotype Fund and OKFN-Deutschland](resources/pf_funding_logos.svg)](https://prototypefund.de/project/open-android-installer/)
+
+* The company [ekimia.fr](https://ekimia.fr) donated devices for testing and development purposes.
+
+[![logo of ekimia.fr](resources/ekimia_logo.jpg)](https://ekimia.fr/)
 
 ## Credits
 
