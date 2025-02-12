@@ -61,12 +61,10 @@ Here are the official links for:
   - some custom ROMs:
     - [BlissRoms](https://blissroms.org)
     - [CalyxOS](https://calyxos.org)
-    - [DivestOS](https://divestos.org)
     - [/e/OS](https://doc.e.foundation/devices)
     - [GrapheneOS](https://grapheneos.org)
     - [LineageOS](https://wiki.lineageos.org/devices)
     - [LineageOS for MicroG](https://download.lineage.microg.org)
-    - [PixelExperience](https://download.pixelexperience.org)
   - Recovery:
     - [TWRP recovery](https://twrp.me/Devices)
   - Optional Add-ons:
@@ -85,7 +83,7 @@ After starting the app you will be prompted to plug your device into your comput
 
 ## Officially supported devices
 
-Currently, the **we support 86 devices** by various vendors and working on adding more soon!
+Currently, the **we support 88 devices** by various vendors and working on adding more soon!
 
 Support for these devices is provided as best effort, but things might still go wrong.
 Help to improve the tool by reporting any issues you might face.
@@ -127,11 +125,13 @@ Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
 Motorola | edge | [racer](https://wiki.lineageos.org/devices/racer) | XT2063-2, XT2063-3 | tested
 Motorola | moto g5 | [cedric](https://wiki.lineageos.org/devices/cedric) | XT1670, XT1671, XT1672, XT1675, XT1676, XT1677 | tested
+Motorola | moto g6 | ali | XT1925-1, XT1925-3, XT1925-4, XT1925-5, XT1925-6, XT1925-7, XT1925-13 | tested
 Motorola | moto g6 plus | [evert](https://wiki.lineageos.org/devices/evert) | XT1926-2, XT1926-3, XT1926-5, XT1926-6, XT1926-7, XT1926-8, XT1926-9 | tested
 Motorola | moto g7 power | [ocean](https://wiki.lineageos.org/devices/ocean) | XT1955-1, XT1955-2, XT1955-4, XT1955-5, XT1955-7 | tested
 Motorola | moto g 5G plus / one 5G | [nairo](https://wiki.lineageos.org/devices/nairo) | XT2075-3, XT2075-5 | tested
 Motorola | moto g 5G / one 5G ace | [kiev](https://wiki.lineageos.org/devices/kiev) | XT2113-2, XT2113-3 | tested
 Motorola | moto z | [griffin](https://wiki.lineageos.org/devices/griffin) | XT1650-3, XT1650-05 | tested
+Motorola | moto z play | [addison](https://wiki.lineageos.org/devices/addison) | XT1635-01, XT1635-02, XT1635-03 | untested
 
 </details>
 
@@ -151,6 +151,7 @@ OnePlus | 7 Pro | [guacamole](https://wiki.lineageos.org/devices/guacamole) | GM
 OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb) | HD1900, HD1901, HD1903, HD1905 | tested
 OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog) | HD1910, HD1911, HD1913, HD1917 | tested
 OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii) | AC2001, AC2003 | tested
+OnePlus | Nord N10 | [billie](https://wiki.lineageos.org/devices/billie) | BE2026, BE2029 | untested
 OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | DE2117 | tested
 OnePlus | 9 | lemonade | LE2110, LE2111, LE2113, LE2115 | under development
 
@@ -181,9 +182,6 @@ Samsung | Galaxy S7 | [herolte](https://wiki.lineageos.org/devices/herolte) | SM
 Samsung | Galaxy S7 Edge | [hero2lte](https://wiki.lineageos.org/devices/hero2lte) | | tested
 Samsung | Galaxy S8 | dreamlte | | tested
 Samsung | Galaxy S9 | [starlte](https://wiki.lineageos.org/devices/starlte) | | tested
-Samsung | Galaxy S10 | [beyond1lte](https://wiki.lineageos.org/devices/beyond1lte) | | tested
-Samsung | Galaxy S10e | [beyond0lte](https://wiki.lineageos.org/devices/beyond0lte) | | tested
-Samsung | Galaxy S10+ | [beyond2lte](https://wiki.lineageos.org/devices/beyond2lte) | | tested
 Samsung | Galaxy Note 3 LTE | [hltetmo](https://wiki.lineageos.org/devices/hltetmo) | N900T/V/W8 | tested
 Samsung | Galaxy Note 8 | greatlte | SM-N950F | tested
 Samsung | Galaxy Note 9 | [crownlte](https://wiki.lineageos.org/devices/crownlte) | | tested
@@ -216,15 +214,17 @@ Xiaomi | Redmi 7A / 8 / 8A / 8A Dual | [Mi439](https://wiki.lineageos.org/device
 Xiaomi | Redmi 9A / 9C / 9AT / 9i / 9A Sport / 10A / 10A Sport | garden / dandelion / blossom / angelican | | tested
 Xiaomi | Redmi 9 / Poco M2 | [lancelot](https://wiki.lineageos.org/devices/lancelot) / galahad / shivan | | untested
 Xiaomi | Redmi Note 7 | [lavender](https://wiki.lineageos.org/devices/lavender) |  | tested
+Xiaomi | Redmi Note 7 Pro | [violet](https://wiki.lineageos.org/devices/violet) |  | tested
 Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo) / willow |  | untested
 Xiaomi | Redmi Note 8 Pro | begonia |  | untested
 Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
 Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
+Xiaomi | Redmi Note 10 Pro | [sweet](https://wiki.lineageos.org/devices/sweet) | M2101K6G | tested
 Xiaomi | Mi A2 / Mi 6X | jasmine_sprout |  | untested
 Xiaomi | Mi 8 | [dipper](https://wiki.lineageos.org/devices/dipper) |  | untested
 Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinci) / davinciin |  | untested
 Xiaomi | Redmi K20 Pro / Mi 9T Pro | raphael / raphaelin | | untested
-Xiaomi | Redmi Note 10 Pro | [sweet](https://wiki.lineageos.org/devices/sweet) | M2101K6G | tested
+Xiaomi | Mi 10T / Mi 10T Pro / Redmi K20 | [apollon](https://wiki.lineageos.org/devices/apollon) / apollo |  | untested
 Xiaomi | Redmi K40 / Mi 11X / Poco F3 | [alioth](https://wiki.lineageos.org/devices/alioth) / aliothin |  | untested
 Xiaomi | Poco X3 / X3 NFC | [surya](https://wiki.lineageos.org/devices/surya) / karna |  | untested
 Xiaomi | Poco X3 Pro | [vayu](https://wiki.lineageos.org/devices/vayu) |  | tested
@@ -276,13 +276,13 @@ The project is supported by the following organizations and companies:
 ## Credits
 
 - The [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools) (such as adb and fastboot) are [Apache](https://android.googlesource.com/platform/system/adb/+/refs/heads/master/NOTICE)-licensed universal Android utilities
-- [Heimdall](https://gitlab.com/BenjaminDobell/Heimdall) is an [MIT](https://gitlab.com/BenjaminDobell/Heimdall/-/blob/master/LICENSE)-licensed replacement for the leaked ODIN tool to flash Samsung devices.
+- [Heimdall](https://github.com/Benjamin-Dobell/Heimdall) is an [MIT](https://github.com/Benjamin-Dobell/Heimdall/blob/master/LICENSE)-licensed replacement for the leaked ODIN tool to flash Samsung devices.
 - [`libusb-1.0`](https://github.com/libusb/libusb) is a [LGPL-2.1](https://github.com/libusb/libusb/blob/master/COPYING)-licensed library for USB device access from Linux, macOS, Windows and others.
 - [`copy-partitions-20220613-signed.zip`](https://mirrorbits.lineageos.org/tools/copy-partitions-20220613-signed.zip) The copy-partitions script was created by LineageOS developer erfanoabdi and filipepferraz and released under LGPL. (It's used when the partitions need to be copied before flashing)
 
 ## License
 
-Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022-2024.
+Original development by [Tobias Sterbak](https://tobiassterbak.com). Copyright (C) 2022-2025.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

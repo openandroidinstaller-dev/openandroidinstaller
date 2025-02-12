@@ -21,7 +21,11 @@ from openandroidinstaller.installer_config import validate_config
 
 @pytest.mark.parametrize(
     "config_path,valid",
-    [(path, True) for path in Path("openandroidinstaller/assets/configs").iterdir()],
+    [
+        (path, True)
+        for path in Path("openandroidinstaller/assets/configs").iterdir()
+        if path.suffix.lower() == ".yaml"
+    ],
 )
 def test_config(config_path: Path, valid: bool):
     """Test if the existing configs are valid."""

@@ -50,7 +50,7 @@ from views import (
 )
 
 # VERSION number
-VERSION = "0.5.3-beta"
+VERSION = "0.5.4-beta"
 
 # detect platform
 PLATFORM = sys.platform
@@ -181,14 +181,14 @@ def configure(page: Page):
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
     page.theme_mode = "light"
-    page.window_height = 900
-    page.window_width = int(1.5 * page.window_height)
-    page.window_top = 100
-    page.window_left = 120
+    page.window.height = 900
+    page.window.width = int(1.5 * page.window.height)
+    page.window.top = 100
+    page.window.left = 120
     page.scroll = "adaptive"
     page.horizontal_alignment = "center"
-    page.window_min_width = 1000
-    page.window_min_height = 600
+    page.window.min_width = 1000
+    page.window.min_height = 600
 
 
 def log_version_infos(bin_path):
@@ -272,10 +272,10 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
 
     # display a warnings banner
     def close_banner(e):
-        page.banner.open = False
+        banner.open = False
         page.update()
 
-    page.banner = Banner(
+    banner = Banner(
         bgcolor=colors.AMBER_100,
         leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
         content=Text(
@@ -285,7 +285,8 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
             TextButton("I understand", on_click=close_banner),
         ],
     )
-    page.banner.open = True
+    page.overlay.append(banner)
+    banner.open = True
     page.update()
 
     # create the State object
@@ -296,6 +297,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         test=test,
         test_config=test_config,
     )
+    state.page = page
     # create application instance
     app = MainView(state=state)
 

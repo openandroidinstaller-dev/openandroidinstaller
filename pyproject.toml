@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openandroidinstaller"
-version = "0.5.3-beta"
+version = "0.5.4-beta"
 description = "Install lineage OS in a nice and easy way."
 authors = ["Tobias Sterbak <hello@openandroidinstaller.org>"]
 license = "GPLv3"
@@ -9,9 +9,9 @@ homepage = "https://openandroidinstaller.org"
 include = ["openandroidinstaller/bin/*", "openandroidinstaller/bin/*/*"]
 
 [tool.poetry.dependencies]
-python = ">=3.11,<3.12"
+python = ">=3.11,<=3.12.3"
 click = "^8.1.3"
-flet = "^0.7.4"
+flet = "^0.24.1"
 pyinstaller = "^5.3"
 Pillow = "^10.0.1"
 PyYAML = "^6.0"
