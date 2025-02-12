@@ -40,7 +40,7 @@ jobs:
     - run: pip install -r requirements.txt
     - run: python scripts/download-tools.py
     - run: python scripts/build.py
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}
         path: dist/
@@ -56,7 +56,7 @@ jobs:
     - run: pip install -r requirements.txt
     - run: python scripts/download-tools.py
     - run: python scripts/build.py
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: openandroidinstaller-${{  github.ref_name }}-windows-latest
         path: dist/
