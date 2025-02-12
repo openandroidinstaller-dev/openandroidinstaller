@@ -65,25 +65,40 @@ def get_module_sources(parsed_lockfile: dict, include_devel: bool = True) -> lis
     for section, packages in parsed_lockfile.items():
         if section == "package":
             for package in packages:
-                # Check for old metadata format (poetry version < 1.0.0b2)
-                if "hashes" in parsed_lockfile["metadata"]:
-                    hashes = parsed_lockfile["metadata"]["hashes"][package["name"]]
-                # Else new metadata format
-                else:
-                    hashes = []
-                    for package_name in parsed_lockfile["metadata"]["files"]:
-                        if package_name == package["name"]:
-                            package_files = parsed_lockfile["metadata"]["files"][
-                                package["name"]
-                            ]
-                            num_files = len(package_files)
-                            for num in range(num_files):
-                                match = hash_re.search(package_files[num]["hash"])
-                                if match:
-                                    hashes.append(match.group(2))
-                url, hash = get_pypi_source(package["name"], package["version"], hashes)
-                source = {"type": "file", "url": url, "sha256": hash}
-                sources.append(source)
+                if (
+                    package.get("category") == "dev"
+                    and include_devel
+                    and not package["optional"]
+                    or package.get("category") == "main"
+                    and not package["optional"]
+                ):
+                    # Check for old metadata format (poetry version < 1.0.0b2)
+                    if "hashes" in parsed_lockfile["metadata"]:
+                        hashes = parsed_lockfile["metadata"]["hashes"][package["name"]]
+                    # Else new metadata format
+                    else:
+                        hashes = []
+                        for package_name in parsed_lockfile["metadata"]["files"]:
+                            if package_name == package["name"]:
+                                package_files = parsed_lockfile["metadata"]["files"][
+                                    package["name"]
+                                ]
+                                num_files = len(package_files)
+                                for num in range(num_files):
+                                    match = hash_re.search(package_files[num]["hash"])
+                                    if match:
+                                        hashes.append(match.group(2))
+                    package_source = package.get("source")
+                    if package_source and package_source["type"] == "directory":
+                        print(
+                            f'Skipping download url and hash extraction for {package["name"]}, source type is directory'
+                        )
+                        continue
+                    url, hash = get_pypi_source(
+                        package["name"], package["version"], hashes
+                    )
+                    source = {"type": "file", "url": url, "sha256": hash}
+                    sources.append(source)
     return sources
 
 
@@ -101,7 +116,14 @@ def get_dep_names(parsed_lockfile: dict, include_devel: bool = True) -> list:
     for section, packages in parsed_lockfile.items():
         if section == "package":
             for package in packages:
-                dep_names.append(package["name"])
+                if (
+                    package.get("category") == "dev"
+                    and include_devel
+                    and not package["optional"]
+                    or package.get("category") == "main"
+                    and not package["optional"]
+                ):
+                    dep_names.append(package["name"])
     return dep_names
 
 
@@ -126,7 +148,6 @@ def main():
         pip_command = [
             "pip3",
             "install",
-            "--use-pep517",
             "--no-index",
             '--find-links="file://${PWD}"',
             "--prefix=${FLATPAK_DEST}",
