@@ -27,7 +27,7 @@ from loguru import logger
 def download_adb_fastboot(platform: str):
     """Download adb and fastboot executable from dl.google.com, extract the zip and save to file."""
     if platform == "win32":
-        platform = "windows"
+        platform = "win"
     logger.info(f"Download adb and fastboot for {platform}...")
     url = f"https://dl.google.com/android/repository/platform-tools_r35.0.2-{platform}.zip"
     # Downloading the file by sending the request to the URL
