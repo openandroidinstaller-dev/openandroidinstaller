@@ -22,7 +22,7 @@ jobs:
     - run: python scripts/download-tools.py
     - run: pip install black ruff pytest pytest-cov pytest-mock pytest-subprocess
     - run: black .
-    - run: PYTHONPATH=openandroidinstaller:$(PYTHONPATH) ruff openandroidinstaller/ --ignore E501
+    - run: ruff check openandroidinstaller/ --ignore E501
     - run: PYTHONPATH=openandroidinstaller:$(PYTHONPATH) pytest --cov=openandroidinstaller tests/
 
   build:
