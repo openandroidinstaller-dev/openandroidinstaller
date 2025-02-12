@@ -151,6 +151,7 @@ OnePlus | 7 Pro | [guacamole](https://wiki.lineageos.org/devices/guacamole) | GM
 OnePlus | 7T | [hotdogb](https://wiki.lineageos.org/devices/hotdogb) | HD1900, HD1901, HD1903, HD1905 | tested
 OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog) | HD1910, HD1911, HD1913, HD1917 | tested
 OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii) | AC2001, AC2003 | tested
+OnePlus | Nord N10 | [billie](https://wiki.lineageos.org/devices/billie) | BE2026, BE2029 | untested
 OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | DE2117 | tested
 OnePlus | 9 | lemonade | LE2110, LE2111, LE2113, LE2115 | under development
 
