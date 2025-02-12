@@ -69,7 +69,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
     - name: Display structure of downloaded files
       run: ls -R
     - uses: montudor/action-zip@v1
