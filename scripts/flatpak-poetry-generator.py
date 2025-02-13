@@ -65,11 +65,12 @@ def get_module_sources(parsed_lockfile: dict, include_devel: bool = True) -> lis
     for section, packages in parsed_lockfile.items():
         if section == "package":
             for package in packages:
+                category = package.get("category", "main")
                 if (
-                    package.get("category") == "dev"
+                    category == "dev"
                     and include_devel
                     and not package["optional"]
-                    or package.get("category") == "main"
+                    or category == "main"
                     and not package["optional"]
                 ):
                     # Check for old metadata format (poetry version < 1.0.0b2)
@@ -116,11 +117,14 @@ def get_dep_names(parsed_lockfile: dict, include_devel: bool = True) -> list:
     for section, packages in parsed_lockfile.items():
         if section == "package":
             for package in packages:
+                category = package.get(
+                    "category", "main"
+                )  # Default to 'main' if missing
                 if (
-                    package.get("category") == "dev"
+                    category == "dev"
                     and include_devel
                     and not package["optional"]
-                    or package.get("category") == "main"
+                    or category == "main"
                     and not package["optional"]
                 ):
                     dep_names.append(package["name"])
