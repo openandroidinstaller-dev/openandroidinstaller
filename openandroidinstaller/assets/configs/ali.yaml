@@ -5,7 +5,6 @@ metadata:
   device_code: ali
   supported_device_codes:
     - ali
-  untested: true
 steps:
   unlock_bootloader:
     - type: call_button
