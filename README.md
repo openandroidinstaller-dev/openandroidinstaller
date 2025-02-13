@@ -50,7 +50,7 @@ You can download the correct version for you system from the [GitHub Releases](h
 The executables are compressed inside `.zip` files, so you'll have to extract them first (make sure you have extracting software installed).
 If you get prompted to, you'll have to adjust the permission of the executable to ensure its proper functionality.
 
-If you run Windows, you might also need to [install the Universal USB Drivers](https://adb.clockworkmod.com) and other potentially drivers needed for your device.
+If you run Windows, you might also need to [install the Google USB Drivers](https://developer.android.com/studio/run/win-usb) and other potentially [drivers needed for your device](https://developer.android.com/studio/run/oem-usb).
 
 For Linux, a Flatpak version is available in Flathub, [`org.openandroidinstaller.OpenAndroidInstaller`](https://flathub.org/apps/org.openandroidinstaller.OpenAndroidInstaller).
 
