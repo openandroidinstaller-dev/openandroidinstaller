@@ -24,15 +24,14 @@ from flet import (
     ProgressBar,
     ProgressRing,
     Row,
-    UserControl,
     alignment,
-    colors,
-    icons,
+    Colors,
+    Icons,
 )
 from styles import Text
 
 
-class TerminalBox(UserControl):
+class TerminalBox(Container):
     def __init__(self, expand: bool = True, visible: bool = False):
         super().__init__(expand=expand)
         self.visible = visible
@@ -48,7 +47,7 @@ class TerminalBox(UserControl):
             margin=10,
             padding=10,
             alignment=alignment.top_left,
-            bgcolor=colors.BLACK38,
+            bgcolor=Colors.BLACK38,
             height=300,
             border_radius=2,
             expand=True,
@@ -85,7 +84,7 @@ class TerminalBox(UserControl):
         self._box.update()
 
 
-class ProgressIndicator(UserControl):
+class ProgressIndicator(Container):
     def __init__(self, expand: bool = True):
         super().__init__(expand=expand)
         # placeholder for the flashing progressbar
@@ -210,7 +209,7 @@ def confirm_button(
     return ElevatedButton(
         f"{confirm_text}",
         on_click=confirm_func,
-        icon=icons.NEXT_PLAN_OUTLINED,
+        icon=Icons.NEXT_PLAN_OUTLINED,
         expand=True,
     )
 
@@ -223,7 +222,7 @@ def call_button(
         f"{confirm_text}",
         on_click=partial(call_func, command=command),
         expand=True,
-        icon=icons.DIRECTIONS_RUN_OUTLINED,
+        icon=Icons.DIRECTIONS_RUN_OUTLINED,
     )
 
 

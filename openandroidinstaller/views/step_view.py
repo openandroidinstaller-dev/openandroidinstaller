@@ -15,7 +15,7 @@ from time import sleep
 from typing import Callable
 
 from app_state import AppState
-from flet import Column, ElevatedButton, Row, Switch, TextField, colors, icons
+from flet import Column, ElevatedButton, Row, Switch, TextField, Colors, Icons
 from installer_config import Step
 from loguru import logger
 from styles import Markdown, Text
@@ -69,7 +69,7 @@ class StepView(BaseView):
     def build(self):
         """Create the content of a view from step."""
         # error text
-        self.error_text = Text("", color=colors.RED)
+        self.error_text = Text("", color=Colors.RED)
 
         # switch to enable advanced output - here it means show terminal input/output in tool
         def check_advanced_switch(e):
@@ -170,7 +170,7 @@ class StepView(BaseView):
                         ElevatedButton(
                             "Skip",
                             on_click=self.on_confirm,
-                            icon=icons.NEXT_PLAN_OUTLINED,
+                            icon=Icons.NEXT_PLAN_OUTLINED,
                             expand=True,
                         ),
                     ]

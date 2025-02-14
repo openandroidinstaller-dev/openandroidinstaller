@@ -25,8 +25,8 @@ from flet import (
     OutlinedButton,
     Row,
     TextButton,
-    colors,
-    icons,
+    Colors,
+    Icons,
 )
 from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
@@ -100,8 +100,8 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
             "What kind of addons?",
             on_click=self.open_explain_addons_dlg,
             expand=True,
-            icon=icons.HELP_OUTLINE_OUTLINED,
-            icon_color=colors.DEEP_ORANGE_500,
+            icon=Icons.HELP_OUTLINE_OUTLINED,
+            icon_color=Colors.DEEP_ORANGE_500,
             tooltip="Get more details on what addons are supported.",
         )
 
@@ -126,7 +126,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                         [
                             ElevatedButton(
                                 "Download F-Droid App-Store",
-                                icon=icons.DOWNLOAD_OUTLINED,
+                                icon=Icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
                                     "https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/"
                                 ),
@@ -141,7 +141,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                         [
                             ElevatedButton(
                                 "Download Google Apps",
-                                icon=icons.DOWNLOAD_OUTLINED,
+                                icon=Icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
                                     "https://wiki.lineageos.org/gapps#downloads"
                                 ),
@@ -154,7 +154,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                         [
                             ElevatedButton(
                                 "Download MicroG",
-                                icon=icons.DOWNLOAD_OUTLINED,
+                                icon=Icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
                                     "https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases"
                                 ),
@@ -174,7 +174,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                     [
                         FilledButton(
                             "Pick the addons you want to install",
-                            icon=icons.UPLOAD_FILE,
+                            icon=Icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_addons_dialog.pick_files(
                                 allow_multiple=True,
                                 file_type="custom",

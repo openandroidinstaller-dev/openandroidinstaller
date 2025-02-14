@@ -11,10 +11,10 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 from app_state import AppState
-from flet import Column, Container, Image, Row, UserControl, VerticalDivider, margin
+from flet import Column, Container, Image, Row, VerticalDivider, margin
 
 
-class BaseView(UserControl):
+class BaseView(Column):
     def __init__(self, state: AppState, image: str = "placeholder.png"):
         super().__init__()
         self.state = state

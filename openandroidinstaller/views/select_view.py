@@ -26,8 +26,8 @@ from flet import (
     OutlinedButton,
     Row,
     TextButton,
-    colors,
-    icons,
+    Colors,
+    Icons,
 )
 from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
@@ -108,16 +108,16 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.selected_image = Text("Selected image: ")
         self.selected_recovery = Text("Selected recovery: ")
         self.selected_dtbo = Checkbox(
-            fill_color=colors.RED, value=None, disabled=True, tristate=True
+            fill_color=Colors.RED, value=None, disabled=True, tristate=True
         )
         self.selected_vbmeta = Checkbox(
-            fill_color=colors.RED, value=None, disabled=True, tristate=True
+            fill_color=Colors.RED, value=None, disabled=True, tristate=True
         )
         self.selected_super_empty = Checkbox(
-            fill_color=colors.RED, value=None, disabled=True, tristate=True
+            fill_color=Colors.RED, value=None, disabled=True, tristate=True
         )
         self.selected_vendor_boot = Checkbox(
-            fill_color=colors.RED, value=None, disabled=True, tristate=True
+            fill_color=Colors.RED, value=None, disabled=True, tristate=True
         )
 
         # initialize and manage button state.
@@ -134,7 +134,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.back_button = ElevatedButton(
             "Back",
             on_click=self.on_back,
-            icon=icons.ARROW_BACK,
+            icon=Icons.ARROW_BACK,
             expand=True,
         )
         # store image and recovery compatibility
@@ -166,8 +166,8 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             "What is this?",
             on_click=self.open_explain_images_dlg,
             expand=True,
-            icon=icons.HELP_OUTLINE_OUTLINED,
-            icon_color=colors.DEEP_ORANGE_500,
+            icon=Icons.HELP_OUTLINE_OUTLINED,
+            icon_color=Colors.DEEP_ORANGE_500,
             tooltip="Get more details on custom operating system images and recoveries.",
         )
 
@@ -193,7 +193,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                     Text(
                         "Important notes for your device",
                         style="titleSmall",
-                        color=colors.RED,
+                        color=Colors.RED,
                         weight="bold",
                     ),
                     Markdown(notes),
@@ -214,7 +214,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                             [
                                 ElevatedButton(
                                     "Download LineageOS image",
-                                    icon=icons.DOWNLOAD_OUTLINED,
+                                    icon=Icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
                                         self.download_link
                                     ),
@@ -222,7 +222,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                                 ),
                                 ElevatedButton(
                                     "Download TWRP recovery",
-                                    icon=icons.DOWNLOAD_OUTLINED,
+                                    icon=Icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
                                         twrp_download_link
                                     ),
@@ -246,7 +246,7 @@ The image file should look something like `lineage-22.1-20241101-nightly-{self.s
                     [
                         FilledButton(
                             "Pick OS image",
-                            icon=icons.UPLOAD_FILE,
+                            icon=Icons.UPLOAD_FILE,
                             on_click=lambda _: self.pick_image_dialog.pick_files(
                                 allow_multiple=False,
                                 file_type="custom",
@@ -275,7 +275,7 @@ The recovery image should look something like `twrp-3.7.1_12-0-{self.state.confi
                         [
                             FilledButton(
                                 "Pick TWRP recovery file",
-                                icon=icons.UPLOAD_FILE,
+                                icon=Icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_recovery_dialog.pick_files(
                                     allow_multiple=False,
                                     file_type="custom",
@@ -378,8 +378,8 @@ If this download page does not contain the required images, you can try to find 
             "Why do I need this and where do I get it?",
             on_click=self.open_explain_additional_images_dlg,
             expand=True,
-            icon=icons.HELP_OUTLINE_OUTLINED,
-            icon_color=colors.DEEP_ORANGE_500,
+            icon=Icons.HELP_OUTLINE_OUTLINED,
+            icon_color=Colors.DEEP_ORANGE_500,
             tooltip="Get more details on additional images and download links.",
         )
 
@@ -412,7 +412,7 @@ Make sure the file is for **your exact phone model!**""",
                         [
                             FilledButton(
                                 "Pick `dtbo.img` image",
-                                icon=icons.UPLOAD_FILE,
+                                icon=Icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_dtbo_dialog.pick_files(
                                     allow_multiple=False,
                                     file_type="custom",
@@ -433,7 +433,7 @@ Make sure the file is for **your exact phone model!**""",
                         [
                             FilledButton(
                                 "Pick `vbmeta.img` image",
-                                icon=icons.UPLOAD_FILE,
+                                icon=Icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_vbmeta_dialog.pick_files(
                                     allow_multiple=False,
                                     file_type="custom",
@@ -454,7 +454,7 @@ Make sure the file is for **your exact phone model!**""",
                         [
                             FilledButton(
                                 "Pick `super_empty.img` image",
-                                icon=icons.UPLOAD_FILE,
+                                icon=Icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_super_empty_dialog.pick_files(
                                     allow_multiple=False,
                                     file_type="custom",
@@ -475,7 +475,7 @@ Make sure the file is for **your exact phone model!**""",
                         [
                             FilledButton(
                                 "Pick `vendor_boot.img` image",
-                                icon=icons.UPLOAD_FILE,
+                                icon=Icons.UPLOAD_FILE,
                                 on_click=lambda _: self.pick_vendor_boot_dialog.pick_files(
                                     allow_multiple=False,
                                     file_type="custom",
@@ -534,11 +534,11 @@ Make sure the file is for **your exact phone model!**""",
                 image_path=self.state.image_path,
             )
             if self.image_compatibility.status == CompatibilityStatus.COMPATIBLE:
-                self.selected_image.color = colors.GREEN
+                self.selected_image.color = Colors.GREEN
             elif self.image_compatibility.status == CompatibilityStatus.UNKNOWN:
-                self.selected_image.color = colors.ORANGE
+                self.selected_image.color = Colors.ORANGE
             else:
-                self.selected_image.color = colors.RED
+                self.selected_image.color = Colors.RED
             self.selected_image.value += f"\n> {self.image_compatibility.message}"
         # if the image works and the sdk level is 33 or higher, show the additional image selection
         if self.state.flash_recovery:
@@ -573,11 +573,11 @@ Make sure the file is for **your exact phone model!**""",
                 recovery_path=self.state.recovery_path,
             )
             if self.recovery_compatibility.status == CompatibilityStatus.COMPATIBLE:
-                self.selected_recovery.color = colors.GREEN
+                self.selected_recovery.color = Colors.GREEN
             elif self.recovery_compatibility.status == CompatibilityStatus.UNKNOWN:
-                self.selected_recovery.color = colors.ORANGE
+                self.selected_recovery.color = Colors.ORANGE
             else:
-                self.selected_recovery.color = colors.RED
+                self.selected_recovery.color = Colors.RED
             self.selected_recovery.value += f"\n> {self.recovery_compatibility.message}"
         # update
         self.enable_button_if_ready(None)
@@ -588,12 +588,12 @@ Make sure the file is for **your exact phone model!**""",
         if e.files:
             # check if the dtbo works with the device and show the filename in different colors accordingly
             if path == "dtbo.img":
-                self.selected_dtbo.fill_color = colors.GREEN
+                self.selected_dtbo.fill_color = Colors.GREEN
                 self.selected_dtbo.value = True
                 self.state.dtbo_path = e.files[0].path
                 logger.info(f"Selected dtbo from {self.state.dtbo_path}")
             else:
-                self.selected_dtbo.fill_color = colors.RED
+                self.selected_dtbo.fill_color = Colors.RED
                 self.selected_dtbo.value = False
         else:
             logger.info("No image selected.")
@@ -606,12 +606,12 @@ Make sure the file is for **your exact phone model!**""",
         if e.files:
             # check if the vbmeta works with the device and show the filename in different colors accordingly
             if path == "vbmeta.img":
-                self.selected_vbmeta.fill_color = colors.GREEN
+                self.selected_vbmeta.fill_color = Colors.GREEN
                 self.selected_vbmeta.value = True
                 self.state.vbmeta_path = e.files[0].path
                 logger.info(f"Selected vbmeta from {self.state.vbmeta_path}")
             else:
-                self.selected_vbmeta.fill_color = colors.RED
+                self.selected_vbmeta.fill_color = Colors.RED
                 self.selected_vbmeta.value = False
         else:
             logger.info("No image selected.")
@@ -625,12 +625,12 @@ Make sure the file is for **your exact phone model!**""",
         if e.files:
             # check if the super_empty works with the device and show the filename in different colors accordingly
             if path == "super_empty.img":
-                self.selected_super_empty.fill_color = colors.GREEN
+                self.selected_super_empty.fill_color = Colors.GREEN
                 self.selected_super_empty.value = True
                 self.state.super_empty_path = e.files[0].path
                 logger.info(f"Selected super_empty from {self.state.super_empty_path}")
             else:
-                self.selected_super_empty.fill_color = colors.RED
+                self.selected_super_empty.fill_color = Colors.RED
                 self.selected_super_empty.value = False
         else:
             logger.info("No image selected.")
@@ -644,14 +644,14 @@ Make sure the file is for **your exact phone model!**""",
         if e.files:
             # check if the super_empty works with the device and show the filename in different colors accordingly
             if path == "vendor_boot.img":
-                self.selected_vendor_boot.fill_color = colors.GREEN
+                self.selected_vendor_boot.fill_color = Colors.GREEN
                 self.selected_vendor_boot.value = True
                 self.state.vendor_boot_path = e.files[0].path
                 logger.info(
                     f"Selected vendor_boot.img from {self.state.vendor_boot_path}"
                 )
             else:
-                self.selected_vendor_boot.fill_color = colors.RED
+                self.selected_vendor_boot.fill_color = Colors.RED
                 self.selected_vendor_boot.value = False
         else:
             logger.info("No image selected.")
@@ -676,7 +676,7 @@ Make sure the file is for **your exact phone model!**""",
                 self.info_field.controls = [
                     Text(
                         "Something is wrong with the selected files.",
-                        color=colors.RED,
+                        color=Colors.RED,
                         weight="bold",
                     )
                 ]
@@ -704,7 +704,7 @@ Make sure the file is for **your exact phone model!**""",
                 self.info_field.controls = [
                     Text(
                         "Some additional images don't match or are missing.",
-                        color=colors.RED,
+                        color=Colors.RED,
                         weight="bold",
                     )
                 ]
@@ -724,7 +724,7 @@ Make sure the file is for **your exact phone model!**""",
                 self.info_field.controls = [
                     Text(
                         "Image doesn't work with the device.",
-                        color=colors.RED,
+                        color=Colors.RED,
                         weight="bold",
                     )
                 ]
