@@ -5,26 +5,7 @@ on:
 
 
 jobs:
-  ci:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: ['ubuntu-20.04', 'ubuntu-latest']
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
-      with:
-        python-version: 3.11
-    - run: pip install -r requirements.txt
-    - run: python scripts/download-tools.py
-    - run: pip install black ruff pytest pytest-cov pytest-mock pytest-subprocess
-    - run: black .
-    - run: ruff check openandroidinstaller/ --ignore E501
-    - run: PYTHONPATH=openandroidinstaller:$(PYTHONPATH) pytest --cov=openandroidinstaller tests/
-
   build:
-    needs: ci
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -44,7 +25,6 @@ jobs:
         path: dist/
 
   build-windows:
-    needs: ci
     runs-on: 'windows-latest'
     steps:
     - uses: actions/checkout@v4
