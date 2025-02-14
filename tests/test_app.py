@@ -60,6 +60,7 @@ def test_app_beyond2lte():
     state = page.controls[0].state
     state.load_config(device_code="sargo")
     state.default_views.extend(state.addon_views)
+    print(page.__dict__)
     number_of_steps = 14
     for _ in range(number_of_steps):
         page.controls[0].to_next_view(None)
