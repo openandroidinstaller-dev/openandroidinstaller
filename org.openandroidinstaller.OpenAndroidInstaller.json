@@ -85,7 +85,7 @@
                 {
                     "type": "script",
                     "commands": [
-                        "python3 /app/lib/python3.10/site-packages/openandroidinstaller/openandroidinstaller.py"
+                        "python3 /app/lib/python3.11/site-packages/openandroidinstaller/openandroidinstaller.py"
                     ],
                     "dest-filename": "openandroidinstaller.sh"
                 },
