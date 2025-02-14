@@ -28,7 +28,7 @@ class SuccessView(BaseView):
         def close_window(e):
             logger.success("Success! Close the window.")
             # close the window
-            self.page.window_close()
+            self.page.window.close()
 
         # right view header
         self.right_view_header.controls = [

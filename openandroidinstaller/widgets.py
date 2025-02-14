@@ -31,7 +31,7 @@ from flet import (
 from styles import Text
 
 
-class TerminalBox(Container):
+class TerminalBox(Row):
     def __init__(self, expand: bool = True, visible: bool = False):
         super().__init__(expand=expand)
         self.visible = visible
@@ -78,10 +78,6 @@ class TerminalBox(Container):
         """Clear terminal output."""
         self._box.content.controls[0].value = ""
         self.update()
-
-    def update(self):
-        """Update the view."""
-        self._box.update()
 
 
 class ProgressIndicator(Container):
@@ -157,7 +153,7 @@ class ProgressIndicator(Container):
         if not self.progress_ring:
             self.progress_ring = ProgressRing(color="#00d886")
             self._container.content.controls.append(self.progress_ring)
-            self._container.update()
+            self.update()
 
     def clear(self):
         """Clear output."""
@@ -165,10 +161,6 @@ class ProgressIndicator(Container):
         self.progress_ring = None
         self.progress_bar = None
         self.update()
-
-    def update(self):
-        """Update the view."""
-        self._container.update()
 
 
 def get_title(

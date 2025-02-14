@@ -72,7 +72,7 @@ class MainView(Column):
             on_confirm=self.to_next_view,
             state=self.state,
         )
-        self.state.page.add(welcome_view)
+        # self.state.page.add(welcome_view)
 
         start_view = StartView(
             on_confirm=self.to_next_view,

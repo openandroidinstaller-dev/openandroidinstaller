@@ -78,10 +78,12 @@ class StepView(BaseView):
                 logger.info("Enable advanced output.")
                 self.state.advanced = True
                 self.terminal_box.toggle_visibility()
+                self.right_view.update()
             else:
                 logger.info("Disable advanced output.")
                 self.state.advanced = False
                 self.terminal_box.toggle_visibility()
+                self.right_view.update()
             self.right_view.update()
 
         self.advanced_switch = Switch(
