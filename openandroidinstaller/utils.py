@@ -204,7 +204,7 @@ def send_tracking_info(device_code: str, event: str):
 
     headers = {
         "Content-Type": "application/json",
-        "User-Agent": "OpenAndroidInstaller",
+        "User-Agent": "Desktop-App",
     }
 
     # Send the POST request
