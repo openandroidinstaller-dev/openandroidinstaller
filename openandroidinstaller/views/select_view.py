@@ -39,6 +39,7 @@ from utils import (
     image_sdk_level,
     image_works_with_device,
     recovery_works_with_device,
+    send_tracking_info,
 )
 from views import BaseView
 from widgets import confirm_button, get_title
@@ -120,9 +121,16 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             fill_color=Colors.RED, value=None, disabled=True, tristate=True
         )
 
+        def confirm_with_tracking(e):
+            # if self.state.test is False:
+            send_tracking_info(
+                device_code=self.state.config.device_code, event="started"
+            )
+            self.on_confirm(e)
+
         # initialize and manage button state.
         self.confirm_button = confirm_button(
-            self.on_confirm, confirm_text="Let's start flashing!"
+            confirm_with_tracking, confirm_text="Let's start flashing!"
         )
         self.confirm_button.disabled = True
         self.continue_eitherway_button = confirm_button(

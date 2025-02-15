@@ -188,3 +188,27 @@ def recovery_works_with_device(
             CompatibilityStatus.INCOMPATIBLE,
             f"Recovery file {recovery_file_name} is not supported by device code in file name.",
         )
+
+
+def send_tracking_info(device_code: str, event: str):
+    # Plausible API endpoint for tracking events
+    url = "https://plausible.io/api/event"
+
+    # Prepare the JSON payload.
+    # Even if you’re not on a website, you can supply a fabricated URL (like "app://login")
+    data = {
+        "name": event,
+        "url": "app://openandroidinstaller",
+        "domain": "openandroidinstaller.org",
+        "props": {"device_code": device_code},
+    }
+
+    # Set headers. A proper User-Agent is important for accurate unique visitor tracking.
+    headers = {
+        "Content-Type": "application/json",
+        "User-Agent": "OpenAndroidInstaller",
+    }
+
+    # Send the POST request
+    _ = requests.post(url, json=data, headers=headers)
+    logger.info(f"Sent tracking event '{event}' for device '{device_code}'.")
