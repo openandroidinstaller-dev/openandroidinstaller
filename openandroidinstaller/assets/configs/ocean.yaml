@@ -55,8 +55,3 @@ steps:
         In some cases, the inactive slot can be unpopulated or contain much older firmware than the active slot, leading to various issues including a potential hard-brick.
         We can ensure none of that will happen by copying the contents of the active slot to the inactive slot. Press 'confirm and run' to to this. Once you are in the bootloader again, continue.
       command: adb_twrp_copy_partitions
-    - type: call_button
-      img: twrp-start.jpeg
-      content: >
-        Now we need to boot into recovery again. Press run and when you see the TWRP screen you can continue.
-      command: fastboot_boot_recovery

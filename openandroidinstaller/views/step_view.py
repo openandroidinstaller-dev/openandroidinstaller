@@ -158,11 +158,9 @@ class StepView(BaseView):
             self.right_view.controls.extend(
                 [Row([link_button(self.step.link, "Open Link"), self.confirm_button])]
             )
-
         elif self.step.type != "text":
             logger.error(f"Unknown step type: {self.step.type}")
             raise Exception(f"Unknown step type: {self.step.type}")
-
         # if skipping is allowed add a button to the view
         if self.step.allow_skip or self.state.test:
             self.right_view.controls.append(

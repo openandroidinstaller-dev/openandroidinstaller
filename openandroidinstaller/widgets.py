@@ -80,7 +80,7 @@ class TerminalBox(Row):
         self.update()
 
 
-class ProgressIndicator(Container):
+class ProgressIndicator(Row):
     def __init__(self, expand: bool = True):
         super().__init__(expand=expand)
         # placeholder for the flashing progressbar
@@ -131,6 +131,7 @@ class ProgressIndicator(Container):
                 percentage_done = max(1, min(99, percentage_done))
             # update the progress bar
             self.set_progress_bar(percentage_done)
+        self.update()
 
     def set_progress_bar(self, percentage_done: int):
         """Set the progress bar to the given percentage.
