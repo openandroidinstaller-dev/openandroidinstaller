@@ -195,7 +195,6 @@ def send_tracking_info(device_code: str, event: str):
     url = "https://plausible.io/api/event"
 
     # Prepare the JSON payload.
-    # Even if you’re not on a website, you can supply a fabricated URL (like "app://login")
     data = {
         "name": event,
         "url": "app://openandroidinstaller",
@@ -203,7 +202,6 @@ def send_tracking_info(device_code: str, event: str):
         "props": {"device_code": device_code},
     }
 
-    # Set headers. A proper User-Agent is important for accurate unique visitor tracking.
     headers = {
         "Content-Type": "application/json",
         "User-Agent": "OpenAndroidInstaller",
