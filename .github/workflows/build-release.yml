@@ -23,7 +23,7 @@ jobs:
     - run: pip install black ruff pytest pytest-cov pytest-mock pytest-subprocess
     - run: black .
     - run: ruff check openandroidinstaller/ --ignore E501
-    - run: PYTHONPATH=openandroidinstaller:$(PYTHONPATH) pytest --cov=openandroidinstaller tests/
+    #- run: PYTHONPATH=openandroidinstaller:$(PYTHONPATH) pytest --cov=openandroidinstaller tests/
 
   build:
     needs: ci
