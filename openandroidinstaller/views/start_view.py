@@ -34,6 +34,7 @@ from styles import Markdown, Text
 from tooling import search_device, SearchResult
 from views import BaseView
 from widgets import get_title
+from utils import send_tracking_info
 
 
 class StartView(BaseView):
@@ -274,6 +275,7 @@ If you don't know what this means, you most likely don't need to do anything and
                 )
                 # add request support for device button
                 request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?labels=device&template=device-support-request.yaml&title=Add support for `{result.device_code}`"
+                send_tracking_info(result.device_code, "not_supported")
                 self.device_request_row.controls.append(
                     ElevatedButton(
                         "Request support for this device",

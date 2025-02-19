@@ -122,10 +122,10 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         )
 
         def confirm_with_tracking(e):
-            # if self.state.test is False:
-            send_tracking_info(
-                device_code=self.state.config.device_code, event="started"
-            )
+            if self.state.test is False:
+                send_tracking_info(
+                    device_code=self.state.config.device_code, event="started"
+                )
             self.on_confirm(e)
 
         # initialize and manage button state.
