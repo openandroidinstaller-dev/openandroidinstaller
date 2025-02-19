@@ -13,7 +13,7 @@
 from typing import Callable
 
 from app_state import AppState
-from flet import Divider, ElevatedButton, Row, icons
+from flet import Divider, ElevatedButton, Row, Icons
 from styles import Markdown, Text
 from views import BaseView
 from widgets import get_title
@@ -37,7 +37,7 @@ class WelcomeView(BaseView):
         self.continue_button = ElevatedButton(
             "Let's start!",
             on_click=self.on_confirm,
-            icon=icons.NEXT_PLAN_OUTLINED,
+            icon=Icons.NEXT_PLAN_OUTLINED,
             disabled=False,
             expand=True,
         )

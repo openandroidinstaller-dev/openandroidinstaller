@@ -24,15 +24,14 @@ from flet import (
     ProgressBar,
     ProgressRing,
     Row,
-    UserControl,
     alignment,
-    colors,
-    icons,
+    Colors,
+    Icons,
 )
 from styles import Text
 
 
-class TerminalBox(UserControl):
+class TerminalBox(Row):
     def __init__(self, expand: bool = True, visible: bool = False):
         super().__init__(expand=expand)
         self.visible = visible
@@ -48,7 +47,7 @@ class TerminalBox(UserControl):
             margin=10,
             padding=10,
             alignment=alignment.top_left,
-            bgcolor=colors.BLACK38,
+            bgcolor=Colors.BLACK38,
             height=300,
             border_radius=2,
             expand=True,
@@ -80,12 +79,8 @@ class TerminalBox(UserControl):
         self._box.content.controls[0].value = ""
         self.update()
 
-    def update(self):
-        """Update the view."""
-        self._box.update()
 
-
-class ProgressIndicator(UserControl):
+class ProgressIndicator(Row):
     def __init__(self, expand: bool = True):
         super().__init__(expand=expand)
         # placeholder for the flashing progressbar
@@ -136,6 +131,7 @@ class ProgressIndicator(UserControl):
                 percentage_done = max(1, min(99, percentage_done))
             # update the progress bar
             self.set_progress_bar(percentage_done)
+        self.update()
 
     def set_progress_bar(self, percentage_done: int):
         """Set the progress bar to the given percentage.
@@ -158,7 +154,7 @@ class ProgressIndicator(UserControl):
         if not self.progress_ring:
             self.progress_ring = ProgressRing(color="#00d886")
             self._container.content.controls.append(self.progress_ring)
-            self._container.update()
+            self.update()
 
     def clear(self):
         """Clear output."""
@@ -166,10 +162,6 @@ class ProgressIndicator(UserControl):
         self.progress_ring = None
         self.progress_bar = None
         self.update()
-
-    def update(self):
-        """Update the view."""
-        self._container.update()
 
 
 def get_title(
@@ -210,7 +202,7 @@ def confirm_button(
     return ElevatedButton(
         f"{confirm_text}",
         on_click=confirm_func,
-        icon=icons.NEXT_PLAN_OUTLINED,
+        icon=Icons.NEXT_PLAN_OUTLINED,
         expand=True,
     )
 
@@ -223,7 +215,7 @@ def call_button(
         f"{confirm_text}",
         on_click=partial(call_func, command=command),
         expand=True,
-        icon=icons.DIRECTIONS_RUN_OUTLINED,
+        icon=Icons.DIRECTIONS_RUN_OUTLINED,
     )
 
 

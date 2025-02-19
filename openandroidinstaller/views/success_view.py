@@ -16,6 +16,7 @@ from loguru import logger
 from styles import Markdown, Text
 from views import BaseView
 from widgets import get_title
+from utils import send_tracking_info
 
 
 class SuccessView(BaseView):
@@ -26,9 +27,13 @@ class SuccessView(BaseView):
         self,
     ):
         def close_window(e):
+            if self.state.test is False:
+                send_tracking_info(
+                    event="finished", device_code=self.state.config.device_code
+                )
             logger.success("Success! Close the window.")
             # close the window
-            self.page.window_close()
+            self.page.window.close()
 
         # right view header
         self.right_view_header.controls = [

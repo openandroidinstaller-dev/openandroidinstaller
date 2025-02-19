@@ -25,8 +25,8 @@ from flet import (
     Row,
     Switch,
     TextButton,
-    colors,
-    icons,
+    Colors,
+    Icons,
 )
 from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
@@ -34,6 +34,7 @@ from styles import Markdown, Text
 from tooling import search_device, SearchResult
 from views import BaseView
 from widgets import get_title
+from utils import send_tracking_info
 
 
 class StartView(BaseView):
@@ -56,14 +57,14 @@ class StartView(BaseView):
         self.continue_button = ElevatedButton(
             "Continue",
             on_click=self.on_confirm,
-            icon=icons.NEXT_PLAN_OUTLINED,
+            icon=Icons.NEXT_PLAN_OUTLINED,
             disabled=True,
             expand=True,
         )
         self.back_button = ElevatedButton(
             "Back",
             on_click=self.on_back,
-            icon=icons.ARROW_BACK,
+            icon=Icons.ARROW_BACK,
             expand=True,
         )
 
@@ -98,8 +99,8 @@ Now you are ready to continue.
             label="Bootloader is already unlocked.",
             on_change=check_bootloader_unlocked,
             disabled=True,
-            inactive_thumb_color=colors.YELLOW,
-            active_color=colors.GREEN,
+            inactive_thumb_color=Colors.YELLOW,
+            active_color=Colors.GREEN,
             col={"xl": 6},
         )
 
@@ -112,8 +113,8 @@ Now you are ready to continue.
             label="Custom recovery is already flashed.",
             on_change=check_recovery_already_flashed,
             disabled=True,
-            inactive_thumb_color=colors.YELLOW,
-            active_color=colors.GREEN,
+            inactive_thumb_color=Colors.YELLOW,
+            active_color=Colors.GREEN,
             col={"xl": 6},
         )
 
@@ -157,8 +158,8 @@ To get started you need to
                             "How do I enable developer options?",
                             on_click=self.open_developer_options_dlg,
                             expand=True,
-                            icon=icons.HELP_OUTLINE_OUTLINED,
-                            icon_color=colors.DEEP_ORANGE_500,
+                            icon=Icons.HELP_OUTLINE_OUTLINED,
+                            icon_color=Colors.DEEP_ORANGE_500,
                             tooltip="Get help to enable developer options and OEM unlocking.",
                         )
                     ]
@@ -189,7 +190,7 @@ If you don't know what this means, you most likely don't need to do anything and
                         FilledButton(
                             "Search for device",
                             on_click=self.search_devices_clicked,
-                            icon=icons.DEVICES_OTHER_OUTLINED,
+                            icon=Icons.DEVICES_OTHER_OUTLINED,
                             expand=True,
                             tooltip="Search for a connected device.",
                         ),
@@ -233,11 +234,11 @@ If you don't know what this means, you most likely don't need to do anything and
             )
             if result.device_code:
                 self.device_name.value = result.device_code
-                self.device_name.color = colors.BLACK
+                self.device_name.color = Colors.BLACK
             else:
                 logger.info("No device detected! Connect to USB and try again.")
                 self.device_name.value = result.msg
-                self.device_name.color = colors.RED
+                self.device_name.color = Colors.RED
 
         # load the config, if a device is detected
         if result.device_code:
@@ -260,7 +261,7 @@ If you don't know what this means, you most likely don't need to do anything and
                 self.device_name.value = (
                     f"{device_name} (code: {self.state.config.device_code})"
                 )
-                self.device_name.color = colors.GREEN
+                self.device_name.color = Colors.GREEN
                 # if there are no steps for bootloader unlocking, assume there is nothing to do and toggle the switch
                 if len(self.state.config.unlock_bootloader) == 0:
                     self.bootloader_switch.value = True
@@ -274,12 +275,13 @@ If you don't know what this means, you most likely don't need to do anything and
                 )
                 # add request support for device button
                 request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?labels=device&template=device-support-request.yaml&title=Add support for `{result.device_code}`"
+                send_tracking_info(result.device_code, "not_supported")
                 self.device_request_row.controls.append(
                     ElevatedButton(
                         "Request support for this device",
-                        icon=icons.PHONELINK_SETUP_OUTLINED,
+                        icon=Icons.PHONELINK_SETUP_OUTLINED,
                         on_click=lambda _: webbrowser.open(request_url),
                     )
                 )
-                self.device_name.color = colors.RED
+                self.device_name.color = Colors.RED
         self.view.update()

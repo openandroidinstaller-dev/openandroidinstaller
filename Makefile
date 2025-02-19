@@ -29,7 +29,7 @@ format:
 	poetry run black .
 
 lint:
-	poetry run ruff openandroidinstaller/ --ignore E501
+	poetry run ruff check openandroidinstaller/ --ignore E501
 
 typing:
 	poetry run mypy openandroidinstaller/. --ignore-missing-imports

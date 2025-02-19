@@ -24,8 +24,8 @@ from flet import (
     OutlinedButton,
     Row,
     TextButton,
-    colors,
-    icons,
+    Colors,
+    Icons,
 )
 from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
@@ -60,7 +60,7 @@ class RequirementsView(BaseView):
         self.continue_button = ElevatedButton(
             "Continue",
             on_click=self.on_confirm,
-            icon=icons.NEXT_PLAN_OUTLINED,
+            icon=Icons.NEXT_PLAN_OUTLINED,
             disabled=True,
             expand=True,
         )
@@ -68,7 +68,7 @@ class RequirementsView(BaseView):
         self.back_button = ElevatedButton(
             "Back",
             on_click=self.on_back,
-            icon=icons.ARROW_BACK,
+            icon=Icons.ARROW_BACK,
             expand=True,
         )
 
@@ -105,8 +105,8 @@ On some devices, the build version is basically the firmware version.""",
             "How to Find the version",
             on_click=self.open_find_version_dlg,
             expand=False,
-            icon=icons.HELP_OUTLINE_OUTLINED,
-            icon_color=colors.DEEP_ORANGE_500,
+            icon=Icons.HELP_OUTLINE_OUTLINED,
+            icon_color=Colors.DEEP_ORANGE_500,
             tooltip="How to find the firmware and android version of your device.",
         )
 

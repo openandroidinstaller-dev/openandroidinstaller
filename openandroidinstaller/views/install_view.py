@@ -14,7 +14,7 @@ from time import sleep
 from typing import Callable
 
 from app_state import AppState
-from flet import Column, ElevatedButton, Row, Switch, colors, icons
+from flet import Column, ElevatedButton, Row, Switch, Colors, Icons
 from loguru import logger
 from styles import Markdown, Text
 from tooling import adb_twrp_wipe_and_install
@@ -34,7 +34,7 @@ class InstallView(BaseView):
     def build(self):
         """Create the content of the view."""
         # error text
-        self.error_text = Text("", color=colors.GREEN)
+        self.error_text = Text("", color=Colors.GREEN)
 
         # switch to enable advanced output - here it means show terminal input/output in tool
         def check_advanced_switch(e):
@@ -115,7 +115,7 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
             "Confirm and install",
             on_click=self.run_install,
             expand=True,
-            icon=icons.DIRECTIONS_RUN_OUTLINED,
+            icon=Icons.DIRECTIONS_RUN_OUTLINED,
         )
         # build the view
         self.right_view.controls.extend(
@@ -142,7 +142,7 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
                         ElevatedButton(
                             "Skip",
                             on_click=self.on_confirm,
-                            icon=icons.NEXT_PLAN_OUTLINED,
+                            icon=Icons.NEXT_PLAN_OUTLINED,
                             expand=True,
                         ),
                     ]
@@ -160,7 +160,7 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
         self.install_button.disabled = True
         self.install_addons_switch.disabled = True
         self.error_text.value = "Please be patient, it may take a few minutes."
-        self.error_text.color = colors.GREEN
+        self.error_text.color = Colors.GREEN
         # reset the progress indicators
         self.progress_indicator.clear()
         # reset terminal output
@@ -190,7 +190,7 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
             self.install_button.disabled = False
             # also remove the last error text if it happened
             self.error_text.value = "Installation failed! Try again or make sure everything is setup correctly."
-            self.error_text.color = colors.RED
+            self.error_text.color = Colors.RED
         else:
             sleep(5)  # wait to make sure everything is fine
             self.progress_indicator.set_progress_bar(100)

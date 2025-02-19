@@ -30,9 +30,8 @@ from flet import (
     Image,
     Page,
     TextButton,
-    UserControl,
-    colors,
-    icons,
+    Colors,
+    Icons,
 )
 from loguru import logger
 from styles import Text
@@ -50,7 +49,7 @@ from views import (
 )
 
 # VERSION number
-VERSION = "0.5.4-beta"
+VERSION = "0.5.5-beta"
 
 # detect platform
 PLATFORM = sys.platform
@@ -61,7 +60,7 @@ CONFIG_PATH = (
 BIN_PATH = Path(__file__).parent.joinpath(Path("bin")).resolve()
 
 
-class MainView(UserControl):
+class MainView(Column):
     def __init__(self, state: AppState):
         super().__init__()
         self.state = state
@@ -73,6 +72,8 @@ class MainView(UserControl):
             on_confirm=self.to_next_view,
             state=self.state,
         )
+        # self.state.page.add(welcome_view)
+
         start_view = StartView(
             on_confirm=self.to_next_view,
             on_back=self.to_previous_view,
@@ -221,7 +222,6 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
 
     # configure the page
     configure(page)
-
     # header
     page.appbar = AppBar(
         leading=Image(src="/logo-192x192.png", height=40, width=40, border_radius=40),
@@ -236,7 +236,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         actions=[
             Container(
                 content=ElevatedButton(
-                    icon=icons.QUESTION_MARK_ROUNDED,
+                    icon=Icons.QUESTION_MARK_ROUNDED,
                     text="FAQ",
                     on_click=lambda _: webbrowser.open(
                         "https://openandroidinstaller.org/faq.html"
@@ -247,7 +247,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
             ),
             Container(
                 content=ElevatedButton(
-                    icon=icons.FEEDBACK_OUTLINED,
+                    icon=Icons.FEEDBACK_OUTLINED,
                     text="Give feedback",
                     on_click=lambda _: webbrowser.open(
                         "https://openandroidinstaller.org/feedback.html"
@@ -258,7 +258,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
             ),
             Container(
                 content=ElevatedButton(
-                    icon=icons.BUG_REPORT_OUTLINED,
+                    icon=Icons.BUG_REPORT_OUTLINED,
                     text="Report a bug",
                     on_click=lambda _: webbrowser.open(
                         "https://github.com/openandroidinstaller-dev/openandroidinstaller/issues"
@@ -276,8 +276,8 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         page.update()
 
     banner = Banner(
-        bgcolor=colors.AMBER_100,
-        leading=Icon(icons.WARNING_AMBER_ROUNDED, color=colors.AMBER, size=40),
+        bgcolor=Colors.AMBER_100,
+        leading=Icon(Icons.WARNING_AMBER_ROUNDED, color=Colors.AMBER, size=40),
         content=Text(
             "These instructions only work if you follow every section and step precisely. Do not continue after something fails!"
         ),
@@ -287,7 +287,6 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
     )
     page.overlay.append(banner)
     banner.open = True
-    page.update()
 
     # create the State object
     state = AppState(
@@ -300,7 +299,6 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
     state.page = page
     # create application instance
     app = MainView(state=state)
-
     # add application's root control to the page
     page.add(app)
 
