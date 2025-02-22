@@ -95,7 +95,7 @@ class AppState:
                     type="confirm_button",
                     content="If you already flashed TWRP, boot into it by pressing 'Confirm and run'. Otherwise restart the process. Once your phone screen looks like the picture on the left, continue.",
                     command="adb_reboot_recovery",
-                    img="twrp-start.jpeg",
+                    img="twrp-start.png",
                 )
             ]
 
@@ -117,6 +117,6 @@ class AppState:
                     type="call_button",
                     content="If you already flashed TWRP, boot into it by pressing 'Confirm and run'. Otherwise restart the process. Once your phone screen looks like the picture on the left, continue.",
                     command="adb_reboot_recovery",
-                    img="twrp-start.jpeg",
+                    img="twrp-start.png",
                 )
             ]
