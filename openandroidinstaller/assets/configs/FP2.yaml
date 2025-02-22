@@ -16,7 +16,7 @@ steps:
         Make sure your device is turned on and connected to the computer. Boot into the bootloader by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
-      img: twrp-start.jpeg
+      img: twrp-start.png
       content: >
         Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_boot_recovery
