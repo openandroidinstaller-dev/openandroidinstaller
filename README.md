@@ -264,9 +264,9 @@ Make sure to check if your issue or PR has already been fixed or implemented **b
 
 ## Collection of anonymous usage data
 
-The OpenAndroidInstaller application collects anonymous usage data to help us improve the application. This data is collected using [Plausible Analytics](https://plausible.io) and is stored on their servers.
-We do not collect any personal data, and we do not track individual users. We only collect the device code when the installation process is started and finished to see which devices are most commonly used with the application.
-The code is available in the function `send_tracking_info` in the `openandroidinstaller/utils.py` file.
+The OpenAndroidInstaller application collects anonymous usage data to help us improve the application. This data is collected using [Plausible Analytics](https://plausible.io) and is stored on their servers. You can see what is collected here: [![Statistics](https://img.shields.io/badge/Statistics-8A2BE2)](https://plausible.io/openandroidinstaller.org).
+
+We do not collect any personal data, and we do not track individual users. We only collect the device code when the installation process is started and finished to see which devices are most commonly used with the application. The code is available in the function `send_tracking_info` in the `openandroidinstaller/utils.py` file.
 
 ## Acknowledgements
 

@@ -28,8 +28,8 @@ from flet import (
     TextButton,
     Colors,
     Icons,
+    ContinuousRectangleBorder,
 )
-from flet_core.buttons import ContinuousRectangleBorder
 from loguru import logger
 from styles import Markdown, Text
 from utils import (
