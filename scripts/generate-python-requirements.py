@@ -125,7 +125,7 @@ def make_build_command(package_names):
     base = (
         'pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST}'
     )
-    return f'{base} {" ".join(package_names)}'
+    return f"{base} {' '.join(package_names)}"
 
 
 def main():

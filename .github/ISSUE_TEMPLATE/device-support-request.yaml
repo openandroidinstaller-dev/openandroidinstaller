@@ -1,3 +1,4 @@
+---
 name: Device support request
 description: Request support for a new device
 title: Add support for <DEVICE>
@@ -17,8 +18,8 @@ body:
       label: Is your device already requested?
       description: Please search to see if an issue for your device already exists.
       options:
-      - label: I have searched the existing issues
-        required: true
+        - label: I have searched the existing issues
+          required: true
   - type: markdown
     attributes:
       value: "---"
@@ -63,9 +64,9 @@ body:
       placeholder: |
         - Custom ROM: https://wiki.lineageos.org/devices/sargo
         - Recovery: https://twrp.me/google/googlepixel3a.html
-      #value: |
-      #  - Custom ROM:
-      #  - Recovery:
+      # value: |
+      #   - Custom ROM:
+      #   - Recovery:
       render: Markdown
     validations:
       required: true
@@ -76,8 +77,8 @@ body:
     attributes:
       label: Do you own the device and would be willing to test the installer?
       options:
-      - label: I own the device and am willing to test the installer on it.
-        required: true
+        - label: I own the device and am willing to test the installer on it.
+          required: true
   - type: markdown
     attributes:
       value: "---"

@@ -468,10 +468,12 @@ Make sure the file is for **your exact phone model!**""",
                             FilledButton(
                                 "Pick `super_empty.img` image",
                                 icon=Icons.UPLOAD_FILE,
-                                on_click=lambda _: self.pick_super_empty_dialog.pick_files(
-                                    allow_multiple=False,
-                                    file_type="custom",
-                                    allowed_extensions=["img"],
+                                on_click=lambda _: (
+                                    self.pick_super_empty_dialog.pick_files(
+                                        allow_multiple=False,
+                                        file_type="custom",
+                                        allowed_extensions=["img"],
+                                    )
                                 ),
                                 expand=True,
                             ),
@@ -489,10 +491,12 @@ Make sure the file is for **your exact phone model!**""",
                             FilledButton(
                                 "Pick `vendor_boot.img` image",
                                 icon=Icons.UPLOAD_FILE,
-                                on_click=lambda _: self.pick_vendor_boot_dialog.pick_files(
-                                    allow_multiple=False,
-                                    file_type="custom",
-                                    allowed_extensions=["img"],
+                                on_click=lambda _: (
+                                    self.pick_vendor_boot_dialog.pick_files(
+                                        allow_multiple=False,
+                                        file_type="custom",
+                                        allowed_extensions=["img"],
+                                    )
                                 ),
                                 expand=True,
                             ),

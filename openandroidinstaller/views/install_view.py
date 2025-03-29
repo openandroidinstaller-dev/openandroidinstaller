@@ -87,8 +87,7 @@ class InstallView(BaseView):
             )
         ]
         self.right_view.controls = [
-            Markdown(
-                """In the next steps, you finally flash the selected OS image.
+            Markdown("""In the next steps, you finally flash the selected OS image.
 
 Connect your device with your computer with the USB-Cable. This step will format your phone and wipe all the data.
 It will also remove encryption and delete all files stored in the internal storage.
@@ -103,8 +102,7 @@ included Google Apps (like PixelExperience) or microG (lineageOS for microG) is 
 
 #### **Warning:**
 Don't try to add addons like Google Apps if your OS ROM already has Google Apps or microG included! Otherwise your system will break!
-"""
-            )
+""")
         ]
         # basic view
         logger.info("Starting installation.")

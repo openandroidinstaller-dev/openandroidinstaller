@@ -21,9 +21,6 @@ install:
 	poetry run python scripts/download-tools.py
 	poetry run pre-commit install
 
-export:
-	poetry export -f requirements.txt --output requirements.txt
-
 format:
 	poetry run black .
 
