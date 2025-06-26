@@ -333,7 +333,8 @@ flet-desktop-light==0.26.0 ; sys_platform == "linux" and python_version >= "3.11
     --hash=sha256:30605dd2998c5c48bc8f057d239ae0dcbb0f97834ebdf1e6eb51abb85af191b6 \
     --hash=sha256:5ef509a2ef45fa5ebbcca1fb4bec175abf95271a0d85af459931d54d689979d2 \
     --hash=sha256:e4beeaece64b14905914503820b828f8599790e56ff001f99f0c05c85eccf3d1
-flet-desktop==0.26.0 ; sys_platform == "win32" and python_version >= "3.11" and python_full_version <= "3.12.3"
+flet-desktop==0.26.0 ; sys_platform == "win32" and python_version >= "3.11" and python_full_version <= "3.12.3" \
+    --hash=sha256:4bb5770efb38ea523705d1e300a1fc14b603d63ee00a5e03df945c756892cfe9
 flet==0.26.0 ; python_version >= "3.11" and python_full_version <= "3.12.3" \
     --hash=sha256:779e58dcfb4fbf0760715471121a183bf7ecf48e522fee068556cb26df3490fb
 h11==0.14.0 ; python_version >= "3.11" and python_full_version <= "3.12.3" and platform_system != "Pyodide" \
