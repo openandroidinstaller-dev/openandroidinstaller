@@ -328,14 +328,14 @@ click==8.1.8 ; python_version >= "3.11" and python_full_version <= "3.12.3" \
 colorama==0.4.6 ; python_version >= "3.11" and python_full_version <= "3.12.3" and (platform_system == "Windows" or sys_platform == "win32") \
     --hash=sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44 \
     --hash=sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6
-flet-desktop-light==0.26.0 ; sys_platform == "linux" and python_version >= "3.11" and python_full_version <= "3.12.3" \
-    --hash=sha256:20a2cb5e2cdbfe4c65a37a63f39801bd456c0bf6b130e5b0a1fd2eb18b49bd74 \
-    --hash=sha256:30605dd2998c5c48bc8f057d239ae0dcbb0f97834ebdf1e6eb51abb85af191b6 \
-    --hash=sha256:5ef509a2ef45fa5ebbcca1fb4bec175abf95271a0d85af459931d54d689979d2 \
-    --hash=sha256:e4beeaece64b14905914503820b828f8599790e56ff001f99f0c05c85eccf3d1
-flet-desktop==0.26.0 ; sys_platform == "win32" and python_version >= "3.11" and python_full_version <= "3.12.3" \
-    --hash=sha256:4bb5770efb38ea523705d1e300a1fc14b603d63ee00a5e03df945c756892cfe9
-flet==0.26.0 ; python_version >= "3.11" and python_full_version <= "3.12.3" \
+#flet-desktop-light==0.26.0 ; sys_platform == "linux" and python_version >= "3.11" and python_full_version <= "3.12.3" \
+#    --hash=sha256:20a2cb5e2cdbfe4c65a37a63f39801bd456c0bf6b130e5b0a1fd2eb18b49bd74 \
+#    --hash=sha256:30605dd2998c5c48bc8f057d239ae0dcbb0f97834ebdf1e6eb51abb85af191b6 \
+#    --hash=sha256:5ef509a2ef45fa5ebbcca1fb4bec175abf95271a0d85af459931d54d689979d2 \
+#    --hash=sha256:e4beeaece64b14905914503820b828f8599790e56ff001f99f0c05c85eccf3d1
+#flet-desktop==0.26.0 ; sys_platform == "win32" and python_version >= "3.11" and python_full_version <= "3.12.3" \
+#    --hash=sha256:4bb5770efb38ea523705d1e300a1fc14b603d63ee00a5e03df945c756892cfe9
+flet[all]==0.26.0 ; python_version >= "3.11" and python_full_version <= "3.12.3" \
     --hash=sha256:779e58dcfb4fbf0760715471121a183bf7ecf48e522fee068556cb26df3490fb
 h11==0.14.0 ; python_version >= "3.11" and python_full_version <= "3.12.3" and platform_system != "Pyodide" \
     --hash=sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d \
