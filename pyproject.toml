@@ -23,6 +23,7 @@ py7zr = "^0.20.0"
 typing-extensions = "^4.7.1"
 requirements-parser = "^0.11.0"
 flet-desktop-light = "^0.26.0"
+certifi = "^2025.6.15"
 
 [tool.poetry.group.dev.dependencies]
 black = ">=24.3.0"
@@ -35,6 +36,9 @@ pytest-mock = "^3.10.0"
 bandit = "^1.7.4"
 pytest-subprocess = "^1.5.0"
 mypy = "^1.0.0"
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

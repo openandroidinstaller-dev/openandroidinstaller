@@ -158,9 +158,9 @@ brotlicffi==1.1.0.0 ; python_version >= "3.11" and python_full_version <= "3.12.
     --hash=sha256:ce01c7316aebc7fce59da734286148b1d1b9455f89cf2c8a4dfce7d41db55c2d \
     --hash=sha256:d9eb71bb1085d996244439154387266fd23d6ad37161f6f52f1cd41dd95a3808 \
     --hash=sha256:fa8ca0623b26c94fccc3a1fdd895be1743b838f3917300506d04aa3346fd2a14
-certifi==2025.1.31 ; python_version >= "3.11" and python_full_version <= "3.12.3" \
-    --hash=sha256:3d5da6925056f6f18f119200434a4780a94263f10d1c21d032a6f6b2baa20651 \
-    --hash=sha256:ca78db4565a652026a4db2bcdf68f2fb589ea80d0be70e03929ed730746b84fe
+certifi==2025.6.15 ; python_version >= "3.11" and python_full_version <= "3.12.3" \
+    --hash=sha256:2e0c7ce7cb5d8f8634ca55d2ba7e6ec2689a2fd6537d8dec1296a477a4910057 \
+    --hash=sha256:d747aa5a8b9bbbb1bb8c22bb13e22bd1f18e9796defa16bab421f7f7a317323b
 cffi==1.17.1 ; python_version >= "3.11" and python_full_version <= "3.12.3" and platform_python_implementation == "PyPy" \
     --hash=sha256:045d61c734659cc045141be4bae381a41d89b741f795af1dd018bfb532fd0df8 \
     --hash=sha256:0984a4925a435b1da406122d4d7968dd861c1385afe3b45ba82b750f229811e2 \
@@ -328,7 +328,7 @@ click==8.1.8 ; python_version >= "3.11" and python_full_version <= "3.12.3" \
 colorama==0.4.6 ; python_version >= "3.11" and python_full_version <= "3.12.3" and (platform_system == "Windows" or sys_platform == "win32") \
     --hash=sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44 \
     --hash=sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6
-flet-desktop-light==0.26.0 ; sys_platform == "linux" and python_version >= "3.11" and python_full_version <= "3.12.3" \
+flet-desktop-light==0.26.0 ; python_version >= "3.11" and python_full_version <= "3.12.3" \
     --hash=sha256:20a2cb5e2cdbfe4c65a37a63f39801bd456c0bf6b130e5b0a1fd2eb18b49bd74 \
     --hash=sha256:30605dd2998c5c48bc8f057d239ae0dcbb0f97834ebdf1e6eb51abb85af191b6 \
     --hash=sha256:5ef509a2ef45fa5ebbcca1fb4bec175abf95271a0d85af459931d54d689979d2 \
