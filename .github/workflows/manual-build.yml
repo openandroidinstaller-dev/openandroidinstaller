@@ -17,7 +17,7 @@ jobs:
       with:
         python-version: 3.11
     - run: pip install -r requirements.txt
-    - run: pip install --no-cache-dir flet[all]
+    - run: pip install --no-cache-dir flet[all]==0.26.0
     - run: python scripts/download-tools.py
     - run: python scripts/build.py
     - uses: actions/upload-artifact@v4
@@ -33,7 +33,7 @@ jobs:
       with:
         python-version: 3.11
     - run: pip install -r requirements.txt
-    - run: pip install --no-cache-dir flet[all]
+    - run: pip install --no-cache-dir flet[all]==0.26.0
     - run: python scripts/download-tools.py
     - run: python scripts/build.py
     - uses: actions/upload-artifact@v4
