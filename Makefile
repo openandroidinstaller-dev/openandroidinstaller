@@ -16,7 +16,6 @@ poetry:
 	curl -sSL https://install.python-poetry.org | python3 -
 
 install:
-	rm poetry.lock
 	rm -rf openandroidinstaller/bin
 	poetry install --with dev
 	poetry run python scripts/download-tools.py
