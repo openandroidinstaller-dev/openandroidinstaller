@@ -1,22 +1,23 @@
 metadata:
   maintainer: SirRGB
-  device_name: Motorola Moto G6
+  device_name: Motorola Moto G5S
   is_ab_device: false
-  device_code: ali
+  device_code: montana
   supported_device_codes:
-    - ali
+    - montana
+  untested: true
 steps:
   unlock_bootloader:
     - type: call_button
+      command: adb_reboot_bootloader
       content: >
         As a first step, you need to unlock the bootloader of your device. A bootloader is the piece of software, that tells your phone
         how to start and run an operating system (like Android). You need to boot into fastboot mode by pressing the 'Confirm and run' button. Then continue.
-      command: adb_reboot_bootloader
     - type: call_button
+      command: fastboot_get_unlock_data
       content: >
         Now you need to get your device ID to get an unlock code from Motorola. Press 'Confirm and run' to get the ID. (You need to toggle 'Advanced Output' here to see it.)
         Copy it to a separate file to use it in the next step.
-      command: fastboot_get_unlock_data
     - type: link_button_with_confirm
       content: >
         Click on the button to open the instructions on Motorola's official unlocking website to generate an unlock code for your bootloader.

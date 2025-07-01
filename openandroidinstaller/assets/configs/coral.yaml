@@ -57,7 +57,7 @@ steps:
         Note : If you have not selected additional partitions it will do nothing and is save to continue.
       command: fastboot_flash_additional_partitions
     - type: call_button
-      img: twrp-start.jpeg
+      img: twrp-start.png
       content: >
         Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_boot_recovery
