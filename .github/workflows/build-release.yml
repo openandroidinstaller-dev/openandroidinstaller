@@ -12,13 +12,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-20.04', 'ubuntu-latest']
+        os: ['ubuntu-latest']
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v4
       with:
         python-version: 3.11
     - run: pip install -r requirements.txt
+    - run: pip install --no-cache-dir flet[all]==0.26.0
     - run: python scripts/download-tools.py
     - run: pip install black ruff pytest pytest-cov pytest-mock pytest-subprocess
     - run: black .
@@ -31,13 +32,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-20.04', 'ubuntu-latest', 'macos-latest']
+        os: ['ubuntu-latest', 'macos-latest']
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v4
       with:
         python-version: 3.11
     - run: pip install -r requirements.txt
+    - run: pip install --no-cache-dir flet[all]==0.26.0
     - run: python scripts/download-tools.py
     - run: python scripts/build.py
     - uses: actions/upload-artifact@v4
@@ -54,6 +56,7 @@ jobs:
       with:
         python-version: 3.11
     - run: pip install -r requirements.txt
+    - run: pip install --no-cache-dir flet[all]==0.26.0
     - run: python scripts/download-tools.py
     - run: python scripts/build.py
     - uses: actions/upload-artifact@v4
@@ -77,9 +80,6 @@ jobs:
         args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-macos-latest.zip openandroidinstaller-${{ github.ref_name }}-macos-latest
     - uses: montudor/action-zip@v1
       with:
-        args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-ubuntu-20.04.zip openandroidinstaller-${{ github.ref_name }}-ubuntu-20.04
-    - uses: montudor/action-zip@v1
-      with:
         args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-ubuntu-latest.zip openandroidinstaller-${{ github.ref_name }}-ubuntu-latest
     - uses: montudor/action-zip@v1
       with:
@@ -95,6 +95,5 @@ jobs:
         title: Release ${{ github.ref_name }}
         files: |
           openandroidinstaller-${{ github.ref_name }}-macos-latest.zip
-          openandroidinstaller-${{ github.ref_name }}-ubuntu-20.04.zip
           openandroidinstaller-${{ github.ref_name }}-ubuntu-latest.zip
           openandroidinstaller-${{ github.ref_name }}-windows-latest.zip
