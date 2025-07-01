@@ -7,7 +7,7 @@ metadata:
   supported_device_codes:
     - sweet
     - sweetin
-  twrp-link: sweet    
+  twrp-link: sweet
   notes:
     - You should install Android 10 or newer ROM.
 requirements:
@@ -48,10 +48,9 @@ steps:
         Install the recovery you chosen before by pressing 'Confirm and run'. Once it's done continue.
       command: fastboot_flash_recovery
     - type: call_button
-      img: twrp-start.jpeg
+      img: twrp-start.png
       content: >
         Reboot to recovery by pressing 'Confirm and run', and hold the Vol+ button of your phone UNTIL you see the recovery.
         If MiUI starts, you have to start the process again, since MiUI delete the recovery you just flashed.
         Once it's done continue.
       command: fastboot_reboot_recovery
-
