@@ -248,7 +248,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 Text("Select an OS image:", style="titleSmall"),
                 Markdown(
                     f"""
-The image file should look something like `lineage-22.1-20241101-nightly-{self.state.config.device_code}-signed.zip`."""
+The image file should look something like `lineage-22.2-20241101-nightly-{self.state.config.device_code}-signed.zip`."""
                 ),
                 Row(
                     [
