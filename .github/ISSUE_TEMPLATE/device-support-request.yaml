@@ -59,17 +59,16 @@ body:
   - type: textarea
     attributes:
       label: Device images
-      description: "Please provide links to any available images for the device, such as official stock firmware, Custom ROMs and Recoveries you would like to install."
+      description: "Please provide links to at least one Custom ROM and TWRP build. This is mandatory for OpenAndroidInstaller support."
       placeholder: |
         - Custom ROM: https://wiki.lineageos.org/devices/sargo
         - Recovery: https://twrp.me/google/googlepixel3a.html
       #value: |
       #  - Custom ROM:
       #  - Recovery:
-      #  - Stock firmware (if needed & existing):
       render: Markdown
     validations:
-      required: false
+      required: true
   - type: markdown
     attributes:
       value: "---"
