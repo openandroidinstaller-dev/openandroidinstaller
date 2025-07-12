@@ -1,10 +1,11 @@
 metadata:
-  maintainer: Tobias Sterbak (tsterbak)
-  device_name: Sony Xperia Z3
+  maintainer: Tobias Sterbak (tsterbak)/SirRGB
+  device_name: Sony Xperia Z3 compact
   is_ab_device: false
-  device_code: z3
+  device_code: z3c
   supported_device_codes:
-    - z3
+    - z3c
+  untested: true
 requirements:
   firmware: 23.5.A.1.291
 steps:

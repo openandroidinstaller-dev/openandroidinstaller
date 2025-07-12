@@ -1,12 +1,13 @@
 metadata:
-  maintainer: Tobias Sterbak (tsterbak)
-  device_name: Sony Xperia Z3
-  is_ab_device: false
-  device_code: z3
+  maintainer: Tobias Sterbak (tsterbak)/SirRGB
+  device_name: Sony Xperia XZ2 Premium
+  is_ab_device: true
+  device_code: aurora
   supported_device_codes:
-    - z3
+    - aurora
+  untested: true
 requirements:
-  firmware: 23.5.A.1.291
+  android: 10
 steps:
   unlock_bootloader:
     - type: confirm_button
@@ -43,9 +44,20 @@ steps:
   boot_recovery:
     - type: call_button
       content: >
-        Now you have to reboot into bootloader again. With your phone turned on, press the button to do so and continue once it is done.
+        Now you need to boot a custom recovery system on the phone. A recovery is a small subsystem on your phone, that manages updating,
+        adapting and repairing of the operating system.
+        Make sure your device is turned on. You need to reboot into the bootloader again by pressing 'Confirm and run' here. Then continue.
       command: adb_reboot_bootloader
     - type: call_button
       content: >
-        Next, you need to boot a custom recovery image. Press the button to flash the selected image. Then continue.
+        Boot a custom recovery (temporarily) by pressing 'Confirm and run'. Once it's done continue.
+      command: fastboot_flash_boot
+    - type: call_button
+      content: >
+        In some cases, the inactive slot can be unpopulated or contain much older firmware than the active slot, leading to various issues including a potential hard-brick.
+        We can ensure none of that will happen by copying the contents of the active slot to the inactive slot. Press 'confirm and run' to to this. Once you are in the bootloader again, continue.
+      command: adb_twrp_copy_partitions
+    - type: call_button
+      content: >
+        Now we need to boot into recovery again. Press run and when you see the TWRP screen you can continue.
       command: fastboot_flash_boot

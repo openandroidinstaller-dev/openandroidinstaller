@@ -1,12 +1,15 @@
 metadata:
-  maintainer: Tobias Sterbak (tsterbak)
-  device_name: Sony Xperia Z3
+  maintainer: Tobias Sterbak (tsterbak)/SirRGB
+  device_name: Sony Xperia XZ Premium
   is_ab_device: false
-  device_code: z3
+  device_code: maple
   supported_device_codes:
-    - z3
+    - maple
+    - G8141
+  twrp-link: maple
+  untested: true
 requirements:
-  firmware: 23.5.A.1.291
+  android: 9
 steps:
   unlock_bootloader:
     - type: confirm_button
