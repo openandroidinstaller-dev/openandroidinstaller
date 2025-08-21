@@ -91,7 +91,10 @@ On the same screen you find the "Android version" you can also find the Firmware
 On some devices, the build version is basically the firmware version.""",
             ),
             actions=[
-                TextButton("Close", on_click=self.close_find_version_dlg),
+                TextButton(
+                    "Close",
+                    on_click=lambda _: self.page.close(self.dlg_howto_find_versions),
+                ),
             ],
             actions_alignment="end",
             shape=ContinuousRectangleBorder(radius=0),
@@ -103,7 +106,7 @@ On some devices, the build version is basically the firmware version.""",
         # create help/info button to show the help dialog
         info_button = OutlinedButton(
             "How to Find the version",
-            on_click=self.open_find_version_dlg,
+            on_click=lambda _: self.page.open(self.dlg_howto_find_versions),
             expand=False,
             icon=Icons.HELP_OUTLINE_OUTLINED,
             icon_color=Colors.DEEP_ORANGE_500,
@@ -306,14 +309,3 @@ otherwise it won\'t work on your custom ROM either! Additionally, some devices r
         logger.info("All requirements ticked. Allow to continue")
         self.continue_button.disabled = False
         self.right_view.update()
-
-    def open_find_version_dlg(self, e):
-        """Open the dialog to explain how to find the android and firmware version."""
-        self.page.dialog = self.dlg_howto_find_versions
-        self.dlg_howto_find_versions.open = True
-        self.page.update()
-
-    def close_find_version_dlg(self, e):
-        """Close the dialog to explain how to find the android and firmware version."""
-        self.dlg_howto_find_versions.open = False
-        self.page.update()

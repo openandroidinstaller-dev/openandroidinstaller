@@ -75,7 +75,9 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
 """,
             ),
             actions=[
-                TextButton("Close", on_click=self.close_close_explain_addons_dlg),
+                TextButton(
+                    "Close", on_click=lambda _: self.page.close(self.dlg_explain_addons)
+                ),
             ],
             actions_alignment="end",
             shape=ContinuousRectangleBorder(radius=0),
@@ -98,7 +100,7 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
         # create help/info button to show the help dialog
         info_button = OutlinedButton(
             "What kind of addons?",
-            on_click=self.open_explain_addons_dlg,
+            on_click=lambda _: self.page.open(self.dlg_explain_addons),
             expand=True,
             icon=Icons.HELP_OUTLINE_OUTLINED,
             icon_color=Colors.DEEP_ORANGE_500,
@@ -191,17 +193,6 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
             ]
         )
         return self.view
-
-    def open_explain_addons_dlg(self, e):
-        """Open the dialog to explain addons."""
-        self.page.dialog = self.dlg_explain_addons
-        self.dlg_explain_addons.open = True
-        self.page.update()
-
-    def close_close_explain_addons_dlg(self, e):
-        """Close the dialog to explain addons."""
-        self.dlg_explain_addons.open = False
-        self.page.update()
 
     def pick_addons_result(self, e: FilePickerResultEvent):
         path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"

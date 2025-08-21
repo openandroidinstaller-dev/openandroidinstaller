@@ -1,12 +1,15 @@
 metadata:
-  maintainer: Tobias Sterbak (tsterbak)
-  device_name: Sony Xperia Z3
+  maintainer: Tobias Sterbak (tsterbak)/SirRGB
+  device_name: Sony Xperia XZ1 Canada
   is_ab_device: false
-  device_code: z3
+  device_code: poplar_canada
   supported_device_codes:
-    - z3
+    - poplar_canada
+    - G8343
+  twrp-link: poplar_canada
+  untested: true
 requirements:
-  firmware: 23.5.A.1.291
+  android: 9
 steps:
   unlock_bootloader:
     - type: confirm_button

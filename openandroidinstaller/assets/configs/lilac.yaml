@@ -1,12 +1,15 @@
 metadata:
-  maintainer: Tobias Sterbak (tsterbak)
-  device_name: Sony Xperia Z3
+  maintainer: Tobias Sterbak (tsterbak)/SirRGB
+  device_name: Sony Xperia XZ1 Compact
   is_ab_device: false
-  device_code: z3
+  device_code: lilac
   supported_device_codes:
-    - z3
+    - lilac
+    - G8441
+  twrp-link: lilac
+  untested: true
 requirements:
-  firmware: 23.5.A.1.291
+  android: 9
 steps:
   unlock_bootloader:
     - type: confirm_button

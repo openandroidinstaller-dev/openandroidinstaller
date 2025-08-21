@@ -20,7 +20,7 @@ steps:
       content: >
         Click on the button to open the instructions on Sonys official unlocking website to generate an unlock code for your bootloader.
         Once you got the code write it down somewhere and continue to input the code.
-      link: https://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/
+      link: https://developer.sony.com/open-source/aosp-on-xperia-open-devices/get-started/unlock-bootloader
     - type: confirm_button
       content: >
         Connect the device to your PC via USB. And confirm to continue.

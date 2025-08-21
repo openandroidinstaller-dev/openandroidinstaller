@@ -84,7 +84,10 @@ Now you are ready to continue.
 """
             ),
             actions=[
-                TextButton("Close", on_click=self.close_developer_options_dlg),
+                TextButton(
+                    "Close",
+                    on_click=lambda _: self.page.close(self.dlg_help_developer_options),
+                ),
             ],
             actions_alignment="end",
             shape=ContinuousRectangleBorder(radius=0),
@@ -156,7 +159,9 @@ To get started you need to
                     [
                         OutlinedButton(
                             "How do I enable developer options?",
-                            on_click=self.open_developer_options_dlg,
+                            on_click=lambda _: self.page.open(
+                                self.dlg_help_developer_options
+                            ),
                             expand=True,
                             icon=Icons.HELP_OUTLINE_OUTLINED,
                             icon_color=Colors.DEEP_ORANGE_500,
@@ -203,17 +208,6 @@ If you don't know what this means, you most likely don't need to do anything and
             ]
         )
         return self.view
-
-    def open_developer_options_dlg(self, e):
-        """Open the dialog for help to developer mode."""
-        self.page.dialog = self.dlg_help_developer_options
-        self.dlg_help_developer_options.open = True
-        self.page.update()
-
-    def close_developer_options_dlg(self, e):
-        """Close the dialog for help to developer mode."""
-        self.dlg_help_developer_options.open = False
-        self.page.update()
 
     def search_devices_clicked(self, e):
         """Search the device when the button is clicked."""

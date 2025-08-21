@@ -88,7 +88,9 @@ replacing the firmware of the device with a completely custom ROM.
 OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about).""",
             ),
             actions=[
-                TextButton("Close", on_click=self.close_close_explain_images_dlg),
+                TextButton(
+                    "Close", on_click=lambda _: self.page.close(self.dlg_explain_images)
+                ),
             ],
             actions_alignment="end",
             shape=ContinuousRectangleBorder(radius=0),
@@ -172,7 +174,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         # create help/info button to show the help dialog for the image and recovery selection
         explain_images_button = OutlinedButton(
             "What is this?",
-            on_click=self.open_explain_images_dlg,
+            on_click=lambda _: self.page.open(self.dlg_explain_images),
             expand=True,
             icon=Icons.HELP_OUTLINE_OUTLINED,
             icon_color=Colors.DEEP_ORANGE_500,
@@ -248,7 +250,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 Text("Select an OS image:", style="titleSmall"),
                 Markdown(
                     f"""
-The image file should look something like `lineage-22.1-20241101-nightly-{self.state.config.device_code}-signed.zip`."""
+The image file should look something like `lineage-22.2-20241101-nightly-{self.state.config.device_code}-signed.zip`."""
                 ),
                 Row(
                     [
@@ -374,7 +376,10 @@ If this download page does not contain the required images, you can try to find 
             ),
             actions=[
                 TextButton(
-                    "Close", on_click=self.close_close_explain_additional_images_dlg
+                    "Close",
+                    on_click=lambda _: self.page.close(
+                        self.dlg_explain_additional_images
+                    ),
                 ),
             ],
             actions_alignment="end",
@@ -384,7 +389,7 @@ If this download page does not contain the required images, you can try to find 
         # create help/info button to show the help dialog for the image and recovery selection
         explain_additional_images_button = OutlinedButton(
             "Why do I need this and where do I get it?",
-            on_click=self.open_explain_additional_images_dlg,
+            on_click=lambda _: self.page.open(self.dlg_explain_additional_images),
             expand=True,
             icon=Icons.HELP_OUTLINE_OUTLINED,
             icon_color=Colors.DEEP_ORANGE_500,
@@ -499,28 +504,6 @@ Make sure the file is for **your exact phone model!**""",
             )
         self.additional_image_selection.controls = additional_image_selection
         self.additional_image_selection.update()
-
-    def open_explain_images_dlg(self, e):
-        """Open the dialog to explain OS and recovery image."""
-        self.page.dialog = self.dlg_explain_images
-        self.dlg_explain_images.open = True
-        self.page.update()
-
-    def close_close_explain_images_dlg(self, e):
-        """Close the dialog to explain OS and recovery image."""
-        self.dlg_explain_images.open = False
-        self.page.update()
-
-    def open_explain_additional_images_dlg(self, e):
-        """Open the dialog to explain additional images."""
-        self.page.dialog = self.dlg_explain_additional_images
-        self.dlg_explain_additional_images.open = True
-        self.page.update()
-
-    def close_close_explain_additional_images_dlg(self, e):
-        """Close the dialog to explain additional images."""
-        self.dlg_explain_additional_images.open = False
-        self.page.update()
 
     def pick_image_result(self, e: FilePickerResultEvent):
         logger.info(f"Selected image: {e.files}")

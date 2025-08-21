@@ -9,5 +9,6 @@ If you build the application for your platform and want to contribute the build,
 Currently development is mainly done on Ubuntu Linux. MacOS, Windows, as well as other Linux distributions like Fedora should also work well. You might need to install additional USB-drivers on Windows.
 
 1. Clone the main branch of this repository
-2. Run `make poetry` and `make install` to install poetry to manage python and install the required dependencies like adb, fastboot and heimdall.
-3. Run `make app` to start the desktop app from the source.
+2. Set up [venv](https://docs.python.org/3/library/venv.html)
+3. Run `make poetry` and `make install` to install poetry to manage python and install the required dependencies like adb, fastboot and heimdall.
+4. Run `make app` to start the desktop app from the source.

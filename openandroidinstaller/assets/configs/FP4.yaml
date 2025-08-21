@@ -13,7 +13,7 @@ steps:
         how to start and run an operating system (like Android). Your device should be turned on.
         Click on the button to open the instructions on the Fairphone Support official unlocking website to generate an unlock code for your device.
         Once you've done that, continue.
-      link: https://www.fairphone.com/en/bootloader-unlocking-code-for-fairphone-3/
+      link: https://www.fairphone.com/en/bootloader-unlocking-code-for-fairphone
     - type: call_button
       content: >
         Press 'Confirm and run' to reboot into the bootloader.
