@@ -155,7 +155,7 @@ OnePlus | 7T Pro | [hotdog](https://wiki.lineageos.org/devices/hotdog) | HD1910,
 OnePlus | Nord | [avicii](https://wiki.lineageos.org/devices/avicii) | AC2001, AC2003 | tested
 OnePlus | Nord N10 | [billie](https://wiki.lineageos.org/devices/billie) | BE2026, BE2029 | untested
 OnePlus | Nord N200 | [dre](https://wiki.lineageos.org/devices/dre) | DE2117 | tested
-OnePlus | 9 | lemonade | LE2110, LE2111, LE2113, LE2115 | under development
+OnePlus | 9 | [lemonade](https://wiki.lineageos.org/devices/lemonade) | LE2110, LE2111, LE2113, LE2115 | under development
 
 </details>
 
@@ -164,12 +164,12 @@ OnePlus | 9 | lemonade | LE2110, LE2111, LE2113, LE2115 | under development
 
 Vendor | Device Name | CodeName | Models | Status
 ---|---|---|---|---
-Samsung | Galaxy J7 2015 | j7elte | | tested
+Samsung | Galaxy J7 2015 | [j7elte](https://wiki.lineageos.org/devices/j7elte) | | tested
 Samsung | Galaxy J7 Prime | on7xelte | | untested
 Samsung | Galaxy A3 2017 | a3y17lte | SM-A320FL | tested
 Samsung | Galaxy A5 2016 | [a5xelte](https://wiki.lineageos.org/devices/a5xelte) | SM-A510F | tested
 Samsung | Galaxy A5 2017 | [a5y17lte](https://wiki.lineageos.org/devices/a5y17lte) | | tested
-Samsung | Galaxy A7 2016 | a7xelte | | tested
+Samsung | Galaxy A7 2016 | [a7xelte](https://wiki.lineageos.org/devices/a7xelte) | | tested
 Samsung | Galaxy A7 2017 | [a7y17lte](https://wiki.lineageos.org/devices/a7y17lte) | | untested
 Samsung | Galaxy Grand Prime VE | grandprimevelte | SM-G531F | tested
 Samsung | Galaxy S III Neo | s3ve3g | GT-I9301I | tested
@@ -224,22 +224,22 @@ Vendor | Device Name | CodeName | Models | Status
 Xiaomi | Redmi 7A / 8 / 8A / 8A Dual | [Mi439](https://wiki.lineageos.org/devices/Mi439) : pine / olive / olivelite / olivewood | | tested
 Xiaomi | Redmi 9A / 9C / 9AT / 9i / 9A Sport / 10A / 10A Sport | garden / dandelion / blossom / angelican | | tested
 Xiaomi | Redmi 9 / Poco M2 | [lancelot](https://wiki.lineageos.org/devices/lancelot) / galahad / shivan | | untested
-Xiaomi | Redmi Note 7 | [lavender](https://wiki.lineageos.org/devices/lavender) |  | tested
-Xiaomi | Redmi Note 7 Pro | [violet](https://wiki.lineageos.org/devices/violet) |  | tested
-Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo) / willow |  | untested
-Xiaomi | Redmi Note 8 Pro | begonia |  | untested
-Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  |  | untested
+Xiaomi | Redmi Note 7 | [lavender](https://wiki.lineageos.org/devices/lavender) | | tested
+Xiaomi | Redmi Note 7 Pro | [violet](https://wiki.lineageos.org/devices/violet) | | tested
+Xiaomi | Redmi Note 8 / 8T | [ginkgo](https://wiki.lineageos.org/devices/ginkgo) / willow | | untested
+Xiaomi | Redmi Note 8 Pro | begonia | | untested
+Xiaomi | Redmi Note 9S / 9 Pro / 9 Pro Max / 10 Lite / Poco M2 pro | [miatoll](https://wiki.lineageos.org/devices/lavender) : gram / curtana / excalibur / joyeuse  | | untested
 Xiaomi | Redmi Note 10S / 11SE / Poco M5S | [rosemary](https://wiki.lineageos.org/devices/rosemary) / maltose / secret /rosemary_p | | untested
 Xiaomi | Redmi Note 10 Pro | [sweet](https://wiki.lineageos.org/devices/sweet) | M2101K6G | tested
-Xiaomi | Mi A2 / Mi 6X | jasmine_sprout |  | untested
-Xiaomi | Mi 8 | [dipper](https://wiki.lineageos.org/devices/dipper) |  | untested
-Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinci) / davinciin |  | untested
+Xiaomi | Mi A2 / Mi 6X | [jasmine_sprout](https://wiki.lineageos.org/devices/jasmine_sprout) | | untested
+Xiaomi | Mi 8 | [dipper](https://wiki.lineageos.org/devices/dipper) | | untested
+Xiaomi | Mi 9T / Redmi K20 | [davinci](https://wiki.lineageos.org/devices/davinci) / davinciin | | untested
 Xiaomi | Redmi K20 Pro / Mi 9T Pro | raphael / raphaelin | | untested
-Xiaomi | Mi 10T / Mi 10T Pro / Redmi K20 | [apollon](https://wiki.lineageos.org/devices/apollon) / apollo |  | untested
-Xiaomi | Redmi K40 / Mi 11X / Poco F3 | [alioth](https://wiki.lineageos.org/devices/alioth) / aliothin |  | untested
-Xiaomi | Poco X3 / X3 NFC | [surya](https://wiki.lineageos.org/devices/surya) / karna |  | untested
-Xiaomi | Poco X3 Pro | [vayu](https://wiki.lineageos.org/devices/vayu) |  | tested
-Xiaomi | 12 | cupid | | untested
+Xiaomi | Mi 10T / Mi 10T Pro / Redmi K20 | [apollon](https://wiki.lineageos.org/devices/apollon) / apollo | | untested
+Xiaomi | Redmi K40 / Mi 11X / Poco F3 | [alioth](https://wiki.lineageos.org/devices/alioth) / aliothin | | untested
+Xiaomi | Poco X3 / X3 NFC | [surya](https://wiki.lineageos.org/devices/surya) / karna | | untested
+Xiaomi | Poco X3 Pro | [vayu](https://wiki.lineageos.org/devices/vayu) | | tested
+Xiaomi | 12 | [cupid](https://wiki.lineageos.org/devices/cupid) | | untested
 
 </details>
 
