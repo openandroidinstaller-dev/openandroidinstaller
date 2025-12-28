@@ -59,15 +59,15 @@ def download_heimdall(platform: str):
 def download_libusb(platform: str):
     """Download libusb-1.0, extract the 7z and save to file."""
     logger.info(f"Download libusb-1.0 for {platform}...")
-    url = "https://github.com/libusb/libusb/releases/download/v1.0.29/libusb-1.0.29.7z"
+    url = "https://github.com/libusb/libusb/releases/download/v1.0.27/libusb-1.0.27.7z"
     # Downloading the file by sending the request to the URL
     response = requests.get(url, allow_redirects=True)
 
     # Writing the file to the local file system
     download_path = Path(__file__).parent.joinpath(Path("libusb-windows")).resolve()
     logger.info(download_path.name)
-    with py7zr.SevenZipFile(BytesIO(response.content), mode="r") as file:
-        file.extractall(path=download_path.name)
+    file = py7zr.SevenZipFile(BytesIO(response.content))
+    file.extractall(path=download_path.name)
     logger.info("DONE.")
 
 
