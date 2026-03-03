@@ -11,6 +11,7 @@
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
 from app_state import AppState
+import flet as ft
 from flet import Column, Container, Image, Row, VerticalDivider, margin
 
 
@@ -26,15 +27,16 @@ class BaseView(Column):
             spacing=30
         )  # , width=self.column_width, height=120)
         self.right_view = Column(
-            alignment="center",
-            scroll="adaptive",  # , width=self.column_width, height=650
+            alignment=ft.MainAxisAlignment.CENTER,
+            scroll=ft.ScrollMode.ADAPTIVE,  # , width=self.column_width, height=650
         )
+        self.right_view.bgcolor = ft.Colors.TRANSPARENT
         # left part of the display: used for displaying the images
         self.left_view = Column(
             # width=self.column_width,
             controls=[Image(src=f"/imgs/{image}", height=600)],
             expand=True,
-            horizontal_alignment="center",
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         )
         # main view row
         self.view = Container(
@@ -46,10 +48,11 @@ class BaseView(Column):
                         expand=True, controls=[self.right_view_header, self.right_view]
                     ),
                 ],
-                alignment="spaceEvenly",
+                alignment=ft.MainAxisAlignment.SPACE_EVENLY,
             ),
             margin=margin.only(left=10, top=0, right=50, bottom=5),
         )
+        self.controls = [self.view]
 
     def clear(
         self,

@@ -15,16 +15,16 @@ from functools import partial
 from typing import Callable, Optional
 
 import regex as re
+import flet as ft
 from flet import (
     Column,
     Container,
-    ElevatedButton,
+    Button,
     IconButton,
     Image,
     ProgressBar,
     ProgressRing,
     Row,
-    alignment,
     Colors,
     Icons,
 )
@@ -35,25 +35,23 @@ class TerminalBox(Row):
     def __init__(self, expand: bool = True, visible: bool = False):
         super().__init__(expand=expand)
         self.visible = visible
-
-    def build(self):
         self._box = Container(
             content=Column(
                 controls=[Text("")],
-                scroll="auto",
+                scroll=ft.ScrollMode.AUTO,
                 expand=True,
                 auto_scroll=True,
             ),
             margin=10,
             padding=10,
-            alignment=alignment.top_left,
+            alignment=ft.Alignment.TOP_LEFT,
             bgcolor=Colors.BLACK38,
             height=300,
             border_radius=2,
             expand=True,
             visible=self.visible,
         )
-        return self._box
+        self.controls = [self._box]
 
     def write_line(self, line: str):
         """
@@ -87,17 +85,14 @@ class ProgressIndicator(Row):
         self.progress_bar = None
         # progress ring to display
         self.progress_ring = None
-
-    def build(self):
         self._container = Container(
-            content=Column(scroll="auto", expand=True),
+            content=Column(scroll=ft.ScrollMode.AUTO, expand=True),
             margin=10,
-            alignment=alignment.center,
             height=50,
             expand=True,
             visible=True,
         )
-        return self._container
+        self.controls = [self._container]
 
     def display_progress_bar(self, line: str):
         """Display and update the progress bar for the given line."""
@@ -166,18 +161,18 @@ class ProgressIndicator(Row):
 
 def get_title(
     title: str, info_button: IconButton = None, step_indicator_img: Optional[str] = None
-) -> Container:
+):
     """Function to get the title header element for the right side view."""
     if info_button:
-        content = Row([Text(f"{title}", style="titleLarge"), info_button])
+        content = Row([Text(f"{title}", style=ft.TextThemeStyle.TITLE_LARGE), info_button])
     else:
-        content = Row([Text(f"{title}", style="titleLarge")])
+        content = Row([Text(f"{title}", style=ft.TextThemeStyle.TITLE_LARGE)])
     if step_indicator_img:
         content = Column(
             controls=[
                 Image(
                     src=f"/imgs/{step_indicator_img}",
-                    fit="fitWidth",
+                    fit=ft.BoxFit.FIT_WIDTH,
                     tooltip=f"Current step: {title}",
                     width=600,
                 ),
@@ -188,19 +183,18 @@ def get_title(
         content=content,
         margin=0,
         padding=0,
-        alignment=alignment.center,
         width=600,
         height=150,
-        border_radius=1,
+        bgcolor=ft.Colors.TRANSPARENT,
     )
 
 
 def confirm_button(
     confirm_func: Callable, confirm_text: str = "Continue"
-) -> ElevatedButton:
+) -> Button:
     """Get a button, that calls a given function when clicked."""
-    return ElevatedButton(
-        f"{confirm_text}",
+    return Button(
+        content=f"{confirm_text}",
         on_click=confirm_func,
         icon=Icons.NEXT_PLAN_OUTLINED,
         expand=True,
@@ -209,20 +203,20 @@ def confirm_button(
 
 def call_button(
     call_func: Callable, command: str, confirm_text: str = "Confirm and run"
-) -> ElevatedButton:
+) -> Button:
     """Get a button, that calls a given function with given command when clicked."""
-    return ElevatedButton(
-        f"{confirm_text}",
+    return Button(
+        content=f"{confirm_text}",
         on_click=partial(call_func, command=command),
         expand=True,
         icon=Icons.DIRECTIONS_RUN_OUTLINED,
     )
 
 
-def link_button(link: str, text: str) -> ElevatedButton:
+def link_button(link: str, text: str) -> Button:
     """Get a button that opens a link in a browser."""
-    return ElevatedButton(
-        f"{text}",
+    return Button(
+        content=f"{text}",
         on_click=lambda _: webbrowser.open(link),
         expand=True,
     )

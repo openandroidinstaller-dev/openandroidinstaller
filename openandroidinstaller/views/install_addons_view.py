@@ -15,7 +15,7 @@ from time import sleep
 from typing import Callable
 
 from app_state import AppState
-from flet import Column, ElevatedButton, Row, Switch, Colors, Icons
+from flet import Column, Button, Row, Switch, Colors, Icons
 from loguru import logger
 from styles import Markdown, Text
 from tooling import adb_reboot, adb_twrp_finish_install_addons, adb_twrp_install_addon
@@ -31,8 +31,9 @@ class InstallAddonsView(BaseView):
     ):
         super().__init__(state=state)
         self.on_confirm = on_confirm
+        self._init_content()
 
-    def build(self):
+    def _init_content(self):
         """Create the content of the view."""
         # error text
         self.error_text = Text("", color=Colors.RED)
@@ -86,8 +87,8 @@ This might take a while. At the end your phone will boot into the new OS.
         self.confirm_button = confirm_button(self.on_confirm)
         self.confirm_button.disabled = True
         # button to run the installation process
-        self.install_button = ElevatedButton(
-            "Confirm and install addons",
+        self.install_button = Button(
+            content="Confirm and install addons",
             on_click=self.run_install_addons,
             expand=True,
             icon=Icons.DIRECTIONS_RUN_OUTLINED,
@@ -114,8 +115,8 @@ This might take a while. At the end your phone will boot into the new OS.
                 Row(
                     [
                         Text("Do you want to skip?"),
-                        ElevatedButton(
-                            "Skip",
+                        Button(
+                            content="Skip",
                             on_click=self.on_confirm,
                             icon=Icons.NEXT_PLAN_OUTLINED,
                             expand=True,
@@ -123,7 +124,6 @@ This might take a while. At the end your phone will boot into the new OS.
                     ]
                 )
             )
-        return self.view
 
     def run_install_addons(self, e):
         """

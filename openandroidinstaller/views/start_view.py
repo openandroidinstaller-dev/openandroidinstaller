@@ -13,12 +13,13 @@
 import webbrowser
 from typing import Callable
 
+import flet as ft
 from app_state import AppState
 from flet import (
     AlertDialog,
     Column,
     Divider,
-    ElevatedButton,
+    Button,
     FilledButton,
     OutlinedButton,
     ResponsiveRow,
@@ -49,20 +50,21 @@ class StartView(BaseView):
         self.on_back = on_back
 
         self.init_visuals()
+        self._init_content()
 
     def init_visuals(
         self,
     ):
         """Initialize the stateful visual elements of the view."""
-        self.continue_button = ElevatedButton(
-            "Continue",
+        self.continue_button = Button(
+            content="Continue",
             on_click=self.on_confirm,
             icon=Icons.NEXT_PLAN_OUTLINED,
             disabled=True,
             expand=True,
         )
-        self.back_button = ElevatedButton(
-            "Back",
+        self.back_button = Button(
+            content="Back",
             on_click=self.on_back,
             icon=Icons.ARROW_BACK,
             expand=True,
@@ -84,9 +86,9 @@ Now you are ready to continue.
 """
             ),
             actions=[
-                TextButton("Close", on_click=self.close_developer_options_dlg),
+                TextButton(content="Close", on_click=self.close_developer_options_dlg),
             ],
-            actions_alignment="end",
+            actions_alignment=ft.MainAxisAlignment.END,
             shape=ContinuousRectangleBorder(radius=0),
         )
 
@@ -123,7 +125,7 @@ Now you are ready to continue.
         self.device_detection_infobox = Row(
             [Text("Detected device:"), self.device_name]
         )
-        self.device_request_row = Row([], alignment="center")
+        self.device_request_row = Row([], alignment=ft.MainAxisAlignment.CENTER)
         self.device_infobox = Column(
             [
                 self.device_detection_infobox,
@@ -131,7 +133,7 @@ Now you are ready to continue.
             ]
         )
 
-    def build(self):
+    def _init_content(self):
         self.clear()
 
         # build up the main view
@@ -155,7 +157,7 @@ To get started you need to
                 Row(
                     [
                         OutlinedButton(
-                            "How do I enable developer options?",
+                            content="How do I enable developer options?",
                             on_click=self.open_developer_options_dlg,
                             expand=True,
                             icon=Icons.HELP_OUTLINE_OUTLINED,
@@ -196,23 +198,21 @@ If you don't know what this means, you most likely don't need to do anything and
                         ),
                         self.continue_button,
                     ],
-                    alignment="center",
+                    alignment=ft.MainAxisAlignment.CENTER,
                 ),
                 Divider(),
                 ResponsiveRow([self.bootloader_switch, self.recovery_switch]),
             ]
         )
-        return self.view
 
     def open_developer_options_dlg(self, e):
         """Open the dialog for help to developer mode."""
-        self.page.dialog = self.dlg_help_developer_options
-        self.dlg_help_developer_options.open = True
+        self.page.show_dialog(self.dlg_help_developer_options)
         self.page.update()
 
     def close_developer_options_dlg(self, e):
         """Close the dialog for help to developer mode."""
-        self.dlg_help_developer_options.open = False
+        self.page.pop_dialog()
         self.page.update()
 
     def search_devices_clicked(self, e):
@@ -277,8 +277,8 @@ If you don't know what this means, you most likely don't need to do anything and
                 request_url = f"https://github.com/openandroidinstaller-dev/openandroidinstaller/issues/new?labels=device&template=device-support-request.yaml&title=Add support for `{result.device_code}`"
                 send_tracking_info(result.device_code, "not_supported")
                 self.device_request_row.controls.append(
-                    ElevatedButton(
-                        "Request support for this device",
+                    Button(
+                        content="Request support for this device",
                         icon=Icons.PHONELINK_SETUP_OUTLINED,
                         on_click=lambda _: webbrowser.open(request_url),
                     )

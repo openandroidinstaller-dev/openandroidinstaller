@@ -12,15 +12,16 @@
 # Author: Tobias Sterbak
 from typing import Callable
 
+import flet as ft
 from app_state import AppState
 from flet import (
     AlertDialog,
+    Button,
     Card,
     Checkbox,
     Column,
     Container,
     Divider,
-    ElevatedButton,
     OutlinedButton,
     Row,
     TextButton,
@@ -57,16 +58,16 @@ class RequirementsView(BaseView):
         self.checkboxes = []
         self.checkbox_cards = []
         # continue button
-        self.continue_button = ElevatedButton(
-            "Continue",
+        self.continue_button = Button(
+            content="Continue",
             on_click=self.on_confirm,
             icon=Icons.NEXT_PLAN_OUTLINED,
             disabled=True,
             expand=True,
         )
         # back button
-        self.back_button = ElevatedButton(
-            "Back",
+        self.back_button = Button(
+            content="Back",
             on_click=self.on_back,
             icon=Icons.ARROW_BACK,
             expand=True,
@@ -91,18 +92,18 @@ On the same screen you find the "Android version" you can also find the Firmware
 On some devices, the build version is basically the firmware version.""",
             ),
             actions=[
-                TextButton("Close", on_click=self.close_find_version_dlg),
+                TextButton(content="Close", on_click=self.close_find_version_dlg),
             ],
-            actions_alignment="end",
+            actions_alignment=ft.MainAxisAlignment.END,
             shape=ContinuousRectangleBorder(radius=0),
         )
 
-    def build(self):
+    def _init_content(self):
         self.clear()
 
         # create help/info button to show the help dialog
         info_button = OutlinedButton(
-            "How to Find the version",
+            content="How to Find the version",
             on_click=self.open_find_version_dlg,
             expand=False,
             icon=Icons.HELP_OUTLINE_OUTLINED,
@@ -144,11 +145,11 @@ On some devices, the build version is basically the firmware version.""",
                                         [
                                             Text(
                                                 f"Android Version {required_android_version}:",
-                                                style="titleSmall",
+                                                style=ft.TextThemeStyle.TITLE_SMALL,
                                             ),
                                             info_button,
                                         ],
-                                        alignment="spaceBetween",
+                                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                                     ),
                                     Markdown(
                                         f"""Before following these instructions please ensure that the device is currently using Android {required_android_version} firmware.
@@ -183,11 +184,11 @@ version before proceeding (guides can be found on the internet!).
                                         [
                                             Text(
                                                 f"Firmware Version {required_firmware_version}:",
-                                                style="titleSmall",
+                                                style=ft.TextThemeStyle.TITLE_SMALL,
                                             ),
                                             info_button,
                                         ],
-                                        alignment="spaceBetween",
+                                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                                     ),
                                     Markdown(
                                         f"""Before following these instructions please ensure that the device is on firmware version {required_firmware_version}.
@@ -221,9 +222,8 @@ If the device is not on the specified version, please follow the instructions be
 
         # add the final confirm and continue button
         self.right_view.controls.append(
-            Row([self.back_button, self.continue_button], alignment="center")
+            Row([self.back_button, self.continue_button], alignment=ft.MainAxisAlignment.CENTER)
         )
-        return self.view
 
     def get_battery_check(self):
         """Get checkbox and card for default requirements: battery level."""
@@ -309,11 +309,8 @@ otherwise it won\'t work on your custom ROM either! Additionally, some devices r
 
     def open_find_version_dlg(self, e):
         """Open the dialog to explain how to find the android and firmware version."""
-        self.page.dialog = self.dlg_howto_find_versions
-        self.dlg_howto_find_versions.open = True
-        self.page.update()
+        self.page.show_dialog(self.dlg_howto_find_versions)
 
     def close_find_version_dlg(self, e):
         """Close the dialog to explain how to find the android and firmware version."""
-        self.dlg_howto_find_versions.open = False
-        self.page.update()
+        self.page.pop_dialog()

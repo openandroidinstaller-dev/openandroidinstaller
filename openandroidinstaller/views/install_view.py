@@ -14,7 +14,7 @@ from time import sleep
 from typing import Callable
 
 from app_state import AppState
-from flet import Column, ElevatedButton, Row, Switch, Colors, Icons
+from flet import Column, Button, Row, Switch, Colors, Icons
 from loguru import logger
 from styles import Markdown, Text
 from tooling import adb_twrp_wipe_and_install
@@ -30,8 +30,9 @@ class InstallView(BaseView):
     ):
         super().__init__(state=state)
         self.on_confirm = on_confirm
+        self._init_content()
 
-    def build(self):
+    def _init_content(self):
         """Create the content of the view."""
         # error text
         self.error_text = Text("", color=Colors.GREEN)
@@ -111,8 +112,8 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
         self.confirm_button = confirm_button(self.on_confirm)
         self.confirm_button.disabled = True
         # button to run the installation process
-        self.install_button = ElevatedButton(
-            "Confirm and install",
+        self.install_button = Button(
+            content="Confirm and install",
             on_click=self.run_install,
             expand=True,
             icon=Icons.DIRECTIONS_RUN_OUTLINED,
@@ -139,8 +140,8 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
                 Row(
                     [
                         Text("Do you want to skip?"),
-                        ElevatedButton(
-                            "Skip",
+                        Button(
+                            content="Skip",
                             on_click=self.on_confirm,
                             icon=Icons.NEXT_PLAN_OUTLINED,
                             expand=True,
@@ -148,7 +149,6 @@ Don't try to add addons like Google Apps if your OS ROM already has Google Apps 
                     ]
                 )
             )
-        return self.view
 
     def run_install(self, e):
         """

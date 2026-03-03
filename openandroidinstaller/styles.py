@@ -10,6 +10,8 @@
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
+import webbrowser
+
 import flet as ft
 
 
@@ -26,7 +28,7 @@ class Markdown(ft.Markdown):
     def __init__(self, *args, **kwargs):
         super().__init__(
             selectable=True,
-            on_tap_link=lambda e: self.page.launch_url(e.data),
+            on_tap_link=lambda e: webbrowser.open(e.data),
             *args,
             **kwargs,
         )

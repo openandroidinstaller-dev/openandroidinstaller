@@ -15,7 +15,7 @@ from time import sleep
 from typing import Callable
 
 from app_state import AppState
-from flet import Column, ElevatedButton, Row, Switch, TextField, Colors, Icons
+from flet import Column, Button, Row, Switch, TextField, Colors, Icons
 from installer_config import Step
 from loguru import logger
 from styles import Markdown, Text
@@ -65,8 +65,9 @@ class StepView(BaseView):
         self.inputtext = TextField(
             hint_text="your unlock code", expand=False
         )  # textfield for the unlock code
+        self._init_content()
 
-    def build(self):
+    def _init_content(self):
         """Create the content of a view from step."""
         # error text
         self.error_text = Text("", color=Colors.RED)
@@ -167,8 +168,8 @@ class StepView(BaseView):
                 Row(
                     [
                         Text("Do you want to skip?"),
-                        ElevatedButton(
-                            "Skip",
+                        Button(
+                            content="Skip",
                             on_click=self.on_confirm,
                             icon=Icons.NEXT_PLAN_OUTLINED,
                             expand=True,
@@ -176,7 +177,6 @@ class StepView(BaseView):
                     ]
                 )
             )
-        return self.view
 
     def call_to_phone(self, e, command: str):
         """

@@ -23,9 +23,9 @@ from app_state import AppState
 from flet import (
     AppBar,
     Banner,
+    Button,
     Column,
     Container,
-    ElevatedButton,
     Icon,
     Image,
     Page,
@@ -134,9 +134,12 @@ class MainView(Column):
         # stack of previous default views for the back-button
         self.previous_views: List = []
 
-    def build(self):
-        self.view.controls.append(self.state.default_views.pop())
-        return self.view
+        # Pop the first view and display it
+        first_view = self.state.default_views.pop()
+        if hasattr(first_view, '_init_content'):
+            first_view._init_content()
+        self.view.controls.append(first_view)
+        self.controls = [self.view]
 
     def to_previous_view(self, e):
         """Method to display the previous view."""
@@ -157,7 +160,10 @@ class MainView(Column):
         self.view.controls = []
         # if there are default views left, display them first
         if self.state.default_views:
-            self.view.controls.append(self.state.default_views.pop())
+            next_view = self.state.default_views.pop()
+            if hasattr(next_view, '_init_content'):
+                next_view._init_content()
+            self.view.controls.append(next_view)
         elif self.state.steps:
             self.view.controls.append(
                 StepView(
@@ -168,7 +174,10 @@ class MainView(Column):
             )
         elif self.state.final_default_views:
             # here we expect the install view to populate the step views again if necessary
-            self.view.controls.append(self.state.final_default_views.pop())
+            next_view = self.state.final_default_views.pop()
+            if hasattr(next_view, '_init_content'):
+                next_view._init_content()
+            self.view.controls.append(next_view)
 
         # else:
         #    # display the final view
@@ -181,13 +190,19 @@ def configure(page: Page):
     """Configure the application."""
     # Configure the application base page
     page.title = "OpenAndroidInstaller"
-    page.theme_mode = "light"
+    page.theme_mode = ft.ThemeMode.LIGHT
+    page.theme = ft.Theme(
+        color_scheme=ft.ColorScheme(
+            surface_tint=ft.Colors.TRANSPARENT,
+        ),
+    )
     page.window.height = 900
     page.window.width = int(1.5 * page.window.height)
     page.window.top = 100
     page.window.left = 120
-    page.scroll = "adaptive"
-    page.horizontal_alignment = "center"
+    page.scroll = ft.ScrollMode.ADAPTIVE
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.bgcolor = ft.Colors.WHITE
     page.window.min_width = 1000
     page.window.min_height = 600
 
@@ -235,9 +250,9 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
         bgcolor="#00d886",
         actions=[
             Container(
-                content=ElevatedButton(
+                content=Button(
                     icon=Icons.QUESTION_MARK_ROUNDED,
-                    text="FAQ",
+                    content="FAQ",
                     on_click=lambda _: webbrowser.open(
                         "https://openandroidinstaller.org/faq.html"
                     ),
@@ -246,9 +261,9 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
                 tooltip="Frequently asked questions and encountered issues.",
             ),
             Container(
-                content=ElevatedButton(
+                content=Button(
                     icon=Icons.FEEDBACK_OUTLINED,
-                    text="Give feedback",
+                    content="Give feedback",
                     on_click=lambda _: webbrowser.open(
                         "https://openandroidinstaller.org/feedback.html"
                     ),
@@ -257,9 +272,9 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
                 tooltip="Give feedback about your experience with OpenAndroidInstaller",
             ),
             Container(
-                content=ElevatedButton(
+                content=Button(
                     icon=Icons.BUG_REPORT_OUTLINED,
-                    text="Report a bug",
+                    content="Report a bug",
                     on_click=lambda _: webbrowser.open(
                         "https://github.com/openandroidinstaller-dev/openandroidinstaller/issues"
                     ),
@@ -272,7 +287,7 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
 
     # display a warnings banner
     def close_banner(e):
-        banner.open = False
+        page.pop_dialog()
         page.update()
 
     banner = Banner(
@@ -282,11 +297,10 @@ def main(page: Page, test: bool = False, test_config: str = "sargo"):
             "These instructions only work if you follow every section and step precisely. Do not continue after something fails!"
         ),
         actions=[
-            TextButton("I understand", on_click=close_banner),
+            TextButton(content="I understand", on_click=close_banner),
         ],
     )
-    page.overlay.append(banner)
-    banner.open = True
+    page.show_dialog(banner)
 
     # create the State object
     state = AppState(
@@ -323,8 +337,8 @@ def startup(test: bool, test_config: str, logging_path: str):
     logger.add(f"{logging_path}/openandroidinstaller.log")
 
     # start the app
-    ft.app(
-        target=functools.partial(main, test=test, test_config=test_config),
+    ft.run(
+        functools.partial(main, test=test, test_config=test_config),
         assets_dir="assets",
     )
 

@@ -13,15 +13,14 @@
 import webbrowser
 from typing import Callable
 
+import flet as ft
 from app_state import AppState
 from flet import (
     AlertDialog,
     Checkbox,
     Column,
     Divider,
-    ElevatedButton,
-    FilePicker,
-    FilePickerResultEvent,
+    Button,
     FilledButton,
     OutlinedButton,
     Row,
@@ -88,24 +87,13 @@ replacing the firmware of the device with a completely custom ROM.
 OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/about).""",
             ),
             actions=[
-                TextButton("Close", on_click=self.close_close_explain_images_dlg),
+                TextButton(content="Close", on_click=self.close_close_explain_images_dlg),
             ],
-            actions_alignment="end",
+            actions_alignment=ft.MainAxisAlignment.END,
             shape=ContinuousRectangleBorder(radius=0),
         )
 
-        # initialize file pickers
-        self.pick_image_dialog = FilePicker(on_result=self.pick_image_result)
-        self.pick_recovery_dialog = FilePicker(on_result=self.pick_recovery_result)
-        self.pick_dtbo_dialog = FilePicker(on_result=self.pick_dtbo_result)
-        self.pick_vbmeta_dialog = FilePicker(on_result=self.pick_vbmeta_result)
-        self.pick_super_empty_dialog = FilePicker(
-            on_result=self.pick_super_empty_result
-        )
-        self.pick_vendor_boot_dialog = FilePicker(
-            on_result=self.pick_vendor_boot_result
-        )
-
+        # initialize file pickers (no longer needed as overlay controls in Flet v1)
         self.selected_image = Text("Selected image: ")
         self.selected_recovery = Text("Selected recovery: ")
         self.selected_dtbo = Checkbox(
@@ -139,8 +127,8 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.continue_eitherway_button.disabled = True
 
         # back button
-        self.back_button = ElevatedButton(
-            "Back",
+        self.back_button = Button(
+            content="Back",
             on_click=self.on_back,
             icon=Icons.ARROW_BACK,
             expand=True,
@@ -149,7 +137,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         self.image_compatibility: CheckResult | None = None
         self.recovery_compatibility: CheckResult | None = None
 
-    def build(self):
+    def _init_content(self):
         self.clear()
 
         # download link
@@ -157,21 +145,11 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
             self.state.config.metadata.get("device_code", "NOTFOUND")
         )
 
-        # attach hidden dialogues
-        self.right_view.controls.extend(
-            [
-                self.pick_image_dialog,
-                self.pick_recovery_dialog,
-                self.pick_dtbo_dialog,
-                self.pick_vbmeta_dialog,
-                self.pick_super_empty_dialog,
-                self.pick_vendor_boot_dialog,
-            ]
-        )
+        # attach controls directly (no more hidden FilePicker overlays)
 
         # create help/info button to show the help dialog for the image and recovery selection
         explain_images_button = OutlinedButton(
-            "What is this?",
+            content="What is this?",
             on_click=self.open_explain_images_dlg,
             expand=True,
             icon=Icons.HELP_OUTLINE_OUTLINED,
@@ -200,7 +178,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                 [
                     Text(
                         "Important notes for your device",
-                        style="titleSmall",
+                        style=ft.TextThemeStyle.TITLE_SMALL,
                         color=Colors.RED,
                         weight="bold",
                     ),
@@ -220,16 +198,16 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
                         ),
                         Row(
                             [
-                                ElevatedButton(
-                                    "Download LineageOS image",
+                                Button(
+                                    content="Download LineageOS image",
                                     icon=Icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
                                         self.download_link
                                     ),
                                     expand=True,
                                 ),
-                                ElevatedButton(
-                                    "Download TWRP recovery",
+                                Button(
+                                    content="Download TWRP recovery",
                                     icon=Icons.DOWNLOAD_OUTLINED,
                                     on_click=lambda _: webbrowser.open(
                                         twrp_download_link
@@ -245,7 +223,7 @@ OpenAndroidInstaller works with the [TWRP recovery project](https://twrp.me/abou
         # attach the controls for uploading image and recovery
         self.right_view.controls.extend(
             [
-                Text("Select an OS image:", style="titleSmall"),
+                Text("Select an OS image:", style=ft.TextThemeStyle.TITLE_SMALL),
                 Markdown(
                     f"""
 The image file should look something like `lineage-22.1-20241101-nightly-{self.state.config.device_code}-signed.zip`."""
@@ -253,13 +231,9 @@ The image file should look something like `lineage-22.1-20241101-nightly-{self.s
                 Row(
                     [
                         FilledButton(
-                            "Pick OS image",
+                            content="Pick OS image",
                             icon=Icons.UPLOAD_FILE,
-                            on_click=lambda _: self.pick_image_dialog.pick_files(
-                                allow_multiple=False,
-                                file_type="custom",
-                                allowed_extensions=["zip"],
-                            ),
+                            on_click=self.handle_pick_image,
                             expand=True,
                         ),
                     ]
@@ -271,7 +245,7 @@ The image file should look something like `lineage-22.1-20241101-nightly-{self.s
         if self.state.flash_recovery:
             self.right_view.controls.extend(
                 [
-                    Text("Select a TWRP recovery image:", style="titleSmall"),
+                    Text("Select a TWRP recovery image:", style=ft.TextThemeStyle.TITLE_SMALL),
                     Markdown(
                         f"""
 The recovery image should look something like `twrp-3.7.1_12-0-{self.state.config.device_code}.img`.
@@ -282,13 +256,9 @@ The recovery image should look something like `twrp-3.7.1_12-0-{self.state.confi
                     Row(
                         [
                             FilledButton(
-                                "Pick TWRP recovery file",
+                                content="Pick TWRP recovery file",
                                 icon=Icons.UPLOAD_FILE,
-                                on_click=lambda _: self.pick_recovery_dialog.pick_files(
-                                    allow_multiple=False,
-                                    file_type="custom",
-                                    allowed_extensions=["img"],
-                                ),
+                                on_click=self.handle_pick_recovery,
                                 expand=True,
                             ),
                         ]
@@ -315,7 +285,6 @@ The recovery image should look something like `twrp-3.7.1_12-0-{self.state.confi
                 Row(bottom_buttons),
             ]
         )
-        return self.view
 
     def get_notes(self) -> str:
         """Prepare and get notes for the specific device from config.
@@ -374,16 +343,16 @@ If this download page does not contain the required images, you can try to find 
             ),
             actions=[
                 TextButton(
-                    "Close", on_click=self.close_close_explain_additional_images_dlg
+                    content="Close", on_click=self.close_close_explain_additional_images_dlg
                 ),
             ],
-            actions_alignment="end",
+            actions_alignment=ft.MainAxisAlignment.END,
             shape=ContinuousRectangleBorder(radius=0),
         )
 
         # create help/info button to show the help dialog for the image and recovery selection
         explain_additional_images_button = OutlinedButton(
-            "Why do I need this and where do I get it?",
+            content="Why do I need this and where do I get it?",
             on_click=self.open_explain_additional_images_dlg,
             expand=True,
             icon=Icons.HELP_OUTLINE_OUTLINED,
@@ -399,7 +368,7 @@ If this download page does not contain the required images, you can try to find 
                     Row(
                         [
                             Text(
-                                "Select required additional images:", style="titleSmall"
+                                "Select required additional images:", style=ft.TextThemeStyle.TITLE_SMALL
                             ),
                             explain_additional_images_button,
                         ]
@@ -419,13 +388,9 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `dtbo.img` image",
+                                content="Pick `dtbo.img` image",
                                 icon=Icons.UPLOAD_FILE,
-                                on_click=lambda _: self.pick_dtbo_dialog.pick_files(
-                                    allow_multiple=False,
-                                    file_type="custom",
-                                    allowed_extensions=["img"],
-                                ),
+                                on_click=self.handle_pick_dtbo,
                                 expand=True,
                             ),
                             self.selected_dtbo,
@@ -440,13 +405,9 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `vbmeta.img` image",
+                                content="Pick `vbmeta.img` image",
                                 icon=Icons.UPLOAD_FILE,
-                                on_click=lambda _: self.pick_vbmeta_dialog.pick_files(
-                                    allow_multiple=False,
-                                    file_type="custom",
-                                    allowed_extensions=["img"],
-                                ),
+                                on_click=self.handle_pick_vbmeta,
                                 expand=True,
                             ),
                             self.selected_vbmeta,
@@ -461,13 +422,9 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `super_empty.img` image",
+                                content="Pick `super_empty.img` image",
                                 icon=Icons.UPLOAD_FILE,
-                                on_click=lambda _: self.pick_super_empty_dialog.pick_files(
-                                    allow_multiple=False,
-                                    file_type="custom",
-                                    allowed_extensions=["img"],
-                                ),
+                                on_click=self.handle_pick_super_empty,
                                 expand=True,
                             ),
                             self.selected_super_empty,
@@ -482,13 +439,9 @@ Make sure the file is for **your exact phone model!**""",
                     Row(
                         [
                             FilledButton(
-                                "Pick `vendor_boot.img` image",
+                                content="Pick `vendor_boot.img` image",
                                 icon=Icons.UPLOAD_FILE,
-                                on_click=lambda _: self.pick_vendor_boot_dialog.pick_files(
-                                    allow_multiple=False,
-                                    file_type="custom",
-                                    allowed_extensions=["img"],
-                                ),
+                                on_click=self.handle_pick_vendor_boot,
                                 expand=True,
                             ),
                             self.selected_vendor_boot,
@@ -502,41 +455,40 @@ Make sure the file is for **your exact phone model!**""",
 
     def open_explain_images_dlg(self, e):
         """Open the dialog to explain OS and recovery image."""
-        self.page.dialog = self.dlg_explain_images
-        self.dlg_explain_images.open = True
-        self.page.update()
+        self.page.show_dialog(self.dlg_explain_images)
 
     def close_close_explain_images_dlg(self, e):
         """Close the dialog to explain OS and recovery image."""
-        self.dlg_explain_images.open = False
-        self.page.update()
+        self.page.pop_dialog()
 
     def open_explain_additional_images_dlg(self, e):
         """Open the dialog to explain additional images."""
-        self.page.dialog = self.dlg_explain_additional_images
-        self.dlg_explain_additional_images.open = True
-        self.page.update()
+        self.page.show_dialog(self.dlg_explain_additional_images)
 
     def close_close_explain_additional_images_dlg(self, e):
         """Close the dialog to explain additional images."""
-        self.dlg_explain_additional_images.open = False
-        self.page.update()
+        self.page.pop_dialog()
 
-    def pick_image_result(self, e: FilePickerResultEvent):
-        logger.info(f"Selected image: {e.files}")
-        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+    async def handle_pick_image(self, e):
+        files = await ft.FilePicker().pick_files(
+            allow_multiple=False,
+            file_type=ft.FilePickerFileType.CUSTOM,
+            allowed_extensions=["zip"],
+        )
+        logger.info(f"Selected image: {files}")
+        path = ", ".join(map(lambda f: f.name, files)) if files else "Cancelled!"
         # update the textfield with the name of the file
         self.selected_image.value = (
             self.selected_image.value.split(":")[0] + f": {path}"
         )
-        if e.files:
-            self.image_path = e.files[0].path
-            self.state.image_path = e.files[0].path
+        if files:
+            self.image_path = files[0].path
+            self.state.image_path = files[0].path
             logger.info(f"Selected image from {self.image_path}")
         else:
             logger.info("No image selected.")
         # check if the image works with the device and show the filename in different colors accordingly
-        if e.files:
+        if files:
             self.image_compatibility = image_works_with_device(
                 supported_device_codes=self.state.config.supported_device_codes,
                 image_path=self.state.image_path,
@@ -562,20 +514,25 @@ Make sure the file is for **your exact phone model!**""",
         self.enable_button_if_ready(None)
         self.selected_image.update()
 
-    def pick_recovery_result(self, e: FilePickerResultEvent):
-        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+    async def handle_pick_recovery(self, e):
+        files = await ft.FilePicker().pick_files(
+            allow_multiple=False,
+            file_type=ft.FilePickerFileType.CUSTOM,
+            allowed_extensions=["img"],
+        )
+        path = ", ".join(map(lambda f: f.name, files)) if files else "Cancelled!"
         # update the textfield with the name of the file
         self.selected_recovery.value = (
             self.selected_recovery.value.split(":")[0] + f": {path}"
         )
-        if e.files:
-            self.recovery_path = e.files[0].path
-            self.state.recovery_path = e.files[0].path
+        if files:
+            self.recovery_path = files[0].path
+            self.state.recovery_path = files[0].path
             logger.info(f"Selected recovery from {self.recovery_path}")
         else:
             logger.info("No image selected.")
         # check if the recovery works with the device and show the filename in different colors accordingly
-        if e.files:
+        if files:
             self.recovery_compatibility = recovery_works_with_device(
                 supported_device_codes=self.state.config.supported_device_codes,
                 recovery_path=self.state.recovery_path,
@@ -591,14 +548,19 @@ Make sure the file is for **your exact phone model!**""",
         self.enable_button_if_ready(None)
         self.selected_recovery.update()
 
-    def pick_dtbo_result(self, e: FilePickerResultEvent):
-        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
-        if e.files:
+    async def handle_pick_dtbo(self, e):
+        files = await ft.FilePicker().pick_files(
+            allow_multiple=False,
+            file_type=ft.FilePickerFileType.CUSTOM,
+            allowed_extensions=["img"],
+        )
+        path = ", ".join(map(lambda f: f.name, files)) if files else "Cancelled!"
+        if files:
             # check if the dtbo works with the device and show the filename in different colors accordingly
             if path == "dtbo.img":
                 self.selected_dtbo.fill_color = Colors.GREEN
                 self.selected_dtbo.value = True
-                self.state.dtbo_path = e.files[0].path
+                self.state.dtbo_path = files[0].path
                 logger.info(f"Selected dtbo from {self.state.dtbo_path}")
             else:
                 self.selected_dtbo.fill_color = Colors.RED
@@ -609,14 +571,19 @@ Make sure the file is for **your exact phone model!**""",
         self.enable_button_if_ready(None)
         self.selected_dtbo.update()
 
-    def pick_vbmeta_result(self, e: FilePickerResultEvent):
-        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
-        if e.files:
+    async def handle_pick_vbmeta(self, e):
+        files = await ft.FilePicker().pick_files(
+            allow_multiple=False,
+            file_type=ft.FilePickerFileType.CUSTOM,
+            allowed_extensions=["img"],
+        )
+        path = ", ".join(map(lambda f: f.name, files)) if files else "Cancelled!"
+        if files:
             # check if the vbmeta works with the device and show the filename in different colors accordingly
             if path == "vbmeta.img":
                 self.selected_vbmeta.fill_color = Colors.GREEN
                 self.selected_vbmeta.value = True
-                self.state.vbmeta_path = e.files[0].path
+                self.state.vbmeta_path = files[0].path
                 logger.info(f"Selected vbmeta from {self.state.vbmeta_path}")
             else:
                 self.selected_vbmeta.fill_color = Colors.RED
@@ -627,15 +594,20 @@ Make sure the file is for **your exact phone model!**""",
         self.enable_button_if_ready(None)
         self.selected_vbmeta.update()
 
-    def pick_super_empty_result(self, e: FilePickerResultEvent):
-        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+    async def handle_pick_super_empty(self, e):
+        files = await ft.FilePicker().pick_files(
+            allow_multiple=False,
+            file_type=ft.FilePickerFileType.CUSTOM,
+            allowed_extensions=["img"],
+        )
+        path = ", ".join(map(lambda f: f.name, files)) if files else "Cancelled!"
         # update the textfield with the name of the file
-        if e.files:
+        if files:
             # check if the super_empty works with the device and show the filename in different colors accordingly
             if path == "super_empty.img":
                 self.selected_super_empty.fill_color = Colors.GREEN
                 self.selected_super_empty.value = True
-                self.state.super_empty_path = e.files[0].path
+                self.state.super_empty_path = files[0].path
                 logger.info(f"Selected super_empty from {self.state.super_empty_path}")
             else:
                 self.selected_super_empty.fill_color = Colors.RED
@@ -646,15 +618,20 @@ Make sure the file is for **your exact phone model!**""",
         self.enable_button_if_ready(None)
         self.selected_super_empty.update()
 
-    def pick_vendor_boot_result(self, e: FilePickerResultEvent):
-        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+    async def handle_pick_vendor_boot(self, e):
+        files = await ft.FilePicker().pick_files(
+            allow_multiple=False,
+            file_type=ft.FilePickerFileType.CUSTOM,
+            allowed_extensions=["img"],
+        )
+        path = ", ".join(map(lambda f: f.name, files)) if files else "Cancelled!"
         # update the textfield with the name of the file
-        if e.files:
-            # check if the super_empty works with the device and show the filename in different colors accordingly
+        if files:
+            # check if the vendor_boot works with the device and show the filename in different colors accordingly
             if path == "vendor_boot.img":
                 self.selected_vendor_boot.fill_color = Colors.GREEN
                 self.selected_vendor_boot.value = True
-                self.state.vendor_boot_path = e.files[0].path
+                self.state.vendor_boot_path = files[0].path
                 logger.info(
                     f"Selected vendor_boot.img from {self.state.vendor_boot_path}"
                 )

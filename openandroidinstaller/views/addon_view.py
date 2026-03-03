@@ -13,14 +13,13 @@
 import webbrowser
 from typing import Callable
 
+import flet as ft
 from app_state import AppState
 from flet import (
     AlertDialog,
+    Button,
     Column,
     Divider,
-    ElevatedButton,
-    FilePicker,
-    FilePickerResultEvent,
     FilledButton,
     OutlinedButton,
     Row,
@@ -43,8 +42,9 @@ class AddonsView(BaseView):
     ):
         super().__init__(state=state)
         self.on_confirm = on_confirm
+        self._init_content()
 
-    def build(self):
+    def _init_content(self):
         # dialog box to explain OS images and recovery
         self.dlg_explain_addons = AlertDialog(
             modal=True,
@@ -75,14 +75,13 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
 """,
             ),
             actions=[
-                TextButton("Close", on_click=self.close_close_explain_addons_dlg),
+                TextButton(content="Close", on_click=self.close_close_explain_addons_dlg),
             ],
-            actions_alignment="end",
+            actions_alignment=ft.MainAxisAlignment.END,
             shape=ContinuousRectangleBorder(radius=0),
         )
 
-        # initialize file pickers
-        self.pick_addons_dialog = FilePicker(on_result=self.pick_addons_result)
+        # initialize file picker (no longer needed as overlay control in Flet v1)
         self.selected_addons = Text("Selected addons: ")
 
         # initialize and manage button state.
@@ -92,12 +91,11 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
         # self.confirm_button.disabled = True
         # self.pick_addons_dialog.on_result = self.enable_button_if_ready
 
-        # attach hidden dialogues
-        self.right_view.controls.append(self.pick_addons_dialog)
+        # attach controls directly (no more hidden FilePicker overlays)
 
         # create help/info button to show the help dialog
         info_button = OutlinedButton(
-            "What kind of addons?",
+            content="What kind of addons?",
             on_click=self.open_explain_addons_dlg,
             expand=True,
             icon=Icons.HELP_OUTLINE_OUTLINED,
@@ -124,8 +122,8 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                     Text("Here you can download the F-Droid App-Store:"),
                     Row(
                         [
-                            ElevatedButton(
-                                "Download F-Droid App-Store",
+                            Button(
+                                content="Download F-Droid App-Store",
                                 icon=Icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
                                     "https://f-droid.org/en/packages/org.fdroid.fdroid.privileged.ota/"
@@ -139,8 +137,8 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                     ),
                     Row(
                         [
-                            ElevatedButton(
-                                "Download Google Apps",
+                            Button(
+                                content="Download Google Apps",
                                 icon=Icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
                                     "https://wiki.lineageos.org/gapps#downloads"
@@ -152,8 +150,8 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                     Text("Here you can download MicroG:"),
                     Row(
                         [
-                            ElevatedButton(
-                                "Download MicroG",
+                            Button(
+                                content="Download MicroG",
                                 icon=Icons.DOWNLOAD_OUTLINED,
                                 on_click=lambda _: webbrowser.open(
                                     "https://github.com/FriendlyNeighborhoodShane/MinMicroG-abuse-CI/releases"
@@ -169,17 +167,13 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
         # attach the controls for uploading addons
         self.right_view.controls.extend(
             [
-                Text("Select addons:", style="titleSmall"),
+                Text("Select addons:", style=ft.TextThemeStyle.TITLE_SMALL),
                 Row(
                     [
                         FilledButton(
-                            "Pick the addons you want to install",
+                            content="Pick the addons you want to install",
                             icon=Icons.UPLOAD_FILE,
-                            on_click=lambda _: self.pick_addons_dialog.pick_files(
-                                allow_multiple=True,
-                                file_type="custom",
-                                allowed_extensions=["zip"],
-                            ),
+                            on_click=self.handle_pick_addons,
                             expand=True,
                         ),
                     ]
@@ -190,27 +184,28 @@ You can get the zip file to install this addon here: [https://f-droid.org/en/pac
                 Row([self.confirm_button]),
             ]
         )
-        return self.view
 
     def open_explain_addons_dlg(self, e):
         """Open the dialog to explain addons."""
-        self.page.dialog = self.dlg_explain_addons
-        self.dlg_explain_addons.open = True
-        self.page.update()
+        self.page.show_dialog(self.dlg_explain_addons)
 
     def close_close_explain_addons_dlg(self, e):
         """Close the dialog to explain addons."""
-        self.dlg_explain_addons.open = False
-        self.page.update()
+        self.page.pop_dialog()
 
-    def pick_addons_result(self, e: FilePickerResultEvent):
-        path = ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+    async def handle_pick_addons(self, e):
+        files = await ft.FilePicker().pick_files(
+            allow_multiple=True,
+            file_type=ft.FilePickerFileType.CUSTOM,
+            allowed_extensions=["zip"],
+        )
+        path = ", ".join(map(lambda f: f.name, files)) if files else "Cancelled!"
         # update the textfield with the name of the file
         self.selected_addons.value = (
             self.selected_addons.value.split(":")[0] + f": {path}"
         )
-        if e.files:
-            self.addon_paths = [file.path for file in e.files]
+        if files:
+            self.addon_paths = [file.path for file in files]
             self.state.addon_paths = self.addon_paths
             logger.info(f"Selected addons: {self.addon_paths}")
         else:

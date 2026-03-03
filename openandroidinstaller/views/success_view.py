@@ -10,8 +10,9 @@
 # You should have received a copy of the GNU General Public License along with OpenAndroidInstaller.
 # If not, see <https://www.gnu.org/licenses/>."""
 # Author: Tobias Sterbak
+import flet as ft
 from app_state import AppState
-from flet import ElevatedButton, Row
+from flet import Button, Row
 from loguru import logger
 from styles import Markdown, Text
 from views import BaseView
@@ -22,18 +23,19 @@ from utils import send_tracking_info
 class SuccessView(BaseView):
     def __init__(self, state: AppState):
         super().__init__(state=state, image="success.png")
+        self._init_content()
 
-    def build(
+    def _init_content(
         self,
     ):
-        def close_window(e):
+        async def close_window(e):
             if self.state.test is False:
                 send_tracking_info(
                     event="finished", device_code=self.state.config.device_code
                 )
             logger.success("Success! Close the window.")
             # close the window
-            self.page.window.close()
+            await self.page.window.destroy()
 
         # right view header
         self.right_view_header.controls = [
@@ -44,7 +46,7 @@ class SuccessView(BaseView):
         self.right_view.controls = [
             Text(
                 "Now your devices boots into the new OS. Have fun with it!",
-                style="titleSmall",
+                style=ft.TextThemeStyle.TITLE_SMALL,
             ),
             Markdown(
                 f"""
@@ -57,12 +59,11 @@ Also, you can consider contributing to make it better. There are a lot of differ
             ),
             Row(
                 [
-                    ElevatedButton(
-                        "Finish and close",
+                    Button(
+                        content="Finish and close",
                         expand=True,
                         on_click=close_window,
                     )
                 ]
             ),
         ]
-        return self.view

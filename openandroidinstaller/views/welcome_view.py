@@ -12,8 +12,9 @@
 # Author: Tobias Sterbak
 from typing import Callable
 
+import flet as ft
 from app_state import AppState
-from flet import Divider, ElevatedButton, Row, Icons
+from flet import Divider, Button, Row, Icons
 from styles import Markdown, Text
 from views import BaseView
 from widgets import get_title
@@ -29,20 +30,21 @@ class WelcomeView(BaseView):
         self.on_confirm = on_confirm
 
         self.init_visuals()
+        self._init_content()
 
     def init_visuals(
         self,
     ):
         """Initialize the stateful visual elements of the view."""
-        self.continue_button = ElevatedButton(
-            "Let's start!",
+        self.continue_button = Button(
+            content="Let's start!",
             on_click=self.on_confirm,
             icon=Icons.NEXT_PLAN_OUTLINED,
             disabled=False,
             expand=True,
         )
 
-    def build(self):
+    def _init_content(self):
         self.clear()
 
         # build up the main view
@@ -83,8 +85,7 @@ Please note, that vendor specific back-ups will most likely not work on LineageO
                     [
                         self.continue_button,
                     ],
-                    alignment="center",
+                    alignment=ft.MainAxisAlignment.CENTER,
                 ),
             ]
         )
-        return self.view
