@@ -51,6 +51,7 @@ class BaseView(Column):
                 alignment=ft.MainAxisAlignment.SPACE_EVENLY,
             ),
             margin=margin.only(left=10, top=0, right=50, bottom=5),
+            bgcolor=ft.Colors.TRANSPARENT,
         )
         self.controls = [self.view]
 

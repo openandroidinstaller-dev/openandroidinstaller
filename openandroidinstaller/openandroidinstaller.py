@@ -193,6 +193,8 @@ def configure(page: Page):
     page.theme_mode = ft.ThemeMode.LIGHT
     page.theme = ft.Theme(
         color_scheme=ft.ColorScheme(
+            surface=ft.Colors.WHITE,
+            surface_variant=ft.Colors.WHITE,
             surface_tint=ft.Colors.TRANSPARENT,
         ),
     )
