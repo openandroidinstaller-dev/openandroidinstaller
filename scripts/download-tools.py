@@ -29,7 +29,7 @@ def download_adb_fastboot(platform: str):
     if platform == "win32":
         platform = "win"
     logger.info(f"Download adb and fastboot for {platform}...")
-    url = f"https://dl.google.com/android/repository/platform-tools_r35.0.2-{platform}.zip"
+    url = f"https://dl.google.com/android/repository/platform-tools_r36.0.0-{platform}.zip"
     # Downloading the file by sending the request to the URL
     response = requests.get(url, allow_redirects=True)
 
@@ -37,7 +37,7 @@ def download_adb_fastboot(platform: str):
     download_path = Path(__file__).parent.joinpath(Path("tools")).resolve()
     logger.info(download_path)
     file = zipfile.ZipFile(BytesIO(response.content))
-    file.extractall(download_path.name)
+    file.extractall(path=download_path.name)
     logger.info("DONE.")
 
 
@@ -52,7 +52,7 @@ def download_heimdall(platform: str):
     download_path = Path(__file__).parent.joinpath(Path("heimdall")).resolve()
     logger.info(download_path)
     file = zipfile.ZipFile(BytesIO(response.content))
-    file.extractall(download_path.name)
+    file.extractall(path=download_path.name)
     logger.info("DONE.")
 
 
@@ -65,15 +65,15 @@ def download_libusb(platform: str):
 
     # Writing the file to the local file system
     download_path = Path(__file__).parent.joinpath(Path("libusb-windows")).resolve()
-    logger.info(download_path)
-    with py7zr.SevenZipFile(BytesIO(response.content)) as file:
-        file.extractall(download_path.name)
+    logger.info(download_path.name)
+    file = py7zr.SevenZipFile(BytesIO(response.content))
+    file.extractall(path=download_path.name)
     logger.info("DONE.")
 
 
 def move_files_to_lib(platform: str):
     """Move files to the expected path in the openandroidinstaller package."""
-    target_path = Path(os.sep.join(["openandroidinstaller", "bin"]), exist_ok=True)
+    target_path = Path(os.sep.join(["openandroidinstaller", "bin"]))
     logger.info(f"Move executables to {target_path}...")
     # move the platformtools
     pt_path = (

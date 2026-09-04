@@ -1,6 +1,7 @@
+---
 metadata:
   maintainer: MagicLike
-  device_name: Samsung Galaxy S4 #(Qualcomm)
+  device_name: Samsung Galaxy S4  # (Qualcomm)
   is_ab_device: false
   device_code: jfltexx
   supported_device_codes:

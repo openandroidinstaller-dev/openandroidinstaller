@@ -1,6 +1,9 @@
+---
 name: Manual build workflow
 
+# yamllint disable rule:truthy
 on:
+  # yamllint enable
   workflow_dispatch:
 
 
@@ -11,35 +14,36 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest']
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
-      with:
-        python-version: 3.11
-    - run: pip install -r requirements.txt
-    - run: pip install --no-cache-dir flet[all]==0.26.0
-    - run: python scripts/download-tools.py
-    - run: python scripts/build.py
-    - uses: actions/upload-artifact@v4
-      with:
-        name: openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}
-        path: dist/
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - run: pip install -r requirements.txt
+      - run: pip install --no-cache-dir flet[all]==0.26.0
+      - run: python scripts/download-tools.py
+      - run: python scripts/build.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openandroidinstaller-${{  github.ref_name }}-${{ matrix.os }}
+          path: dist/
 
   build-windows:
     runs-on: 'windows-latest'
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
-      with:
-        python-version: 3.11
-    - run: pip install -r requirements.txt
-    - run: pip install --no-cache-dir flet[all]==0.26.0
-    - run: python scripts/download-tools.py
-    - run: python scripts/build.py
-    - uses: actions/upload-artifact@v4
-      with:
-        name: openandroidinstaller-${{  github.ref_name }}-windows-latest
-        path: dist/
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - run: pip install -r requirements.txt
+      - run: pip install --no-cache-dir flet[all]==0.26.0
+      - run: python scripts/download-tools.py
+      - run: python scripts/build.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openandroidinstaller-${{  github.ref_name }}-windows-latest
+          path: dist/
 
   create-release:
     needs:
@@ -47,30 +51,30 @@ jobs:
       - build-windows
     runs-on: 'ubuntu-latest'
     steps:
-    - uses: actions/checkout@v4
-    - name: Download artifact
-      uses: actions/download-artifact@v4
-    - name: Display structure of downloaded files
-      run: ls -R
-    - uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-macos-latest.zip openandroidinstaller-${{ github.ref_name }}-macos-latest
-    - uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-ubuntu-latest.zip openandroidinstaller-${{ github.ref_name }}-ubuntu-latest
-    - uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-windows-latest.zip openandroidinstaller-${{ github.ref_name }}-windows-latest
-    - name: Display structure of downloaded files
-      run: ls -R
-    - name: Create release
-      uses: dciborow/action-github-releases@v1.0.1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        prerelease: false
-        title: Release ${{ github.ref_name }}
-        files: |
-          openandroidinstaller-${{ github.ref_name }}-macos-latest.zip
-          openandroidinstaller-${{ github.ref_name }}-ubuntu-latest.zip
-          openandroidinstaller-${{ github.ref_name }}-windows-latest.zip
+      - uses: actions/checkout@v4
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+      - name: Display structure of downloaded files
+        run: ls -R
+      - uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-macos-latest.zip openandroidinstaller-${{ github.ref_name }}-macos-latest
+      - uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-ubuntu-latest.zip openandroidinstaller-${{ github.ref_name }}-ubuntu-latest
+      - uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r openandroidinstaller-${{ github.ref_name }}-windows-latest.zip openandroidinstaller-${{ github.ref_name }}-windows-latest
+      - name: Display structure of downloaded files
+        run: ls -R
+      - name: Create release
+        uses: dciborow/action-github-releases@v1.0.1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          title: Release ${{ github.ref_name }}
+          files: |
+            openandroidinstaller-${{ github.ref_name }}-macos-latest.zip
+            openandroidinstaller-${{ github.ref_name }}-ubuntu-latest.zip
+            openandroidinstaller-${{ github.ref_name }}-windows-latest.zip

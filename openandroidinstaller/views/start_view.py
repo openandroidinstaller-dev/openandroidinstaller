@@ -72,8 +72,7 @@ class StartView(BaseView):
         self.dlg_help_developer_options = AlertDialog(
             modal=True,
             title=Text("How to enable developer options and OEM unlocking"),
-            content=Markdown(
-                """
+            content=Markdown("""
 To do this,
 - **tap seven times on the build number** in the 'System'- or 'About the phone'-Menu in Settings. You can also use the phones own search to look for `build number`.
 - Then go back to the main menu and look for **'developer options'**. You can also search for it in your phone.
@@ -81,8 +80,7 @@ To do this,
 - If your phone is already connected to your PC, a pop-up might appear. **Allow USB debugging in the pop-up on your phone.**
 
 Now you are ready to continue.
-"""
-            ),
+"""),
             actions=[
                 TextButton(
                     "Close",
@@ -148,13 +146,11 @@ Now you are ready to continue.
         )
         self.right_view.controls.extend(
             [
-                Markdown(
-                    """
+                Markdown("""
 To get started you need to
 - **enable developer options** on your device
 - and then **enable USB debugging** and **OEM unlocking** in the developer options.
-                """
-                ),
+                """),
                 Row(
                     [
                         OutlinedButton(
@@ -170,8 +166,7 @@ To get started you need to
                     ]
                 ),
                 Divider(),
-                Markdown(
-                    """
+                Markdown("""
 Now
 - **connect your device to this computer via USB** and
 - **allow USB debugging in the pop-up on your phone**.
@@ -179,15 +174,12 @@ Now
 - Then **press the button 'Search device'**.
 
 When everything works correctly you should see your device name here and you can continue.
-                """
-                ),
+                """),
                 Divider(),
-                Markdown(
-                    """
+                Markdown("""
 If you **already unlocked the bootloader** of your device or already **flashed a custom recovery**, please toggle the respective switch below, to skip the procedure.
 If you don't know what this means, you most likely don't need to do anything and you can just continue.
-            """
-                ),
+            """),
                 self.device_infobox,
                 Row(
                     [
