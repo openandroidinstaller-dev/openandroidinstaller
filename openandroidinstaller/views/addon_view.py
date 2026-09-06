@@ -52,16 +52,22 @@ class AddonsView(BaseView):
             content=Markdown(
                 """Please select all addons you want to install at once. See for the most common ones below.
 
-## Google Apps:
+## Google Apps & Services:
 The packages listed here will bring back Google functionality to your phone, required by many proprietary apps.
-The most notable Google Apps packages are:
 
-- **[MicroG](https://github.com/microg/GmsCore/wiki)** ([Download](https://github.com/IsHacker003/microG_no_sigspoof/releases)):
-  **free-as-in-freedom re-implementation of Google**'s proprietary Android user space apps and libraries (installable after custom ROM installation as APK but might have problems with spoofing)
+### Full sets
+The most known packages, including apps and services, are:
+
 - **[MindTheGapps](https://wiki.lineageos.org/gapps/)** ([Download](https://wiki.lineageos.org/gapps/#downloads)):
-  **full Google set** including all apps you can find on a standard Android device
+  Proprietary **Google-branded applications that come pre-installed** with most Android devices, such as the Play Store, Gmail, Maps, etc.
 - **[NikGApps](https://nikgapps.com)** ([Download](https://sourceforge.net/projects/nikgapps/files/Releases/)):
   choose your **set of Google Apps** and have NikGApps manage them more sustainable
+
+### Only services
+The most known packages, giving you google functionality but no google apps, are:
+
+- **[MicroG](https://github.com/microg/GmsCore/wiki)** ([Download](https://github.com/microg/GmsCore/wiki/Installation)):
+  **free-as-in-freedom re-implementation of Google**'s proprietary Android user space libraries and functionality (installable after custom ROM installation as APK but might have problems with spoofing)
 
 These are dependend on the version of your **Android OS version** (Stock ROM) and the **phone's architecture**. You can find that information most likely on [LineageOS' device page](https://wiki.lineageos.org/devices).
 
