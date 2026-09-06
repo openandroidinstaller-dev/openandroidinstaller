@@ -154,10 +154,10 @@ On some devices, the build version is basically the firmware version.""",
                                         alignment="spaceBetween",
                                     ),
                                     Markdown(
-                                        f"""Before following these instructions please ensure that the device is currently using Android {required_android_version} firmware.
+                                        f"""Before following these instructions please ensure that the device is **currently using Android {required_android_version}** firmware.
 If the vendor provided multiple updates for that version, e.g. security updates, make sure you are on the latest!
 If your current installation is newer or older than Android {required_android_version}, please upgrade or downgrade to the required
-version before proceeding (guides can be found on the internet!).
+version before proceeding (flashing stock ROM with adb sideload, guides can be found on the internet!).
                         """
                                     ),
                                     android_checkbox,
@@ -264,9 +264,10 @@ Before continuing make sure your device battery level is above 80%.
                     [
                         Markdown(
                             """
-#### Boot your device with the stock OS at least once and check every functionality.
+#### Boot with the stock OS and check every functionality
 Make sure that you can send and receive SMS and place and receive calls (also via WiFi and LTE, if available),
 otherwise it won\'t work on your custom ROM either! Additionally, some devices require that VoLTE/VoWiFi be utilized once on stock to provision IMS.
+This is not required but to be sure all works.
             """
                         ),
                         boot_stock_checkbox,

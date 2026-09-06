@@ -278,7 +278,7 @@ The image file should look something like `lineage-22.2-20241101-nightly-{self.s
                         f"""
 The recovery image should look something like `twrp-3.7.1_12-0-{self.state.config.device_code}.img`.
 
-**Note:** This tool **only supports TWRP recoveries**.""",
+Note: This tool **only supports TWRP recoveries**.""",
                         extension_set="gitHubFlavored",
                     ),
                     Row(

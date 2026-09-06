@@ -113,7 +113,7 @@ Now you are ready to continue.
             self.state.toggle_flash_recovery()
 
         self.recovery_switch = Switch(
-            label="Custom recovery is already flashed.",
+            label="Custom recovery (TWRP or similar) is already flashed.",
             on_change=check_recovery_already_flashed,
             disabled=True,
             inactive_thumb_color=Colors.YELLOW,
@@ -184,11 +184,18 @@ When everything works correctly you should see your device name here and you can
                 Divider(),
                 Markdown(
                     """
-If you **already unlocked the bootloader** of your device or already **flashed a custom recovery**, please toggle the respective switch below, to skip the procedure.
-If you don't know what this means, you most likely don't need to do anything and you can just continue.
+If you already
+
+- **unlocked the bootloader**
+- **flashed a custom recovery**
+
+**toggle the respective switch** below after a device has been detected.
+If you **don't know what this means**, do not toggle them and continue.
             """
                 ),
+                Divider(),
                 self.device_infobox,
+                ResponsiveRow([self.bootloader_switch, self.recovery_switch]),
                 Row(
                     [
                         self.back_button,
@@ -203,8 +210,6 @@ If you don't know what this means, you most likely don't need to do anything and
                     ],
                     alignment="center",
                 ),
-                Divider(),
-                ResponsiveRow([self.bootloader_switch, self.recovery_switch]),
             ]
         )
         return self.view

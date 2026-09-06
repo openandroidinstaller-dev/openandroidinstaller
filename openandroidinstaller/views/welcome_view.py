@@ -71,7 +71,7 @@ The following steps are performed in this tool:
                 Markdown(
                     """
 Before you continue, make sure
-- your devices is on the latest system update.
+- your devices is on the **latest system update**.
 - you have a backup of all your important data, since this procedure will **erase all data from the phone**.
 - to not store the backup on the phone!
 
