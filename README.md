@@ -23,8 +23,6 @@
       <a href="https://openandroidinstaller.org">Website</a>
       ·
       <a href="https://github.com/openandroidinstaller-dev/openandroidinstaller/issues">Report Bugs</a>
-      ·
-      <a href="mailto: hello@openandroidinstaller.org">Request Feature</a>
     </strong>
   </p>
 </div>
