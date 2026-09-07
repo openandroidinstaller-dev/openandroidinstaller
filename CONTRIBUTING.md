@@ -77,3 +77,7 @@ Opening an issue first also allows other users to comment on it, often leading t
 If you want to write tests & documentation for existing features / behavior, always feel free to do so and open a pull request.
 Here, we would also appreciate if you opened an issue first to avoid duplicate work.
 If you have any questions while doing to, please open an issue or write us an email.
+
+## How to build
+
+See [docs/building_the_application_for_your_platform.md](./docs/building_the_application_for_your_platform.md).
