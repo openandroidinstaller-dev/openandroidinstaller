@@ -1,3 +1,6 @@
+> [!WARNING]
+> This application is currently not actively maintained! Everything is provided as is, don't expect bugfixes or new features (for now)
+
 <div align="center">
   <a href="https://github.com/openandroidinstaller-dev/openandroidinstaller">
     <img src="openandroidinstaller/assets/logo-192x192.png" alt="OpenAndroidInstaller" width="80" height="80">
